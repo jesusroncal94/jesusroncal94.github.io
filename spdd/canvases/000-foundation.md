@@ -135,3 +135,19 @@ committed `package-lock.json`; no `postinstall` scripts.
 - The repository must be public for free GitHub Pages: before the first push, re-check that
   `design/photo-source.jpg` is the only personal asset and that `data/` holds only the export.
 - Pages is configured to deploy from GitHub Actions, not from a branch.
+
+## Sync — 2026-09-23 (from canvas 002)
+
+- **Fonts are subset at design time.** `scripts/subset-fonts.sh`, run by
+  `./tasks.ps1 fonts` in `python:3.12-slim`, uses fontTools to restrict Geist to weights
+  400–600 and Geist Mono to 400–500, and keeps only Latin-1, typographic punctuation, arrows,
+  `−` and `⌘`. It writes the results to `src/assets/fonts/`, which are committed:
+  `geist.woff2` 17 KB, `geist-mono.woff2` 13 KB, `instrument-serif-italic.woff2` 20 KB,
+  74 KB before. `src/styles/fonts.css` declares them, and `Base.astro` preloads Geist and the
+  serif. The Fontsource packages are now dev dependencies that only feed the script. Re-run
+  it when the content gains characters outside that set (story 004: Latin-1 already covers
+  Spanish and Italian).
+- **`motion` was removed.** Nothing needs it: the one animation (count-up) is a small
+  `requestAnimationFrame` loop.
+- **Stylesheet delivery.** Inlining was tried in canvas 001 and reverted in 002. See the sync
+  note there.

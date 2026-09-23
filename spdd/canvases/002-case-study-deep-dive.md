@@ -5,6 +5,8 @@ Open source `6:158`, Experience `6:213`, How I work `6:269`; Mobile Selected wor
 Experience `9:132`, How I work `9:156`. Components: `CaseCard 2:121`, `StackTag 2:96`,
 `AskPrompt 2:112` (rebuilt as the command palette).
 
+**Status:** implemented and synced on 2026-09-23 (see the Sync section). The four case texts await approval.
+
 ## R — Requirements
 
 A hiring manager can judge engineering judgement from real problems.
@@ -152,3 +154,58 @@ superlatives that the numbers do not carry.
   cost-leak case describes its cause only as a stale background worker.
 - Intercorp copy uses only the metrics approved for publication.
 - The palette never pretends to answer: every entry is a link to existing content.
+
+## Sync — 2026-09-23
+
+Implemented. The code differs from the operations above in these places; this section is
+authoritative where they disagree.
+
+- **E, op 1.** A case has no `slug` or `period` field. The slug comes from the file name
+  (`cases/en/01-evals.md` → `01-evals`), and the period is computed from `roleId` against
+  `public-profile.json`, so dates live in one place. `keywords` feeds the palette.
+- **E, op 9.** Timeline entries carry the approved display copy (`role`, `organisation`,
+  `place`, `line`) and only take their dates from the export. Entries marked `earlier`
+  collapse on mobile into one row (`earlierSummary`, period 2017 — 2022), matching the
+  mobile frame.
+- **Op 4.** `countUp` is a 20-line `requestAnimationFrame` loop with ease-out cubic and an
+  `IntersectionObserver` at 60% visibility, not the `motion` library. Motion would have cost
+  most of the 15 KB script budget for one number animation, so the dependency was removed.
+- **Op 5.** `BeforeAfter` exposes one sentence to screen readers ("Before: 45.6%. After:
+  100%.") and hides the animated digits from them.
+- **Op 6.** "Two more cases" on mobile reveals the rest with `:target`, not `<details>`, so
+  the same markup can sit in the two-column grid on desktop (`md:contents`).
+- **Ops 11–12.** The palette's entries are built by `src/lib/palette-entries.ts` and served
+  as a static `/palette.json`, fetched when the pointer or focus reaches the trigger, or when
+  ⌘K is pressed. Options are rendered from a `<template>`. Keeping 21 options and their JSON
+  out of the HTML is what keeps the home page within its byte budget. The trigger is a link to
+  `#work`, so it still does something without JavaScript, and it is hidden below `md`, as in
+  the mobile frame.
+- **Mobile copy.** Mobile shows the full case summaries, eyebrows and principle bodies
+  rather than the shortened variants drawn in the mobile frame, to keep one approved text per
+  item. The open-source section, absent from the mobile frame, is shown on mobile too.
+- **Case page.** The end block stacks "Next case" above the two CTAs; side by side they did
+  not fit the 680 px measure.
+
+### Performance work this canvas triggered
+
+Adding four sections pushed the home page's mobile LCP to 1.52 s, over the 1.5 s budget, and
+made it bimodal (1.37 s or 1.52 s depending on the run). Measured, one change at a time:
+
+| Change | Home LCP (mobile, median) | Kept |
+| ------ | ------------------------- | ---- |
+| Baseline after the new sections | 1.52 s | — |
+| Palette data moved to `/palette.json` | 1.52 s | yes, for bytes |
+| Content-visibility on below-fold sections | 1.52 s | no, no measurable effect |
+| Stylesheet served as a file again (HTML 8.9 KB gz) | 1.37–1.52 s, bimodal | yes |
+| Fonts subset to the weights and glyphs in use (74 → 50 KB) | **1.38 s, stable** | yes |
+
+The bimodality came from Geist Mono: whether its request started before the LCP paint
+decided whether Lighthouse charged its download to the LCP. Smaller fonts removed the swing.
+
+**Verified:** all five pages score 100 in performance, accessibility, best practices and
+SEO; the budget's assertions pass on 5 URLs × 3 runs; home LCP 1.38 s, case pages 1.07–1.23 s;
+CLS ≤ 0.005; total inline JavaScript under 3 KB compressed on the home page.
+
+### Pending
+
+Operation 2 is **not done** until Jesus approves the four case texts.

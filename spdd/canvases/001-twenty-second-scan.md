@@ -151,3 +151,9 @@ All of [norms.md](norms.md). Content comes only from `site/en.yaml` and
 - The portrait asset is cropped above the bag strap, as in Figma; it is not the raw selfie.
 - The "Based in Milan" line never mentions visa status.
 - The fold contains no element that needs JavaScript to be visible.
+
+**Sync, 2026-09-23 (from canvas 002):** stylesheets are no longer inlined. Once the home page
+grew, inlining pushed the HTML past the first TCP round trip (16 KB compressed), which cost
+more than the separate request it saved. The stylesheet is a cached file again, the HTML is
+8.9 KB compressed, and the fonts are subset (see canvas 000). Home LCP is 1.38 s, stable
+across runs.
