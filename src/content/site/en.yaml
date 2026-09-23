@@ -1,0 +1,46 @@
+displayName: Jesús Roncal
+monogram: jr
+
+hero:
+  status: Open to AI Engineer roles · EU
+  headlineLead: I ship LLM systems
+  headlineAccent: that survive production.
+  lede: >-
+    Senior Software Engineer, AI & Backend. Eight years building backend systems — the last
+    four shipping multi-agent, RAG and eval pipelines to real users. Measured, grounded,
+    cost-aware. Based in Milan.
+  ledeShort: >-
+    Eight years in backend; the last four shipping multi-agent, RAG and eval pipelines to
+    real users.
+  role: AI & Backend
+  portraitAlt: Jesús Roncal smiling, in front of a brick archway on a sunny day
+  portraitCaption: Milan, IT · ES / EN / IT
+  badges:
+    - eyebrow: Now
+      title: AI Engineer · Intercorp
+    - eyebrow: 2025 – 2026
+      title: Tech Lead · MindFortress
+
+metrics:
+  - value: 45.6% → 100%
+    caption: structural conformance after an eval-driven prompt rewrite
+    source: Intercorp · LLM-as-judge
+    compact:
+      value: 45.6→100%
+      caption: structural conformance, eval-driven prompts
+    accent: true
+  - value: 112 PRs · 30 h
+    caption: cleared from queue to production with parallel Claude Code agents
+    source: Reeve · merge campaign
+    compact:
+      value: 112 PRs · 30h
+      caption: queue to prod with parallel agents
+  - value: $15/day → $0
+    caption: untracked AI spend traced to its source and shut off
+    source: MindFortress · cost
+    compact:
+      value: $15/day → $0
+      caption: untracked AI spend shut off
+  - value: 500K+ users
+    caption: served by LLM transcription and translation pipelines
+    source: Wordbox · 10+ markets
