@@ -52,3 +52,7 @@
     outline-offset: 3px;
   }
 }
+
+@utility portrait-tone {
+  filter: saturate(0.85) contrast(1.08) brightness(0.95);
+}

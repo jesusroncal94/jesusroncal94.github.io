@@ -1,0 +1,36 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import Icon, { type IconName } from './Icon.astro';
+
+type Variant = 'primary' | 'secondary' | 'ghost';
+
+interface Props extends Omit<HTMLAttributes<'a'>, 'class'> {
+  variant?: Variant;
+  icon?: IconName;
+  class?: string;
+}
+
+const { variant = 'primary', icon, href, class: className, ...attributes } = Astro.props;
+
+const variants: Record<Variant, string> = {
+  primary: 'bg-signal px-5 text-on-signal hover:brightness-110',
+  secondary: 'border border-border-strong bg-raised px-5 text-primary hover:bg-surface',
+  ghost: 'px-2 text-muted hover:text-primary',
+};
+
+const Element = href ? 'a' : 'button';
+---
+
+<Element
+  href={href}
+  type={href ? undefined : 'button'}
+  class:list={[
+    'button-m inline-flex items-center justify-center gap-2.5 rounded-full py-3 whitespace-nowrap transition-[color,background-color,filter] duration-150',
+    variants[variant],
+    className,
+  ]}
+  {...attributes}
+>
+  {icon && <Icon name={icon} size={16} />}
+  <slot />
+</Element>

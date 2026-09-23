@@ -101,3 +101,20 @@
   line-height: 1.25rem;
   letter-spacing: -0.005em;
 }
+
+@utility display-serif-mobile {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 3.125rem;
+  line-height: 3rem;
+  letter-spacing: -0.015em;
+}
+
+@utility metric-s {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1.375rem;
+  line-height: 1.75rem;
+  letter-spacing: -0.02em;
+}

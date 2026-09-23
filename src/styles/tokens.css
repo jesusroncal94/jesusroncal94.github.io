@@ -19,6 +19,18 @@
   --font-sans: 'Geist Variable', 'Geist Fallback', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'Geist Mono Variable', 'Geist Mono Fallback', ui-monospace, monospace;
   --font-serif: 'Instrument Serif', 'Instrument Serif Fallback', ui-serif, serif;
+
+  --shadow-float: 0 12px 32px rgb(0 0 0 / 0.5);
+  --shadow-live: 0 0 8px color-mix(in oklab, var(--color-signal) 80%, transparent);
+
+  --animate-rise: rise 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      translate: 0 12px;
+    }
+  }
 }
 
 [data-theme='light'] {
