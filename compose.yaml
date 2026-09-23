@@ -3,6 +3,7 @@ x-node: &node
   working_dir: /app
   environment:
     WATCH_MODE: polling
+    ASTRO_TELEMETRY_DISABLED: "1"
   volumes:
     - .:/app
     - node_modules:/app/node_modules
