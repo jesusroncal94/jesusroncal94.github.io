@@ -92,7 +92,7 @@ src/pages/index.astro
    `metrics` (`ProofMetric[]`), keyed by locale id. `src/content/site/en.yaml` holds the
    approved copy verbatim from the Figma frames.
 2. **`Icon.astro`**: `name` ∈ `arrow-right | arrow-up-right | arrow-up | download | mail |
-   sparkles | menu | copy | check`; renders a 24-viewBox SVG using `currentColor`, with a
+   sparkles | menu | close | copy | check`; renders a 24-viewBox SVG using `currentColor`, with a
    `size` prop and `aria-hidden="true"`.
 3. **`StatusChip.astro`**: pill with the live dot (signal fill with a soft glow) and a
    `label-mono` label; Figma `2:93`.
