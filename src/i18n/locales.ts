@@ -1,0 +1,24 @@
+export const LOCALES = ['en', 'es', 'it'] as const;
+
+export type Locale = (typeof LOCALES)[number];
+
+export const DEFAULT_LOCALE: Locale = 'en';
+
+export const PUBLISHED_LOCALES: readonly Locale[] = ['en'];
+
+export function isLocale(value: string): value is Locale {
+  return (LOCALES as readonly string[]).includes(value);
+}
+
+export function localePath(locale: Locale, path = ''): string {
+  const segments = path.split('/').filter(Boolean);
+  if (locale !== DEFAULT_LOCALE) segments.unshift(locale);
+  const joined = segments.join('/');
+  return joined ? `/${joined}/` : '/';
+}
+
+export function stripLocale(pathname: string): string {
+  const segments = pathname.split('/').filter(Boolean);
+  if (segments[0] && isLocale(segments[0])) segments.shift();
+  return segments.join('/');
+}
