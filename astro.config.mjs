@@ -14,7 +14,6 @@ export default defineConfig({
   },
   integrations: [sitemap()],
   devToolbar: { enabled: false },
-  build: { inlineStylesheets: 'always' },
   vite: {
     plugins: [tailwindcss()],
     server: { watch: { usePolling: pollForFileChanges } },
