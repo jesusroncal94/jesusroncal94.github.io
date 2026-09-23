@@ -44,3 +44,114 @@ metrics:
   - value: 500K+ users
     caption: served by LLM transcription and translation pipelines
     source: Wordbox · 10+ markets
+
+palette:
+  placeholder: Jump to a case, a repo or a question…
+  hint: Press ⌘K anywhere to jump around.
+  questions:
+    - label: How did you cut an AI cost leak to $0?
+      case: 02-cost-leak
+    - label: What does your eval process look like?
+      case: 01-evals
+    - label: Walk me through Freya’s agents
+      case: 04-freya
+
+work:
+  eyebrow: Selected work
+  title: Four problems, and what changed
+  lede: How I approached each one, in the order it happened. Every case reads in about ninety seconds.
+  more: Two more cases
+
+openSource:
+  eyebrow: Open source
+  title: Code you can actually read
+  lede: Client work stays under NDA. These are public, small on purpose, and each one is about a single idea.
+  repos:
+    - name: rag-assistant
+      url: https://github.com/jesusroncal94/rag-assistant
+      title: Answers with citations, or not at all
+      pitch: >-
+        Question answering over internal documents that cites every claim and returns the
+        closest sources instead of an apology when the evidence is weak.
+      note: Retrieval 6/6 · answering 1/6 — reported, not hidden
+      stack: [Python, BM25, Eval gate]
+    - name: aws-serverless-fastapi ⇄ ecs-fargate
+      url: https://github.com/jesusroncal94/aws-serverless-fastapi
+      title: Same API, two runtimes
+      pitch: >-
+        One URL shortener, one domain layer, deployed twice: Lambda with DynamoDB and Fargate
+        with PostgreSQL. Reading them side by side isolates what the runtime changes.
+      note: Terraform · Serverless · one shared core
+      stack: [FastAPI, AWS, Terraform]
+    - name: ai-agents
+      url: https://github.com/jesusroncal94/ai-agents
+      title: The agent setup I work with daily
+      pitch: >-
+        Claude Code subagents, slash commands and permission settings, versioned and portable
+        across projects — the tooling behind the 112-PR campaign, generalised.
+      note: Claude Code today · Cursor and Copilot planned
+      stack: [Claude Code, MCP, Shell]
+
+experience:
+  eyebrow: Experience
+  title: Eight years, three continents, one direction
+  titleShort: Eight years, one direction
+  lede: >-
+    From PHP back offices in Lima to leading AI products for US startups — always on
+    distributed teams across the US, EU and LATAM.
+  entries:
+    - roleId: intercorp-management-innova-latam
+      role: AI Engineer
+      organisation: Intercorp · Innova LATAM
+      place: Peru · remote
+      line: Production LLM system generating curriculum-aligned lesson plans for 3 countries.
+    - roleId: mindfortress-inc
+      role: Technical Lead, AI Products
+      organisation: MindFortress
+      place: USA · remote
+      line: Code review and release gating for Freya and Reeve; multi-agent architecture.
+    - roleId: wordbox
+      role: Backend & AI Engineer
+      organisation: Wordbox
+      place: MX / UK · remote
+      line: LLM content pipelines for 500K+ learners; Python → Go rewrite, −40% latency.
+    - roleId: accelone
+      role: Backend Developer
+      organisation: AccelOne
+      place: USA · remote
+      line: 'Video platform backend: large-file pipelines on SQS, Elasticsearch search.'
+    - roleId: indra-pretty-technical
+      role: Backend Developer, freelance
+      organisation: Indra · Pretty Technical
+      place: PE / NL
+      line: APIs serving ML models at 95% coverage; Go services for fintech and genomics.
+      earlier: true
+    - roleId: red-cientifica-peruana
+      role: Backend Developer
+      organisation: Red Científica Peruana
+      place: Lima
+      line: Internationalised a hosting platform serving 11,000+ businesses.
+      earlier: true
+    - roleId: codrise
+      role: Software Engineer
+      organisation: Codrise
+      place: Lima
+      line: From L3 support to shipping Laravel and CodeIgniter APIs.
+      earlier: true
+  earlierSummary:
+    role: Backend & Software Engineer
+    organisation: Indra · RCP · Codrise
+
+principles:
+  eyebrow: How I work
+  title: Three rules I don’t break
+  items:
+    - numeral: i.
+      title: Evals before vibes
+      body: A prompt change ships when a fixture set says it is better — not when it reads better.
+    - numeral: ii.
+      title: No threshold is a guess
+      body: Every limit in a system I own has a measurement next to it, and a note on what it costs.
+    - numeral: iii.
+      title: Cost is a feature
+      body: Tokens, latency and dollars per request are on the dashboard from day one, and reported to whoever pays.
