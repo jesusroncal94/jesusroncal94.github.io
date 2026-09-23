@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import './fonts.css';
 @import './tokens.css';
 @import './typography.css';
 
@@ -56,3 +57,4 @@
 @utility portrait-tone {
   filter: saturate(0.85) contrast(1.08) brightness(0.95);
 }
+

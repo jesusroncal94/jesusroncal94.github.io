@@ -39,6 +39,14 @@ services:
       - npm_cache:/root/.npm
       - ../cv-manager:/cv-manager:ro
 
+  fonts:
+    image: python:3.12-slim
+    working_dir: /app
+    command: sh scripts/subset-fonts.sh
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules:ro
+
 volumes:
   node_modules:
   npm_cache:

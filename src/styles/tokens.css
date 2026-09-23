@@ -16,8 +16,8 @@
   --radius-md: 14px;
   --radius-lg: 24px;
 
-  --font-sans: 'Geist Variable', 'Geist Fallback', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'Geist Mono Variable', 'Geist Mono Fallback', ui-monospace, monospace;
+  --font-sans: 'Geist', 'Geist Fallback', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback', ui-monospace, monospace;
   --font-serif: 'Instrument Serif', 'Instrument Serif Fallback', ui-serif, serif;
 
   --shadow-float: 0 12px 32px rgb(0 0 0 / 0.5);
