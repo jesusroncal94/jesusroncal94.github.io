@@ -1,0 +1,154 @@
+# 002 — Case study deep dive
+
+Story: [002](../stories/002-case-study-deep-dive.md). Figma: Desktop Selected work `5:117`,
+Open source `6:158`, Experience `6:213`, How I work `6:269`; Mobile Selected work `8:71`,
+Experience `9:132`, How I work `9:156`. Components: `CaseCard 2:121`, `StackTag 2:96`,
+`AskPrompt 2:112` (rebuilt as the command palette).
+
+## R — Requirements
+
+A hiring manager can judge engineering judgement from real problems.
+
+- Four case cards on the home page, each linking to its own page.
+- Each case page reads Problem → Approach → Result, states the role, and ends with the stack.
+- A before → after panel whose numbers count up when it scrolls into view. The bespoke
+  interactive visuals are Phase 3 (analysis decision 2).
+- The end of every case page offers the next case and the contact actions together.
+- The depth layer on the home page: Open source, Experience timeline, How I work.
+- The hero prompt is a ⌘K command palette that jumps to sections, cases, repos and the
+  three suggested questions (analysis decision 1).
+
+**Done when:** four case pages exist and each reads in about ninety seconds; the palette opens
+with ⌘K / Ctrl+K and from the hero, and filters by keyboard alone; the home depth sections
+match Figma.
+
+## E — Entities
+
+```ts
+Case {                         // content collection `cases`, one Markdown file per locale
+  slug: string                 // "01-evals"
+  order: number
+  organisation: string         // "Intercorp"
+  product?: string             // "Reeve", "Freya"
+  role: string                 // "AI Engineer"
+  period: string               // "2024 — now"
+  title: string
+  summary: string              // the card body
+  before: string               // "45.6%"
+  after: string                // "100%"
+  stack: string[]
+  body: Markdown               // ## Problem, ## Approach, ## Result
+}
+
+Repo { name: string; url: URL; title: string; pitch: string; note: string; stack: string[] }
+Principle { numeral: string; title: string; body: string }
+TimelineLine { roleId: string; line: string }       // joins Role from the export
+PaletteEntry { id: string; group: 'section'|'case'|'repo'|'question'|'action'; label: string; keywords: string[]; href: string }
+```
+
+## A — Approach
+
+Cases are an Astro content collection per locale, rendered by `work/[slug].astro` with
+`getStaticPaths`. The count-up splits a value into prefix, number and suffix (`$15/day` →
+`$`, `15`, `/day`), so any metric animates without special cases. It runs through `motion`'s
+`animate` and `inView`, and renders the final value in the HTML so it reads correctly
+without JavaScript.
+
+The palette is a native `<dialog>` with a listbox, built from `PaletteEntry[]` at build time
+and serialised into the page, so there is no fetch. Ranking is a pure function. The hero shows
+a button styled as the approved prompt; the dialog provides the focus trap and Escape for
+free.
+
+The home depth sections read their copy from `site/en.yaml`. The Experience timeline joins
+`public-profile.json` roles (title, organisation, dates) with the editorial one-liners by
+`roleId`.
+
+## S — Structure
+
+```
+src/content/cases/en/01-evals.md
+src/content/cases/en/02-cost-leak.md
+src/content/cases/en/03-merge-campaign.md
+src/content/cases/en/04-freya.md
+src/content/site/en.yaml            + repos, principles, timelineLines, suggestedQuestions
+src/components/StackTag.astro
+src/components/CaseCard.astro
+src/components/BeforeAfter.astro
+src/components/CommandPalette.astro
+src/lib/count-up.ts                 splitNumeric(), countUp()
+src/lib/palette.ts                  buildEntries(), rankEntries()
+src/lib/timeline.ts                 buildTimeline()
+src/sections/Work.astro
+src/sections/OpenSource.astro
+src/sections/Experience.astro
+src/sections/Principles.astro
+src/pages/work/[slug].astro
+tests/count-up.test.ts
+tests/palette.test.ts
+```
+
+## O — Operations
+
+1. **Collection `cases`** in `content.config.ts` using the glob loader over
+   `src/content/cases/**/*.md`, with the `Case` schema; the locale comes from the folder.
+2. **Four case files.** Write the long-form copy from `profile.md` facts, using only the
+   approved softened wording (see analysis §4 and the mockup cards). Each body has
+   `## Problem`, `## Approach` and `## Result`, 250–350 words in total. **Jesus reviews and
+   approves the four texts before this operation is marked done.**
+3. **`StackTag.astro`** (`2:96`) and **`CaseCard.astro`** (`2:121`): eyebrow
+   `"{order} · {product ?? organisation} · {role}"`, title, `BeforeAfter` in compact mode,
+   summary, stack tags, and "Read the case →". The whole card is one link, with the title as
+   its accessible name.
+4. **`src/lib/count-up.ts`**:
+   `splitNumeric(value: string): { prefix: string; number: number; decimals: number; suffix: string } | null`
+   and `countUp(element: HTMLElement, value: string, locale: Locale): void`. The latter
+   animates from 0 over 900 ms with ease-out, and only when reduced motion is not requested.
+   Test: `tests/count-up.test.ts` covers `45.6%`, `$15/day`, `112 queued` and
+   `7 agents`.
+5. **`BeforeAfter.astro`**: `before` in `status-before`, an arrow icon, `after` in
+   `signal`; `metric-l` (48 px) from `md` up, 34 px below. Values carry `data-count-up`; one
+   module script calls `countUp` for each when it enters the viewport.
+6. **`Work.astro`**: section `id="work"`, eyebrow and heading from `site`, 2 × 2 grid from
+   `md` up (gap 24) and stacked below. Mobile shows the first two cards and a ghost link
+   "Two more cases" to `#work-more`, which reveals the rest (`<details>`).
+7. **`pages/work/[slug].astro`**: `Base` layout with a per-case title and description.
+   Header (eyebrow, `<h1>` title, role · period); the full-size `BeforeAfter`; the rendered
+   Markdown in a 680 px measure with `body-l` paragraphs and `heading-h3` subheads; the stack
+   tags; then an end block with "Next case →" (wrapping from 04 to 01) next to the primary
+   "Download CV" and secondary "Email me".
+8. **`OpenSource.astro`** (`6:158`): three equal-height cards from `site.repos`, with the
+   repo name in `code-mono` glow colour, the title, the pitch, the honest-note strip and the
+   stack tags. The whole card links to GitHub (`target="_blank"`, `rel="noopener"`).
+9. **`src/lib/timeline.ts`**: `buildTimeline(roles: Role[], lines: TimelineLine[], locale)`
+   returns the approved rows in the Figma order, with the period formatted through
+   `formatPeriod`. **`Experience.astro`** (`6:213` / `9:132`) renders four columns from
+   `md` up and stacks them below, marking the current role's period in `signal`.
+10. **`Principles.astro`** (`6:269` / `9:156`): three columns with a serif numeral in glow,
+    the title and the body; stacked rows on mobile.
+11. **`src/lib/palette.ts`**: `buildEntries(site, cases, locale): PaletteEntry[]` and
+    `rankEntries(query, entries): PaletteEntry[]` (case- and accent-insensitive token match
+    over label and keywords; label matches rank above keyword matches; an empty query
+    returns all, grouped). Test: `tests/palette.test.ts` checks that "cost" ranks
+    `02-cost-leak` first.
+12. **`CommandPalette.astro`**: the trigger is a `<button>` styled as `AskPrompt 2:112`,
+    with sparkles, the placeholder "Jump to a case, a repo or a question…", `⌘K` and the send
+    disc. The three suggested questions below are plain links to their cases, so they work
+    without JavaScript. The `<dialog>` holds an input with `role="combobox"` and a
+    `role="listbox"` of results. ↑/↓ move the active option, Enter follows its `href`, Esc
+    closes. A global listener opens it on ⌘K / Ctrl+K. The hint line under the prompt reads
+    "Press ⌘K anywhere to jump around."
+13. **Home assembly**: `index.astro` adds Work, OpenSource, Experience and Principles after
+    Proof, and the palette inside Hero. The Figma "Ask the portfolio" section `5:44` is
+    **not** rendered in Phase 1 (story 005).
+
+## N — Norms
+
+All of [norms.md](norms.md). Case copy follows Problem → Approach → Result with no
+superlatives that the numbers do not carry.
+
+## S — Safeguards
+
+- Case copy uses no infrastructure detail beyond the approved wording. In particular, the
+  cost-leak case describes its cause only as a stale background worker.
+- Intercorp copy uses only the metrics approved for publication.
+- The palette never pretends to answer: every entry is a link to existing content.

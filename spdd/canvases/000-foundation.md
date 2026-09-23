@@ -1,0 +1,122 @@
+# 000 — Foundation
+
+Enables every Phase 1 story. Figma: Foundations `2:3`.
+
+## R — Requirements
+
+A static Astro site that builds and runs entirely in Docker, renders the approved tokens
+and fonts, has i18n routing in place with only English published, and deploys to GitHub
+Pages on every push to `main` after passing Lighthouse CI.
+
+**Done when:** `./tasks.ps1 build` produces `dist/`; `./tasks.ps1 dev` serves the site at
+`http://localhost:4321`; a push to `main` publishes to `https://jesusroncal94.github.io`; the
+Lighthouse job fails the workflow when a budget from [norms.md](norms.md) is broken.
+
+## E — Entities
+
+- `Locale`: `'en' | 'es' | 'it'`. `DEFAULT_LOCALE = 'en'`. `PUBLISHED_LOCALES = ['en']`
+  until story 004.
+- `UiDictionary`: a typed record of every UI string, one per locale; English is the type's
+  source of truth, so a missing key in another locale is a type error.
+- Theme tokens: the colour, dimension and type values from [../design.md](../design.md).
+
+## A — Approach
+
+Astro 7 in static mode with built-in i18n routing (`prefixDefaultLocale: false`), so English
+lives at `/` and other locales at `/es/`, `/it/`. Tailwind 4 through its Vite plugin, with
+the tokens declared in `@theme` so utilities such as `bg-canvas` and `text-muted` exist.
+Fonts are self-hosted through Fontsource. A custom GitHub Actions workflow (rather than
+`withastro/action`) builds the site, because story 003 adds a PDF render step after the
+Astro build.
+
+Phase 1 is dark only: it is the approved design. Light tokens ship in `tokens.css` behind
+`[data-theme="light"]`, unused until a theme toggle is designed.
+
+## S — Structure
+
+```
+package.json            scripts: dev, build, preview, test, export
+astro.config.mjs
+tsconfig.json           extends astro/tsconfigs/strict
+compose.yaml            services: web, build, test (node:22-alpine, repo mounted at /app)
+tasks.ps1
+lighthouserc.json
+src/
+  env.d.ts
+  styles/tokens.css
+  styles/global.css
+  i18n/locales.ts
+  i18n/ui/en.ts
+  i18n/translate.ts
+  i18n/format.ts
+  layouts/Base.astro
+  pages/index.astro     placeholder until 001
+.github/workflows/deploy.yml
+README.md
+```
+
+## O — Operations
+
+1. **`package.json`**: `"type": "module"`; dependencies `astro@^7.3`, `tailwindcss@^4.3`,
+   `@tailwindcss/vite@^4.3`, `@astrojs/sitemap@^3.7`, `motion@^13.4`,
+   `@fontsource-variable/geist`, `@fontsource-variable/geist-mono`,
+   `@fontsource/instrument-serif`; devDependencies `vitest`, `tsx`, `zod`. Scripts:
+   `dev: astro dev --host`, `build: astro build`, `preview: astro preview --host`,
+   `test: vitest run`.
+2. **`compose.yaml`**: service `web` (`npm run dev`, port `4321:4321`), `build`
+   (`npm ci && npm run build`), `test` (`npm run test`). All use `node:22-alpine`, mount `.`
+   at `/app`, and keep `node_modules` in a named volume so the Windows host never sees it.
+3. **`tasks.ps1`**: `param([ValidateSet('dev','build','test','export','preview')] $Task)`,
+   each mapping to `docker compose run --rm --service-ports <service>`.
+4. **`astro.config.mjs`**: `site: 'https://jesusroncal94.github.io'`, `output: 'static'`,
+   `i18n: { defaultLocale: 'en', locales: ['en','es','it'], routing: { prefixDefaultLocale: false } }`,
+   `integrations: [sitemap()]`, `vite: { plugins: [tailwindcss()] }`.
+5. **`src/styles/tokens.css`**: `@theme` with `--color-canvas`, `--color-surface`,
+   `--color-raised`, `--color-border`, `--color-border-strong`, `--color-primary`,
+   `--color-muted`, `--color-subtle`, `--color-signal`, `--color-on-signal`, `--color-glow`,
+   `--color-before`; `--radius-sm|md|lg`; `--font-sans: 'Geist Variable'`,
+   `--font-mono: 'Geist Mono Variable'`, `--font-serif: 'Instrument Serif'`. Light values
+   under `[data-theme="light"]`.
+6. **`src/styles/global.css`**: `@import 'tailwindcss'`, the tokens, the three font faces
+   (Instrument Serif italic 400 only), `font-display: swap` with `size-adjust` fallbacks;
+   `body` gets `bg-canvas text-primary font-sans antialiased`; `::selection` uses the signal
+   colour; `:focus-visible` draws a 2px signal outline offset by 3px.
+7. **Type utilities** in `global.css` as `@utility` blocks mirroring the Figma text styles:
+   `display-xl`, `display-serif`, `display-mobile`, `heading-h2`, `heading-h3`, `metric-l`,
+   `metric-m`, `body-l`, `body-m`, `body-s`, `label-mono` (uppercase, +6% tracking),
+   `code-mono`, `button-m`. Values exactly as in Figma.
+8. **`src/i18n/locales.ts`**: exports `LOCALES`, `DEFAULT_LOCALE`, `PUBLISHED_LOCALES`,
+   `type Locale`, `localePath(locale, path)` returning `/path` for English and `/es/path`
+   otherwise.
+9. **`src/i18n/ui/en.ts`** exports `const en = { … } as const` with the nav, CTA, section
+   eyebrow and footer strings from the mockups; **`translate.ts`** exports
+   `useTranslations(locale): (key: keyof typeof en) => string`.
+10. **`src/i18n/format.ts`**: `formatNumber(value, locale, options?)`,
+    `formatMonth(yyyyMm, locale)` (e.g. `Sep 2024`), `formatPeriod(start, end | null, locale)`
+    (e.g. `2024 — now`), all through `Intl`. Test: `tests/format.test.ts`, English happy path.
+11. **`src/layouts/Base.astro`**: props `locale`, `title`, `description`, `image?`; sets
+    `<html lang>`, `data-theme="dark"`, canonical, `hreflang` alternates for
+    `PUBLISHED_LOCALES` plus `x-default`, Open Graph and Twitter tags, the theme colour
+    `#09090B`, and preloads Geist and Instrument Serif Italic.
+12. **`.github/workflows/deploy.yml`**: on push to `main`: job `build` (checkout, setup-node
+    22 with npm cache, `npm ci`, `npm run build`, `actions/upload-pages-artifact` with
+    `dist`); job `lighthouse` (needs build; runs `treosh/lighthouse-ci-action` against the
+    artifact with `lighthouserc.json`); job `deploy` (needs lighthouse;
+    `actions/deploy-pages`). Permissions: `contents: read`, `pages: write`,
+    `id-token: write`.
+13. **`lighthouserc.json`**: mobile preset; assertions from the performance budget in
+    [norms.md](norms.md).
+14. **`README.md`** following the account's skeleton: what it is, how the code is
+    organised, how to run it (`./tasks.ps1`), how it deploys, deliberate simplifications,
+    licence.
+
+## N — Norms
+
+All of [norms.md](norms.md). Additionally: dependency versions pinned with caret ranges and a
+committed `package-lock.json`; no `postinstall` scripts.
+
+## S — Safeguards
+
+- The repository must be public for free GitHub Pages: before the first push, re-check that
+  `design/photo-source.jpg` is the only personal asset and that `data/` holds only the export.
+- Pages is configured to deploy from GitHub Actions, not from a branch.
