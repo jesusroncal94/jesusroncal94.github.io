@@ -1,6 +1,6 @@
 param(
     [Parameter(Mandatory)]
-    [ValidateSet('dev', 'build', 'preview', 'test')]
+    [ValidateSet('dev', 'build', 'preview', 'test', 'export')]
     [string] $Task
 )
 
@@ -11,6 +11,7 @@ $services = @{
     build   = 'build'
     preview = 'preview'
     test    = 'test'
+    export  = 'export'
 }
 
 docker compose run --rm --service-ports $services[$Task]

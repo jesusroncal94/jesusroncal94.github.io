@@ -6,7 +6,8 @@
     "dev": "astro dev --host",
     "build": "astro build",
     "preview": "astro preview --host",
-    "test": "vitest run"
+    "test": "vitest run",
+    "export": "tsx scripts/export-profile.ts"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

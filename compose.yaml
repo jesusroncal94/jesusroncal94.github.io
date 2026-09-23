@@ -30,6 +30,15 @@ services:
     <<: *node
     command: sh -c "npm ci --prefer-offline && npm run test"
 
+  export:
+    <<: *node
+    command: sh -c "npm ci --prefer-offline && npm run export"
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+      - npm_cache:/root/.npm
+      - ../cv-manager:/cv-manager:ro
+
 volumes:
   node_modules:
   npm_cache:
