@@ -2,6 +2,8 @@
 
 Enables every Phase 1 story. Figma: Foundations `2:3`.
 
+**Status:** implemented and synced with the code on 2026-09-23.
+
 ## R — Requirements
 
 A static Astro site that builds and runs entirely in Docker, renders the approved tokens
@@ -35,15 +37,17 @@ Phase 1 is dark only: it is the approved design. Light tokens ship in `tokens.cs
 ## S — Structure
 
 ```
-package.json            scripts: dev, build, preview, test, export
+package.json            scripts: dev, build, preview, test
 astro.config.mjs
 tsconfig.json           extends astro/tsconfigs/strict
-compose.yaml            services: web, build, test (node:22-alpine, repo mounted at /app)
+compose.yaml            services: web, build, preview, test (node:22-alpine, repo mounted at /app)
 tasks.ps1
 lighthouserc.json
+LICENSE                 MIT for the code; content reserved (stated in the README)
+public/favicon.svg
 src/
-  env.d.ts
   styles/tokens.css
+  styles/typography.css
   styles/global.css
   i18n/locales.ts
   i18n/ui/en.ts
@@ -64,24 +68,30 @@ README.md
    `dev: astro dev --host`, `build: astro build`, `preview: astro preview --host`,
    `test: vitest run`.
 2. **`compose.yaml`**: service `web` (`npm run dev`, port `4321:4321`), `build`
-   (`npm ci && npm run build`), `test` (`npm run test`). All use `node:22-alpine`, mount `.`
-   at `/app`, and keep `node_modules` in a named volume so the Windows host never sees it.
-3. **`tasks.ps1`**: `param([ValidateSet('dev','build','test','export','preview')] $Task)`,
-   each mapping to `docker compose run --rm --service-ports <service>`.
+   (`npm ci && npm run build`), `preview` (build, then `npm run preview` on port 4321) and
+   `test` (`npm run test`). All use `node:22-alpine`, mount `.` at `/app`, keep
+   `node_modules` and the npm cache in named volumes so the Windows host never sees them,
+   and set `WATCH_MODE=polling` and `ASTRO_TELEMETRY_DISABLED=1`.
+3. **`tasks.ps1`**: `param([ValidateSet('dev','build','preview','test')] $Task)`, each
+   mapping to `docker compose run --rm --service-ports <service>`. Canvas 006 adds `export`.
 4. **`astro.config.mjs`**: `site: 'https://jesusroncal94.github.io'`, `output: 'static'`,
    `i18n: { defaultLocale: 'en', locales: ['en','es','it'], routing: { prefixDefaultLocale: false } }`,
-   `integrations: [sitemap()]`, `vite: { plugins: [tailwindcss()] }`.
+   `integrations: [sitemap()]`, `vite: { plugins: [tailwindcss()] }`, and file-watch
+   polling when `WATCH_MODE=polling` (bind mounts from Windows do not emit change events).
 5. **`src/styles/tokens.css`**: `@theme` with `--color-canvas`, `--color-surface`,
    `--color-raised`, `--color-border`, `--color-border-strong`, `--color-primary`,
    `--color-muted`, `--color-subtle`, `--color-signal`, `--color-on-signal`, `--color-glow`,
    `--color-before`; `--radius-sm|md|lg`; `--font-sans: 'Geist Variable'`,
    `--font-mono: 'Geist Mono Variable'`, `--font-serif: 'Instrument Serif'`. Light values
    under `[data-theme="light"]`.
-6. **`src/styles/global.css`**: `@import 'tailwindcss'`, the tokens, the three font faces
-   (Instrument Serif italic 400 only), `font-display: swap` with `size-adjust` fallbacks;
-   `body` gets `bg-canvas text-primary font-sans antialiased`; `::selection` uses the signal
-   colour; `:focus-visible` draws a 2px signal outline offset by 3px.
-7. **Type utilities** in `global.css` as `@utility` blocks mirroring the Figma text styles:
+6. **`src/styles/global.css`**: `@import 'tailwindcss'`, the tokens and the type scale; the
+   three metric-matched fallback faces (`Geist Fallback` on Arial, `Geist Mono Fallback` on
+   Courier New, `Instrument Serif Fallback` on Times New Roman), with overrides computed by
+   Capsize rather than estimated; `body` gets `bg-canvas text-primary font-sans antialiased`;
+   `::selection` uses the signal colour; `:focus-visible` draws a 2px signal outline offset
+   by 3px. The web fonts themselves are imported in `Base.astro` from Fontsource, whose faces
+   already use `font-display: swap`; Instrument Serif is limited to italic 400.
+7. **Type utilities** in `src/styles/typography.css` as `@utility` blocks mirroring the Figma text styles, in rem:
    `display-xl`, `display-serif`, `display-mobile`, `heading-h2`, `heading-h3`, `metric-l`,
    `metric-m`, `body-l`, `body-m`, `body-s`, `label-mono` (uppercase, +6% tracking),
    `code-mono`, `button-m`. Values exactly as in Figma.
@@ -96,16 +106,21 @@ README.md
     (e.g. `2024 — now`), all through `Intl`. Test: `tests/format.test.ts`, English happy path.
 11. **`src/layouts/Base.astro`**: props `locale`, `title`, `description`, `image?`; sets
     `<html lang>`, `data-theme="dark"`, canonical, `hreflang` alternates for
-    `PUBLISHED_LOCALES` plus `x-default`, Open Graph and Twitter tags, the theme colour
-    `#09090B`, and preloads Geist and Instrument Serif Italic.
-12. **`.github/workflows/deploy.yml`**: on push to `main`: job `build` (checkout, setup-node
-    22 with npm cache, `npm ci`, `npm run build`, `actions/upload-pages-artifact` with
-    `dist`); job `lighthouse` (needs build; runs `treosh/lighthouse-ci-action` against the
-    artifact with `lighthouserc.json`); job `deploy` (needs lighthouse;
-    `actions/deploy-pages`). Permissions: `contents: read`, `pages: write`,
-    `id-token: write`.
-13. **`lighthouserc.json`**: mobile preset; assertions from the performance budget in
-    [norms.md](norms.md).
+    `PUBLISHED_LOCALES` plus `x-default`, Open Graph and Twitter tags, the favicon, and
+    preloads the Latin subsets of Geist and Instrument Serif Italic. The `theme-color` meta
+    is left out: it would need a colour literal outside `tokens.css`. `noindex?` is
+    accepted for the `/cv` page in 003.
+12. **`.github/workflows/deploy.yml`**: on push to `main` (and on manual dispatch): job
+    `build` runs checkout, setup-node 22 with the npm cache, `npm ci`, `npm run test`,
+    `npm run build`, the Lighthouse budget (`treosh/lighthouse-ci-action` over `dist/` with
+    `lighthouserc.json`), then `actions/upload-pages-artifact`; job `deploy` (needs build)
+    runs `actions/deploy-pages`. Lighthouse runs inside the build job rather than in its own
+    job, so it audits the exact `dist/` without passing artifacts between jobs. Permissions:
+    `contents: read`, `pages: write`, `id-token: write`.
+13. **`lighthouserc.json`**: `staticDistDir: ./dist`, three runs, Lighthouse's default mobile
+    emulation, and the assertions from the performance budget in [norms.md](norms.md) (the
+    median run for timing metrics). Verified locally on the Playwright image with
+    `@lhci/cli`.
 14. **`README.md`** following the account's skeleton: what it is, how the code is
     organised, how to run it (`./tasks.ps1`), how it deploys, deliberate simplifications,
     licence.
