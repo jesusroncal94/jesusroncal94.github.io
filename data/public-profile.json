@@ -1,0 +1,192 @@
+{
+  "name": "Jesus Enrique Roncal Huatta",
+  "headline": "Senior Software Engineer | AI & Backend",
+  "city": "Milan, Italy",
+  "contact": {
+    "email": "jesusroncal94@gmail.com",
+    "linkedin": "https://www.linkedin.com/in/jes%C3%BAs-enrique-roncal-huatta-453a15109",
+    "github": "https://github.com/jesusroncal94"
+  },
+  "roles": [
+    {
+      "id": "mindfortress-inc",
+      "title": "Technical Lead - AI Products",
+      "organisation": "MindFortress Inc (via Revelo)",
+      "location": "USA - Remote",
+      "start": "2025-10",
+      "end": "2026-09"
+    },
+    {
+      "id": "intercorp-management-innova-latam",
+      "title": "AI Engineer",
+      "organisation": "Intercorp Management / Innova LATAM",
+      "location": "Peru - Remote",
+      "start": "2024-09",
+      "end": null
+    },
+    {
+      "id": "accelone",
+      "title": "Backend Developer (concurrent)",
+      "organisation": "AccelOne (US client)",
+      "location": "USA - Remote",
+      "start": "2023-08",
+      "end": "2024-01"
+    },
+    {
+      "id": "wordbox",
+      "title": "Backend Developer & AI Engineer",
+      "organisation": "Wordbox",
+      "location": "Mexico / United Kingdom - Remote",
+      "start": "2022-01",
+      "end": "2024-11"
+    },
+    {
+      "id": "indra-pretty-technical",
+      "title": "Backend Developer - Freelance (concurrent, part-time)",
+      "organisation": "Indra (Peru) | Pretty Technical (Netherlands)",
+      "location": null,
+      "start": "2021",
+      "end": "2022"
+    },
+    {
+      "id": "red-cientifica-peruana",
+      "title": "Backend Developer",
+      "organisation": "Red Cientifica Peruana",
+      "location": "Lima, Peru",
+      "start": "2020-07",
+      "end": "2022-01"
+    },
+    {
+      "id": "codrise",
+      "title": "Software Engineer / IT Support Analyst L3",
+      "organisation": "Codrise (Vilbra Group)",
+      "location": "Lima, Peru",
+      "start": "2017-12",
+      "end": "2020-07"
+    }
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Systems Engineering",
+      "institution": "National Technological University of South Lima, Lima, Peru",
+      "year": 2019
+    }
+  ],
+  "skills": [
+    {
+      "group": "Languages",
+      "items": [
+        "Python",
+        "Go",
+        "Java",
+        "TypeScript / Node.js",
+        "PHP",
+        "SQL",
+        "Bash"
+      ]
+    },
+    {
+      "group": "Backend & APIs",
+      "items": [
+        "FastAPI",
+        "Django",
+        "Flask",
+        "Spring Boot",
+        "Laravel",
+        "CodeIgniter",
+        "REST",
+        "GraphQL",
+        "gRPC",
+        "WebSocket",
+        "SQLAlchemy",
+        "Alembic"
+      ]
+    },
+    {
+      "group": "Async & Messaging",
+      "items": [
+        "AWS SQS",
+        "Google Cloud Pub/Sub",
+        "Celery",
+        "Redis",
+        "event-driven workflows",
+        "n8n orchestration"
+      ]
+    },
+    {
+      "group": "Cloud & Infrastructure",
+      "items": [
+        "AWS (ECS, EC2, RDS, S3, SQS, Cognito, IAM/SSO)",
+        "GCP (Cloud Run, Vertex AI, Cloud SQL, Pub/Sub)",
+        "Docker",
+        "CI/CD (GitHub Actions)",
+        "Terraform and Kubernetes (working knowledge)"
+      ]
+    },
+    {
+      "group": "Databases & Search",
+      "items": [
+        "PostgreSQL",
+        "Redis",
+        "Elasticsearch",
+        "Qdrant",
+        "pgvector",
+        "Typesense",
+        "Neo4j"
+      ]
+    },
+    {
+      "group": "AI / LLM Engineering",
+      "items": [
+        "Multi-agent orchestration",
+        "RAG",
+        "prompt engineering (few-shot, chain-of-thought, eval-driven)",
+        "LLM evaluation (LLM-as-judge, quality gates)",
+        "AI cost governance",
+        "Anthropic Claude",
+        "Google Gemini / Vertex AI",
+        "OpenAI / Azure OpenAI",
+        "LangChain",
+        "LangGraph",
+        "LangFuse",
+        "Spring AI",
+        "MCP",
+        "Claude Code"
+      ]
+    },
+    {
+      "group": "Monitoring & DevOps",
+      "items": [
+        "Grafana",
+        "Sentry",
+        "PostHog",
+        "GitHub Actions",
+        "CI/CD"
+      ]
+    },
+    {
+      "group": "Frontend",
+      "items": [
+        "React",
+        "Next.js (App Router)",
+        "TypeScript",
+        "Tailwind / shadcn/ui",
+        "Yjs / CRDT"
+      ]
+    }
+  ],
+  "languages": [
+    {
+      "name": "Spanish",
+      "level": "Native (C2)"
+    },
+    {
+      "name": "English",
+      "level": "Professional working proficiency (C1)"
+    },
+    {
+      "name": "Italian",
+      "level": "Elementary (A2)"
+    }
+  ]
+}
