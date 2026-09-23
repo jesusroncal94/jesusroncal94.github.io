@@ -1,8 +1,13 @@
 ---
+import CommandPalette from '../components/CommandPalette.astro';
 import Base from '../layouts/Base.astro';
+import Experience from '../sections/Experience.astro';
 import Hero from '../sections/Hero.astro';
 import Nav from '../sections/Nav.astro';
+import OpenSource from '../sections/OpenSource.astro';
+import Principles from '../sections/Principles.astro';
 import Proof from '../sections/Proof.astro';
+import Work from '../sections/Work.astro';
 import { DEFAULT_LOCALE } from '../i18n/locales';
 import { useTranslations } from '../i18n/translate';
 
@@ -13,7 +18,13 @@ const t = useTranslations(locale);
 <Base locale={locale} title={t('site.title')} description={t('site.description')}>
   <Nav locale={locale} />
   <main>
-    <Hero locale={locale} />
+    <Hero locale={locale}>
+      <CommandPalette slot="prompt" locale={locale} />
+    </Hero>
     <Proof locale={locale} />
+    <Work locale={locale} />
+    <OpenSource locale={locale} />
+    <Experience locale={locale} />
+    <Principles locale={locale} />
   </main>
 </Base>

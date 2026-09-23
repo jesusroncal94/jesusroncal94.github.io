@@ -1,0 +1,28 @@
+---
+import SectionHead from '../components/SectionHead.astro';
+import type { Locale } from '../i18n/locales';
+import { getSite } from '../lib/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { principles } = await getSite(locale);
+---
+
+<section id="how-i-work" aria-labelledby="how-i-work-title" class="scroll-mt-4 border-t border-border px-6 py-14 md:px-20 md:py-30">
+  <SectionHead headingId="how-i-work-title" eyebrow={principles.eyebrow} title={principles.title} />
+
+  <ol class="mt-8 grid gap-5 md:mt-12 md:grid-cols-3 md:gap-6">
+    {principles.items.map(({ numeral, title, body }) => (
+      <li class="flex gap-4 md:flex-col md:gap-3.5 md:border-t md:border-border-strong md:pt-7">
+        <span class="display-serif-mobile w-11 shrink-0 text-glow md:display-serif md:w-auto" aria-hidden="true">{numeral}</span>
+        <span class="flex flex-col gap-1 md:gap-3.5">
+          <span class="body-m text-primary md:heading-h3">{title}</span>
+          <span class="body-s text-muted md:body-m">{body}</span>
+        </span>
+      </li>
+    ))}
+  </ol>
+</section>

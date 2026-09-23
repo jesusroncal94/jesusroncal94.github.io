@@ -1,0 +1,78 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import BeforeAfter from '../../components/BeforeAfter.astro';
+import Button from '../../components/Button.astro';
+import Icon from '../../components/Icon.astro';
+import StackTag from '../../components/StackTag.astro';
+import Base from '../../layouts/Base.astro';
+import Nav from '../../sections/Nav.astro';
+import profile from '../../../data/public-profile.json';
+import { formatPeriod } from '../../i18n/format';
+import { DEFAULT_LOCALE, localePath } from '../../i18n/locales';
+import { useTranslations } from '../../i18n/translate';
+import { caseEyebrow, caseSlug, getCases, type Case } from '../../lib/cases';
+
+export const getStaticPaths = (async () => {
+  const cases = await getCases(DEFAULT_LOCALE);
+  return cases.map((entry, index) => ({
+    params: { slug: caseSlug(entry) },
+    props: { entry, next: cases[(index + 1) % cases.length] },
+  }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  entry: Case;
+  next: Case;
+}
+
+const locale = DEFAULT_LOCALE;
+const t = useTranslations(locale);
+const { entry, next } = Astro.props;
+const { title, summary, before, after, stack, roleId } = entry.data;
+const role = profile.roles.find(({ id }) => id === roleId);
+if (!role) throw new Error(`Case ${entry.id} references an unknown role: ${roleId}`);
+const { Content } = await render(entry);
+---
+
+<Base locale={locale} title={`${title} — Jesús Roncal`} description={summary}>
+  <Nav locale={locale} />
+  <main class="px-6 pt-6 pb-24 md:px-20 md:pt-12">
+    <article class="mx-auto flex max-w-170 flex-col gap-8">
+      <a href={`${localePath(locale)}#work`} class="button-m inline-flex w-fit items-center gap-2 text-muted hover:text-primary">
+        <Icon name="arrow-right" size={16} class="rotate-180" />
+        {t('case.allWork')}
+      </a>
+
+      <header class="flex flex-col gap-4">
+        <p class="label-mono text-signal">{caseEyebrow(entry)}</p>
+        <h1 class="heading-h2-mobile text-primary md:heading-h2">{title}</h1>
+        <p class="code-mono text-subtle">{role.title} · {formatPeriod(role.start, role.end, locale)}</p>
+      </header>
+
+      <BeforeAfter before={before} after={after} locale={locale} size="full" />
+
+      <div class="body-l flex flex-col gap-5 text-muted [&_h2]:heading-h3 [&_h2]:mt-4 [&_h2]:text-primary">
+        <Content />
+      </div>
+
+      <ul class="flex flex-wrap gap-2" aria-label={t('case.stack')}>
+        {stack.map((label) => <StackTag label={label} />)}
+      </ul>
+
+      <footer class="mt-8 flex flex-col gap-6 border-t border-border pt-8">
+        <a href={localePath(locale, `work/${caseSlug(next)}`)} class="group flex flex-col gap-1">
+          <span class="label-mono text-subtle">{t('cta.nextCase')}</span>
+          <span class="heading-h3 inline-flex items-center gap-2 text-primary">
+            {next.data.title}
+            <Icon name="arrow-right" size={18} class="transition-transform group-hover:translate-x-1" />
+          </span>
+        </a>
+        <div class="flex flex-wrap gap-3">
+          <Button icon="download" href="/cv/jesus-roncal-cv-en.pdf" download>{t('cta.downloadCv')}</Button>
+          <Button variant="secondary" icon="mail" href={`mailto:${profile.contact.email}`}>{t('cta.emailMe')}</Button>
+        </div>
+      </footer>
+    </article>
+  </main>
+</Base>
