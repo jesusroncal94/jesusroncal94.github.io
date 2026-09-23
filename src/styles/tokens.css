@@ -1,0 +1,37 @@
+@theme {
+  --color-canvas: #09090b;
+  --color-surface: #111114;
+  --color-raised: #18181c;
+  --color-border: #26262c;
+  --color-border-strong: #3a3a42;
+  --color-primary: #f4f4f5;
+  --color-muted: #a1a1aa;
+  --color-subtle: #80808a;
+  --color-signal: #c8f55a;
+  --color-on-signal: #0b0f02;
+  --color-glow: #7c6bff;
+  --color-before: #ff7a6b;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 24px;
+
+  --font-sans: 'Geist Variable', 'Geist Fallback', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono Variable', 'Geist Mono Fallback', ui-monospace, monospace;
+  --font-serif: 'Instrument Serif', 'Instrument Serif Fallback', ui-serif, serif;
+}
+
+[data-theme='light'] {
+  --color-canvas: #fafaf9;
+  --color-surface: #ffffff;
+  --color-raised: #f4f4f5;
+  --color-border: #e4e4e7;
+  --color-border-strong: #d4d4d8;
+  --color-primary: #09090b;
+  --color-muted: #52525b;
+  --color-subtle: #6b6b74;
+  --color-signal: #467010;
+  --color-on-signal: #ffffff;
+  --color-glow: #5b4be8;
+  --color-before: #c81e1e;
+}
