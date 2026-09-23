@@ -1,0 +1,37 @@
+---
+import BeforeAfter from './BeforeAfter.astro';
+import Icon from './Icon.astro';
+import StackTag from './StackTag.astro';
+import { localePath, type Locale } from '../i18n/locales';
+import { useTranslations } from '../i18n/translate';
+import { caseEyebrow, caseSlug, type Case } from '../lib/cases';
+
+interface Props {
+  entry: Case;
+  locale: Locale;
+}
+
+const { entry, locale } = Astro.props;
+const t = useTranslations(locale);
+const slug = caseSlug(entry);
+const titleId = `case-${slug}`;
+const { title, summary, before, after, stack } = entry.data;
+---
+
+<a
+  href={localePath(locale, `work/${slug}`)}
+  aria-labelledby={titleId}
+  class="group flex h-full flex-col gap-5 rounded-lg border border-border bg-surface p-5 transition-colors hover:border-border-strong md:p-8"
+>
+  <p class="label-mono text-subtle">{caseEyebrow(entry)}</p>
+  <h3 id={titleId} class="heading-h3 text-primary">{title}</h3>
+  <BeforeAfter before={before} after={after} locale={locale} />
+  <p class="body-m flex-1 text-muted">{summary}</p>
+  <ul class="flex flex-wrap gap-2" aria-label={t('case.stack')}>
+    {stack.map((label) => <StackTag label={label} />)}
+  </ul>
+  <span class="button-m inline-flex items-center gap-2 text-primary">
+    {t('cta.readCase')}
+    <Icon name="arrow-right" size={16} class="transition-transform group-hover:translate-x-1" />
+  </span>
+</a>

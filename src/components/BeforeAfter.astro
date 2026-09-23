@@ -1,0 +1,46 @@
+---
+import Icon from './Icon.astro';
+import type { Locale } from '../i18n/locales';
+import { useTranslations } from '../i18n/translate';
+
+interface Props {
+  before: string;
+  after: string;
+  locale: Locale;
+  size?: 'compact' | 'full';
+}
+
+const { before, after, locale, size = 'compact' } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<p
+  class:list={[
+    'flex items-center justify-center gap-4 rounded-md bg-raised',
+    size === 'compact' ? 'h-30 md:h-45' : 'h-40 md:h-60',
+  ]}
+  data-locale={locale}
+>
+  <span class="sr-only">{t('metric.before')}: {before}. {t('metric.after')}: {after}.</span>
+  <span class="metric-m text-before md:metric-l" data-count-up={before} aria-hidden="true">{before}</span>
+  <Icon name="arrow-right" size={24} class="text-muted" />
+  <span class="metric-m text-signal md:metric-l" data-count-up={after} aria-hidden="true">{after}</span>
+</p>
+
+<script>
+  import { countUp } from '../lib/count-up';
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const { isIntersecting, target } of entries) {
+        if (!isIntersecting) continue;
+        observer.unobserve(target);
+        const element = target as HTMLElement;
+        const locale = element.closest<HTMLElement>('[data-locale]')?.dataset.locale ?? 'en';
+        countUp(element, element.dataset.countUp!, locale);
+      }
+    },
+    { threshold: 0.6 },
+  );
+  document.querySelectorAll('[data-count-up]').forEach((element) => observer.observe(element));
+</script>

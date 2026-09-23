@@ -1,0 +1,28 @@
+---
+interface Props {
+  headingId: string;
+  eyebrow: string;
+  title: string;
+  titleShort?: string;
+  lede?: string;
+}
+
+const { headingId, eyebrow, title, titleShort, lede } = Astro.props;
+---
+
+<div class="flex flex-col gap-4 md:flex-row md:items-end md:gap-16">
+  <div class="flex flex-1 flex-col gap-4">
+    <p class="label-mono text-signal">{eyebrow}</p>
+    <h2 id={headingId} class="heading-h2-mobile text-primary md:heading-h2">
+      {titleShort ? (
+        <>
+          <span class="md:hidden">{titleShort}</span>
+          <span class="max-md:hidden">{title}</span>
+        </>
+      ) : (
+        title
+      )}
+    </h2>
+  </div>
+  {lede && <p class="body-m max-w-105 text-muted max-md:hidden">{lede}</p>}
+</div>

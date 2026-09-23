@@ -118,3 +118,11 @@
   line-height: 1.75rem;
   letter-spacing: -0.02em;
 }
+
+@utility heading-h2-mobile {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 2rem;
+  line-height: 2.25rem;
+  letter-spacing: -0.025em;
+}

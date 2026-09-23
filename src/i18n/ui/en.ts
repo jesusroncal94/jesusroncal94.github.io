@@ -23,6 +23,19 @@ export const en = {
 
   'period.now': 'now',
 
+  'metric.before': 'Before',
+  'metric.after': 'After',
+  'case.allWork': 'All work',
+  'case.stack': 'Stack',
+
+  'palette.label': 'Quick navigation',
+  'palette.empty': 'Nothing matches that yet.',
+  'palette.group.question': 'Question',
+  'palette.group.case': 'Case',
+  'palette.group.section': 'Section',
+  'palette.group.repo': 'Repo',
+  'palette.group.action': 'Action',
+
   'footer.builtWith': 'Built spec-first with SPDD',
   'footer.source': 'source',
 } as const;
