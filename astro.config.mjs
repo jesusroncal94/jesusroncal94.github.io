@@ -13,6 +13,8 @@ export default defineConfig({
     routing: { prefixDefaultLocale: false },
   },
   integrations: [sitemap()],
+  devToolbar: { enabled: false },
+  build: { inlineStylesheets: 'always' },
   vite: {
     plugins: [tailwindcss()],
     server: { watch: { usePolling: pollForFileChanges } },
