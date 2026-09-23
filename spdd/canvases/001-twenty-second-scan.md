@@ -4,6 +4,8 @@ Story: [001](../stories/001-twenty-second-scan.md). Figma: Desktop Nav `3:6`, He
 Proof `3:78`; Mobile Nav `8:6`, Hero `8:14`, Proof `9:197`, fold marker `9:194`.
 Components: `StatusChip 2:93`, `Button 2:92`, `MetricTile 2:98`.
 
+**Status:** implemented and synced with the code on 2026-09-23. Story 001 closes with canvas 003 (the mobile contact bar).
+
 ## R — Requirements
 
 The first screen answers "who, what level, does he fit" in under twenty seconds.
@@ -20,36 +22,60 @@ CLS ≤ 0.02 on Lighthouse mobile; no client JavaScript is required to render th
 ## E — Entities
 
 ```ts
+Site {
+  displayName: string         // "Jesús Roncal"
+  monogram: string            // "jr"
+  hero: HeroContent
+  metrics: ProofMetric[]
+}
+
 HeroContent {
   status: string              // "Open to AI Engineer roles · EU"
   headlineLead: string        // "I ship LLM systems"
   headlineAccent: string      // "that survive production."
-  lede: string
-  location: string            // "Based in Milan · open to roles across the EU"
-  badges: { eyebrow: string; title: string }[]
+  lede: string                // desktop
+  ledeShort: string           // mobile, as approved in Figma
+  role: string                // "AI & Backend", shown next to the city on mobile
+  portraitAlt: string
+  portraitCaption: string     // "Milan, IT · ES / EN / IT"
+  badges: [{ eyebrow, title }, { eyebrow, title }]
 }
 
-ProofMetric { value: string; caption: string; source: string; featured: boolean }
+ProofMetric {
+  value: string; caption: string; source: string
+  compact?: { value: string; caption: string }   // the mobile row copy
+  accent: boolean                                 // mobile row value in signal
+}
 ```
 
-Four metrics on desktop; the three with `featured: true` on mobile, in that order.
+Four metrics on desktop; on mobile, the ones with `compact` copy, in order. During
+implementation the planned `featured` flag and single `location` field were dropped: the
+mobile rows use different, shorter approved wording, so `compact` carries both the selection
+and the text, and the location reads from the status chip, the lede ("Based in Milan") and
+the portrait caption, exactly as in the approved frames.
 
 ## A — Approach
 
-Pure server-rendered Astro. The portrait is the desktop LCP element: rendered with
-`<Picture>` in AVIF and WebP at 420 and 840 px, `loading="eager"` and
-`fetchpriority="high"`. On mobile the portrait is a 56 px avatar, so the headline is the LCP
-and its fonts are preloaded. The aurora is a CSS radial gradient on a pseudo-element, never
-a live `filter: blur()`. The proof block is one component with two layouts: a tile from `md`
-up, a one-line row below it. The only motion on this screen is a single fade-up on load,
-disabled under reduced motion.
+Pure server-rendered Astro. The portrait is the desktop LCP element: a hand-written
+`<picture>` whose AVIF and WebP sources (420 and 840 px, from `getImage`) only match
+`(min-width: 48rem)`, falling back to a transparent pixel, so phones never download it. It
+is `loading="eager"` with `fetchpriority="high"`. There is no preload link: sections cannot
+write into `<head>`, and the preload scanner already finds the `<picture>` in the initial
+HTML. On mobile the portrait is a 56 px avatar, so the headline is the LCP and its fonts are
+preloaded. Stylesheets are inlined into the HTML (`build.inlineStylesheets: 'always'`),
+which removes a round trip from the headline's critical path. The aurora is a CSS radial
+gradient on a static layer, never a live `filter: blur()`. The only motion is a single
+fade-up on the proof block, disabled under reduced motion; it was moved off the headline so
+that it can never hold back the LCP.
 
 ## S — Structure
 
 ```
-src/content.config.ts             collection `site` (file loader over src/content/site/*.yaml)
+src/content.config.ts             collection `site` (glob loader over src/content/site/*.yaml)
 src/content/site/en.yaml          hero and metrics
-src/assets/portrait.jpg           the source photo, cropped above the strap
+src/lib/site.ts                   getSite(locale), which fails loudly when a locale has no content
+src/assets/portrait.jpg           660 × 845 crop of the source photo, above the strap
+src/assets/avatar.jpg             336 × 336 square crop for the mobile avatar
 src/components/StatusChip.astro   props: label
 src/components/Button.astro       props: variant ('primary'|'secondary'|'ghost'), href?, icon?, download?, track?
 src/components/Icon.astro         props: name — inline SVG from a fixed set (lucide paths)
@@ -74,13 +100,16 @@ src/pages/index.astro
    Figma `2:92`: primary = signal fill with on-signal text; secondary = raised fill with a
    strong border; ghost = muted text. Optional leading icon; pass-through `download` and
    `data-track`.
-5. **`MetricTile.astro`**: from `md` up a tile (surface, border, `radius-md`, source →
-   value `metric-m` → caption); below `md` a row (value 22 px in a 142 px column, caption
-   fills the rest, top border). Matches `2:98` and `9:197`.
-6. **`Nav.astro`**: brand mark "jr" plus the name (the name hides below `md`), anchor links
-   `#work`, `#open-source`, `#experience` from `md` up, the locale indicator, and a secondary
-   "Email me" button (wired in 003). Mobile shows the menu icon, which opens a
-   `<details>`-based sheet so it works without JavaScript.
+5. **`MetricTile.astro`**: the desktop tile (surface, border, `radius-md`, source → value
+   `metric-m` → caption), filling its grid cell. Matches `2:98`. The mobile rows (`9:197`)
+   live in `Proof.astro` instead, because they render the `compact` copy rather than a
+   second layout of the same text.
+6. **`Nav.astro`**: brand mark "jr" plus the name (visually hidden below `md`), anchor links
+   `#work`, `#open-source`, `#experience` from `md` up, and a secondary "Email me" button
+   (a `mailto:` link until 003). The locale indicator is not rendered while only one locale
+   is published; it arrives with story 004. Mobile shows the menu icon, which opens a
+   `<details>`-based sheet that works without JavaScript; a two-line script closes it when a
+   link is followed.
 7. **`Hero.astro`**:
    - left column: `StatusChip`, then `<h1>` with the lead in `display-xl` and the accent in a
      `<span class="display-serif text-signal">` on its own line; the lede in `body-l`
@@ -93,12 +122,24 @@ src/pages/index.astro
      above the headline; headline in `display-mobile` with the accent at 50 px;
    - the hero prompt slot below the columns, filled by the command palette in 002;
    - the aurora pseudo-element behind the prompt.
-8. **`Proof.astro`**: grid of four `MetricTile` from `md` up (gap 20); below `md` the three
-   featured metrics as rows.
+8. **`Proof.astro`**: grid of four `MetricTile` from `md` up (gap 20); below `md` the
+   metrics with `compact` copy as rows (value in `metric-s`, 152 px, never wrapping; caption
+   in `body-s`; top border), the `accent` one in signal.
 9. **`pages/index.astro`**: `Base` layout with the English title and description; renders
    Nav, Hero and Proof, plus the sections from 002 and 003 as they land.
 10. **Visual check**: screenshots at 390 × 844 and 1440 × 900 compared against the Figma
     frames. The mobile fold must end below the third proof row and above the contact bar.
+
+**Verified on 2026-09-23:**
+- Desktop matches the Figma frame.
+- On mobile, the third proof row ends at y = 706, above where the contact bar starts
+  (764), and the phone downloads only the avatar.
+- Lighthouse mobile, three runs: 100 in performance, accessibility, best practices and
+  SEO; LCP 1.37 s (the headline); CLS 0; TBT 0; no assertion failures.
+- Lighthouse desktop: 100 in all four categories, with an LCP of 0.38 s (the portrait in
+  AVIF).
+- Until canvas 003 adds the sticky contact bar, phones have no "Download CV" above the
+  fold. Story 001 is only complete once 003 lands.
 
 ## N — Norms
 
