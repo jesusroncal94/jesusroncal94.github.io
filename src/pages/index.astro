@@ -1,5 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
+import Hero from '../sections/Hero.astro';
+import Nav from '../sections/Nav.astro';
+import Proof from '../sections/Proof.astro';
 import { DEFAULT_LOCALE } from '../i18n/locales';
 import { useTranslations } from '../i18n/translate';
 
@@ -8,11 +11,9 @@ const t = useTranslations(locale);
 ---
 
 <Base locale={locale} title={t('site.title')} description={t('site.description')}>
-  <main class="mx-auto flex min-h-screen max-w-5xl flex-col justify-center gap-6 px-6">
-    <p class="label-mono text-subtle">{t('section.work')}</p>
-    <h1 class="display-mobile md:display-xl">
-      I ship LLM systems<br />
-      <span class="display-serif text-signal">that survive production.</span>
-    </h1>
+  <Nav locale={locale} />
+  <main>
+    <Hero locale={locale} />
+    <Proof locale={locale} />
   </main>
 </Base>

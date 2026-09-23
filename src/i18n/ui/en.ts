@@ -15,6 +15,7 @@ export const en = {
   'cta.nextCase': 'Next case',
   'cta.copied': 'Copied',
 
+  'section.proof': 'Results in numbers',
   'section.work': 'Selected work',
   'section.openSource': 'Open source',
   'section.experience': 'Experience',

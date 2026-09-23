@@ -1,0 +1,106 @@
+---
+import { getImage, Image } from 'astro:assets';
+import Button from '../components/Button.astro';
+import StatusChip from '../components/StatusChip.astro';
+import avatar from '../assets/avatar.jpg';
+import portrait from '../assets/portrait.jpg';
+import profile from '../../data/public-profile.json';
+import type { Locale } from '../i18n/locales';
+import { useTranslations } from '../i18n/translate';
+import { getSite } from '../lib/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const site = await getSite(locale);
+const { hero } = site;
+const city = profile.city.split(',')[0];
+
+const DESKTOP = '(min-width: 48rem)';
+const PORTRAIT_SIZES = '420px';
+const [portraitAvif, portraitWebp] = await Promise.all(
+  (['avif', 'webp'] as const).map((format) => getImage({ src: portrait, widths: [420, 840], format })),
+);
+const TRANSPARENT_PIXEL = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+---
+
+<section class="relative isolate px-6 pt-6 pb-10 md:px-20 md:pt-18 md:pb-24">
+  <div
+    class="pointer-events-none absolute -z-10 h-75 w-105 bg-[radial-gradient(closest-side,color-mix(in_oklab,var(--color-glow)_55%,transparent),transparent)] opacity-60 max-md:top-95 max-md:-left-10 md:top-130 md:left-67 md:h-105 md:w-225 md:opacity-70"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="flex flex-col gap-5.5 md:flex-row md:items-center md:gap-16">
+    <div class="flex flex-col gap-5.5 md:flex-1 md:gap-8">
+      <div class="flex items-center gap-3.5 md:hidden">
+        <Image
+          src={avatar}
+          alt=""
+          widths={[56, 112]}
+          sizes="56px"
+          loading="eager"
+          class="portrait-tone size-14 rounded-full object-cover ring-2 ring-signal"
+        />
+        <div>
+          <p class="button-m text-primary">{site.displayName}</p>
+          <p class="code-mono text-muted">{hero.role} · {city}</p>
+        </div>
+      </div>
+
+      <div class="max-md:order-last">
+        <StatusChip label={hero.status} />
+      </div>
+
+      <h1 class="display-mobile max-w-195 text-primary md:display-xl">
+        {hero.headlineLead}<br class="max-md:hidden" />
+        {' '}<span class="display-serif-mobile text-signal md:display-serif">{hero.headlineAccent}</span>
+      </h1>
+
+      <p class="body-m text-muted md:hidden">{hero.ledeShort}</p>
+      <p class="body-l max-w-155 text-muted max-md:hidden">{hero.lede}</p>
+
+      <div class="flex flex-wrap gap-3 max-md:hidden">
+        <Button icon="download" href="/cv/jesus-roncal-cv-en.pdf" download>{t('cta.downloadCv')}</Button>
+        <Button variant="secondary" icon="mail" href={`mailto:${profile.contact.email}`}>{t('cta.emailMe')}</Button>
+        <Button variant="ghost" icon="arrow-right" href="#work">{t('cta.seeWork')}</Button>
+      </div>
+    </div>
+
+    <figure class="relative h-135 w-105 shrink-0 max-md:hidden">
+      <picture>
+        <source media={DESKTOP} type="image/avif" srcset={portraitAvif.srcSet.attribute} sizes={PORTRAIT_SIZES} />
+        <source media={DESKTOP} type="image/webp" srcset={portraitWebp.srcSet.attribute} sizes={PORTRAIT_SIZES} />
+        <img
+          src={TRANSPARENT_PIXEL}
+          alt={hero.portraitAlt}
+          width="420"
+          height="540"
+          loading="eager"
+          fetchpriority="high"
+          class="portrait-tone size-full rounded-[28px] border border-border-strong object-cover"
+        />
+      </picture>
+      <div class="absolute inset-x-0 bottom-0 h-55 rounded-b-[28px] bg-linear-to-b from-transparent to-canvas/85" aria-hidden="true"></div>
+
+      {hero.badges.map(({ eyebrow, title }, index) => (
+        <p
+          class:list={[
+            'absolute flex flex-col gap-1 rounded-md border border-border-strong bg-surface/90 px-4 py-3 shadow-float backdrop-blur-md',
+            index === 0 ? 'top-16 -left-14' : 'top-75 left-49',
+          ]}
+        >
+          <span class="label-mono text-subtle">{eyebrow}</span>
+          <span class="button-m text-primary">{title}</span>
+        </p>
+      ))}
+
+      <figcaption class="code-mono absolute bottom-6 left-6 text-primary">{hero.portraitCaption}</figcaption>
+    </figure>
+  </div>
+
+  <slot name="prompt" />
+</section>
