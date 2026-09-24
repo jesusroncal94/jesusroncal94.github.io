@@ -5,7 +5,7 @@ Open source `6:158`, Experience `6:213`, How I work `6:269`; Mobile Selected wor
 Experience `9:132`, How I work `9:156`. Components: `CaseCard 2:121`, `StackTag 2:96`,
 `AskPrompt 2:112` (rebuilt as the command palette).
 
-**Status:** implemented and synced on 2026-09-23 (see the Sync section). The four case texts await approval.
+**Status:** implemented and synced on 2026-09-23 (see the Sync section). Case texts approved on 2026-09-24.
 
 ## R — Requirements
 
@@ -208,4 +208,8 @@ CLS ≤ 0.005; total inline JavaScript under 3 KB compressed on the home page.
 
 ### Pending
 
-Operation 2 is **not done** until Jesus approves the four case texts.
+Operation 2 is done: Jesus approved the four case texts on 2026-09-24, after five claims were
+corrected to what `profile.md` states. The unit-generation guardrails are attributed to that
+engine, not to the eval pipeline; Railway is gone from the cost-leak stack; the Freya agents
+work "alongside" the consistency engine rather than "over" it; the stale worker keeps no
+infrastructure detail; the three countries stay.
