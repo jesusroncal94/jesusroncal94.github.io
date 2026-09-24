@@ -155,3 +155,69 @@ principles:
     - numeral: iii.
       title: Cost is a feature
       body: Tokens, latency and dollars per request are on the dashboard from day one, and reported to whoever pays.
+
+contact:
+  headlineLead: Let’s build something
+  headlineAccent: that holds up.
+  lede: Open to AI Engineer, Senior Backend and Tech Lead roles across the EU — remote, or on-site in Milan.
+  ledeShort: Open to AI Engineer, Senior Backend and Tech Lead roles across the EU.
+  sourceUrl: https://github.com/jesusroncal94/jesusroncal94.github.io
+
+cv:
+  summary: >-
+    Senior software engineer with 8+ years across backend systems, APIs and cloud
+    infrastructure, the last 4+ building and operating production LLM-powered applications.
+    Technical Lead on two AI products and AI Engineer on a third, designing multi-agent
+    systems, RAG pipelines and evaluation frameworks for real users. Ships and operates
+    services on AWS and GCP in Python, Go, Java and TypeScript, working daily with AI coding
+    agents and the Claude, Gemini and OpenAI APIs across distributed US, EU and LATAM teams.
+  highlights:
+    - roleId: mindfortress-inc
+      items:
+        - >-
+          Led the Reeve MVP merge campaign: 112 pull requests across 4 repositories from queue
+          to production in ~30 hours, orchestrating parallel Claude Code agents behind a serial
+          no-new-failures merge gate.
+        - >-
+          Architected Freya's AI layer: 7 specialised agents alongside a knowledge-graph
+          consistency engine (33 edge types, epistemic tracking) and real-time co-editing on
+          Yjs/CRDT, on a FastAPI backend with 800+ endpoints.
+        - >-
+          Traced an unattributed AI spend of ~$12–16/day to a stale worker and cut it to $0,
+          verified in the production ledger; took backend CI from 11 flaky failures to 0.
+    - roleId: intercorp-management-innova-latam
+      items:
+        - >-
+          Own the production LLM system on Gemini 2.5 Pro (Vertex AI) that generates
+          curriculum-aligned lesson plans for Peru, Colombia and Mexico.
+        - >-
+          Designed an eval-driven prompt pipeline (fixtures plus LLM-as-judge, 5 dimensions and
+          19 items): structural conformance from 45.6% to 100%, output tokens −71% on bloated
+          cases.
+        - >-
+          Led the migration from n8n to Spring Boot and Spring AI (Java 21) on AWS ECS, with
+          versioned prompts and per-call token, cost and latency observability.
+    - roleId: accelone
+      items:
+        - >-
+          Built the backend of a video platform in Django and PostgreSQL on AWS: queue-based
+          processing of very large media files on SQS, Elasticsearch search and Stripe payments.
+    - roleId: wordbox
+      items:
+        - >-
+          Integrated Google and OpenAI LLMs into transcription, translation and adaptive-learning
+          pipelines serving 500,000+ users in 10+ markets, lifting user satisfaction 35%.
+        - Rewrote core services from Python to Go, cutting API latency 40% and supporting 50% more concurrent users.
+    - roleId: indra-pretty-technical
+      items:
+        - >-
+          Built APIs serving predictive ML models at 95% test coverage, and backend services in
+          Go for gaming, finance and DNA-sequencing clients.
+    - roleId: red-cientifica-peruana
+      items:
+        - >-
+          Internationalised Yachay (yachay.lat), a hosting and domain platform serving 11,000+
+          businesses, driving 25% revenue growth in new markets.
+    - roleId: codrise
+      items:
+        - Progressed from L3 IT support to Software Engineer, building web applications and REST APIs in PHP (Laravel, CodeIgniter).

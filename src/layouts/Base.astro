@@ -11,9 +11,10 @@ interface Props {
   description: string;
   image?: string;
   noindex?: boolean;
+  theme?: 'dark' | 'light';
 }
 
-const { locale, title, description, image, noindex = false } = Astro.props;
+const { locale, title, description, image, noindex = false, theme = 'dark' } = Astro.props;
 const path = stripLocale(Astro.url.pathname);
 const canonical = getAbsoluteLocaleUrl(locale, path);
 const alternates = PUBLISHED_LOCALES.map((alternate) => ({
@@ -24,7 +25,7 @@ const imageUrl = image ? new URL(image, Astro.site).href : undefined;
 ---
 
 <!doctype html>
-<html lang={locale} data-theme="dark">
+<html lang={locale} data-theme={theme}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />

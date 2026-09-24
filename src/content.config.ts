@@ -68,6 +68,17 @@ const site = defineCollection({
     principles: sectionHead.extend({
       items: z.array(z.object({ numeral: z.string(), title: z.string(), body: z.string() })),
     }),
+    contact: z.object({
+      headlineLead: z.string(),
+      headlineAccent: z.string(),
+      lede: z.string(),
+      ledeShort: z.string(),
+      sourceUrl: z.url(),
+    }),
+    cv: z.object({
+      summary: z.string(),
+      highlights: z.array(z.object({ roleId: z.string(), items: z.array(z.string()).min(1).max(3) })),
+    }),
   }),
 });
 
