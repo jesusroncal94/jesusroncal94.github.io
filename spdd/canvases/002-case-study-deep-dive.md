@@ -206,7 +206,7 @@ decided whether Lighthouse charged its download to the LCP. Smaller fonts remove
 SEO; the budget's assertions pass on 5 URLs × 3 runs; home LCP 1.38 s, case pages 1.07–1.23 s;
 CLS ≤ 0.005; total inline JavaScript under 3 KB compressed on the home page.
 
-### Pending
+### Approval
 
 Operation 2 is done: Jesus approved the four case texts on 2026-09-24, after five claims were
 corrected to what `profile.md` states. The unit-generation guardrails are attributed to that
