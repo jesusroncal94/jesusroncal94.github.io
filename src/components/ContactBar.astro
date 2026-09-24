@@ -1,0 +1,39 @@
+---
+import Button from './Button.astro';
+import EmailAction from './EmailAction.astro';
+import type { Locale } from '../i18n/locales';
+import { useTranslations } from '../i18n/translate';
+import { cvPath } from '../lib/cv';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<div
+  data-contact-bar
+  class="fixed inset-x-4 bottom-4 z-30 flex gap-2.5 rounded-full border border-border-strong bg-surface/85 p-2.5 shadow-float backdrop-blur-lg transition-[translate,opacity] duration-300 data-hidden:pointer-events-none data-hidden:translate-y-[150%] data-hidden:opacity-0 md:hidden"
+>
+  <Button icon="download" href={cvPath(locale)} download data-track="cv_download" class="flex-1">{t('cta.downloadCv')}</Button>
+  <EmailAction locale={locale} class="flex-1" />
+</div>
+
+<script>
+  const bar = document.querySelector<HTMLElement>('[data-contact-bar]');
+  const zones = document.querySelectorAll('[data-contact-zone]');
+
+  if (bar && zones.length) {
+    const zonesInView = new Set<Element>();
+    const observer = new IntersectionObserver((entries) => {
+      for (const { target, isIntersecting } of entries) {
+        if (isIntersecting) zonesInView.add(target);
+        else zonesInView.delete(target);
+      }
+      bar.toggleAttribute('data-hidden', zonesInView.size > 0);
+    });
+    zones.forEach((zone) => observer.observe(zone));
+  }
+</script>

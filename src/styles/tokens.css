@@ -11,6 +11,7 @@
   --color-on-signal: #0b0f02;
   --color-glow: #7c6bff;
   --color-before: #ff7a6b;
+  --color-dusk: #2e266b;
 
   --radius-sm: 8px;
   --radius-md: 14px;
@@ -46,4 +47,5 @@
   --color-on-signal: #ffffff;
   --color-glow: #5b4be8;
   --color-before: #c81e1e;
+  --color-dusk: #e9e6ff;
 }

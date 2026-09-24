@@ -1,12 +1,14 @@
 ---
 import { getImage, Image } from 'astro:assets';
 import Button from '../components/Button.astro';
+import EmailAction from '../components/EmailAction.astro';
 import StatusChip from '../components/StatusChip.astro';
 import avatar from '../assets/avatar.jpg';
 import portrait from '../assets/portrait.jpg';
 import profile from '../../data/public-profile.json';
 import type { Locale } from '../i18n/locales';
 import { useTranslations } from '../i18n/translate';
+import { cvPath } from '../lib/cv';
 import { getSite } from '../lib/site';
 
 interface Props {
@@ -64,8 +66,8 @@ const TRANSPARENT_PIXEL = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAE
       <p class="body-l max-w-155 text-muted max-md:hidden">{hero.lede}</p>
 
       <div class="flex flex-wrap gap-3 max-md:hidden">
-        <Button icon="download" href="/cv/jesus-roncal-cv-en.pdf" download>{t('cta.downloadCv')}</Button>
-        <Button variant="secondary" icon="mail" href={`mailto:${profile.contact.email}`}>{t('cta.emailMe')}</Button>
+        <Button icon="download" href={cvPath(locale)} download data-track="cv_download">{t('cta.downloadCv')}</Button>
+        <EmailAction locale={locale} />
         <Button variant="ghost" icon="arrow-right" href="#work">{t('cta.seeWork')}</Button>
       </div>
     </div>

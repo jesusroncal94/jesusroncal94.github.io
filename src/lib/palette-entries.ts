@@ -2,6 +2,7 @@ import profile from '../../data/public-profile.json';
 import { localePath, type Locale } from '../i18n/locales';
 import { useTranslations } from '../i18n/translate';
 import { caseSlug, getCases } from './cases';
+import { cvPath } from './cv';
 import type { PaletteEntry } from './palette';
 import { getSite } from './site';
 
@@ -33,6 +34,7 @@ export async function buildPaletteEntries(locale: Locale): Promise<PaletteEntry[
     { id: 'open-source', label: site.openSource.eyebrow },
     { id: 'experience', label: site.experience.eyebrow },
     { id: 'how-i-work', label: site.principles.eyebrow },
+    { id: 'contact', label: t('section.contact') },
   ].map(({ id, label }) => ({ id: `section-${id}`, group: 'section' as const, label, keywords: [], href: `${home}#${id}` }));
 
   const repos = site.openSource.repos.map(({ name, title, stack, url }) => ({
@@ -45,7 +47,7 @@ export async function buildPaletteEntries(locale: Locale): Promise<PaletteEntry[
   }));
 
   const actions: PaletteEntry[] = [
-    { id: 'action-cv', group: 'action', label: t('cta.downloadCv'), keywords: ['resume', 'pdf'], href: '/cv/jesus-roncal-cv-en.pdf' },
+    { id: 'action-cv', group: 'action', label: t('cta.downloadCv'), keywords: ['resume', 'pdf'], href: cvPath(locale) },
     { id: 'action-email', group: 'action', label: t('cta.emailMe'), keywords: ['contact', 'hire'], href: `mailto:${profile.contact.email}` },
   ];
 

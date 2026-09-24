@@ -15,11 +15,15 @@ export const en = {
   'cta.nextCase': 'Next case',
   'cta.copied': 'Copied',
 
+  'contact.copiedStatus': 'Email address copied to the clipboard.',
+  'contact.email': 'Email',
+
   'section.proof': 'Results in numbers',
   'section.work': 'Selected work',
   'section.openSource': 'Open source',
   'section.experience': 'Experience',
   'section.howIWork': 'How I work',
+  'section.contact': 'Contact',
 
   'period.now': 'now',
 
@@ -38,6 +42,13 @@ export const en = {
 
   'footer.builtWith': 'Built spec-first with SPDD',
   'footer.source': 'source',
+
+  'cv.title': 'Curriculum vitae',
+  'cv.summary': 'Summary',
+  'cv.experience': 'Experience',
+  'cv.education': 'Education',
+  'cv.skills': 'Skills',
+  'cv.languages': 'Languages',
 } as const;
 
 export type UiKey = keyof typeof en;

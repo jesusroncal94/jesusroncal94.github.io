@@ -3,6 +3,8 @@ import type { GetStaticPaths } from 'astro';
 import { render } from 'astro:content';
 import BeforeAfter from '../../components/BeforeAfter.astro';
 import Button from '../../components/Button.astro';
+import ContactBar from '../../components/ContactBar.astro';
+import EmailAction from '../../components/EmailAction.astro';
 import Icon from '../../components/Icon.astro';
 import StackTag from '../../components/StackTag.astro';
 import Base from '../../layouts/Base.astro';
@@ -12,6 +14,7 @@ import { formatPeriod } from '../../i18n/format';
 import { DEFAULT_LOCALE, localePath } from '../../i18n/locales';
 import { useTranslations } from '../../i18n/translate';
 import { caseEyebrow, caseSlug, getCases, type Case } from '../../lib/cases';
+import { cvPath } from '../../lib/cv';
 
 export const getStaticPaths = (async () => {
   const cases = await getCases(DEFAULT_LOCALE);
@@ -60,7 +63,7 @@ const { Content } = await render(entry);
         {stack.map((label) => <StackTag label={label} />)}
       </ul>
 
-      <footer class="mt-8 flex flex-col gap-6 border-t border-border pt-8">
+      <footer class="mt-8 flex flex-col gap-6 border-t border-border pt-8" data-contact-zone>
         <a href={localePath(locale, `work/${caseSlug(next)}`)} class="group flex flex-col gap-1">
           <span class="label-mono text-subtle">{t('cta.nextCase')}</span>
           <span class="heading-h3 inline-flex items-center gap-2 text-primary">
@@ -69,10 +72,11 @@ const { Content } = await render(entry);
           </span>
         </a>
         <div class="flex flex-wrap gap-3">
-          <Button icon="download" href="/cv/jesus-roncal-cv-en.pdf" download>{t('cta.downloadCv')}</Button>
-          <Button variant="secondary" icon="mail" href={`mailto:${profile.contact.email}`}>{t('cta.emailMe')}</Button>
+          <Button icon="download" href={cvPath(locale)} download data-track="cv_download">{t('cta.downloadCv')}</Button>
+          <EmailAction locale={locale} />
         </div>
       </footer>
     </article>
   </main>
+  <ContactBar locale={locale} />
 </Base>

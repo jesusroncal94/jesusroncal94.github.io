@@ -1,6 +1,8 @@
 ---
 import CommandPalette from '../components/CommandPalette.astro';
+import ContactBar from '../components/ContactBar.astro';
 import Base from '../layouts/Base.astro';
+import Contact from '../sections/Contact.astro';
 import Experience from '../sections/Experience.astro';
 import Hero from '../sections/Hero.astro';
 import Nav from '../sections/Nav.astro';
@@ -26,5 +28,7 @@ const t = useTranslations(locale);
     <OpenSource locale={locale} />
     <Experience locale={locale} />
     <Principles locale={locale} />
+    <Contact locale={locale} />
   </main>
+  <ContactBar locale={locale} />
 </Base>
