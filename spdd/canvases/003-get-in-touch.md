@@ -3,6 +3,8 @@
 Story: [003](../stories/003-get-in-touch.md). Figma: Desktop Nav `3:6`, Contact `6:287`;
 Mobile Contact `9:174`, Sticky contact bar `9:182`. Component: `Button 2:92`.
 
+**Status:** implemented and synced on 2026-09-24. The CV copy awaits approval.
+
 ## R — Requirements
 
 A recruiter who is convinced can act immediately.
@@ -114,3 +116,53 @@ only in `track.ts`.
 - No phone number on the site or in the PDF.
 - No form, no data collection, no cookies, no third-party script in Phase 1.
 - The copy action never blocks the `mailto:` path: a failure falls back, it never dead-ends.
+
+## Sync — 2026-09-24
+
+Implemented. This section is authoritative where it differs from the operations above.
+
+- **Runtime image.** Every Node service in `compose.yaml` now runs on
+  `mcr.microsoft.com/playwright:v1.63.0-noble` (Node 24, Chromium preinstalled), not only a
+  separate `pdf` service. Sharing one `node_modules` volume between Alpine (musl) and Ubuntu
+  (glibc) would break native binaries such as sharp and esbuild. `playwright` is pinned to
+  exactly `1.63.0` so it uses the image's browsers, and CI moved to Node 24 to match.
+- **Dev server lock.** Astro 7 writes `.astro/dev.json` with the server's PID. A container
+  killed from outside leaves it behind, and `--force` then kills whatever process owns that
+  PID in the next container — npm itself. The `web` service deletes the file before starting.
+- **Op 2.** Tracking and copying share one delegated listener in `src/scripts/contact.ts`.
+  Copy applies to anchors carrying `data-email-copy`. The "Copied" label and the live-region
+  text are passed in through data attributes, so the script holds no copy.
+- **Op 3.** `EmailAction` wraps its button and its live region in a `display: contents` span,
+  so it can sit directly in a flex row.
+- **Op 5.** The contact bar hides while any `[data-contact-zone]` is in view: the Contact
+  section on the home page and the end block of each case page, which has its own CTAs.
+- **Op 6.** The contact section shows its two CTAs on mobile too. The mobile frame had none,
+  but the bar hides exactly there, so without them the last screen would have no action.
+- **Op 7.** `src/lib/cv.ts` owns the CV file name and path (`cvPath(locale)`), used by the
+  hero, the bar, the contact section, case pages and the palette.
+- **Op 8.** `/cv` renders with `Base`'s new `theme="light"` prop, so the light tokens are
+  finally used. It is excluded from the sitemap. Its contact links get 24 px touch targets on
+  screen only, because WCAG 2.2 target size failed without them; print is unchanged.
+- **Op 9.** `npm run build` is `astro build && tsx scripts/render-cv.ts`.
+- **Found during verification:** `formatMonth('2021')` invented "Jan 2021" for roles the
+  profile dates by year only. It now returns the year, with a test.
+
+**Verified on 2026-09-24:**
+- **PDF:** 2 A4 pages. It lists every role, the email, LinkedIn and GitHub, and contains no
+  phone number.
+- **End-to-end in headless Chromium on the production build** (mobile 390 × 844 and desktop
+  1440 × 900):
+  - the contact bar is visible at the top, hides at the contact section and returns, and is
+    absent on desktop;
+  - "Email me" copies the address, shows "Copied" and does not navigate;
+  - "Download CV" downloads `jesus-roncal-cv-en.pdf`;
+  - Ctrl+K, typing "freya" and pressing Enter opens `/work/04-freya/`.
+- **Mobile fold:** the last proof row ends at y = 715 and the contact bar sits at
+  761–828 within 844, which closes story 001.
+- **Lighthouse, six URLs × 3 runs, all assertions pass:**
+  - the home page, the case pages and `/cv` score 100 in performance, accessibility and
+    best practices;
+  - SEO is 100 everywhere except `/cv`, which scores 0.63 because it is `noindex` on
+    purpose.
+
+**Pending:** Jesus approves the CV copy in `site.cv` (summary and highlights).

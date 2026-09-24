@@ -4,7 +4,7 @@ Story: [001](../stories/001-twenty-second-scan.md). Figma: Desktop Nav `3:6`, He
 Proof `3:78`; Mobile Nav `8:6`, Hero `8:14`, Proof `9:197`, fold marker `9:194`.
 Components: `StatusChip 2:93`, `Button 2:92`, `MetricTile 2:98`.
 
-**Status:** implemented and synced with the code on 2026-09-23. Story 001 closes with canvas 003 (the mobile contact bar).
+**Status:** implemented and synced. Story 001 closed on 2026-09-24, when canvas 003 added the mobile contact bar.
 
 ## R — Requirements
 

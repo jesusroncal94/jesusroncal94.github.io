@@ -27,7 +27,8 @@ src/
   styles/     design tokens mirrored from the Figma variables, and the type scale
   i18n/       locales, UI dictionary, Intl formatters
   layouts/    the HTML shell: SEO, hreflang, font preloads
-  pages/      routes
+  pages/      routes, including /cv, the source of the PDF
+  lib/        content access, the public-profile parser, palette and timeline logic
 tests/        happy-path tests for the pure modules
 ```
 
@@ -42,6 +43,8 @@ Everything runs in Docker; nothing needs Node on the host.
 ./tasks.ps1 test
 ./tasks.ps1 build     # static output in dist/
 ./tasks.ps1 preview   # build, then serve dist/ at http://localhost:4321
+./tasks.ps1 export    # regenerate data/public-profile.json from ../cv-manager
+./tasks.ps1 fonts     # re-subset the fonts after the content gains new characters
 ```
 
 ## Deploying
@@ -59,8 +62,8 @@ missed on mobile:
 
 ## Deliberate simplifications
 
-- **Dark only.** The light theme's tokens exist, but nothing switches to them until a toggle
-  is designed.
+- **Dark only.** The light tokens are used by the printable CV at `/cv`, which becomes the
+  downloadable PDF at build time; the site itself has no theme toggle yet.
 - **Fonts are self-hosted**, never loaded from a CDN, for performance and GDPR.
 - **No UI framework.** The few interactive pieces are plain TypeScript.
 
