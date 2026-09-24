@@ -7,7 +7,7 @@ title: Finding the AI spend nobody could explain
 summary: A spend bucket with no owner was burning $12–16 a day. I traced it to its source, shipped a guard so it cannot recur, and verified $0 in the production ledger.
 before: $15/day
 after: $0
-stack: [Python, Railway, Cost ledger]
+stack: [Python, Cost ledger, Root-cause analysis]
 keywords: [cost, spend, leak, money, ledger, production, debugging]
 ---
 

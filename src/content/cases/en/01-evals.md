@@ -28,9 +28,10 @@ dimensions and 19 items. Each prompt change now produces a number that can be co
 the last one, instead of an impression.
 
 Prompts became versioned artefacts with semantic versions, so a change is a release with a
-number rather than an edit in place. Checks that do not need a model stay out of the
-model: deterministic guardrails validate the structure and detect truncated output without a
-single extra LLM call. And every call reports its tokens, cost and latency, so a change that
+number rather than an edit in place. In the same system, the unit-generation engine I
+shipped keeps checks that do not need a model out of the model: deterministic guardrails
+validate the structure and detect truncated output without a single extra LLM call. And every
+call reports its tokens, cost and latency, so a change that
 improves quality but doubles the bill is visible on the dashboard before it becomes a
 surprise.
 
