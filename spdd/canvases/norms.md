@@ -23,7 +23,8 @@
 ## Safeguards
 
 - **Nothing private reaches the repository.** No phone number, salary, deal-breaker, visa
-  status or `cv-manager` note in any committed file or built page.
+  status or `cv-manager` note in any committed file or built page. Test fixtures included:
+  anything private in a fixture uses synthetic values of the same shape.
 - **Truthfulness.** Every fact traces to `cv-manager/profile.md`; every softened claim uses the
   approved wording. No metric is invented, rounded up or extrapolated.
 - **Accessibility: WCAG 2.2 AA.** Text contrast ≥ 4.5:1 (the tokens already comply), every

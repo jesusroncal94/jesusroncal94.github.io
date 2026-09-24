@@ -120,3 +120,16 @@ filesystem.
 - If a heading no longer matches, the export fails with the offending heading in the
   message. It never writes a partial file.
 - The committed JSON is reviewed in the diff before every push, like code.
+
+## Incident — 2026-09-24
+
+The first version of `tests/fixtures/profile.md` was trimmed from the real profile and kept
+real private values: the WhatsApp number, the visa note, a production cost figure and the
+salary expectation. The export never leaked them, and the privacy test proved that, but the
+fixture itself would have published them with the repository.
+
+It was caught by a full-history scan before the first push. The fixture now uses synthetic
+values of the same shape, which still trip every privacy pattern, so the guard is exactly as
+strong. `main` was rewritten with `git filter-branch` so that no commit contains the real
+values. The repository had never been pushed, so no copy exists outside this machine. The
+safeguard in [norms.md](norms.md) now names test fixtures explicitly.
