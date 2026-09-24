@@ -1,5 +1,5 @@
 x-node: &node
-  image: node:22-alpine
+  image: mcr.microsoft.com/playwright:v1.63.0-noble
   working_dir: /app
   environment:
     WATCH_MODE: polling
@@ -12,7 +12,7 @@ x-node: &node
 services:
   web:
     <<: *node
-    command: sh -c "npm ci --prefer-offline && npm run dev"
+    command: sh -c "rm -f .astro/dev.json && npm ci --prefer-offline && npm run dev"
     ports:
       - "4321:4321"
 
