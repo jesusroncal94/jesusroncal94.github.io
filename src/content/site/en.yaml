@@ -183,6 +183,10 @@ cv:
           consistency engine (33 edge types, epistemic tracking) and real-time co-editing on
           Yjs/CRDT, on a FastAPI backend with 800+ endpoints.
         - >-
+          Designed a multi-agent orchestration system (Coordinator, Manager and Worker tiers)
+          routing user requests across 8 messaging channels, from WhatsApp and Telegram to
+          Slack and Teams.
+        - >-
           Traced an unattributed AI spend of ~$12–16/day to a stale worker and cut it to $0,
           verified in the production ledger; took backend CI from 11 flaky failures to 0.
     - roleId: intercorp-management-innova-latam

@@ -77,7 +77,7 @@ const site = defineCollection({
     }),
     cv: z.object({
       summary: z.string(),
-      highlights: z.array(z.object({ roleId: z.string(), items: z.array(z.string()).min(1).max(3) })),
+      highlights: z.array(z.object({ roleId: z.string(), items: z.array(z.string()).min(1).max(4) })),
     }),
   }),
 });
