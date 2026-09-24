@@ -6,6 +6,7 @@ describe('English formatting', () => {
   it('formats numbers, months and periods', () => {
     expect(formatNumber(12000, 'en', { notation: 'compact' })).toBe('12K');
     expect(formatMonth('2024-09', 'en')).toBe('Sep 2024');
+    expect(formatMonth('2021', 'en')).toBe('2021');
     expect(formatPeriod('2024-09', null, 'en')).toBe('2024 — now');
     expect(formatPeriod('2022-01', '2024-11', 'en')).toBe('2022 — 2024');
   });

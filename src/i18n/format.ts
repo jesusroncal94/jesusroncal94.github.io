@@ -6,7 +6,8 @@ export function formatNumber(value: number, locale: Locale, options?: Intl.Numbe
 }
 
 export function formatMonth(yearMonth: string, locale: Locale): string {
-  const [year, month = '01'] = yearMonth.split('-');
+  const [year, month] = yearMonth.split('-');
+  if (!month) return year;
   const date = new Date(Date.UTC(Number(year), Number(month) - 1, 1));
   return new Intl.DateTimeFormat(locale, { month: 'short', year: 'numeric', timeZone: 'UTC' }).format(date);
 }
