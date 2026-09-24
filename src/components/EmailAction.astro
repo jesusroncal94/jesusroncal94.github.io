@@ -1,0 +1,37 @@
+---
+import Button from './Button.astro';
+import profile from '../../data/public-profile.json';
+import type { Locale } from '../i18n/locales';
+import { useTranslations } from '../i18n/translate';
+
+interface Props {
+  locale: Locale;
+  variant?: 'primary' | 'secondary' | 'ghost';
+  label?: string;
+  class?: string;
+}
+
+const { locale, variant = 'secondary', label, class: className } = Astro.props;
+const t = useTranslations(locale);
+const { email } = profile.contact;
+---
+
+<span class="contents">
+  <Button
+    variant={variant}
+    icon="mail"
+    href={`mailto:${email}`}
+    class={className}
+    data-track="email_copy"
+    data-email-copy={email}
+    data-copied-label={t('cta.copied')}
+    data-copied-status={t('contact.copiedStatus')}
+  >
+    <span data-email-label>{label ?? t('cta.emailMe')}</span>
+  </Button>
+  <span class="sr-only" aria-live="polite" data-email-status></span>
+</span>
+
+<script>
+  import '../scripts/contact';
+</script>
