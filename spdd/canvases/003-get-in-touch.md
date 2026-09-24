@@ -3,7 +3,7 @@
 Story: [003](../stories/003-get-in-touch.md). Figma: Desktop Nav `3:6`, Contact `6:287`;
 Mobile Contact `9:174`, Sticky contact bar `9:182`. Component: `Button 2:92`.
 
-**Status:** implemented and synced on 2026-09-24. The CV copy awaits approval.
+**Status:** implemented and synced on 2026-09-24. CV copy approved on 2026-09-24.
 
 ## R — Requirements
 
@@ -165,4 +165,10 @@ Implemented. This section is authoritative where it differs from the operations 
   - SEO is 100 everywhere except `/cv`, which scores 0.63 because it is `noindex` on
     purpose.
 
-**Pending:** Jesus approves the CV copy in `site.cv` (summary and highlights).
+**Approval (2026-09-24):** Jesus approved the CV copy. Two changes came out of the review:
+- MindFortress gets a fourth highlight, the multi-agent orchestration across 8 messaging
+  channels, and the schema now allows up to four per role. Stripe billing and
+  `mindfortress-claude` stay out: the first is product work, and the second overlaps with the
+  merge campaign and the `ai-agents` repository.
+- The name is spelled "Jesús", fixed at the source in `cv-manager/profile.md` and
+  re-exported, so future CVs inherit it. The PDF stays at two pages.
