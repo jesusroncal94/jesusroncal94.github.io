@@ -4,7 +4,7 @@ Story: [007](../stories/007-reads-well-on-any-screen.md). Analysis:
 [Phase 1.1](../analysis/phase-1-1-responsive.md). Penpot, page Home: `Home — Phone 390`,
 `Home — Tablet 834`, `Home — Desktop 1440` (see [../design.md](../design.md)).
 
-**Status:** approved on 2026-09-27, in implementation.
+**Status:** implemented and synced on 2026-09-27.
 
 ## R — Requirements
 
@@ -123,3 +123,37 @@ All of [norms.md](norms.md). Breakpoints appear only as `md:` and `xl:` (plus th
 - The LCP element on phones and tablets stays the headline; only desktops fetch the
   portrait.
 - No content changes.
+
+## Sync — 2026-09-27
+
+Implemented. This section is authoritative where it differs from the operations above.
+
+- **Op 1.** `--gutter` is set with nested media queries on `:root` in `global.css`. Because
+  `px-page` pads the section itself, `100%` is the viewport width, and no wrapper was
+  needed anywhere.
+- **Op 3.**
+  - The status chip is rendered twice: once in the identity row (tablet only) and once
+    standalone (phone and desktop). Only one is displayed at any width.
+  - The avatar ships 56, 72, 112 and 144 px candidates, with
+    `sizes="(min-width: 48rem) 72px, 56px"`.
+  - The aurora keeps its desktop position relative to the column:
+    `left: max(16.75rem, 50% - 28.25rem)`, which equals the approved 268 px at 1440 px.
+- **Op 9.** On desktop, case 04 ("7 agents → 1 story graph") wraps after the arrow at
+  1280 px and fits on one line at 1440 px. This is the intended between-values wrap.
+- **Headline.** Four lines at 320 and 360 px, three at 390 and 430 px and at 1280 px, two
+  elsewhere. That meets the criterion of at most three lines above 390 px.
+- **Lighthouse locally.** Inside the Playwright container Chromium needs
+  `--disable-dev-shm-usage`, or the tab crashes on Docker's 64 MB `/dev/shm`. CI is
+  unaffected.
+
+**Verified on 2026-09-27:**
+- **Overflow audit** of the production build, on `/` and `/work/02-cost-leak/`, at 320,
+  360, 390, 430, 600, 768, 900, 1024, 1280, 1440, 1920 and 2560 px: zero horizontal
+  overflow at every width.
+- **Screenshots** at 390, 900, 1280 and 1920 px:
+  - 390 px is unchanged from Phase 1.
+  - 900 px shows the tablet frame: the identity row with the chip, 2 × 2 tiles, single
+    columns and the two-column timeline.
+  - 1280 and 1920 px show the desktop frame inside the centred 1280 px column.
+- **Tests:** 7 unit tests pass.
+- **Lighthouse:** all assertions pass on six URLs × 3 runs.

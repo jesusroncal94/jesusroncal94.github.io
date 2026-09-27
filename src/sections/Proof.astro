@@ -14,8 +14,8 @@ const { metrics } = await getSite(locale);
 const compactMetrics = metrics.flatMap(({ compact, accent }) => (compact ? [{ ...compact, accent }] : []));
 ---
 
-<section aria-label={t('section.proof')} class="px-6 pb-12 motion-safe:animate-rise md:px-20 md:pb-30">
-  <ul class="grid grid-cols-4 gap-5 max-md:hidden">
+<section aria-label={t('section.proof')} class="px-page pb-12 motion-safe:animate-rise md:pb-30">
+  <ul class="grid grid-cols-2 gap-5 max-md:hidden xl:grid-cols-4">
     {metrics.map(({ value, caption, source }) => (
       <li>
         <MetricTile value={value} caption={caption} source={source} />

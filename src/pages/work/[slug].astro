@@ -40,7 +40,7 @@ const { Content } = await render(entry);
 
 <Base locale={locale} title={`${title} — Jesús Roncal`} description={summary}>
   <Nav locale={locale} />
-  <main class="px-6 pt-6 pb-24 md:px-20 md:pt-12">
+  <main class="px-page pt-6 pb-24 md:pt-12">
     <article class="mx-auto flex max-w-170 flex-col gap-8">
       <a href={`${localePath(locale)}#work`} class="button-m inline-flex w-fit items-center gap-2 text-muted hover:text-primary">
         <Icon name="arrow-right" size={16} class="rotate-180" />
@@ -49,7 +49,7 @@ const { Content } = await render(entry);
 
       <header class="flex flex-col gap-4">
         <p class="label-mono text-signal">{caseEyebrow(entry)}</p>
-        <h1 class="heading-h2-mobile text-primary md:heading-h2">{title}</h1>
+        <h1 class="heading-h2 text-primary">{title}</h1>
         <p class="code-mono text-subtle">{role.title} · {formatPeriod(role.start, role.end, locale)}</p>
       </header>
 

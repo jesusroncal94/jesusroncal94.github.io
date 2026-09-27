@@ -10,6 +10,6 @@ const { value, caption, source } = Astro.props;
 
 <article class="flex h-full flex-col gap-2.5 rounded-md border border-border bg-surface p-6">
   <p class="label-mono text-subtle">{source}</p>
-  <p class="metric-m text-primary">{value}</p>
+  <p class="metric-m whitespace-nowrap text-primary">{value}</p>
   <p class="body-s text-muted">{caption}</p>
 </article>

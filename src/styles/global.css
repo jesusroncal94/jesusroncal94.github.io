@@ -58,3 +58,19 @@
   filter: saturate(0.85) contrast(1.08) brightness(0.95);
 }
 
+
+:root {
+  --gutter: 1.5rem;
+
+  @media (width >= 48rem) {
+    --gutter: 2.5rem;
+  }
+
+  @media (width >= 80rem) {
+    --gutter: 5rem;
+  }
+}
+
+@utility px-page {
+  padding-inline: max(var(--gutter), (100% - 80rem) / 2);
+}

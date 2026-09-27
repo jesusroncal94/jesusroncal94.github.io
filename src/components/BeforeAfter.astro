@@ -16,15 +16,15 @@ const t = useTranslations(locale);
 
 <p
   class:list={[
-    'flex items-center justify-center gap-4 rounded-md bg-raised',
-    size === 'compact' ? 'h-30 md:h-45' : 'h-40 md:h-60',
+    'flex flex-wrap items-center justify-center gap-x-4 gap-y-1 rounded-md bg-raised px-4 py-4',
+    size === 'compact' ? 'min-h-30 md:min-h-45' : 'min-h-40 md:min-h-60',
   ]}
   data-locale={locale}
 >
   <span class="sr-only">{t('metric.before')}: {before}. {t('metric.after')}: {after}.</span>
-  <span class="metric-m text-before md:metric-l" data-count-up={before} aria-hidden="true">{before}</span>
+  <span class="metric-l whitespace-nowrap text-before" data-count-up={before} aria-hidden="true">{before}</span>
   <Icon name="arrow-right" size={24} class="text-muted" />
-  <span class="metric-m text-signal md:metric-l" data-count-up={after} aria-hidden="true">{after}</span>
+  <span class="metric-l whitespace-nowrap text-signal" data-count-up={after} aria-hidden="true">{after}</span>
 </p>
 
 <script>

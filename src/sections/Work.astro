@@ -16,10 +16,10 @@ const cases = await getCases(locale);
 const [first, second, ...more] = cases;
 ---
 
-<section id="work" aria-labelledby="work-title" class="scroll-mt-4 px-6 py-14 max-md:border-t max-md:border-border md:px-20 md:py-30">
+<section id="work" aria-labelledby="work-title" class="scroll-mt-4 px-page py-14 max-md:border-t max-md:border-border md:py-30">
   <SectionHead headingId="work-title" eyebrow={work.eyebrow} title={work.title} lede={work.lede} />
 
-  <div class="mt-8 grid gap-5 md:mt-12 md:grid-cols-2 md:gap-6">
+  <div class="mt-8 grid gap-5 md:mt-12 md:gap-6 xl:grid-cols-2">
     <CaseCard entry={first} locale={locale} />
     <CaseCard entry={second} locale={locale} />
     <div id="work-more" class="flex flex-col gap-5 max-md:hidden max-md:target:flex md:contents">

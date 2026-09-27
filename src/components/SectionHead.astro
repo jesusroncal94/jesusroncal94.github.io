@@ -10,10 +10,10 @@ interface Props {
 const { headingId, eyebrow, title, titleShort, lede } = Astro.props;
 ---
 
-<div class="flex flex-col gap-4 md:flex-row md:items-end md:gap-16">
+<div class="flex flex-col gap-4 xl:flex-row xl:items-end xl:gap-16">
   <div class="flex flex-1 flex-col gap-4">
     <p class="label-mono text-signal">{eyebrow}</p>
-    <h2 id={headingId} class="heading-h2-mobile text-primary md:heading-h2">
+    <h2 id={headingId} class="heading-h2 text-primary">
       {titleShort ? (
         <>
           <span class="md:hidden">{titleShort}</span>
