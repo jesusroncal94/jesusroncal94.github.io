@@ -92,4 +92,4 @@ before → after values, the stack tags and the contact actions overflowed until
 allowed to wrap. A check of every layer against the frame's width now finds no overflow in
 the phone frame, which is the same contract the code must meet.
 
-**⚠️ Pending:** Jesus reviews and approves the three frames before the canvas is written.
+**✅ Approved on 2026-09-27:** Jesus approved the three frames.

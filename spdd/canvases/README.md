@@ -15,5 +15,11 @@ Build order for Phase 1:
 | [002 — Case study deep dive](002-case-study-deep-dive.md) | [002](../stories/002-case-study-deep-dive.md) | 001 |
 | [003 — Get in touch](003-get-in-touch.md) | [003](../stories/003-get-in-touch.md) | 001, 006 |
 
-Cross-cutting rules every canvas inherits are in [norms.md](norms.md). Figma node IDs
-refer to the file listed in [../design.md](../design.md).
+Phase 1.1:
+
+| Canvas | Story | Depends on |
+| ------ | ----- | ---------- |
+| [007 — Reads well on any screen](007-reads-well-on-any-screen.md) | [007](../stories/007-reads-well-on-any-screen.md) | 001, 002, 003 |
+
+Cross-cutting rules every canvas inherits are in [norms.md](norms.md). Figma node IDs (000–006) and
+Penpot frame names (007) refer to the files listed in [../design.md](../design.md).
