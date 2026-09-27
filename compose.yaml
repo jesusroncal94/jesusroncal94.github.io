@@ -22,7 +22,7 @@ services:
 
   preview:
     <<: *node
-    command: sh -c "npm ci --prefer-offline && npm run build && npm run preview"
+    command: sh -c "rm -f .astro/preview.json && npm ci --prefer-offline && npm run build && npm run preview"
     ports:
       - "4321:4321"
 
