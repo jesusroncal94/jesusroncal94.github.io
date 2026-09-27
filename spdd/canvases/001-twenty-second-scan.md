@@ -116,8 +116,9 @@ src/pages/index.astro
      (`max-width` 620 px); CTAs: primary "Download CV", secondary "Email me", ghost "See the
      work" linking to `#work`;
    - right column (`md` and up): the portrait at 420 × 540, radius 28, strong border, a
-     bottom fade to canvas, two badge cards absolutely positioned (`-56/64` and `196/300`,
-     as in Figma), and the location line inside the fade;
+     bottom fade to canvas, two badge cards absolutely positioned, framing the face on a diagonal:
+     the current role at top 64 px overhanging the left edge by 56 px, the lead role at
+     bottom 24 px overhanging the right edge by 56 px (amended 2026-09-27, see below), and the location line inside the fade;
    - mobile: the avatar row (56 px circle, signal ring, name and "AI & Backend · Milan")
      above the headline; headline in `display-mobile` with the accent at 50 px;
    - the hero prompt slot below the columns, filled by the command palette in 002;
@@ -157,3 +158,25 @@ grew, inlining pushed the HTML past the first TCP round trip (16 KB compressed),
 more than the separate request it saved. The stylesheet is a cached file again, the HTML is
 8.9 KB compressed, and the fonts are subset (see canvas 000). Home LCP is 1.38 s, stable
 across runs.
+
+**Amendment, 2026-09-27 (portrait badges).** The second badge sat at `196/300` inside the
+portrait, the Figma coordinates, which were drawn before the real photo existed. On Jesus's
+portrait it covered the mouth and glasses. The Penpot desktop frame now places it in the
+bottom-right corner, 24 px from the bottom and overhanging the right edge by 56 px, mirroring
+the first badge. The two frame the face on a diagonal and share the bottom row with the
+location line. Jesus approved the frame on 2026-09-27.
+
+## Sync — 2026-09-27
+
+The amendment above is implemented: the second badge in `Hero.astro` moved from
+`top-75 left-49` to `bottom-6 -right-14`.
+
+**Verified on 2026-09-27, on the production build:**
+- **Badge geometry.** At 1280, 1440 and 1920 px the second badge sits 24 px above the
+  portrait's bottom edge and overhangs its right edge by 56 px, and stays inside the viewport.
+  At 1280 px its right edge is at 1256 px.
+- **Screenshots** at 1280 and 1440 px match the Penpot frame: the face is clear, and the
+  badge shares the bottom row with the location line.
+- **Overflow audit:** zero overflow on `/` and `/work/02-cost-leak/` at all 12 widths.
+- **Tests:** 7 unit tests pass.
+- **Lighthouse:** all assertions pass on six URLs × 3 runs.

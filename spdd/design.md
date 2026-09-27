@@ -74,6 +74,8 @@ Code Mono.
   2 × 2 tiles, puts cases and repositories in one column, and lays the timeline out in two
   columns.
 - Case study copy uses the approved, softened wording.
+- The portrait badges frame the face on a diagonal: the current role overhangs the top-left
+  edge, the lead role the bottom-right, so neither covers the face (2026-09-27).
 
 ## Working with the Penpot MCP server
 
