@@ -1,0 +1,69 @@
+import { readdir, rm } from 'node:fs/promises';
+import { preview } from 'astro';
+import { chromium, type Browser } from 'playwright';
+import { localePath, PUBLISHED_LOCALES } from '../src/i18n/locales';
+import { cvFileName } from '../src/lib/cv';
+import { PREVIEW_SIZE } from '../src/lib/preview';
+
+const PORT = 4322;
+const ORIGIN = `http://127.0.0.1:${PORT}`;
+const DIST = 'dist';
+const OG = `${DIST}/og`;
+
+async function renderCvs(browser: Browser) {
+  for (const locale of PUBLISHED_LOCALES) {
+    const page = await browser.newPage();
+    await page.goto(`${ORIGIN}${localePath(locale, 'cv')}`, { waitUntil: 'networkidle' });
+    await page.evaluate(() => document.fonts.ready);
+    const path = `${DIST}/cv/${cvFileName(locale)}`;
+    await page.pdf({ path, format: 'A4', printBackground: true, preferCSSPageSize: true });
+    await page.close();
+    console.log(`Rendered ${path}`);
+  }
+}
+
+async function cardPages() {
+  const entries = await readdir(OG, { recursive: true, withFileTypes: true });
+  return entries
+    .filter((entry) => entry.name === 'index.html')
+    .map((entry) => `${entry.parentPath}`.replaceAll('\', '/').slice(OG.length));
+}
+
+async function renderCards(browser: Browser) {
+  const page = await browser.newPage({ viewport: PREVIEW_SIZE });
+  for (const card of await cardPages()) {
+    await page.goto(`${ORIGIN}/og${card}/`, { waitUntil: 'networkidle' });
+    await page.evaluate(async () => {
+      await document.fonts.ready;
+      await Promise.all([...document.images].map((image) => image.decode()));
+    });
+    const height = await page.locator('[data-og-card]').evaluate((element) => element.scrollHeight);
+    if (height > PREVIEW_SIZE.height) throw new Error(`Preview card /og${card}/ is ${height}px tall, over ${PREVIEW_SIZE.height}px`);
+    const path = card ? `${OG}${card}.jpg` : `${OG}/home.jpg`;
+    await page.screenshot({ path, type: 'jpeg', quality: 85, clip: { x: 0, y: 0, ...PREVIEW_SIZE } });
+    console.log(`Rendered ${path}`);
+  }
+  await page.close();
+}
+
+async function removeCardPages() {
+  const entries = await readdir(OG, { recursive: true, withFileTypes: true });
+  await Promise.all(entries.filter((entry) => entry.name === 'index.html').map((entry) => rm(`${entry.parentPath}/${entry.name}`)));
+  const directories = entries.filter((entry) => entry.isDirectory()).map((entry) => `${entry.parentPath}/${entry.name}`);
+  for (const directory of directories.sort((a, b) => b.length - a.length)) {
+    if ((await readdir(directory)).length === 0) await rm(directory, { recursive: true });
+  }
+}
+
+const server = await preview({ root: '.', logLevel: 'warn', server: { host: '127.0.0.1', port: PORT } });
+const browser = await chromium.launch();
+
+try {
+  await renderCvs(browser);
+  await renderCards(browser);
+} finally {
+  await browser.close();
+  await server.stop();
+}
+
+await removeCardPages();
