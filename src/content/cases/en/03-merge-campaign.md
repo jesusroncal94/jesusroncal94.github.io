@@ -39,6 +39,6 @@ so that a red build meant a real problem.
 All 112 pull requests went from the queue to production in about 30 hours. The agents
 supplied the throughput; the serial gate supplied the safety.
 
-It is the same division of labour I use for release gating day to day — 6–8 pull requests
-per session to production, each through empirical pre-merge gates: tests, type checks and
-migration replays.
+It is the same division of labour I used for release gating day to day at MindFortress —
+6–8 pull requests per session to production, each through empirical pre-merge gates: tests,
+type checks and migration replays.
