@@ -9,20 +9,20 @@
   },
   "roles": [
     {
-      "id": "mindfortress-inc",
-      "title": "Technical Lead - AI Products",
-      "organisation": "MindFortress Inc (via Revelo)",
-      "location": "USA - Remote",
-      "start": "2025-10",
-      "end": "2026-09"
-    },
-    {
       "id": "intercorp-management-innova-latam",
       "title": "AI Engineer",
       "organisation": "Intercorp Management / Innova LATAM",
       "location": "Peru - Remote",
       "start": "2024-09",
       "end": null
+    },
+    {
+      "id": "mindfortress-inc",
+      "title": "Technical Lead - AI Products",
+      "organisation": "MindFortress Inc (via Revelo)",
+      "location": "USA - Remote",
+      "start": "2025-10",
+      "end": "2026-09"
     },
     {
       "id": "accelone",
