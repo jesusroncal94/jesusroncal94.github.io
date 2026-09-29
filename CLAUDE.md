@@ -101,7 +101,8 @@ Report what failed as plainly as what passed.
 - Published on 2026-09-30 at https://jesusroncal94.github.io (public repo, squash-only, `main`
   protected with the `build` check required, Pages from Actions). Every later push still needs
   Jesus's yes.
-- Custom domain `jesusroncal.dev`: bought, not configured. When configured, update `site` in
-  `astro.config.mjs` and the `Sitemap` line in `public/robots.txt`.
+- Custom domain `jesusroncal.dev`: dropped on 2026-09-30, the site stays on
+  `jesusroncal94.github.io`. If it is ever revived, change `site` in `astro.config.mjs` and
+  the `Sitemap` line in `public/robots.txt` together.
 - `cv-manager/cv-base.md` spells "Jesus" without the accent: deferred.
 - Phase 2 (story 005, Ask the portfolio), Phase 3 (story 004, ES/IT), Phase 4 (PostHog EU).
