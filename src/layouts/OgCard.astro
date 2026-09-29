@@ -31,7 +31,9 @@ const { title, aurora } = Astro.props;
         aria-hidden="true"
       >
       </div>
-      <slot />
+      <div data-og-content class="h-full">
+        <slot />
+      </div>
     </div>
   </body>
 </html>

@@ -26,7 +26,7 @@ async function cardPages() {
   const entries = await readdir(OG, { recursive: true, withFileTypes: true });
   return entries
     .filter((entry) => entry.name === 'index.html')
-    .map((entry) => `${entry.parentPath}`.replaceAll('\', '/').slice(OG.length));
+    .map((entry) => entry.parentPath.replaceAll('\\', '/').slice(OG.length));
 }
 
 async function renderCards(browser: Browser) {
@@ -37,8 +37,8 @@ async function renderCards(browser: Browser) {
       await document.fonts.ready;
       await Promise.all([...document.images].map((image) => image.decode()));
     });
-    const height = await page.locator('[data-og-card]').evaluate((element) => element.scrollHeight);
-    if (height > PREVIEW_SIZE.height) throw new Error(`Preview card /og${card}/ is ${height}px tall, over ${PREVIEW_SIZE.height}px`);
+    const overflow = await page.locator('[data-og-content]').evaluate((element) => element.scrollHeight - element.clientHeight);
+    if (overflow > 0) throw new Error(`Preview card /og${card}/ overflows its content box by ${overflow}px`);
     const path = card ? `${OG}${card}.jpg` : `${OG}/home.jpg`;
     await page.screenshot({ path, type: 'jpeg', quality: 85, clip: { x: 0, y: 0, ...PREVIEW_SIZE } });
     console.log(`Rendered ${path}`);
