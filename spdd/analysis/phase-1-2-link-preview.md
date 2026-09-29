@@ -65,5 +65,5 @@ page falls back to a text-only card. Three smaller gaps:
 
 ## 4. Decisions
 
-**⚠️ Pending — generation approach.** Recommended: A, Playwright screenshots of `/og/`
-pages, deleted after rendering, as JPEG.
+**✅ Decision 1 — generation approach.** Confirmed 2026-09-30: option A. Playwright
+screenshots `/og/` pages into JPEGs, and the pages are deleted after rendering.
