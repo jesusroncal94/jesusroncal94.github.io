@@ -104,5 +104,4 @@ Report what failed as plainly as what passed.
 - Custom domain `jesusroncal.dev`: dropped on 2026-09-30, the site stays on
   `jesusroncal94.github.io`. If it is ever revived, change `site` in `astro.config.mjs` and
   the `Sitemap` line in `public/robots.txt` together.
-- `cv-manager/cv-base.md` spells "Jesus" without the accent: deferred.
 - Phase 2 (story 005, Ask the portfolio), Phase 3 (story 004, ES/IT), Phase 4 (PostHog EU).
