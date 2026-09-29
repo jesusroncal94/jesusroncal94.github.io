@@ -5,7 +5,7 @@ Story: [008](../stories/008-link-preview.md). Analysis:
 `OG — Home 1200×630`, `OG — Case 02 1200×630`, `OG — Case 04 1200×630` (see
 [../design.md](../design.md)).
 
-**Status:** written on 2026-09-30, waiting for approval.
+**Status:** approved on 2026-09-30, including the alt texts and the role line (operation 2); in implementation.
 
 ## R — Requirements
 
