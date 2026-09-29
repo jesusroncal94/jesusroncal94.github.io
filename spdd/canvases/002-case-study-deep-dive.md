@@ -213,3 +213,7 @@ corrected to what `profile.md` states. The unit-generation guardrails are attrib
 engine, not to the eval pipeline; Railway is gone from the cost-leak stack; the Freya agents
 work "alongside" the consistency engine rather than "over" it; the stale worker keeps no
 infrastructure detail; the three countries stay.
+
+**Copy amendment, 2026-09-30.** MindFortress ended in 2026-09, so case 03's closing line moved
+to the past tense: "the same division of labour I used for release gating day to day at
+MindFortress". Jesus approved it on 2026-09-30.

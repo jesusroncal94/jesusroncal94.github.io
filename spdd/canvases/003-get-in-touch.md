@@ -172,3 +172,8 @@ Implemented. This section is authoritative where it differs from the operations 
   merge campaign and the `ai-agents` repository.
 - The name is spelled "Jesús", fixed at the source in `cv-manager/profile.md` and
   re-exported, so future CVs inherit it. The PDF stays at two pages.
+
+**Copy amendment, 2026-09-30.** MindFortress ended in 2026-09, and `profile.md` now leads with
+the current role. The CV summary reads "Most recently Technical Lead on two AI products, and
+currently AI Engineer on a third". Jesus approved it on 2026-09-30. The PDF is still two
+pages.
