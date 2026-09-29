@@ -11,13 +11,14 @@ import Principles from '../sections/Principles.astro';
 import Proof from '../sections/Proof.astro';
 import Work from '../sections/Work.astro';
 import { DEFAULT_LOCALE } from '../i18n/locales';
+import { ogImagePath } from '../lib/preview';
 import { useTranslations } from '../i18n/translate';
 
 const locale = DEFAULT_LOCALE;
 const t = useTranslations(locale);
 ---
 
-<Base locale={locale} title={t('site.title')} description={t('site.description')}>
+<Base locale={locale} title={t('site.title')} description={t('site.description')} image={{ path: ogImagePath(), alt: t('og.homeAlt') }}>
   <Nav locale={locale} />
   <main>
     <Hero locale={locale}>

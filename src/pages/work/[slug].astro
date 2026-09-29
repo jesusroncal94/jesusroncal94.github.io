@@ -12,9 +12,10 @@ import Nav from '../../sections/Nav.astro';
 import profile from '../../../data/public-profile.json';
 import { formatPeriod } from '../../i18n/format';
 import { DEFAULT_LOCALE, localePath } from '../../i18n/locales';
-import { useTranslations } from '../../i18n/translate';
+import { interpolate, useTranslations } from '../../i18n/translate';
 import { caseEyebrow, caseSlug, getCases, type Case } from '../../lib/cases';
 import { cvPath } from '../../lib/cv';
+import { ogImagePath } from '../../lib/preview';
 
 export const getStaticPaths = (async () => {
   const cases = await getCases(DEFAULT_LOCALE);
@@ -38,7 +39,12 @@ if (!role) throw new Error(`Case ${entry.id} references an unknown role: ${roleI
 const { Content } = await render(entry);
 ---
 
-<Base locale={locale} title={`${title} — Jesús Roncal`} description={summary}>
+<Base
+  locale={locale}
+  title={`${title} — Jesús Roncal`}
+  description={summary}
+  image={{ path: ogImagePath(caseSlug(entry)), alt: interpolate(t('og.caseAlt'), { title, before, after }) }}
+>
   <Nav locale={locale} />
   <main class="px-page pt-6 pb-24 md:pt-12">
     <article class="mx-auto flex max-w-170 flex-col gap-8">
