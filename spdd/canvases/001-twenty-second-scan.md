@@ -180,3 +180,21 @@ The amendment above is implemented: the second badge in `Hero.astro` moved from
 - **Overflow audit:** zero overflow on `/` and `/work/02-cost-leak/` at all 12 widths.
 - **Tests:** 7 unit tests pass.
 - **Lighthouse:** all assertions pass on six URLs × 3 runs.
+
+## Incident — 2026-09-30
+
+On the published site, the nav links "Work", "Open source" and "Experience" did nothing on
+case pages. Jesus reported it after using the command palette to open a case.
+
+- **Cause.** Operation 6 wrote the nav links as bare fragments (`#work`), when the home page
+  was the only page. Canvas 002 then rendered the same `Nav` on every case page, where the
+  fragments resolve to `/work/<slug>/#work`, an `id` those pages do not have. Six links were
+  broken on each case page: three in the desktop nav and three in the mobile sheet.
+- **Why it slipped through.** The end-to-end checks in canvas 003 used the nav only from the
+  home page. Nothing checked that internal links reach their target. The command palette and
+  "All work" were unaffected, because they already built `/#id` from `localePath`.
+- **Fix.** The nav builds `${localePath(locale)}#<id>`. On the home page this is still an
+  in-page jump with no reload, because the path matches.
+- **Prevention.** A new norm, "Links carry their page", in [norms.md](norms.md), enforced by
+  `scripts/check-links.ts`. The script runs after every build, locally and in CI. It
+  resolves every internal link in `dist/` and fails on a missing page or `id`.

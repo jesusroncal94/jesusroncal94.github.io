@@ -19,6 +19,11 @@
 - **Formatting through `Intl`** (numbers, dates, periods), keyed by locale.
 - **Motion respects `prefers-reduced-motion`**: animations run only when it is `no-preference`.
 - **Files:** Astro components in PascalCase, everything else in kebab-case.
+- **Links carry their page.** A component rendered on more than one page never links with a
+  bare fragment (`#work`). Links to home sections are built from `localePath(locale)`
+  (`/#work`); a bare fragment is only for a target inside the same component. After every
+  build, `scripts/check-links.ts` fails if any internal link points to a page or `id` that
+  does not exist.
 
 ## Safeguards
 
