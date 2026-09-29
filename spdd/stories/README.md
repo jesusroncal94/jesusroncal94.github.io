@@ -13,6 +13,7 @@ REASONS canvas in `../canvases/` names the story it implements.
 | 005 | [Ask the portfolio](005-ask-the-portfolio.md)         | Technical interviewer | 2 |
 | 006 | [Public profile export](006-public-profile-export.md) | Jesus (owner)         | 1 |
 | 007 | [Reads well on any screen](007-reads-well-on-any-screen.md) | Any visitor       | 1.1 |
+| 008 | [Link preview](008-link-preview.md)                   | Recruiter             | 1.2 |
 
 ## Personas
 
