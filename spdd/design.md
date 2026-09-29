@@ -10,6 +10,9 @@ Mockups live in **Penpot** and are the visual source of truth for the canvases i
 | Home        | Home — Desktop 1440    | 001, 002, 003, 007      |
 | Home        | Home — Tablet 834      | 007                     |
 | Home        | Home — Phone 390       | 001, 003, 007           |
+| Social      | OG — Home 1200×630     | 008                     |
+| Social      | OG — Case 02 1200×630  | 008                     |
+| Social      | OG — Case 04 1200×630  | 008                     |
 
 The three Home frames sit side by side and share one set of components, so the responsive
 behaviour of story 007 can be compared section by section.
@@ -74,6 +77,10 @@ Code Mono.
   2 × 2 tiles, puts cases and repositories in one column, and lays the timeline out in two
   columns.
 - Case study copy uses the approved, softened wording.
+- Link previews (Social page, approved 2026-09-30) reuse the site's tokens and type at
+  1200 × 630. The home card pairs the desktop headline with the portrait. The case cards put
+  the before → after metric at Display size, so it survives as a 400 px thumbnail. Case 04,
+  the longest metric, is drawn to prove it fits on one line.
 - The portrait badges frame the face on a diagonal: the current role overhangs the top-left
   edge, the lead role the bottom-right, so neither covers the face (2026-09-27).
 
@@ -84,7 +91,7 @@ Code Mono.
   (for example side by side) while an agent works in it.
 - The plugin's `storage` is lost when the plugin reconnects. The builder library is saved
   in the file itself, as plugin data (`portfolioLib.foundations`,
-  `portfolioLib.sections`, `portfolioLib.patches`, `portfolioLib.frames`), and can be
+  `portfolioLib.sections`, `portfolioLib.patches`, `portfolioLib.social`, `portfolioLib.frames`), and can be
   reinstalled in one call.
 - Shapes whose text changes need auto-height or auto-width set after they are added to a
   flex board, or they keep the width they had at creation.
