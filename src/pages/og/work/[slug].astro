@@ -1,0 +1,43 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { Image } from 'astro:assets';
+import Icon from '../../../components/Icon.astro';
+import OgAddress from '../../../components/OgAddress.astro';
+import OgCard from '../../../layouts/OgCard.astro';
+import avatar from '../../../assets/avatar.jpg';
+import { DEFAULT_LOCALE } from '../../../i18n/locales';
+import { caseEyebrow, caseSlug, getCases, type Case } from '../../../lib/cases';
+import { getSite } from '../../../lib/site';
+
+export const getStaticPaths = (async () => {
+  const cases = await getCases(DEFAULT_LOCALE);
+  return cases.map((entry) => ({ params: { slug: caseSlug(entry) }, props: { entry } }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  entry: Case;
+}
+
+const { entry } = Astro.props;
+const { title, before, after, organisation } = entry.data;
+const site = await getSite(DEFAULT_LOCALE);
+---
+
+<OgCard title={title} aurora="right">
+  <div class="flex h-full flex-col gap-6">
+    <p class="label-mono text-signal">{caseEyebrow(entry)}</p>
+    <h1 class="heading-h2 text-primary">{title}</h1>
+    <p class="flex flex-1 flex-wrap items-center justify-center gap-x-7 rounded-lg bg-raised px-10 py-6">
+      <span class="display whitespace-nowrap text-before">{before}</span>
+      <Icon name="arrow-right" size={40} class="text-muted" />
+      <span class="display whitespace-nowrap text-signal">{after}</span>
+    </p>
+    <div class="flex items-center justify-between">
+      <p class="flex items-center gap-4">
+        <Image src={avatar} alt="" width={112} loading="eager" class="portrait-tone size-14 rounded-full object-cover ring-2 ring-signal" />
+        <span class="heading-h3 text-primary">{site.displayName} · {organisation}</span>
+      </p>
+      <OgAddress />
+    </div>
+  </div>
+</OgCard>

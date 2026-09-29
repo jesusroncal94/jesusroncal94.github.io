@@ -1,0 +1,10 @@
+---
+import Icon from './Icon.astro';
+
+const host = Astro.site?.host ?? '';
+---
+
+<p class="body-l flex items-center gap-2.5 text-muted">
+  {host}
+  <Icon name="arrow-up-right" size={20} />
+</p>
