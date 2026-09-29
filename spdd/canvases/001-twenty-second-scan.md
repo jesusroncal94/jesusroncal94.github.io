@@ -198,3 +198,31 @@ case pages. Jesus reported it after using the command palette to open a case.
 - **Prevention.** A new norm, "Links carry their page", in [norms.md](norms.md), enforced by
   `scripts/check-links.ts`. The script runs after every build, locally and in CI. It
   resolves every internal link in `dist/` and fails on a missing page or `id`.
+
+## Sync — 2026-09-30 (nav links)
+
+The incident above is fixed. This section is authoritative over operation 6.
+
+- **Nav links.** They are `${localePath(locale)}#work`, `#open-source` and `#experience`,
+  so they resolve to the home page from every page.
+- **`src/lib/links.ts`.** `findBrokenLinks` resolves every relative `href` in the built
+  HTML against its page. It reports a link whose target file does not exist
+  (`missing page`) or whose fragment names no `id` on the target page (`missing id`). A unit
+  test covers both cases.
+- **`scripts/check-links.ts`.** Runs `findBrokenLinks` over `dist/`. It is the last step of
+  `npm run build`, so a broken link now fails the local build and the CI build before
+  anything is deployed.
+
+**Verified on 2026-09-30, on the production build:**
+- **Link checker:**
+  - Before the fix, it found the 24 broken links: 6 per case page × 4 pages, and nothing
+    else.
+  - After the fix: "Checked internal links in 6 pages: none broken".
+- **End-to-end in headless Chromium** (desktop 1440 × 900 and mobile 390 × 844):
+  - Each nav link, clicked from `/work/02-cost-leak/`, opens `/#<id>` with the section
+    16 px from the top.
+  - Clicked from `/`, it jumps within the same document, with no reload.
+  - On mobile the sheet closes after the tap.
+- **Tests:** 8 unit tests pass.
+- **Overflow audit:** zero overflow at all 12 widths on `/` and a case page.
+- **Lighthouse:** all assertions pass on six URLs × 3 runs.
