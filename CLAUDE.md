@@ -98,8 +98,10 @@ Report what failed as plainly as what passed.
 
 ## Open items
 
-- Publishing: create `jesusroncal94.github.io` (public, `main` protected, squash-only), enable
-  Pages from Actions, first push. Waiting for Jesus's go-ahead.
+- Published on 2026-09-30 at https://jesusroncal94.github.io (public repo, squash-only, `main`
+  protected with the `build` check required, Pages from Actions). Every later push still needs
+  Jesus's yes.
+- No `robots.txt`: `/robots.txt` returns 404, so the sitemap is not advertised to crawlers.
 - Custom domain `jesusroncal.dev`: bought, not configured.
 - `cv-manager/cv-base.md` spells "Jesus" without the accent: deferred.
 - Phase 2 (story 005, Ask the portfolio), Phase 3 (story 004, ES/IT), Phase 4 (PostHog EU).
