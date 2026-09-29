@@ -1,8 +1,8 @@
 @utility display {
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: clamp(2.75rem, 2.006rem + 3.048vw, 4.75rem);
-  line-height: clamp(3rem, 2.257rem + 3.048vw, 5rem);
+  font-size: clamp(2.75rem, 2.006rem + 3.048 * var(--fluid-vw, 1vw), 4.75rem);
+  line-height: clamp(3rem, 2.257rem + 3.048 * var(--fluid-vw, 1vw), 5rem);
   letter-spacing: -0.035em;
 }
 
@@ -10,16 +10,16 @@
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: 400;
-  font-size: clamp(3.125rem, 2.336rem + 3.238vw, 5.25rem);
-  line-height: clamp(3rem, 2.257rem + 3.048vw, 5rem);
+  font-size: clamp(3.125rem, 2.336rem + 3.238 * var(--fluid-vw, 1vw), 5.25rem);
+  line-height: clamp(3rem, 2.257rem + 3.048 * var(--fluid-vw, 1vw), 5rem);
   letter-spacing: -0.015em;
 }
 
 @utility heading-h2 {
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: clamp(2rem, 1.721rem + 1.143vw, 2.75rem);
-  line-height: clamp(2.25rem, 1.925rem + 1.333vw, 3.125rem);
+  font-size: clamp(2rem, 1.721rem + 1.143 * var(--fluid-vw, 1vw), 2.75rem);
+  line-height: clamp(2.25rem, 1.925rem + 1.333 * var(--fluid-vw, 1vw), 3.125rem);
   letter-spacing: -0.025em;
 }
 
@@ -34,8 +34,8 @@
 @utility metric-l {
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: clamp(2.125rem, 1.8rem + 1.333vw, 3rem);
-  line-height: clamp(2.5rem, 2.221rem + 1.143vw, 3.25rem);
+  font-size: clamp(2.125rem, 1.8rem + 1.333 * var(--fluid-vw, 1vw), 3rem);
+  line-height: clamp(2.5rem, 2.221rem + 1.143 * var(--fluid-vw, 1vw), 3.25rem);
   letter-spacing: -0.03em;
 }
 
