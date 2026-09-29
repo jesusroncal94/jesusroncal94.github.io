@@ -49,6 +49,10 @@ export const en = {
   'cv.education': 'Education',
   'cv.skills': 'Skills',
   'cv.languages': 'Languages',
+
+  'og.role': 'AI & Backend Engineer',
+  'og.homeAlt': 'Jesús Roncal, AI & Backend Engineer. I ship LLM systems that survive production.',
+  'og.caseAlt': '{title}: {before} to {after}. A case study by Jesús Roncal.',
 } as const;
 
 export type UiKey = keyof typeof en;

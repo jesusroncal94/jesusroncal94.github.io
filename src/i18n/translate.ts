@@ -9,3 +9,6 @@ export function useTranslations(locale: Locale): (key: UiKey) => string {
   const dictionary = dictionaries[locale] ?? en;
   return (key) => dictionary[key];
 }
+
+export const interpolate = (template: string, values: Record<string, string>) =>
+  template.replace(/\{(\w+)\}/g, (placeholder, name: string) => values[name] ?? placeholder);
