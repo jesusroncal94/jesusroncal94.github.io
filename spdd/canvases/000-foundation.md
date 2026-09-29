@@ -151,3 +151,14 @@ committed `package-lock.json`; no `postinstall` scripts.
   `requestAnimationFrame` loop.
 - **Stylesheet delivery.** Inlining was tried in canvas 001 and reverted in 002. See the sync
   note there.
+
+## Sync — 2026-09-30 (robots.txt)
+
+After the first publication `/robots.txt` returned 404, so crawlers were never told where
+the sitemap is. `public/robots.txt` now allows everything and points to
+`https://jesusroncal94.github.io/sitemap-index.xml`.
+
+- `/cv` is deliberately not disallowed. It is already `noindex`, and blocking the crawl would
+  stop crawlers from seeing that tag.
+- The file holds the domain as text. When `jesusroncal.dev` is configured, its `Sitemap` line
+  changes together with `site` in `astro.config.mjs`.
