@@ -5,7 +5,7 @@ Story: [008](../stories/008-link-preview.md). Analysis:
 `OG — Home 1200×630`, `OG — Case 02 1200×630`, `OG — Case 04 1200×630` (see
 [../design.md](../design.md)).
 
-**Status:** approved on 2026-09-30, including the alt texts and the role line (operation 2); in implementation.
+**Status:** implemented and synced on 2026-09-30. The alt texts and the role line (operation 2) were approved on 2026-09-30. Waiting for the push and Jesus's Post Inspector check.
 
 ## R — Requirements
 
@@ -152,3 +152,47 @@ All of [norms.md](norms.md). In particular:
   are the only new strings.
 - Nothing from `/og/` is published as HTML, indexed or audited. Only the JPEGs ship.
 - No third-party service renders or hosts the images.
+
+## Sync — 2026-09-30
+
+Implemented. This section is authoritative where it differs from the operations above.
+
+- **Op 2.** `og.caseAlt` holds placeholders, filled by a new `interpolate` helper in
+  `src/i18n/translate.ts`, which has a unit test.
+- **Ops 4–6, pinned type.**
+  - The fluid utilities in `typography.css` now multiply by `var(--fluid-vw, 1vw)` instead
+    of `vw`. On the site nothing changes.
+  - `OgCard` sets `--fluid-vw: 14.4px`, so the card computes exactly the 1440-px desktop
+    sizes, as the frames do, without duplicate utilities.
+  - The name on the home card sets `--fluid-vw: 8.34px`, the 834-px tablet size (37 px)
+    that the frame uses.
+- **Op 4.** The slot sits in a `[data-og-content]` box. The site address is a small
+  `OgAddress` component shared by both cards, and it reads the host from `Astro.site`.
+- **Op 7.**
+  - The overflow guard compares the content box's `scrollHeight` with its `clientHeight`.
+    Measuring the whole card counted the decorative aurora and reported the home card as
+    880 px tall.
+  - Screenshots are 1200 × 630 JPEGs at quality 85, and the `/og/` HTML and its empty
+    directories are removed after rendering.
+- **Op 10.** `BuiltFile` gained an optional `size`, so one list of built files serves both
+  checkers.
+- **Op 12.** `/cv` is `noindex`, so the preview check skips it by design.
+
+**Verified on 2026-09-30, on the production build:**
+- **Cards.** `dist/og/home.jpg` (92 KB) and `dist/og/work/<slug>.jpg` for all four cases
+  (38–48 KB), each 1200 × 630.
+  - The home card and cases 01 and 04 were compared with the Penpot frames and match.
+    Case 04 has the longest metric and case 01 the longest title; both fit on one line.
+- **Output.**
+  - The only HTML left in `dist/` is `/`, `/cv/` and the four case pages.
+  - The sitemap holds no `/og/` URL.
+- **Head.** Each case page declares an absolute `og:image` with its type, width, height and
+  alt, plus `twitter:card` `summary_large_image` and `og:locale` `en_US`.
+- **Checks.**
+  - The preview check passes: "Checked link previews in 6 pages: all complete".
+  - With `og:image` stripped from one page, it fails with "no og:image".
+  - The link check passes.
+- **Tests:** 10 unit tests pass.
+- **Overflow audit:** zero overflow at all 12 widths.
+- **Lighthouse:** all assertions pass on six URLs × 3 runs.
+- **Pending:** Jesus's LinkedIn Post Inspector check, after the deploy.
