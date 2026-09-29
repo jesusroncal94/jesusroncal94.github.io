@@ -1,6 +1,7 @@
 export interface BuiltFile {
   path: string;
   html?: string;
+  size?: number;
 }
 
 export interface BrokenLink {
