@@ -22,3 +22,7 @@ export function stripLocale(pathname: string): string {
   if (segments[0] && isLocale(segments[0])) segments.shift();
   return segments.join('/');
 }
+
+const OG_LOCALES: Record<Locale, string> = { en: 'en_US', es: 'es_ES', it: 'it_IT' };
+
+export const ogLocale = (locale: Locale) => OG_LOCALES[locale];
