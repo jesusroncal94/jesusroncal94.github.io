@@ -14,9 +14,9 @@ const t = useTranslations(locale);
 const site = await getSite(locale);
 
 const links = [
-  { href: '#work', label: t('nav.work') },
-  { href: '#open-source', label: t('nav.openSource') },
-  { href: '#experience', label: t('nav.experience') },
+  { href: `${localePath(locale)}#work`, label: t('nav.work') },
+  { href: `${localePath(locale)}#open-source`, label: t('nav.openSource') },
+  { href: `${localePath(locale)}#experience`, label: t('nav.experience') },
 ];
 ---
 
