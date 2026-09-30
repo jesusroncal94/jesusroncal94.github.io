@@ -3,7 +3,7 @@ import { findMissingPreviews } from '../src/lib/previews';
 
 const head = (tags: string) => `<html><head>${tags}</head></html>`;
 const complete = [
-  '<meta property="og:image" content="https://site.invalid/og/home.jpg" />',
+  '<meta property="og:image" content="https://site.invalid/og/home.jpg?v=0123abcd" />',
   '<meta property="og:image:width" content="1200" />',
   '<meta property="og:image:height" content="630" />',
   '<meta property="og:image:alt" content="A card" />',

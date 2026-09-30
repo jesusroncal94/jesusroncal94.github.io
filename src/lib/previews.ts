@@ -32,6 +32,7 @@ function missingFromPage({ path, html }: BuiltPage, files: Set<string>): Missing
 
   const image = tags.get('og:image');
   if (image && !files.has(new URL(image).pathname.slice(1))) missing.push({ page, reason: `image not built: ${image}` });
+  if (image && !new URL(image).searchParams.has('v')) missing.push({ page, reason: `image URL has no content version: ${image}` });
   return missing;
 }
 
