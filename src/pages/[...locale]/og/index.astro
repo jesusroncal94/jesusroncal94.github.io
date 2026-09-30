@@ -5,6 +5,7 @@ import OgCard from '../../../layouts/OgCard.astro';
 import portrait from '../../../assets/portrait.jpg';
 import profile from '../../../../data/public-profile.json';
 import { localeRoutes, type Locale } from '../../../i18n/locales';
+import { localiseProfile } from '../../../i18n/profile';
 import { useTranslations } from '../../../i18n/translate';
 import { getSite } from '../../../lib/site';
 
@@ -17,7 +18,7 @@ interface Props {
 const { locale } = Astro.props;
 const t = useTranslations(locale);
 const site = await getSite(locale);
-const city = profile.city.split(',')[0];
+const city = localiseProfile(profile.city, locale).split(',')[0];
 ---
 
 <OgCard locale={locale} title={site.displayName} aurora="left">

@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import profile from '../../../data/public-profile.json';
 import { formatMonth } from '../../i18n/format';
 import { localeRoutes, type Locale } from '../../i18n/locales';
+import { localiseProfile } from '../../i18n/profile';
 import { useTranslations } from '../../i18n/translate';
 import { getSite } from '../../lib/site';
 
@@ -20,7 +21,8 @@ const { name, headline, city, contact, roles, education, skills, languages } = p
 const highlightsFor = (roleId: string) => cv.highlights.find((entry) => entry.roleId === roleId)?.items ?? [];
 const period = (start: string, end: string | null) =>
   `${formatMonth(start, locale)} – ${end ? formatMonth(end, locale) : t('period.now')}`;
-const display = (url: string) => decodeURIComponent(url.replace(/^https?:\/\/(www\.)?/, ''));
+const l = (value: string) => localiseProfile(value, locale);
+const display =(url: string) => decodeURIComponent(url.replace(/^https?:\/\/(www\.)?/, ''));
 ---
 
 <Base locale={locale} title={`${name} — ${t('cv.title')}`} description={headline} theme="light" noindex>
@@ -29,7 +31,7 @@ const display = (url: string) => decodeURIComponent(url.replace(/^https?:\/\/(ww
       <h1>{name}</h1>
       <p class="headline">{headline}</p>
       <p class="contact">
-        <span>{city}</span>
+        <span>{l(city)}</span>
         <a href={`mailto:${contact.email}`}>{contact.email}</a>
         <a href={contact.linkedin}>{display(contact.linkedin)}</a>
         <a href={contact.github}>{display(contact.github)}</a>
@@ -47,7 +49,7 @@ const display = (url: string) => decodeURIComponent(url.replace(/^https?:\/\/(ww
         <article>
           <div class="role">
             <h3>
-              {role.title} <span class="muted">— {role.organisation}{role.location && `, ${role.location}`}</span>
+              {role.title} <span class="muted">— {role.organisation}{role.location && `, ${l(role.location)}`}</span>
             </h3>
             <p class="period">{period(role.start, role.end)}</p>
           </div>
@@ -63,7 +65,7 @@ const display = (url: string) => decodeURIComponent(url.replace(/^https?:\/\/(ww
       {education.map(({ degree, institution, year }) => (
         <div class="role">
           <h3>
-            {degree} <span class="muted">— {institution}</span>
+            {l(degree)} <span class="muted">— {l(institution)}</span>
           </h3>
           <p class="period">{year}</p>
         </div>
@@ -75,7 +77,7 @@ const display = (url: string) => decodeURIComponent(url.replace(/^https?:\/\/(ww
       <dl>
         {skills.map(({ group, items }) => (
           <div>
-            <dt>{group}</dt>
+            <dt>{l(group)}</dt>
             <dd>{items.join(', ')}</dd>
           </div>
         ))}
@@ -84,7 +86,7 @@ const display = (url: string) => decodeURIComponent(url.replace(/^https?:\/\/(ww
 
     <section>
       <h2>{t('cv.languages')}</h2>
-      <p>{languages.map(({ name, level }) => `${name} — ${level}`).join(' · ')}</p>
+      <p>{languages.map(({ name, level }) => `${l(name)} — ${l(level)}`).join(' · ')}</p>
     </section>
   </main>
 </Base>

@@ -7,6 +7,7 @@ import avatar from '../assets/avatar.jpg';
 import portrait from '../assets/portrait.jpg';
 import profile from '../../data/public-profile.json';
 import type { Locale } from '../i18n/locales';
+import { localiseProfile } from '../i18n/profile';
 import { useTranslations } from '../i18n/translate';
 import { cvPath } from '../lib/cv';
 import { getSite } from '../lib/site';
@@ -19,7 +20,7 @@ const { locale } = Astro.props;
 const t = useTranslations(locale);
 const site = await getSite(locale);
 const { hero } = site;
-const city = profile.city.split(',')[0];
+const city = localiseProfile(profile.city, locale).split(',')[0];
 
 const DESKTOP = '(min-width: 80rem)';
 const PORTRAIT_SIZES = '420px';
