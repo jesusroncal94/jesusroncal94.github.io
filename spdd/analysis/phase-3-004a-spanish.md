@@ -99,14 +99,14 @@ The CV and the timeline print fields from `public-profile.json`, which is in Eng
 
 ## 4. Decisions
 
-**⚠️ Pending — routing.** Recommended: A, an optional `[...locale]` route parameter.
+**✅ Decision 1 — routing.** Confirmed 2026-09-30: A, an optional `[...locale]` route parameter.
 
-**⚠️ Pending — profile-derived text.** Recommended: job titles, technologies and products
+**✅ Decision 2 — profile-derived text.** Confirmed 2026-09-30: job titles, technologies and products
 stay in English; places, language levels, degrees and labels are translated through a
 checked map.
 
-**⚠️ Pending — review format.** Recommended: `spdd/reviews/004a-es.md`, a table per section
+**✅ Decision 3 — review format.** Confirmed 2026-09-30: `spdd/reviews/004a-es.md`, a table per section
 with a status column; only `ok` rows ship.
 
-**⚠️ Pending — Spanish variant.** Recommended: neutral Spanish for Spain and Latin America,
+**✅ Decision 4 — Spanish variant.** Confirmed 2026-09-30: neutral Spanish for Spain and Latin America,
 first person, no *vosotros* and no regionalisms.

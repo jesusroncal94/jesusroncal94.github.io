@@ -27,5 +27,11 @@ Phase 1.2:
 | ------ | ----- | ---------- |
 | [008 — Link preview](008-link-preview.md) | [008](../stories/008-link-preview.md) | 001, 002, 003 |
 
+Phase 3:
+
+| Canvas | Story | Depends on |
+| ------ | ----- | ---------- |
+| [004a — Spanish](004a-spanish.md) | [004](../stories/004-read-it-in-my-language.md), part a | 001, 002, 003, 008 |
+
 Cross-cutting rules every canvas inherits are in [norms.md](norms.md). Figma node IDs (000–006) and
-Penpot frame names (007–008) refer to the files listed in [../design.md](../design.md).
+Penpot frame names (004a, 007, 008) refer to the files listed in [../design.md](../design.md).
