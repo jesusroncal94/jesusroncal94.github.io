@@ -7,15 +7,20 @@ export interface NumericParts {
 
 const DURATION_MS = 900;
 
-export function splitNumeric(value: string): NumericParts | null {
-  const match = /^(\D*?)(\d+(?:\.\d+)?)(.*)$/s.exec(value);
+const decimalSeparator = (locale: string) =>
+  new Intl.NumberFormat(locale).formatToParts(1.1).find(({ type }) => type === 'decimal')?.value ?? '.';
+
+export function splitNumeric(value: string, locale: string): NumericParts | null {
+  const separator = decimalSeparator(locale);
+  const match = new RegExp(`^(\\D*?)(\\d+(?:\\${separator}\\d+)?)(.*)$`, 's').exec(value);
   if (!match) return null;
   const [, prefix, digits, suffix] = match;
-  return { prefix, number: Number(digits), decimals: digits.split('.')[1]?.length ?? 0, suffix };
+  const [whole, fraction = ''] = digits.split(separator);
+  return { prefix, number: Number(`${whole}.${fraction || '0'}`), decimals: fraction.length, suffix };
 }
 
 export function countUp(element: HTMLElement, value: string, locale: string): void {
-  const parts = splitNumeric(value);
+  const parts = splitNumeric(value, locale);
   if (!parts || parts.number === 0) return;
   if (!window.matchMedia('(prefers-reduced-motion: no-preference)').matches) return;
 
