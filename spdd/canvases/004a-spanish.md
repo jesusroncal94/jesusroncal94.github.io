@@ -5,7 +5,7 @@ Story: [004](../stories/004-read-it-in-my-language.md), part a. Analysis:
 `Home — Desktop 1440 · i18n`, `Home — Phone 390 · i18n suggestion`,
 `Home — Phone 390 · i18n menu` (see [../design.md](../design.md)).
 
-**Status:** approved on 2026-09-30; half 1 (operations 1–7) in implementation.
+**Status:** approved on 2026-09-30. Half 1 (operations 1–7) implemented and synced on 2026-10-01; half 2 (operations 8–11) not started.
 
 ## R — Requirements
 
@@ -157,3 +157,58 @@ All of [norms.md](norms.md). In particular:
   preview card, sitemap entry or suggestion is produced.
 - **No tracking:** the suggestion reads only `navigator.languages` and `localStorage`. No
   request, no cookie, no location.
+
+## Sync — 2026-10-01 (half 1: operations 1–7)
+
+Implemented with `PUBLISHED_LOCALES = ['en']`. This section is authoritative where it differs
+from the operations above.
+
+- **Op 1.**
+  - `localeRoutes()` returns one static path per published locale, with `locale: undefined`
+    for English.
+  - The case pages combine it with their slugs.
+  - `palette.json` became `[...locale]/palette.json.ts`.
+  - Moving the files changed only Astro's scoped-style hash on `/cv/`, which derives from
+    the file path.
+- **Op 3.**
+  - Cards follow the route convention, with the locale first: `/es/og/home.jpg` and
+    `/es/og/work/<slug>.jpg`, not `/og/es/…`.
+  - `render-artifacts.ts` walks every published locale's `og/` directory.
+  - `versionPreviewUrls` matches the whole path after the origin.
+  - The preview weight check matches any `og/` directory.
+  - `OgCard` takes the locale for its `lang`.
+- **Op 4.** `localiseProfile` also covers the city in the hero and on the home card. The
+  CV applies it to the city, role locations, the degree and institution, skill groups, and
+  language names and levels.
+- **Op 5.**
+  - `LOCALE_NAMES` holds the endonyms (English, Español, Italiano), and `isMultilingual()`
+    guards the markup, so a single-locale site renders exactly as before.
+  - Compact links carry `aria-label="EN — English"`, which contains the visible label.
+- **Op 6.**
+  - The suggestion sits inside the header, so it scrolls away with it. The desktop card is
+    absolutely positioned under the switcher, and the phone pill at `top-17`.
+  - Its copy comes from the target locale's dictionary. The English subtitle is
+    `suggest.alsoIn` with `language.<target>`.
+  - The phone menu sheet moved to `z-40`, because the pill covered the open menu.
+- **Op 7.** The parity test runs for each published non-default locale. It checks the site
+  file, the same case files, and a translation for every profile value a page shows. Zod
+  already validates the structure of each `site` file at build.
+
+**Verified on 2026-10-01.**
+- **English build.** After each operation it was compared with the previous build, and it
+  stayed byte-identical except for:
+  - the count-up script (op 2);
+  - the stylesheet, which gained the switcher's and the suggestion's utilities (op 5–6);
+  - the phone menu's `z-40` class (op 6).
+
+  The preview cards, their versioned URLs and the sitemap are unchanged.
+- **Tests:** 23 unit tests pass, including the story's six suggestion cases.
+- **Throwaway multilingual build.** A copy inside the container published `es` with the
+  English content as a stand-in, and an end-to-end run in headless Chromium checked it:
+  - the six suggestion cases matched;
+  - dismissal survives a reload;
+  - switching from `/work/02-cost-leak/#result` lands on `/es/work/02-cost-leak/#result`;
+  - without JavaScript the switcher is plain links and the suggestion stays hidden;
+  - screenshots at 1440 × 900 and 390 × 844, with the menu open, match the three frames.
+
+  Until `ui/es.ts` exists, the suggestion falls back to the English dictionary.
