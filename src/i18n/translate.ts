@@ -1,9 +1,10 @@
 import type { Locale } from './locales';
 import { en, type UiKey } from './ui/en';
+import { es } from './ui/es';
 
 export type UiDictionary = Record<UiKey, string>;
 
-const dictionaries: Partial<Record<Locale, UiDictionary>> = { en };
+const dictionaries: Partial<Record<Locale, UiDictionary>> = { en, es };
 
 export function useTranslations(locale: Locale): (key: UiKey) => string {
   const dictionary = dictionaries[locale] ?? en;

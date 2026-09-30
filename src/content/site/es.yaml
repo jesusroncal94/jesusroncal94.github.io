@@ -1,0 +1,236 @@
+displayName: Jesús Roncal
+monogram: jr
+
+hero:
+  status: Abierto a roles de AI Engineer · UE
+  headlineLead: Construyo sistemas LLM
+  headlineAccent: que sobreviven en producción.
+  lede: >-
+    Senior Software Engineer, AI & Backend. Ocho años construyendo sistemas backend; los
+    últimos cuatro, llevando pipelines multiagente, RAG y de evaluación a usuarios reales.
+    Medido, fundamentado y atento al coste. Con base en Milán.
+  ledeShort: >-
+    Ocho años en backend; los últimos cuatro, llevando pipelines multiagente, RAG y de
+    evaluación a usuarios reales.
+  role: AI & Backend
+  portraitAlt: Jesús Roncal sonriendo frente a un arco de ladrillo en un día soleado
+  portraitCaption: Milán, IT · ES / EN / IT
+  badges:
+    - eyebrow: Ahora
+      title: AI Engineer · Intercorp
+    - eyebrow: 2025 – 2026
+      title: Tech Lead · MindFortress
+
+metrics:
+  - value: 45,6 % → 100 %
+    caption: conformidad estructural tras reescribir el prompt guiado por evaluaciones
+    source: Intercorp · LLM-as-judge
+    compact:
+      value: 45,6→100 %
+      caption: conformidad estructural, prompts guiados por evaluaciones
+    accent: true
+  - value: 112 PR · 30 h
+    caption: de la cola a producción con agentes de Claude Code en paralelo
+    source: Reeve · campaña de merge
+    compact:
+      value: 112 PR · 30 h
+      caption: de la cola a producción con agentes en paralelo
+  - value: $15/día → $0
+    caption: gasto de IA sin rastrear, localizado en su origen y cortado
+    source: MindFortress · coste
+    compact:
+      value: $15/día → $0
+      caption: gasto de IA sin rastrear, cortado
+  - value: +500 mil usuarios
+    caption: atendidos por pipelines de transcripción y traducción con LLM
+    source: Wordbox · 10+ mercados
+
+palette:
+  placeholder: Salta a un caso, un repo o una pregunta…
+  hint: Pulsa ⌘K en cualquier parte para moverte.
+  questions:
+    - label: ¿Cómo redujiste a $0 una fuga de costes de IA?
+      case: 02-cost-leak
+    - label: ¿Cómo es tu proceso de evaluación?
+      case: 01-evals
+    - label: Explícame los agentes de Freya
+      case: 04-freya
+
+work:
+  eyebrow: Trabajo destacado
+  title: Cuatro problemas, y qué cambió
+  lede: Cómo abordé cada uno, en el orden en que ocurrió. Cada caso se lee en unos noventa segundos.
+  more: Dos casos más
+
+openSource:
+  eyebrow: Código abierto
+  title: Código que de verdad se puede leer
+  lede: El trabajo para clientes está bajo NDA. Estos repos son públicos, pequeños a propósito, y cada uno trata una sola idea.
+  repos:
+    - name: rag-assistant
+      url: https://github.com/jesusroncal94/rag-assistant
+      title: Respuestas con citas, o ninguna
+      pitch: >-
+        Preguntas y respuestas sobre documentos internos que cita cada afirmación y, cuando la
+        evidencia es débil, devuelve las fuentes más cercanas en lugar de una disculpa.
+      note: 'Recuperación 6/6 · respuesta 1/6: reportado, no oculto'
+      stack: [Python, BM25, Eval gate]
+    - name: aws-serverless-fastapi ⇄ ecs-fargate
+      url: https://github.com/jesusroncal94/aws-serverless-fastapi
+      title: La misma API, dos runtimes
+      pitch: >-
+        Un acortador de URLs, una capa de dominio, desplegado dos veces: Lambda con DynamoDB y
+        Fargate con PostgreSQL. Leerlos lado a lado aísla lo que cambia el runtime.
+      note: Terraform · Serverless · un núcleo compartido
+      stack: [FastAPI, AWS, Terraform]
+    - name: ai-agents
+      url: https://github.com/jesusroncal94/ai-agents
+      title: El setup de agentes con el que trabajo cada día
+      pitch: >-
+        Subagentes, slash commands y permisos de Claude Code, versionados y portables entre
+        proyectos: las herramientas detrás de la campaña de 112 PR, generalizadas.
+      note: Claude Code hoy · Cursor y Copilot previstos
+      stack: [Claude Code, MCP, Shell]
+
+experience:
+  eyebrow: Experiencia
+  title: Ocho años, tres continentes, una dirección
+  titleShort: Ocho años, una dirección
+  lede: >-
+    De back offices en PHP en Lima a liderar productos de IA para startups de EE. UU., siempre
+    en equipos distribuidos entre EE. UU., la UE y LATAM.
+  entries:
+    - roleId: intercorp-management-innova-latam
+      role: AI Engineer
+      organisation: Intercorp · Innova LATAM
+      place: Perú · remoto
+      line: Sistema LLM en producción que genera planes de clase alineados al currículo para 3 países.
+    - roleId: mindfortress-inc
+      role: Technical Lead, AI Products
+      organisation: MindFortress
+      place: EE. UU. · remoto
+      line: Revisión de código y control de releases para Freya y Reeve; arquitectura multiagente.
+    - roleId: wordbox
+      role: Backend & AI Engineer
+      organisation: Wordbox
+      place: MX / UK · remoto
+      line: Pipelines de contenido con LLM para más de 500 mil estudiantes; reescritura de Python a Go, −40 % de latencia.
+    - roleId: accelone
+      role: Backend Developer
+      organisation: AccelOne
+      place: EE. UU. · remoto
+      line: 'Backend de una plataforma de video: pipelines de archivos grandes sobre SQS y búsqueda con Elasticsearch.'
+    - roleId: indra-pretty-technical
+      role: Backend Developer, freelance
+      organisation: Indra · Pretty Technical
+      place: PE / NL
+      line: APIs que sirven modelos de ML con un 95 % de cobertura; servicios en Go para fintech y genómica.
+      earlier: true
+    - roleId: red-cientifica-peruana
+      role: Backend Developer
+      organisation: Red Científica Peruana
+      place: Lima
+      line: Internacionalicé una plataforma de hosting que da servicio a más de 11.000 empresas.
+      earlier: true
+    - roleId: codrise
+      role: Software Engineer
+      organisation: Codrise
+      place: Lima
+      line: Del soporte L3 a entregar APIs con Laravel y CodeIgniter.
+      earlier: true
+  earlierSummary:
+    role: Backend & Software Engineer
+    organisation: Indra · RCP · Codrise
+
+principles:
+  eyebrow: Cómo trabajo
+  title: Tres reglas que no rompo
+  items:
+    - numeral: i.
+      title: Evals antes que sensaciones
+      body: Un cambio de prompt sale cuando un conjunto de fixtures dice que es mejor, no cuando suena mejor.
+    - numeral: ii.
+      title: Ningún umbral es una suposición
+      body: Cada límite de un sistema a mi cargo tiene una medición al lado y una nota de lo que cuesta.
+    - numeral: iii.
+      title: El coste es una funcionalidad
+      body: Tokens, latencia y dólares por petición están en el dashboard desde el primer día, y se reportan a quien paga.
+
+contact:
+  headlineLead: Construyamos algo
+  headlineAccent: que aguante.
+  lede: Abierto a roles de AI Engineer, Senior Backend y Tech Lead en toda la UE, en remoto o presencial en Milán.
+  ledeShort: Abierto a roles de AI Engineer, Senior Backend y Tech Lead en toda la UE.
+  sourceUrl: https://github.com/jesusroncal94/jesusroncal94.github.io
+
+cv:
+  summary: >-
+    Ingeniero de software senior con más de 8 años en sistemas backend, APIs e infraestructura
+    cloud; los últimos 4+ construyendo y operando aplicaciones en producción basadas en LLM.
+    Recientemente Technical Lead de dos productos de IA, y actualmente AI Engineer en un
+    tercero, diseñando sistemas multiagente, pipelines RAG y frameworks de evaluación para
+    usuarios reales. Desarrolla y opera servicios en AWS y GCP con Python, Go, Java y
+    TypeScript, trabajando a diario con agentes de programación con IA y las APIs de Claude,
+    Gemini y OpenAI en equipos distribuidos de EE. UU., la UE y LATAM.
+  highlights:
+    - roleId: mindfortress-inc
+      items:
+        - >-
+          Lideré la campaña de merge del MVP de Reeve: 112 pull requests en 4 repositorios, de
+          la cola a producción en ~30 horas, orquestando agentes de Claude Code en paralelo
+          tras un merge gate serial sin fallos nuevos.
+        - >-
+          Diseñé la arquitectura de la capa de IA de Freya: 7 agentes especializados junto a un
+          motor de consistencia basado en un grafo de conocimiento (33 tipos de aristas,
+          seguimiento epistémico) y coedición en tiempo real con Yjs/CRDT, sobre un backend
+          FastAPI con más de 800 endpoints.
+        - >-
+          Diseñé un sistema de orquestación multiagente (niveles Coordinator, Manager y Worker)
+          que enruta las peticiones de los usuarios por 8 canales de mensajería, de WhatsApp y
+          Telegram a Slack y Teams.
+        - >-
+          Rastreé un gasto de IA no atribuido de ~$12–16/día hasta un worker obsoleto y lo
+          reduje a $0, verificado en el ledger de producción; llevé el CI del backend de 11
+          fallos intermitentes a 0.
+    - roleId: intercorp-management-innova-latam
+      items:
+        - >-
+          Soy responsable del sistema LLM en producción sobre Gemini 2.5 Pro (Vertex AI) que
+          genera planes de clase alineados al currículo para Perú, Colombia y México.
+        - >-
+          Diseñé un pipeline de prompts guiado por evaluaciones (fixtures más LLM-as-judge, 5
+          dimensiones y 19 ítems): conformidad estructural del 45,6 % al 100 %, −71 % de tokens
+          de salida en los casos inflados.
+        - >-
+          Lideré la migración de n8n a Spring Boot y Spring AI (Java 21) en AWS ECS, con prompts
+          versionados y observabilidad de tokens, coste y latencia por llamada.
+    - roleId: accelone
+      items:
+        - >-
+          Construí el backend de una plataforma de video en Django y PostgreSQL sobre AWS:
+          procesamiento por colas de archivos multimedia muy grandes con SQS, búsqueda con
+          Elasticsearch y pagos con Stripe.
+    - roleId: wordbox
+      items:
+        - >-
+          Integré LLMs de Google y OpenAI en pipelines de transcripción, traducción y
+          aprendizaje adaptativo con más de 500.000 usuarios en más de 10 mercados, aumentando
+          la satisfacción de los usuarios un 35 %.
+        - >-
+          Reescribí servicios centrales de Python a Go, reduciendo la latencia de la API un 40 %
+          y soportando un 50 % más de usuarios concurrentes.
+    - roleId: indra-pretty-technical
+      items:
+        - >-
+          Construí APIs que sirven modelos predictivos de ML con un 95 % de cobertura de tests,
+          y servicios backend en Go para clientes de videojuegos, finanzas y secuenciación de
+          ADN.
+    - roleId: red-cientifica-peruana
+      items:
+        - >-
+          Internacionalicé Yachay (yachay.lat), una plataforma de hosting y dominios que da
+          servicio a más de 11.000 empresas, impulsando un 25 % de crecimiento de ingresos en
+          nuevos mercados.
+    - roleId: codrise
+      items:
+        - Pasé del soporte TI L3 a Software Engineer, desarrollando aplicaciones web y APIs REST en PHP (Laravel, CodeIgniter).
