@@ -16,6 +16,10 @@ Mockups live in **Penpot** and are the visual source of truth for the canvases i
 | Home        | Home — Desktop 1440 · i18n | 004              |
 | Home        | Home — Phone 390 · i18n suggestion | 004      |
 | Home        | Home — Phone 390 · i18n menu | 004            |
+| Ask         | Ask — Desktop 1440 · answer  | 005            |
+| Ask         | Ask — Desktop 1440 · refusal | 005            |
+| Ask         | Ask — Phone 390 · answer     | 005            |
+| Ask         | Ask — Phone 390 · limit      | 005            |
 
 The three Home frames sit side by side and share one set of components, so the responsive
 behaviour of story 007 can be compared section by section.
@@ -89,6 +93,13 @@ Code Mono.
   suggestion floats and never shifts the layout. On desktop it is a card anchored under the
   switcher, so it points at where the choice lives. On phones it is a one-line pill under the
   nav, because a card there would cover the headline. It is written in the target language.
+- Ask the portfolio (story 005, drawn 2026-10-01) lives in the command palette dialog: the
+  question in the input row, then the answer with numbered references, a numbered source list
+  whose rows link to the page, and a footer with the receipt (tokens, cost, latency, grounding)
+  and the privacy line. A refusal uses muted text, "Closest sources" and an "Email Jesus"
+  action; the limit state keeps only the message and the action. Answers speak about Jesus in
+  the third person, because the assistant is not him. Answer texts and receipt figures in the
+  frames are illustrative.
 - The portrait badges frame the face on a diagonal: the current role overhangs the top-left
   edge, the lead role the bottom-right, so neither covers the face (2026-09-27).
 
@@ -99,7 +110,7 @@ Code Mono.
   (for example side by side) while an agent works in it.
 - The plugin's `storage` is lost when the plugin reconnects. The builder library is saved
   in the file itself, as plugin data (`portfolioLib.foundations`,
-  `portfolioLib.sections`, `portfolioLib.patches`, `portfolioLib.social`, `portfolioLib.i18n`, `portfolioLib.frames`), and can be
+  `portfolioLib.sections`, `portfolioLib.patches`, `portfolioLib.social`, `portfolioLib.i18n`, `portfolioLib.ask`, `portfolioLib.frames`), and can be
   reinstalled in one call.
 - Shapes whose text changes need auto-height or auto-width set after they are added to a
   flex board, or they keep the width they had at creation.
