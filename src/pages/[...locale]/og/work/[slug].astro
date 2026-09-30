@@ -1,26 +1,31 @@
 ---
 import type { GetStaticPaths } from 'astro';
 import { Image } from 'astro:assets';
-import Icon from '../../../components/Icon.astro';
-import OgAddress from '../../../components/OgAddress.astro';
-import OgCard from '../../../layouts/OgCard.astro';
-import avatar from '../../../assets/avatar.jpg';
-import { DEFAULT_LOCALE } from '../../../i18n/locales';
-import { caseEyebrow, caseSlug, getCases, type Case } from '../../../lib/cases';
-import { getSite } from '../../../lib/site';
+import Icon from '../../../../components/Icon.astro';
+import OgAddress from '../../../../components/OgAddress.astro';
+import OgCard from '../../../../layouts/OgCard.astro';
+import avatar from '../../../../assets/avatar.jpg';
+import { localeRoutes, type Locale } from '../../../../i18n/locales';
+import { caseEyebrow, caseSlug, getCases, type Case } from '../../../../lib/cases';
+import { getSite } from '../../../../lib/site';
 
 export const getStaticPaths = (async () => {
-  const cases = await getCases(DEFAULT_LOCALE);
-  return cases.map((entry) => ({ params: { slug: caseSlug(entry) }, props: { entry } }));
+  const routes = await Promise.all(
+    localeRoutes().map(async ({ params, props: { locale } }) =>
+      (await getCases(locale)).map((entry) => ({ params: { ...params, slug: caseSlug(entry) }, props: { locale, entry } })),
+    ),
+  );
+  return routes.flat();
 }) satisfies GetStaticPaths;
 
 interface Props {
+  locale: Locale;
   entry: Case;
 }
 
-const { entry } = Astro.props;
+const { locale, entry } = Astro.props;
 const { title, before, after, organisation } = entry.data;
-const site = await getSite(DEFAULT_LOCALE);
+const site = await getSite(locale);
 ---
 
 <OgCard title={title} aurora="right">

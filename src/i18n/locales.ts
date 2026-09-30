@@ -26,3 +26,9 @@ export function stripLocale(pathname: string): string {
 const OG_LOCALES: Record<Locale, string> = { en: 'en_US', es: 'es_ES', it: 'it_IT' };
 
 export const ogLocale = (locale: Locale) => OG_LOCALES[locale];
+
+export const localeRoutes = () =>
+  PUBLISHED_LOCALES.map((locale) => ({
+    params: { locale: locale === DEFAULT_LOCALE ? undefined : locale },
+    props: { locale },
+  }));

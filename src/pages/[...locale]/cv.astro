@@ -1,12 +1,18 @@
 ---
-import Base from '../layouts/Base.astro';
-import profile from '../../data/public-profile.json';
-import { formatMonth } from '../i18n/format';
-import { DEFAULT_LOCALE } from '../i18n/locales';
-import { useTranslations } from '../i18n/translate';
-import { getSite } from '../lib/site';
+import Base from '../../layouts/Base.astro';
+import profile from '../../../data/public-profile.json';
+import { formatMonth } from '../../i18n/format';
+import { localeRoutes, type Locale } from '../../i18n/locales';
+import { useTranslations } from '../../i18n/translate';
+import { getSite } from '../../lib/site';
 
-const locale = DEFAULT_LOCALE;
+export const getStaticPaths = localeRoutes;
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
 const t = useTranslations(locale);
 const { cv } = await getSite(locale);
 const { name, headline, city, contact, roles, education, skills, languages } = profile;

@@ -1,38 +1,43 @@
 ---
 import type { GetStaticPaths } from 'astro';
 import { render } from 'astro:content';
-import BeforeAfter from '../../components/BeforeAfter.astro';
-import Button from '../../components/Button.astro';
-import ContactBar from '../../components/ContactBar.astro';
-import EmailAction from '../../components/EmailAction.astro';
-import Icon from '../../components/Icon.astro';
-import StackTag from '../../components/StackTag.astro';
-import Base from '../../layouts/Base.astro';
-import Nav from '../../sections/Nav.astro';
-import profile from '../../../data/public-profile.json';
-import { formatPeriod } from '../../i18n/format';
-import { DEFAULT_LOCALE, localePath } from '../../i18n/locales';
-import { interpolate, useTranslations } from '../../i18n/translate';
-import { caseEyebrow, caseSlug, getCases, type Case } from '../../lib/cases';
-import { cvPath } from '../../lib/cv';
-import { ogImagePath } from '../../lib/preview';
+import BeforeAfter from '../../../components/BeforeAfter.astro';
+import Button from '../../../components/Button.astro';
+import ContactBar from '../../../components/ContactBar.astro';
+import EmailAction from '../../../components/EmailAction.astro';
+import Icon from '../../../components/Icon.astro';
+import StackTag from '../../../components/StackTag.astro';
+import Base from '../../../layouts/Base.astro';
+import Nav from '../../../sections/Nav.astro';
+import profile from '../../../../data/public-profile.json';
+import { formatPeriod } from '../../../i18n/format';
+import { localePath, localeRoutes, type Locale } from '../../../i18n/locales';
+import { interpolate, useTranslations } from '../../../i18n/translate';
+import { caseEyebrow, caseSlug, getCases, type Case } from '../../../lib/cases';
+import { cvPath } from '../../../lib/cv';
+import { ogImagePath } from '../../../lib/preview';
 
 export const getStaticPaths = (async () => {
-  const cases = await getCases(DEFAULT_LOCALE);
-  return cases.map((entry, index) => ({
-    params: { slug: caseSlug(entry) },
-    props: { entry, next: cases[(index + 1) % cases.length] },
-  }));
+  const routes = await Promise.all(
+    localeRoutes().map(async ({ params, props: { locale } }) => {
+      const cases = await getCases(locale);
+      return cases.map((entry, index) => ({
+        params: { ...params, slug: caseSlug(entry) },
+        props: { locale, entry, next: cases[(index + 1) % cases.length] },
+      }));
+    }),
+  );
+  return routes.flat();
 }) satisfies GetStaticPaths;
 
 interface Props {
+  locale: Locale;
   entry: Case;
   next: Case;
 }
 
-const locale = DEFAULT_LOCALE;
+const { locale, entry, next } = Astro.props;
 const t = useTranslations(locale);
-const { entry, next } = Astro.props;
 const { title, summary, before, after, stack, roleId } = entry.data;
 const role = profile.roles.find(({ id }) => id === roleId);
 if (!role) throw new Error(`Case ${entry.id} references an unknown role: ${roleId}`);
