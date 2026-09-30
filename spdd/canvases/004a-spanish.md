@@ -5,7 +5,7 @@ Story: [004](../stories/004-read-it-in-my-language.md), part a. Analysis:
 `Home — Desktop 1440 · i18n`, `Home — Phone 390 · i18n suggestion`,
 `Home — Phone 390 · i18n menu` (see [../design.md](../design.md)).
 
-**Status:** approved on 2026-09-30. Half 1 (operations 1–7) implemented and synced on 2026-10-01; half 2 (operations 8–11) not started.
+**Status:** implemented and synced on 2026-10-01. The Spanish copy was approved on 2026-10-01 in `spdd/reviews/004a-es.md` (three batches, choices C1–C15, C1 amended). Waiting for the push.
 
 ## R — Requirements
 
@@ -212,3 +212,60 @@ from the operations above.
   - screenshots at 1440 × 900 and 390 × 844, with the menu open, match the three frames.
 
   Until `ui/es.ts` exists, the suggestion falls back to the English dictionary.
+
+## Sync — 2026-10-01 (half 2: operations 8–11)
+
+This section is authoritative where it differs from the operations above.
+
+- **Op 8.**
+  - The review was delivered in three batches: UI, home and CV; cases 01–02; cases 03–04.
+  - Each batch opened with the choices it depended on (C1–C15), and Jesus approved every
+    row.
+  - `tests/review.test.ts` parses the review with `js-yaml`, now an exact devDependency. It
+    asserts that every row is `ok`, and that its Spanish cell equals the shipped value,
+    whitespace-normalised, with `(Cn)` and `*(approved …)*` annotations removed. It also
+    asserts that every UI key and every profile value was reviewed.
+  - A choice tag is kept when the English cell ends with the same tag, because "Native (C2)"
+    is a CEFR level, not an annotation.
+- **Op 9.**
+  - Case headings are written as `<h2 id="problem">Problema</h2>` (choice C8), so both
+    locales share `#problem`, `#approach` and `#result`, and switching language keeps the
+    section.
+  - Keywords are in Spanish, so the palette finds cases by Spanish words.
+- **C1 amended.**
+  - The approved headline "Construyo sistemas LLM / que sobreviven en producción." took
+    4 lines at 390–430 px and on every desktop width. On phones it pushed the third proof
+    metric under the contact bar, so story 001's fold failed.
+  - Six wordings were measured on the built page. Jesus chose "Creo sistemas LLM / que
+    resisten en producción.": 3 lines at 360–430 and 1280 px, 2 lines at 1440 px and wider,
+    and the third metric ends at 727 px, above the bar.
+  - `site.description` and `og.homeAlt` follow the headline. The review records the
+    amendment.
+- **Op 11, Lighthouse.** Autodiscovery on `staticDistDir` found only 8 of the 12 pages; it
+  skips `/es/work/…`, three levels deep.
+  - `lighthouserc.json` now lists all twelve URLs.
+  - `tests/lighthouse-urls.test.ts` asserts that the list equals the published pages
+    (home, CV and every case, in every published locale), so a new case or locale cannot
+    silently drop out of the audit.
+
+**Verified on 2026-10-01, on the production build with `PUBLISHED_LOCALES = ['en', 'es']`:**
+- **Pages:** 12, plus 10 preview cards. `/es/og/*` weighs 38–100 KB, and there is no leftover
+  `/og/` HTML.
+- **Sitemap:** it lists `en` / `es` alternates for every page.
+- **CV:** `jesus-roncal-cv-es.pdf` is two A4 pages.
+- **Tests:** 245 unit tests pass, among them 220 review rows matched against the content.
+- **Checks:** "Checked internal links in 12 pages: none broken" and "Checked link previews
+  in 12 pages: all complete".
+- **Overflow audit:** zero overflow on `/`, `/work/02-cost-leak/`, `/es/` and
+  `/es/work/02-cost-leak/` at all 12 widths. The Spanish headline is 4 lines only at 320 px,
+  as the English one is.
+- **End-to-end in headless Chromium, with the real Spanish content:**
+  - the six suggestion cases match;
+  - the card reads "También en español. This site is also available in Spanish. Ver en
+    español";
+  - dismissal survives a reload;
+  - `/work/02-cost-leak/#result` switches to `/es/work/02-cost-leak/#result`;
+  - without JavaScript the switcher is plain links and the suggestion stays hidden.
+- **Screenshots:** `/es/` at 1440 and 390 px and `/es/work/04-freya/` match the frames. The
+  `04` card fits "7 agentes → 1 grafo narrativo" on one line.
+- **Lighthouse:** all assertions pass on 12 URLs × 3 runs.

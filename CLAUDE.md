@@ -104,7 +104,7 @@ Report what failed as plainly as what passed.
 - Custom domain `jesusroncal.dev`: dropped on 2026-09-30, the site stays on
   `jesusroncal94.github.io`. If it is ever revived, change `site` in `astro.config.mjs` and
   the `Sitemap` line in `public/robots.txt` together.
-- Story 004 is split: 004a (Spanish) is in progress. 004b (Italian) is on hold since
+- Story 004 is split: 004a (Spanish) is done (2026-10-01). 004b (Italian) is on hold since
   2026-09-30 until a native Italian reviewer is available; `it` stays out of
   `PUBLISHED_LOCALES` until then.
 - Phase 2 (story 005, Ask the portfolio), Phase 4 (PostHog EU).
