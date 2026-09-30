@@ -12,7 +12,12 @@ export default defineConfig({
     locales: ['en', 'es', 'it'],
     routing: { prefixDefaultLocale: false },
   },
-  integrations: [sitemap({ filter: (page) => !page.endsWith('/cv/') && !page.includes('/og/') })],
+  integrations: [
+    sitemap({
+      filter: (page) => !page.endsWith('/cv/') && !page.includes('/og/'),
+      i18n: { defaultLocale: 'en', locales: { en: 'en', es: 'es' } },
+    }),
+  ],
   devToolbar: { enabled: false },
   vite: {
     plugins: [tailwindcss()],
