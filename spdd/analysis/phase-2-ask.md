@@ -162,3 +162,22 @@ and the service fetches it at startup.
 
 **⚠️ Pending — 6, target.** Recommended: ≥ 80% of natural answerable questions answered with
 a correct citation, in both languages; 0 unanswerable or injection questions answered.
+
+**⏸️ On hold since 2026-10-01 — the live assistant.** Jesus questioned whether a live chat adds
+enough value for this site's audience. The recruiter scans in twenty seconds, and the
+interviewer prefers the written cases. "Chat with my CV" reads as a cliché in 2026, a wrong
+live answer costs more than a right one earns, and the service needs permanent care: a cloud
+project, billing, keys, and price and model changes. The six decisions above stay pending and
+are not needed for now.
+
+The part with clear value moves to its own session in the `rag-assistant` repository:
+improving retrieval on the problem its README already documents (1 of 6 natural questions
+answered), additively and measured. A code review on 2026-10-01 confirmed that
+`rag-assistant` is RAG in the strict sense:
+- BM25 retrieval;
+- the retrieved chunks quoted into the prompt as data;
+- an LLM that writes a new, cited answer;
+- plus a confidence floor before generation and a grounding guardrail after it.
+
+The extractive "first sentence" behaviour belongs only to the `FakeModel` test double. Once
+that work lands, a fifth case study on this site can tell it.
