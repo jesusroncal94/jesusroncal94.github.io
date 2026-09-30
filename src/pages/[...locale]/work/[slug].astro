@@ -48,7 +48,7 @@ const { Content } = await render(entry);
   locale={locale}
   title={`${title} — Jesús Roncal`}
   description={summary}
-  image={{ path: ogImagePath(caseSlug(entry)), alt: interpolate(t('og.caseAlt'), { title, before, after }) }}
+  image={{ path: ogImagePath(locale, caseSlug(entry)), alt: interpolate(t('og.caseAlt'), { title, before, after }) }}
 >
   <Nav locale={locale} />
   <main class="px-page pt-6 pb-24 md:pt-12">

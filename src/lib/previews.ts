@@ -40,7 +40,7 @@ export function findMissingPreviews(builtFiles: BuiltFile[]): MissingPreview[] {
   const files = new Set(builtFiles.map(({ path }) => path));
   const pages = builtFiles.filter((file): file is BuiltPage => file.html !== undefined);
   const heavy = builtFiles
-    .filter(({ path, size = 0 }) => path.startsWith('og/') && size >= PREVIEW_MAX_BYTES)
+    .filter(({ path, size = 0 }) => /(^|\/)og\//.test(path) && size >= PREVIEW_MAX_BYTES)
     .map(({ path, size = 0 }) => ({ page: `/${path}`, reason: `${Math.round(size / 1024)} KB, over ${PREVIEW_MAX_BYTES / 1024} KB` }));
 
   return [...pages.flatMap((page) => missingFromPage(page, files)), ...heavy];

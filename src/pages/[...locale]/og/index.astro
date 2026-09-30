@@ -20,7 +20,7 @@ const site = await getSite(locale);
 const city = profile.city.split(',')[0];
 ---
 
-<OgCard title={site.displayName} aurora="left">
+<OgCard locale={locale} title={site.displayName} aurora="left">
   <div class="flex h-full items-start justify-between">
     <div class="flex h-full w-169 flex-col justify-between">
       <div class="flex flex-col gap-7">

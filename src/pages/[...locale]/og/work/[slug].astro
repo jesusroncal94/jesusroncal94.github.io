@@ -28,7 +28,7 @@ const { title, before, after, organisation } = entry.data;
 const site = await getSite(locale);
 ---
 
-<OgCard title={title} aurora="right">
+<OgCard locale={locale} title={title} aurora="right">
   <div class="flex h-full flex-col gap-6">
     <p class="label-mono text-signal">{caseEyebrow(entry)}</p>
     <h1 class="heading-h2 text-primary">{title}</h1>

@@ -9,3 +9,12 @@ describe('versionPreviewUrls', () => {
     );
   });
 });
+
+describe('versionPreviewUrls in a locale', () => {
+  it('versions a preview image under a locale prefix', () => {
+    const html = '<meta property="og:image" content="https://site.invalid/es/og/home.jpg" />';
+    expect(versionPreviewUrls(html, new Map([['/es/og/home.jpg', 'a1b2c3d4']]))).toBe(
+      '<meta property="og:image" content="https://site.invalid/es/og/home.jpg?v=a1b2c3d4" />',
+    );
+  });
+});

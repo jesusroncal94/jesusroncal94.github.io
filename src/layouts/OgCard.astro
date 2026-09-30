@@ -1,17 +1,19 @@
 ---
 import '../styles/global.css';
+import type { Locale } from '../i18n/locales';
 import { PREVIEW_SIZE } from '../lib/preview';
 
 interface Props {
+  locale: Locale;
   title: string;
   aurora: 'left' | 'right';
 }
 
-const { title, aurora } = Astro.props;
+const { locale, title, aurora } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang={locale} data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content={`width=${PREVIEW_SIZE.width}`} />
