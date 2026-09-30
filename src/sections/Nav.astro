@@ -1,7 +1,8 @@
 ---
 import EmailAction from '../components/EmailAction.astro';
 import Icon from '../components/Icon.astro';
-import { localePath, type Locale } from '../i18n/locales';
+import LocaleSwitch from '../components/LocaleSwitch.astro';
+import { isMultilingual, localePath, type Locale } from '../i18n/locales';
 import { useTranslations } from '../i18n/translate';
 import { getSite } from '../lib/site';
 
@@ -38,7 +39,14 @@ const links = [
     </ul>
   </nav>
 
-  <EmailAction locale={locale} class="max-md:hidden" />
+  {isMultilingual() ? (
+    <div class="flex items-center gap-4 max-md:hidden">
+      <LocaleSwitch locale={locale} variant="compact" />
+      <EmailAction locale={locale} />
+    </div>
+  ) : (
+    <EmailAction locale={locale} class="max-md:hidden" />
+  )}
 
   <details class="group md:hidden" data-mobile-menu>
     <summary class="cursor-pointer list-none rounded-sm p-1 text-primary [&::-webkit-details-marker]:hidden">
@@ -54,6 +62,12 @@ const links = [
           </li>
         ))}
       </ul>
+      {isMultilingual() && (
+        <div class="mt-2 flex items-center justify-between border-t border-border px-2 pt-3 pb-1">
+          <p class="label-mono text-subtle">{t('nav.language')}</p>
+          <LocaleSwitch locale={locale} variant="full" />
+        </div>
+      )}
     </nav>
   </details>
 </header>

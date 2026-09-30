@@ -7,6 +7,7 @@ export const en = {
   'nav.openSource': 'Open source',
   'nav.experience': 'Experience',
   'nav.menu': 'Menu',
+  'nav.language': 'Language',
 
   'cta.downloadCv': 'Download CV',
   'cta.emailMe': 'Email me',

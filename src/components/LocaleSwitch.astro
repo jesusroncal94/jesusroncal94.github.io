@@ -1,0 +1,42 @@
+---
+import { LOCALE_NAMES, localePath, PUBLISHED_LOCALES, stripLocale, type Locale } from '../i18n/locales';
+
+interface Props {
+  locale: Locale;
+  variant: 'compact' | 'full';
+  class?: string;
+}
+
+const { locale, variant, class: className } = Astro.props;
+const path = stripLocale(Astro.url.pathname);
+const compact = variant === 'compact';
+---
+
+{PUBLISHED_LOCALES.length > 1 && (
+  <ul class:list={['flex items-center gap-0.5 rounded-full border border-border-strong p-[3px]', className]}>
+    {PUBLISHED_LOCALES.map((target) => (
+      <li>
+        <a
+          href={localePath(target, path)}
+          hreflang={target}
+          lang={target}
+          aria-current={target === locale ? 'true' : undefined}
+          data-locale-link={target}
+          aria-label={compact ? `${target.toUpperCase()} — ${LOCALE_NAMES[target]}` : undefined}
+          class:list={[
+            'block rounded-full text-muted transition-colors hover:text-primary aria-[current]:bg-raised aria-[current]:text-primary',
+            compact ? 'label-mono px-2.5 py-1.5' : 'body-s px-4 py-2.5',
+          ]}
+        >
+          {compact ? target.toUpperCase() : LOCALE_NAMES[target]}
+        </a>
+      </li>
+    ))}
+  </ul>
+)}
+
+<script>
+  import { bindLocaleLinks } from '../scripts/locale';
+
+  bindLocaleLinks();
+</script>

@@ -32,3 +32,7 @@ export const localeRoutes = () =>
     params: { locale: locale === DEFAULT_LOCALE ? undefined : locale },
     props: { locale },
   }));
+
+export const LOCALE_NAMES: Record<Locale, string> = { en: 'English', es: 'Español', it: 'Italiano' };
+
+export const isMultilingual = () => PUBLISHED_LOCALES.length > 1;
