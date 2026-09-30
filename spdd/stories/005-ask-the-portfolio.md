@@ -63,3 +63,11 @@ improvement is measured, as `rag-assistant` measures everything.
 - **Privacy:** question text is never stored; only anonymous counters are kept.
 - **Retrieval:** the improvement lands in the public `rag-assistant` repository, with its
   before and after measured in that repository's README.
+
+**✅ Approved on 2026-10-01:** the four Penpot frames on the Ask page (desktop answer and refusal,
+phone answer and limit) and their fixed UI copy: "Sources", "Closest sources", "Email Jesus",
+the refusal line ("That is not in Jesus's public profile, so I will not guess. These are the
+closest things it does say:"), the limit line ("That is today's 10 questions. Ask again
+tomorrow, or write to Jesus directly."), the privacy line ("Questions are not stored. Answers
+use only Jesus's public profile.") and the receipt format ("{n} tokens · ${cost} · {s} s ·
+grounding {score}", or "declined: not in the profile").
