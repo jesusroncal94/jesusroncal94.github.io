@@ -1,9 +1,10 @@
-import { readdir, rm } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { preview } from 'astro';
 import { chromium, type Browser } from 'playwright';
 import { localePath, PUBLISHED_LOCALES } from '../src/i18n/locales';
 import { cvFileName } from '../src/lib/cv';
-import { PREVIEW_SIZE } from '../src/lib/preview';
+import { PREVIEW_SIZE, versionPreviewUrls } from '../src/lib/preview';
 
 const PORT = 4322;
 const ORIGIN = `http://127.0.0.1:${PORT}`;
@@ -55,6 +56,22 @@ async function removeCardPages() {
   }
 }
 
+async function versionPreviews() {
+  const files = (await readdir(DIST, { recursive: true, withFileTypes: true }))
+    .filter((entry) => entry.isFile())
+    .map((entry) => `${entry.parentPath}/${entry.name}`.replaceAll('\\', '/'));
+  const versions = new Map<string, string>();
+  for (const image of files.filter((file) => file.startsWith(`${OG}/`) && file.endsWith('.jpg'))) {
+    const hash = createHash('sha256').update(await readFile(image)).digest('hex').slice(0, 8);
+    versions.set(image.slice(DIST.length), hash);
+  }
+  for (const page of files.filter((file) => file.endsWith('.html'))) {
+    const html = await readFile(page, 'utf8');
+    const versioned = versionPreviewUrls(html, versions);
+    if (versioned !== html) await writeFile(page, versioned);
+  }
+}
+
 const server = await preview({ root: '.', logLevel: 'warn', server: { host: '127.0.0.1', port: PORT } });
 const browser = await chromium.launch();
 
@@ -67,3 +84,4 @@ try {
 }
 
 await removeCardPages();
+await versionPreviews();
