@@ -67,8 +67,8 @@ openSource:
   title: Code you can actually read
   lede: Client work stays under NDA. These are public, small on purpose, and each one is about a single idea.
   repos:
-    - name: rag-assistant
-      url: https://github.com/jesusroncal94/rag-assistant
+    - name: rag-bm25-search
+      url: https://github.com/jesusroncal94/rag-bm25-search
       title: Answers with citations, or not at all
       pitch: >-
         Question answering over internal documents that cites every claim and returns the

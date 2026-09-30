@@ -67,8 +67,8 @@ openSource:
   title: Código que de verdad se puede leer
   lede: El trabajo para clientes está bajo NDA. Estos repos son públicos, pequeños a propósito, y cada uno trata una sola idea.
   repos:
-    - name: rag-assistant
-      url: https://github.com/jesusroncal94/rag-assistant
+    - name: rag-bm25-search
+      url: https://github.com/jesusroncal94/rag-bm25-search
       title: Respuestas con citas, o ninguna
       pitch: >-
         Preguntas y respuestas sobre documentos internos que cita cada afirmación y, cuando la
