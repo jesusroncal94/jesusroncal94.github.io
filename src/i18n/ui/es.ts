@@ -3,7 +3,7 @@ import type { UiKey } from './en';
 export const es: Record<UiKey, string> = {
   'site.title': 'Jesús Roncal — AI & Backend Engineer',
   'site.description':
-    'Senior Software Engineer, AI & Backend. Construyo sistemas LLM que sobreviven en producción: medidos, fundamentados y atentos al coste.',
+    'Senior Software Engineer, AI & Backend. Creo sistemas LLM que resisten en producción: medidos, fundamentados y atentos al coste.',
 
   'nav.work': 'Trabajo',
   'nav.openSource': 'Código abierto',
@@ -54,7 +54,7 @@ export const es: Record<UiKey, string> = {
   'cv.languages': 'Idiomas',
 
   'og.role': 'AI & Backend Engineer',
-  'og.homeAlt': 'Jesús Roncal, AI & Backend Engineer. Construyo sistemas LLM que sobreviven en producción.',
+  'og.homeAlt': 'Jesús Roncal, AI & Backend Engineer. Creo sistemas LLM que resisten en producción.',
   'og.caseAlt': '{title}: de {before} a {after}. Un caso de estudio de Jesús Roncal.',
 
   'suggest.title': 'También en español.',

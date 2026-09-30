@@ -3,8 +3,8 @@ monogram: jr
 
 hero:
   status: Abierto a roles de AI Engineer · UE
-  headlineLead: Construyo sistemas LLM
-  headlineAccent: que sobreviven en producción.
+  headlineLead: Creo sistemas LLM
+  headlineAccent: que resisten en producción.
   lede: >-
     Senior Software Engineer, AI & Backend. Ocho años construyendo sistemas backend; los
     últimos cuatro, llevando pipelines multiagente, RAG y de evaluación a usuarios reales.
