@@ -196,3 +196,31 @@ Implemented. This section is authoritative where it differs from the operations 
 - **Overflow audit:** zero overflow at all 12 widths.
 - **Lighthouse:** all assertions pass on six URLs × 3 runs.
 - **Pending:** Jesus's LinkedIn Post Inspector check, after the deploy.
+
+## Sync — 2026-09-30 (Post Inspector and versioned image URLs)
+
+**Post Inspector, first pass.**
+- `/` rendered sharp, from LinkedIn's `articleshare-shrink_480` rendition.
+- `/work/02-cost-leak/` rendered blurry. LinkedIn served its `articleshare-shrink_160`
+  rendition, a 160 px image stretched across the card, and re-inspecting did not change it.
+- `/work/01-evals/`, inspected fresh as a control, rendered sharp. The case cards are
+  therefore fine; LinkedIn kept a poor first rendition of one image URL. It caches
+  renditions per image URL, so re-reading the page cannot replace one.
+
+**Fix: content-versioned image URLs.**
+- After rendering, `render-artifacts.ts` hashes each JPEG (first 8 hex digits of its
+  SHA-256).
+- `versionPreviewUrls` rewrites every `og:image` in the built HTML to
+  `…/<card>.jpg?v=<hash>`, and has a unit test.
+- A URL now changes exactly when its card changes, so no network can keep serving a stale
+  or poor rendition of an updated card. `/work/02-cost-leak/` gets a URL LinkedIn has
+  never seen.
+- `findMissingPreviews` also reports an `og:image` without `?v=`.
+
+**Verified on 2026-09-30.**
+- 11 unit tests pass, and both checks pass.
+- All five pages declare versioned URLs.
+- Rendering is deterministic: the local build and the deployed CI build produce
+  byte-identical JPEGs for `home`, `01-evals` and `02-cost-leak`, so deploys do not churn
+  the URLs.
+- **Pending:** Jesus re-inspects `/work/02-cost-leak/` after the deploy.
