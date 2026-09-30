@@ -5,7 +5,7 @@ Story: [004](../stories/004-read-it-in-my-language.md), part a. Analysis:
 `Home — Desktop 1440 · i18n`, `Home — Phone 390 · i18n suggestion`,
 `Home — Phone 390 · i18n menu` (see [../design.md](../design.md)).
 
-**Status:** written on 2026-09-30, waiting for approval.
+**Status:** approved on 2026-09-30; half 1 (operations 1–7) in implementation.
 
 ## R — Requirements
 
