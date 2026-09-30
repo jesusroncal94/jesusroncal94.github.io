@@ -1,4 +1,5 @@
-import { DEFAULT_LOCALE } from '../i18n/locales';
+import { DEFAULT_LOCALE, isLocale } from '../i18n/locales';
+import { suggestLocale } from '../lib/suggest-locale';
 
 const DISMISSED_KEY = 'locale-suggestion';
 
@@ -24,5 +25,24 @@ export function bindLocaleLinks() {
     if (!link) return;
     if (link.dataset.localeLink === DEFAULT_LOCALE) rememberDismissal();
     if (location.hash) link.hash = location.hash;
+  });
+}
+
+export function revealLocaleSuggestion() {
+  const suggestions = [...document.querySelectorAll<HTMLElement>('[data-locale-suggestion]')];
+  if (!suggestions.length) return;
+
+  const published = (suggestions[0].dataset.published ?? '').split(' ').filter(isLocale);
+  const target = suggestLocale(navigator.languages, published, wasDismissed());
+  suggestions.forEach((suggestion) => (suggestion.hidden = suggestion.dataset.localeSuggestion !== target));
+
+  document.addEventListener('click', (event) => {
+    const element = event.target as Element;
+    if (element.closest('[data-suggestion-dismiss]')) {
+      rememberDismissal();
+      suggestions.forEach((suggestion) => (suggestion.hidden = true));
+    } else if (element.closest('[data-locale-suggestion] a')) {
+      rememberDismissal();
+    }
   });
 }

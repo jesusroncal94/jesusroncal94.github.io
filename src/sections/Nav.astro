@@ -1,6 +1,7 @@
 ---
 import EmailAction from '../components/EmailAction.astro';
 import Icon from '../components/Icon.astro';
+import LocaleSuggestion from '../components/LocaleSuggestion.astro';
 import LocaleSwitch from '../components/LocaleSwitch.astro';
 import { isMultilingual, localePath, type Locale } from '../i18n/locales';
 import { useTranslations } from '../i18n/translate';
@@ -41,7 +42,10 @@ const links = [
 
   {isMultilingual() ? (
     <div class="flex items-center gap-4 max-md:hidden">
-      <LocaleSwitch locale={locale} variant="compact" />
+      <div class="relative">
+        <LocaleSwitch locale={locale} variant="compact" />
+        <LocaleSuggestion locale={locale} variant="card" class="absolute top-full right-0 z-30 mt-3" />
+      </div>
       <EmailAction locale={locale} />
     </div>
   ) : (
@@ -54,7 +58,7 @@ const links = [
       <Icon name="menu" size={24} class="group-open:hidden" />
       <Icon name="close" size={24} class="hidden group-open:block" />
     </summary>
-    <nav aria-label={t('nav.menu')} class="absolute inset-x-4 top-16 rounded-lg border border-border-strong bg-surface p-2 shadow-float">
+    <nav aria-label={t('nav.menu')} class="absolute inset-x-4 top-16 z-40 rounded-lg border border-border-strong bg-surface p-2 shadow-float">
       <ul>
         {links.map(({ href, label }) => (
           <li>
@@ -70,6 +74,8 @@ const links = [
       )}
     </nav>
   </details>
+
+  {isMultilingual() && <LocaleSuggestion locale={locale} variant="pill" class="absolute inset-x-4 top-17 z-30 md:hidden" />}
 </header>
 
 <script>

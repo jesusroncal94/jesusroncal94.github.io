@@ -54,6 +54,15 @@ export const en = {
   'og.role': 'AI & Backend Engineer',
   'og.homeAlt': 'Jesús Roncal, AI & Backend Engineer. I ship LLM systems that survive production.',
   'og.caseAlt': '{title}: {before} to {after}. A case study by Jesús Roncal.',
+
+  'suggest.title': 'Also in English.',
+  'suggest.alsoIn': 'This site is also available in {language}.',
+  'suggest.action': 'Read in English',
+  'suggest.pill': 'Read this site in English →',
+  'suggest.close': 'Dismiss',
+  'language.en': 'English',
+  'language.es': 'Spanish',
+  'language.it': 'Italian',
 } as const;
 
 export type UiKey = keyof typeof en;
