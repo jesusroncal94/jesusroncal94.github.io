@@ -5,7 +5,7 @@ Story: [008](../stories/008-link-preview.md). Analysis:
 `OG — Home 1200×630`, `OG — Case 02 1200×630`, `OG — Case 04 1200×630` (see
 [../design.md](../design.md)).
 
-**Status:** implemented and synced on 2026-09-30. The alt texts and the role line (operation 2) were approved on 2026-09-30. Waiting for the push and Jesus's Post Inspector check.
+**Status:** done on 2026-09-30, story 008 closed. The alt texts and the role line (operation 2) were approved on 2026-09-30.
 
 ## R — Requirements
 
@@ -224,3 +224,27 @@ Implemented. This section is authoritative where it differs from the operations 
   byte-identical JPEGs for `home`, `01-evals` and `02-cost-leak`, so deploys do not churn
   the URLs.
 - **Pending:** Jesus re-inspects `/work/02-cost-leak/` after the deploy.
+
+## Sync — 2026-09-30 (closing check)
+
+The versioned URL did not change the Post Inspector result. LinkedIn fetched
+`02-cost-leak.jpg?v=415e30fe` as a new asset, with a new id and timestamp, and again chose
+`articleshare-shrink_160`. The stale-cache diagnosis in the previous section was therefore
+wrong. The versioned URLs stay, because they still make updated cards reach every network.
+
+The deciding check was LinkedIn's post composer, which shows what a reader sees.
+- Jesus pasted `/work/02-cost-leak/` into the composer and discarded the draft.
+- LinkedIn rendered it as a compact link card, with a thumbnail and the title.
+- The thumbnail was sharp: the title, "$15/day → $0" and the byline were legible.
+
+`shrink_160` is the rendition for that compact layout. The Post Inspector stretches it to
+large-card size, which made it look blurry.
+
+LinkedIn chooses the large or compact layout per link. Our tags cannot choose it: they are
+complete on every page. The home page and case 01 got large cards, and case 02 got a compact
+one.
+
+**Definition of done:**
+- **Post Inspector:** it shows the card for `/`, `/work/01-evals/` and `/work/02-cost-leak/`.
+- **Legibility:** the card reads in both layouts LinkedIn uses.
+- **Closed:** story 008 is closed.
