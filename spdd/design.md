@@ -13,6 +13,9 @@ Mockups live in **Penpot** and are the visual source of truth for the canvases i
 | Social      | OG — Home 1200×630     | 008                     |
 | Social      | OG — Case 02 1200×630  | 008                     |
 | Social      | OG — Case 04 1200×630  | 008                     |
+| Home        | Home — Desktop 1440 · i18n | 004              |
+| Home        | Home — Phone 390 · i18n suggestion | 004      |
+| Home        | Home — Phone 390 · i18n menu | 004            |
 
 The three Home frames sit side by side and share one set of components, so the responsive
 behaviour of story 007 can be compared section by section.
@@ -81,6 +84,11 @@ Code Mono.
   1200 × 630. The home card pairs the desktop headline with the portrait. The case cards put
   the before → after metric at Display size, so it survives as a 400 px thumbnail. Case 04,
   the longest metric, is drawn to prove it fits on one line.
+- Language (story 004, drawn 2026-09-30). An EN / ES segmented switch sits in the desktop
+  nav before "Email me", and in a "Language" row at the foot of the phone menu sheet. The
+  suggestion floats and never shifts the layout. On desktop it is a card anchored under the
+  switcher, so it points at where the choice lives. On phones it is a one-line pill under the
+  nav, because a card there would cover the headline. It is written in the target language.
 - The portrait badges frame the face on a diagonal: the current role overhangs the top-left
   edge, the lead role the bottom-right, so neither covers the face (2026-09-27).
 
@@ -91,7 +99,7 @@ Code Mono.
   (for example side by side) while an agent works in it.
 - The plugin's `storage` is lost when the plugin reconnects. The builder library is saved
   in the file itself, as plugin data (`portfolioLib.foundations`,
-  `portfolioLib.sections`, `portfolioLib.patches`, `portfolioLib.social`, `portfolioLib.frames`), and can be
+  `portfolioLib.sections`, `portfolioLib.patches`, `portfolioLib.social`, `portfolioLib.i18n`, `portfolioLib.frames`), and can be
   reinstalled in one call.
 - Shapes whose text changes need auto-height or auto-width set after they are added to a
   flex board, or they keep the width they had at creation.

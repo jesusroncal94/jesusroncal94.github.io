@@ -20,10 +20,25 @@ Spanish and Italian ship separately, because they are reviewed differently:
 
 ## Acceptance criteria
 
-- WHEN the browser language is `es` or `it`, that locale is published, and the visitor
-  lands on an English page
-  THEN a dismissible suggestion to switch language appears, and never an automatic
-  redirect. Dismissing it is remembered on that device.
+- WHEN all four conditions hold:
+  1. the visitor is on an English page;
+  2. a published locale other than English comes before English in `navigator.languages`,
+     or English is not listed at all;
+  3. they have not dismissed the suggestion on this device;
+  4. they have not chosen English with the switcher, which counts as a dismissal;
+
+  THEN a dismissible suggestion for that locale appears, and never an automatic redirect.
+  The decision uses only the browser's language list, never location or IP, and makes no
+  request to any other service. These cases are its tests:
+
+  | `navigator.languages` | Suggest |
+  | --------------------- | ------- |
+  | `es-ES` | Spanish |
+  | `es-MX, en` | Spanish |
+  | `en-US, es` | nothing: English is preferred |
+  | `it-IT, en` | nothing while Italian is unpublished; Italian once 004b ships |
+  | `it-IT, es` | Spanish |
+  | `en-GB` | nothing |
 - WHEN the visitor uses the language switcher in the nav
   THEN they land on the same page and section in the other locale
 - WHEN JavaScript is disabled
@@ -53,3 +68,10 @@ Spanish and Italian ship separately, because they are reviewed differently:
 - Every fact stays traceable to `profile.md`: translation never adds, rounds or softens a
   claim
 - The Lighthouse budget passes on every page of every published locale
+
+**✅ Approved on 2026-09-30:** the story, the three Penpot frames (`Home — Desktop 1440 · i18n`,
+`Home — Phone 390 · i18n suggestion`, `Home — Phone 390 · i18n menu`) and their copy:
+- the desktop card: "También en español.", "This site is also available in Spanish." and
+  "Ver en español";
+- the phone pill: "Ver este sitio en español →";
+- the menu row: "Language", "English" and "Español".
