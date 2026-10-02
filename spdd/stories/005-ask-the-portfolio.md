@@ -4,6 +4,9 @@
 **I want** to ask questions about Jesus's work and get grounded answers
 **So that** I can probe specific experience before we talk
 
+> **Note (2026-10-02):** `rag-assistant` was renamed to `rag-bm25-search`. This story keeps the
+> name the repository had when it was written.
+
 ## Evidence (2026-10-01)
 
 Revised before the mockups. `rag-assistant`, the public service this story runs on, reports

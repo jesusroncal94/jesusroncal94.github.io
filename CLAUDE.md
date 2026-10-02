@@ -108,5 +108,6 @@ Report what failed as plainly as what passed.
   2026-09-30 until a native Italian reviewer is available; `it` stays out of
   `PUBLISHED_LOCALES` until then.
 - Story 005 (Ask the portfolio) is on hold since 2026-10-01: the live assistant is not built for now.
-  Retrieval work continues in the `rag-assistant` repository, in its own session; a fifth case
+  Retrieval work continues in the `rag-bm25-search` repository (named `rag-assistant` until
+  2026-10-02, and kept sparse-only), in its own session; a fifth case
   study here can tell it once measured. Phase 4 (PostHog EU) is still open.

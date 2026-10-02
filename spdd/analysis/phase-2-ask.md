@@ -4,6 +4,11 @@ Step 3 of the SPDD flow for story [005](../stories/005-ask-the-portfolio.md). In
 as approved on 2026-10-01, the four frames on the Ask page of the Penpot file (see
 [../design.md](../design.md)), and the `rag-assistant` repository as of commit `96321d9`.
 
+> **Note (2026-10-02):** `rag-assistant` was renamed to `rag-bm25-search`, and its history was
+> rewritten, so the same state is now commit `6a1183d`. This analysis keeps the names it was
+> written with. The repository stays sparse-only, so decision 3's hybrid option does not apply
+> as written: the retrieval work there improves BM25 alone.
+
 ## 1. Diagnosis
 
 ### What `rag-assistant` already gives
