@@ -45,6 +45,10 @@ export const es: Record<UiKey, string> = {
 
   'footer.builtWith': 'Hecho spec-first con SPDD',
   'footer.source': 'código',
+  'footer.privacy': 'Privacidad',
+
+  'privacy.back': 'Inicio',
+  'privacy.updated': 'Actualizado el {date}',
 
   'cv.title': 'Currículum vítae',
   'cv.summary': 'Resumen',

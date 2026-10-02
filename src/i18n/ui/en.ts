@@ -43,6 +43,10 @@ export const en = {
 
   'footer.builtWith': 'Built spec-first with SPDD',
   'footer.source': 'source',
+  'footer.privacy': 'Privacy',
+
+  'privacy.back': 'Home',
+  'privacy.updated': 'Updated {date}',
 
   'cv.title': 'Curriculum vitae',
   'cv.summary': 'Summary',

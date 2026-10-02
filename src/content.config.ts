@@ -75,6 +75,12 @@ const site = defineCollection({
       ledeShort: z.string(),
       sourceUrl: z.url(),
     }),
+    privacy: z.object({
+      eyebrow: z.string(),
+      title: z.string(),
+      updated: z.iso.date(),
+      sections: z.array(z.object({ heading: z.string(), text: z.string() })).min(1),
+    }),
     cv: z.object({
       summary: z.string(),
       highlights: z.array(z.object({ roleId: z.string(), items: z.array(z.string()).min(1).max(4) })),

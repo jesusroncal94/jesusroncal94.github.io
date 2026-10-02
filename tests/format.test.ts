@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatMonth, formatNumber, formatPeriod } from '../src/i18n/format';
+import { formatDate, formatMonth, formatNumber, formatPeriod } from '../src/i18n/format';
 import { localePath, stripLocale } from '../src/i18n/locales';
 
 describe('English formatting', () => {
@@ -9,6 +9,11 @@ describe('English formatting', () => {
     expect(formatMonth('2021', 'en')).toBe('2021');
     expect(formatPeriod('2024-09', null, 'en')).toBe('2024 — now');
     expect(formatPeriod('2022-01', '2024-11', 'en')).toBe('2022 — 2024');
+  });
+
+  it('formats a full date the way the approved copy writes it', () => {
+    expect(formatDate('2026-10-02', 'en')).toBe('2 October 2026');
+    expect(formatDate('2026-10-02', 'es')).toBe('2 de octubre de 2026');
   });
 
   it('builds locale-aware paths', () => {

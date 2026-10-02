@@ -163,6 +163,22 @@ contact:
   ledeShort: Abierto a roles de AI Engineer, Senior Backend y Tech Lead en toda la UE.
   sourceUrl: https://github.com/jesusroncal94/jesusroncal94.github.io
 
+privacy:
+  eyebrow: Privacidad
+  title: Qué registra este sitio y qué no
+  updated: '2026-10-02'
+  sections:
+    - heading: Qué se registra
+      text: Qué página abres, el sitio desde el que llegas, el idioma en que la lees y cualquier etiqueta de campaña del enlace (utm_*). También si descargas el CV, copias o abres la dirección de email, abres mi LinkedIn o GitHub, o lees un caso hasta su resultado.
+    - heading: Qué no
+      text: Ninguna cookie. No se guarda nada en tu navegador y nada te identifica de una visita a otra. Tu dirección IP se usa para contar la visita y después se descarta.
+    - heading: Adónde va
+      text: A PostHog, que lo procesa en la UE. Lo uso para ver qué candidaturas y qué páginas funcionan, nunca para perfilar a nadie. Mis informes abarcan los últimos doce meses.
+    - heading: Cómo desactivarlo
+      text: Si tu navegador envía Global Privacy Control o Do Not Track, no se registra nada.
+    - heading: Preguntas
+      text: Escríbeme a jesusroncal94@gmail.com.
+
 cv:
   summary: >-
     Ingeniero de software senior con más de 8 años en sistemas backend, APIs e infraestructura
