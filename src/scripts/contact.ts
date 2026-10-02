@@ -1,12 +1,14 @@
-import { track, type ConversionEvent } from '../lib/track';
+import type { ConversionEvent } from '../lib/track';
 
 const CONFIRMATION_MS = 2000;
 
 document.addEventListener('click', (event) => {
   const element = (event.target as Element).closest<HTMLElement>('[data-track]');
   if (!element) return;
-  const { trackTarget } = element.dataset;
-  track(element.dataset.track as ConversionEvent, trackTarget ? { target: trackTarget } : undefined);
+  const { track: conversion, trackTarget } = element.dataset;
+  import('../lib/track').then(({ track }) =>
+    track(conversion as ConversionEvent, trackTarget ? { target: trackTarget } : undefined),
+  );
   if (element instanceof HTMLAnchorElement && element.dataset.emailCopy) copyEmail(event, element);
 });
 
