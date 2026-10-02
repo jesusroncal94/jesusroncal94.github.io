@@ -19,10 +19,11 @@ const site = await getSite(locale);
     clearsContactBar && 'max-md:pb-30',
   ]}
 >
-  <p class="code-mono text-subtle">
-    © 2026 {site.displayName} ·{' '}
+  <div class="code-mono flex gap-[1ch] text-subtle">
+    <p>© 2026 {site.displayName}</p>
+    <span aria-hidden="true">·</span>
     <a href={localePath(locale, 'privacy')} class="text-muted hover:text-primary">{t('footer.privacy')}</a>
-  </p>
+  </div>
   <a href={site.contact.sourceUrl} target="_blank" rel="noopener" class="code-mono text-subtle hover:text-primary">
     {t('footer.builtWith')} · {t('footer.source')} ↗
   </a>

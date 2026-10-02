@@ -43,10 +43,11 @@ const { email, linkedin, github } = profile.contact;
       <li><a href={github} target="_blank" rel="noopener" data-track="profile_open" data-track-target="github" class="body-s text-primary hover:text-signal md:text-muted">GitHub ↗</a></li>
       <li><a href={`mailto:${email}`} data-track="email_open" class="body-s text-primary hover:text-signal md:text-muted">{t('contact.email')}</a></li>
     </ul>
-    <p class="code-mono text-subtle md:order-1">
-      © 2026 {site.displayName} ·{' '}
+    <div class="code-mono flex gap-[1ch] text-subtle md:order-1">
+      <p>© 2026 {site.displayName}</p>
+      <span aria-hidden="true">·</span>
       <a href={localePath(locale, 'privacy')} class="text-muted hover:text-primary">{t('footer.privacy')}</a>
-    </p>
+    </div>
     <a href={contact.sourceUrl} target="_blank" rel="noopener" class="code-mono text-subtle hover:text-primary md:order-3">
       {t('footer.builtWith')} · {t('footer.source')} ↗
     </a>
