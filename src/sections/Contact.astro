@@ -39,8 +39,8 @@ const { email, linkedin, github } = profile.contact;
 
   <footer class="mt-18 flex flex-col gap-4 md:mt-30 md:flex-row md:items-center md:justify-between">
     <ul class="flex gap-6 md:order-2 md:gap-7">
-      <li><a href={linkedin} target="_blank" rel="noopener" data-track="profile_open" class="body-s text-primary hover:text-signal md:text-muted">LinkedIn ↗</a></li>
-      <li><a href={github} target="_blank" rel="noopener" data-track="profile_open" class="body-s text-primary hover:text-signal md:text-muted">GitHub ↗</a></li>
+      <li><a href={linkedin} target="_blank" rel="noopener" data-track="profile_open" data-track-target="linkedin" class="body-s text-primary hover:text-signal md:text-muted">LinkedIn ↗</a></li>
+      <li><a href={github} target="_blank" rel="noopener" data-track="profile_open" data-track-target="github" class="body-s text-primary hover:text-signal md:text-muted">GitHub ↗</a></li>
       <li><a href={`mailto:${email}`} data-track="email_open" class="body-s text-primary hover:text-signal md:text-muted">{t('contact.email')}</a></li>
     </ul>
     <p class="code-mono text-subtle md:order-1">© 2026 {site.displayName}</p>
