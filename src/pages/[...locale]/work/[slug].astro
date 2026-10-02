@@ -52,7 +52,7 @@ const { Content } = await render(entry);
 >
   <Nav locale={locale} />
   <main class="px-page pt-6 pb-24 md:pt-12">
-    <article class="mx-auto flex max-w-170 flex-col gap-8">
+    <article class="mx-auto flex max-w-170 flex-col gap-8" data-case={caseSlug(entry)}>
       <a href={`${localePath(locale)}#work`} class="button-m inline-flex w-fit items-center gap-2 text-muted hover:text-primary">
         <Icon name="arrow-right" size={16} class="rotate-180" />
         {t('case.allWork')}
