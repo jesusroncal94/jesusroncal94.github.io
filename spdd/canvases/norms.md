@@ -39,4 +39,6 @@
   LCP ≤ 1.5 s, CLS ≤ 0.02, total JavaScript on the home page ≤ 15 KB gzipped.
 - **Works without JavaScript.** Every link, the CV download and the email fallback function
   with scripts disabled; scripts only enhance.
-- **No third-party requests at runtime** in Phase 1: no CDN fonts, no analytics, no embeds.
+- **No third-party requests at runtime, except one:** since Phase 4 (2026-10-02), the
+  analytics event to `eu.i.posthog.com`, and nothing else. No CDN fonts, no embeds, no
+  third-party scripts.

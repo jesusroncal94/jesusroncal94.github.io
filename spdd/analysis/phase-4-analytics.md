@@ -138,19 +138,19 @@ server hash mode and passes on the project key.
 
 ## 4. Decisions
 
-**⚠️ Pending — 1, provider and mode.** PostHog Cloud EU, cookieless server hash mode.
+**✅ Decision 1 — Provider and mode.** Confirmed 2026-10-02: PostHog Cloud EU, cookieless server hash mode.
 
-**⚠️ Pending — 2, tracker and budget.** A first-party tracker of about 1 KB, no SDK, with the
+**✅ Decision 2 — Tracker and budget.** Confirmed 2026-10-02: A first-party tracker of about 1 KB, no SDK, with the
 third-party budget from 0 to 1, pinned to `eu.i.posthog.com`.
 
-**⚠️ Pending — 3, events.** As in the table, including `profile_open` and the gates.
+**✅ Decision 3 — Events.** Confirmed 2026-10-02: As in the table, including `profile_open` and the gates.
 
-**⚠️ Pending — 4, owner mark.** `?analytics=off` and `?analytics=on`, stored only in
+**✅ Decision 4 — Owner mark.** Confirmed 2026-10-02: `?analytics=off` and `?analytics=on`, stored only in
 `localStorage` of the browsers where Jesus sets it.
 
-**⚠️ Pending — 5, note and footer.** As described, with 14 audited URLs.
+**✅ Decision 5 — Note and footer.** Confirmed 2026-10-02: As described, with 14 audited URLs.
 
-**⚠️ Pending — 6, retention sentence.** The replacement copy above, in both languages.
+**✅ Decision 6 — Retention sentence.** Confirmed 2026-10-02: The replacement copy above, in both languages.
 
-**⚠️ Pending — 7, dashboard.** The built-in Web analytics dashboard plus one conversions
+**✅ Decision 7 — Dashboard.** Confirmed 2026-10-02: The built-in Web analytics dashboard plus one conversions
 insight. Jesus creates the account and the project.
