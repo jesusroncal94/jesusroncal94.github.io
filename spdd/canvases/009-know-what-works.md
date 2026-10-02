@@ -322,4 +322,18 @@ run, because the Lighthouse budget failed, so neither reached the published site
     it in any `_astro` chunk, because the tracker moved into the `analytics` chunk.
   - Confirmation is the CI Lighthouse run on the pull request, which builds without
     deploying, so a failure no longer lands on `main`.
+- **Second step, from the pull request's CI run.**
+  - The case pages, the note and the CV went back to about 1358 ms. `/` and `/es/` still
+    measured 1506 ms.
+  - On the home page the one remaining extra request before LCP was the external `Base`
+    entry (1.1 KB) that loaded `analytics.ts` with a dynamic import. The case pages carried it
+    too and passed, but the home page has more weight before LCP: two fonts, the portrait and
+    an 11 KB document.
+  - `Base` now imports `analytics.ts` statically. With no other importer, the tracker
+    bundles into that one script, which has no imports, and Astro inlines it into the HTML.
+    `analytics.ts` itself waits for `load` before it sends the page view.
+  - Every page now makes exactly the external script requests it made before this canvas.
+    The home HTML grows from 11.3 to 12.1 KB compressed, under the 14.6 KB first round trip.
+  - The browser checks were rerun with the key injected into the HTML, and the results are
+    the same.
 - **New rule** in `norms.md`: a performance claim is measured where it is enforced.
