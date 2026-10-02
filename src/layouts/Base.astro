@@ -61,7 +61,7 @@ const imageUrl = image ? new URL(image.path, Astro.site).href : undefined;
   <body>
     <slot />
     <script>
-      addEventListener('load', () => import('../scripts/analytics'), { once: true });
+      import '../scripts/analytics';
     </script>
   </body>
 </html>
