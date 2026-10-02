@@ -1,0 +1,29 @@
+---
+import { localePath, type Locale } from '../i18n/locales';
+import { useTranslations } from '../i18n/translate';
+import { getSite } from '../lib/site';
+
+interface Props {
+  locale: Locale;
+  clearsContactBar?: boolean;
+}
+
+const { locale, clearsContactBar = false } = Astro.props;
+const t = useTranslations(locale);
+const site = await getSite(locale);
+---
+
+<footer
+  class:list={[
+    'flex flex-col gap-2.5 border-t border-border px-page pt-6 pb-8 md:flex-row md:items-center md:justify-between md:gap-4',
+    clearsContactBar && 'max-md:pb-30',
+  ]}
+>
+  <p class="code-mono text-subtle">
+    © 2026 {site.displayName} ·{' '}
+    <a href={localePath(locale, 'privacy')} class="text-muted hover:text-primary">{t('footer.privacy')}</a>
+  </p>
+  <a href={site.contact.sourceUrl} target="_blank" rel="noopener" class="code-mono text-subtle hover:text-primary">
+    {t('footer.builtWith')} · {t('footer.source')} ↗
+  </a>
+</footer>
