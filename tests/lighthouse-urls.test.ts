@@ -8,6 +8,7 @@ it('audits every published page with Lighthouse', () => {
   const pages = PUBLISHED_LOCALES.flatMap((locale) => [
     localePath(locale),
     localePath(locale, 'cv'),
+    localePath(locale, 'privacy'),
     ...slugs.map((slug) => localePath(locale, `work/${slug}`)),
   ]);
   const config = JSON.parse(readFileSync('lighthouserc.json', 'utf8'));

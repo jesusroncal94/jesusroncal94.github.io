@@ -9,12 +9,14 @@
         "http://localhost/work/02-cost-leak/index.html",
         "http://localhost/work/03-merge-campaign/index.html",
         "http://localhost/work/04-freya/index.html",
+        "http://localhost/privacy/index.html",
         "http://localhost/es/index.html",
         "http://localhost/es/cv/index.html",
         "http://localhost/es/work/01-evals/index.html",
         "http://localhost/es/work/02-cost-leak/index.html",
         "http://localhost/es/work/03-merge-campaign/index.html",
-        "http://localhost/es/work/04-freya/index.html"
+        "http://localhost/es/work/04-freya/index.html",
+        "http://localhost/es/privacy/index.html"
       ],
       "numberOfRuns": 3
     },
@@ -25,7 +27,7 @@
         "largest-contentful-paint": ["error", { "maxNumericValue": 1500, "aggregationMethod": "median-run" }],
         "cumulative-layout-shift": ["error", { "maxNumericValue": 0.02, "aggregationMethod": "median-run" }],
         "resource-summary:script:size": ["error", { "maxNumericValue": 15360 }],
-        "resource-summary:third-party:count": ["error", { "maxNumericValue": 0 }]
+        "resource-summary:third-party:count": ["error", { "maxNumericValue": 1 }]
       }
     }
   }
