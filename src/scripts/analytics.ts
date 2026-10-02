@@ -1,8 +1,12 @@
-import { OWNER_MARK, track } from '../lib/track';
+import { CONVERSION, OWNER_MARK, track, type Conversion } from '../lib/track';
 
 applyOwnerMark(new URLSearchParams(location.search).get(OWNER_MARK.key));
 track('$pageview');
 watchCaseResult();
+document.addEventListener(CONVERSION, (event) => {
+  const { event: conversion, props } = (event as CustomEvent<Conversion>).detail;
+  track(conversion, props);
+});
 
 function applyOwnerMark(setting: string | null) {
   try {

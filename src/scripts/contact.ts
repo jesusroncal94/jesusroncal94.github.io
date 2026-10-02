@@ -1,14 +1,17 @@
-import type { ConversionEvent } from '../lib/track';
+import type { CONVERSION, Conversion, ConversionEvent } from '../lib/track';
 
 const CONFIRMATION_MS = 2000;
+const CONVERSION_EVENT: typeof CONVERSION = 'conversion';
 
 document.addEventListener('click', (event) => {
   const element = (event.target as Element).closest<HTMLElement>('[data-track]');
   if (!element) return;
   const { track: conversion, trackTarget } = element.dataset;
-  import('../lib/track').then(({ track }) =>
-    track(conversion as ConversionEvent, trackTarget ? { target: trackTarget } : undefined),
-  );
+  const detail: Conversion = {
+    event: conversion as ConversionEvent,
+    props: trackTarget ? { target: trackTarget } : undefined,
+  };
+  document.dispatchEvent(new CustomEvent(CONVERSION_EVENT, { detail }));
   if (element instanceof HTMLAnchorElement && element.dataset.emailCopy) copyEmail(event, element);
 });
 
