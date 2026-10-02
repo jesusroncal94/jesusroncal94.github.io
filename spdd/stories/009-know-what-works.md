@@ -61,3 +61,9 @@ that speed, or the site stops proving the quality it claims.
 **✅ Approved on 2026-10-02:** the story as written, with its three product decisions: a
 `case_result_seen` event for case reads to the end, excluding Jesus's own visits with a mark
 set only on his browsers, and a privacy note page linked from every page's footer.
+
+**✅ Approved on 2026-10-02:** the six Penpot frames on the Privacy page (privacy note, home
+footer and case end, each on desktop and phone) and their copy in English and Spanish, on one
+condition: the note's three factual claims (the IP address is discarded, data is processed in
+the EU, and it is kept for one year) must be confirmed by the analysis before code, or the
+copy comes back for approval.

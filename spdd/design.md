@@ -20,6 +20,12 @@ Mockups live in **Penpot** and are the visual source of truth for the canvases i
 | Ask         | Ask — Desktop 1440 · refusal | 005            |
 | Ask         | Ask — Phone 390 · answer     | 005            |
 | Ask         | Ask — Phone 390 · limit      | 005            |
+| Privacy     | Privacy — Desktop 1440       | 009            |
+| Privacy     | Privacy — Phone 390          | 009            |
+| Privacy     | Home footer — Desktop 1440   | 009            |
+| Privacy     | Home footer — Phone 390      | 009            |
+| Privacy     | Case end — Desktop 1440      | 009            |
+| Privacy     | Case end — Phone 390         | 009            |
 
 The three Home frames sit side by side and share one set of components, so the responsive
 behaviour of story 007 can be compared section by section.
