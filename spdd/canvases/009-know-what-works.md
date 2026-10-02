@@ -79,7 +79,7 @@ existing Contact footer instead, as its frame shows.
 ```
 spdd/canvases/norms.md               third-party exception for Phase 4, with its date
 spdd/analysis/phase-4-analytics.md   decisions recorded as ✅ Confirmed 2026-10-02
-src/lib/analytics-config.ts          ANALYTICS (endpoint, public key, production host)
+src/lib/analytics-config.ts          ANALYTICS (endpoint, production host, key from PUBLIC_POSTHOG_KEY)
 src/lib/track.ts                     AnalyticsEvent, Visit, isMeasured, buildEvent, track
 src/scripts/analytics.ts             readVisit, owner mark, $pageview, case_result_seen
 src/layouts/Base.astro               imports analytics.ts
@@ -167,7 +167,7 @@ tests/track.test.ts                  payload, gates, pinned host
 12. **Launch, Jesus's part, then the end-to-end check.**
     - Jesus creates the PostHog account and an EU project, enables "Cookieless server hash
       mode", and passes on the project key.
-    - The key goes into `analytics-config.ts`, followed by a push with his yes.
+    - The key goes into the `PUBLIC_POSTHOG_KEY` repository variable, never into the code (incident below), followed by a push with his yes.
     - Then: events seen arriving, the Web analytics dashboard, one conversions insight by
       locale, and a Lighthouse run on the published home page.
 
@@ -188,8 +188,8 @@ All of [norms.md](norms.md), with the Phase 4 amendment from operation 1. In par
 - No identifier is sent: no `distinct_id` other than the cookieless placeholder, no session
   id, no person profile.
 - The one third-party request goes to the EU endpoint only, and a test pins it.
-- The project key is public and write-only by design. No other credential enters the
-  repository.
+- No key or token is written in the repository, public or not. The project token comes from
+  the `PUBLIC_POSTHOG_KEY` build variable (amended 2026-10-02, see the incident below).
 
 ## Sync — 2026-10-02 (operations 1–11)
 
@@ -267,3 +267,47 @@ operations above. Operation 12 needs Jesus's PostHog project and key, and a push
   back link, "All work" on case pages and now "Home" on the note, until it is dismissed.
 - `./tasks.ps1 test` stops under Windows PowerShell 5.1: `$ErrorActionPreference = 'Stop'`
   turns Docker's normal stderr into an error. `docker compose run --rm test` works.
+
+## Incident — 2026-10-02
+
+Two defects reached `main` in commit `b6bcd34`, pushed with Jesus's yes. The deploy did not
+run, because the Lighthouse budget failed, so neither reached the published site.
+
+**1. The project token was written in the repository.**
+- What happened:
+  - Operation 12 put the PostHog project token as a literal in `analytics-config.ts`, and it
+    was pushed to the public `main`.
+  - The canvas safeguard said this was acceptable, because the token is public and write-only
+    by design.
+  - Jesus caught it: a key belongs in the environment, not in the code.
+- The token is public in kind, since it ends up in the published JavaScript of a static site
+  anyway. But committing it puts it in the history, ties rotation to a commit, and mixes
+  configuration with code.
+- Fixed:
+  - Jesus rotated the token in PostHog, so the committed one is dead.
+  - `b6bcd34` is removed from `main` by a force-push, with Jesus's yes.
+  - The key now comes from `import.meta.env.PUBLIC_POSTHOG_KEY`. The deploy workflow passes it
+    from the `PUBLIC_POSTHOG_KEY` repository variable, and it is absent locally, so local builds
+    send nothing.
+  - Verified: a build without the variable ships an empty key, a build with it inlines it, and
+    no `phc_` token is left in any tracked file.
+- **New rule** in `norms.md`: no key or token in the repository, not even a public one.
+
+**2. The Sync above wrongly said this canvas does not change LCP.**
+- That conclusion came from a local Lighthouse comparison: 1380 → 1382 ms on `/`. In CI the
+  same build measured a median LCP of about 1505 ms on almost every page, against about
+  1358 ms for `5ded6f2`, and the budget is 1500 ms.
+- Cause: the tracker added three early module requests per page (from 3 to 6):
+  - the `Base` entry;
+  - the shared `track` chunk;
+  - `contact.ts` importing it.
+
+  CI's simulated throttling counts them on the critical path, and the local container did
+  not reproduce it.
+- Fixed:
+  - `Base` now imports `analytics.ts` only after the `load` event.
+  - `contact.ts` imports the tracker only on a click.
+  - A page now makes four early script requests, not six, and nothing on the critical path
+    waits on analytics.
+  - Confirmation is the CI Lighthouse run on the corrected commit, not a local run.
+- **New rule** in `norms.md`: a performance claim is measured where it is enforced.

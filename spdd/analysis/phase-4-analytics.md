@@ -58,8 +58,9 @@ and its own tests show exactly what:
 So `src/lib/track.ts` sends that shape itself, with `fetch(..., { keepalive: true })` to
 `https://eu.i.posthog.com/i/v0/e/`. Each event carries `$current_url`, `$pathname`, `$host`,
 `$referrer`, `$referring_domain`, the `utm_*` parameters, `locale`, and
-`$process_person_profile: false`, so no person profile is ever created. The project key goes in
-the site config: it is a public, write-only key by design.
+`$process_person_profile: false`, so no person profile is ever created. The project key is a
+public, write-only key by design, but it is not written in the repository: it comes from a
+build variable (amended 2026-10-02, see the incident in canvas 009).
 
 **The budget change this needs, for Jesus to approve:**
 

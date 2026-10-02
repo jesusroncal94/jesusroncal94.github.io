@@ -39,6 +39,14 @@
   LCP ≤ 1.5 s, CLS ≤ 0.02, total JavaScript on the home page ≤ 15 KB gzipped.
 - **Works without JavaScript.** Every link, the CV download and the email fallback function
   with scripts disabled; scripts only enhance.
+- **No key or token in the repository, not even a public one.** Keys come from build-time
+  environment variables (`PUBLIC_*` for the few the browser needs), set in CI as repository
+  variables. Locally they are absent, so a local build sends nothing anywhere. Added
+  2026-10-02 after the incident in canvas 009.
+- **A performance claim is measured where it is enforced.** A Lighthouse comparison that
+  decides whether a change regresses the budget runs in CI, or is confirmed there before it is
+  written down. A local container simulates a different machine. Added 2026-10-02, same
+  incident.
 - **No third-party requests at runtime, except one:** since Phase 4 (2026-10-02), the
   analytics event to `eu.i.posthog.com`, and nothing else. No CDN fonts, no embeds, no
   third-party scripts.
