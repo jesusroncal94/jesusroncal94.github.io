@@ -2,7 +2,7 @@
 import Button from '../components/Button.astro';
 import EmailAction from '../components/EmailAction.astro';
 import profile from '../../data/public-profile.json';
-import type { Locale } from '../i18n/locales';
+import { localePath, type Locale } from '../i18n/locales';
 import { useTranslations } from '../i18n/translate';
 import { cvPath } from '../lib/cv';
 import { getSite } from '../lib/site';
@@ -43,7 +43,10 @@ const { email, linkedin, github } = profile.contact;
       <li><a href={github} target="_blank" rel="noopener" data-track="profile_open" data-track-target="github" class="body-s text-primary hover:text-signal md:text-muted">GitHub ↗</a></li>
       <li><a href={`mailto:${email}`} data-track="email_open" class="body-s text-primary hover:text-signal md:text-muted">{t('contact.email')}</a></li>
     </ul>
-    <p class="code-mono text-subtle md:order-1">© 2026 {site.displayName}</p>
+    <p class="code-mono text-subtle md:order-1">
+      © 2026 {site.displayName} ·{' '}
+      <a href={localePath(locale, 'privacy')} class="text-muted hover:text-primary">{t('footer.privacy')}</a>
+    </p>
     <a href={contact.sourceUrl} target="_blank" rel="noopener" class="code-mono text-subtle hover:text-primary md:order-3">
       {t('footer.builtWith')} · {t('footer.source')} ↗
     </a>

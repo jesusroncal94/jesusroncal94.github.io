@@ -6,6 +6,7 @@ import Button from '../../../components/Button.astro';
 import ContactBar from '../../../components/ContactBar.astro';
 import EmailAction from '../../../components/EmailAction.astro';
 import Icon from '../../../components/Icon.astro';
+import SiteFooter from '../../../components/SiteFooter.astro';
 import StackTag from '../../../components/StackTag.astro';
 import Base from '../../../layouts/Base.astro';
 import Nav from '../../../sections/Nav.astro';
@@ -89,5 +90,6 @@ const { Content } = await render(entry);
       </footer>
     </article>
   </main>
+  <SiteFooter locale={locale} clearsContactBar />
   <ContactBar locale={locale} />
 </Base>

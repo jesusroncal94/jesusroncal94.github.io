@@ -1,0 +1,57 @@
+---
+import Icon from '../../components/Icon.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import Base from '../../layouts/Base.astro';
+import Nav from '../../sections/Nav.astro';
+import { formatDate } from '../../i18n/format';
+import { localePath, localeRoutes, type Locale } from '../../i18n/locales';
+import { interpolate, useTranslations } from '../../i18n/translate';
+import { ogImagePath } from '../../lib/preview';
+import { getSite } from '../../lib/site';
+
+export const getStaticPaths = localeRoutes;
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const { privacy, displayName } = await getSite(locale);
+const [, notRecorded] = privacy.sections;
+---
+
+<Base
+  locale={locale}
+  title={`${privacy.title} — ${displayName}`}
+  description={notRecorded.text}
+  image={{ path: ogImagePath(locale), alt: t('og.homeAlt') }}
+>
+  <Nav locale={locale} />
+  <main class="px-page pt-6 pb-16 md:pt-12 md:pb-24">
+    <article class="mx-auto flex max-w-170 flex-col gap-8">
+      <a href={localePath(locale)} class="button-m inline-flex w-fit items-center gap-2 text-muted hover:text-primary">
+        <Icon name="arrow-right" size={16} class="rotate-180" />
+        {t('privacy.back')}
+      </a>
+
+      <header class="flex flex-col gap-4">
+        <p class="label-mono text-signal">{privacy.eyebrow}</p>
+        <h1 class="heading-h2 text-primary">{privacy.title}</h1>
+        <p class="code-mono text-subtle">{interpolate(t('privacy.updated'), { date: formatDate(privacy.updated, locale) })}</p>
+      </header>
+
+      <div class="flex flex-col gap-7">
+        {
+          privacy.sections.map(({ heading, text }) => (
+            <section class="flex flex-col gap-2.5">
+              <h2 class="heading-h3 text-primary">{heading}</h2>
+              <p class="body-m md:body-l text-muted">{text}</p>
+            </section>
+          ))
+        }
+      </div>
+    </article>
+  </main>
+  <SiteFooter locale={locale} />
+</Base>
