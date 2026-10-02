@@ -190,3 +190,80 @@ All of [norms.md](norms.md), with the Phase 4 amendment from operation 1. In par
 - The one third-party request goes to the EU endpoint only, and a test pins it.
 - The project key is public and write-only by design. No other credential enters the
   repository.
+
+## Sync — 2026-10-02 (operations 1–11)
+
+Implemented up to operation 11. This section is authoritative where it differs from the
+operations above. Operation 12 needs Jesus's PostHog project and key, and a push.
+
+- **Op 3.**
+  - `readVisit()` lives in `src/lib/track.ts`, not in `analytics.ts`: `track()` needs it when
+    `contact.ts` calls it too.
+  - The body is sent as `text/plain`, not `application/json`. That avoids a CORS preflight,
+    which does not combine well with `keepalive`. Whether PostHog accepts it is confirmed in
+    the end-to-end check of operation 12.
+- **Ops 3–4** are one commit, the code with its tests. Commits for this canvas use a new
+  `analytics` scope.
+- **Op 7.** The note's date is data (`updated: '2026-10-02'`), formatted by a new
+  `formatDate`. It uses `en-GB` for English full dates because the site writes British
+  English, which gives the approved "2 October 2026"; plain `en` gives "October 2, 2026".
+- **Op 8.**
+  - The copyright, the separator and the Privacy link are three siblings in a flex row
+    (`gap-[1ch]`), in `SiteFooter` and in the home Contact footer.
+  - Inside one paragraph, the link failed Lighthouse's `link-in-text-block`, because it was
+    told apart from the text by colour alone. Accessibility fell to 0.95 on case pages and
+    0.91 on the note. The row looks the same as the frames.
+  - Astro's HTML compression also dropped the space after the "·" when it was written as
+    text.
+- **Op 9.** The note's meta description reuses approved copy, the "What is not" text, so no
+  unapproved string ships.
+
+**Verified on 2026-10-02, on the production build:**
+- **Tests:** 271 pass, among them:
+  - 10 for the tracker: the payload, each of the five gates, and the pinned host;
+  - 15 new review rows matched against the content.
+- **Checks:** "Checked internal links in 14 pages: none broken" and "Checked link previews in
+  14 pages: all complete".
+- **Overflow audit:** zero overflow on `/`, `/work/02-cost-leak/`, `/privacy/` and
+  `/es/privacy/` at all 12 widths.
+- **Screenshots** at 1440 and 390 px match the six frames:
+  - privacy EN and ES;
+  - home footer;
+  - case end, where Privacy ends 168 px above the contact bar on phones.
+
+  The only visible difference is where the desktop note title wraps.
+- **Lighthouse,** 14 URLs × 3 runs, all assertions pass:
+  - accessibility 1 and performance 1 everywhere;
+  - median LCP 1231–1382 ms;
+  - at most 5.1 KB of script;
+  - no third-party request, because the host gate keeps localhost silent.
+
+  An earlier run had single LCP readings of 1512 and 1522 ms. The commit before this canvas
+  (`5ded6f2`) measures 1380 ms on `/` and 1382 ms on `/es/` with the same method, against
+  1382 and 1375 ms now, so the canvas does not change LCP.
+- **Storage:** after visiting all 14 pages in a fresh profile, there are no cookies and no
+  `localStorage` or `sessionStorage` key.
+- **Sending path:**
+  - The site was served as `jesusroncal94.github.io` through a Playwright route, with a test
+    key injected into the tracker chunk in memory only. Requests to `eu.i.posthog.com` were
+    intercepted and answered locally, so nothing left the machine.
+  - Captured, all as `POST` `text/plain` to `/i/v0/e/` with
+    `distinct_id: "$posthog_cookieless"`, `$cookieless_mode: true` and
+    `$process_person_profile: false`:
+    - `$pageview` with the referrer, `www.linkedin.com` as the referring domain, the `utm_*`
+      tags and the locale;
+    - one `case_result_seen` with `case: "02-cost-leak"`, even after scrolling to the result
+      twice;
+    - `$pageview` with `$direct`;
+    - `profile_open` with `target` `linkedin` and `github`;
+    - `email_open` and `cv_download`.
+  - `email_copy` was not clicked in this run. It goes through the same `data-track` handler
+    as the rest.
+- **Gates on the published host:** zero requests with Global Privacy Control, with Do Not
+  Track, and after `?analytics=off`.
+
+**Found, outside this canvas:**
+- On phones, the language suggestion pill of story 004a (`position: absolute`) covers the
+  back link, "All work" on case pages and now "Home" on the note, until it is dismissed.
+- `./tasks.ps1 test` stops under Windows PowerShell 5.1: `$ErrorActionPreference = 'Stop'`
+  turns Docker's normal stderr into an error. `docker compose run --rm test` works.
