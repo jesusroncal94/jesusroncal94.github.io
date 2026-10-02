@@ -31,6 +31,7 @@ jobs:
       - run: npm run build
         env:
           ASTRO_TELEMETRY_DISABLED: "1"
+          PUBLIC_POSTHOG_KEY: ${{ vars.PUBLIC_POSTHOG_KEY }}
       - name: Lighthouse budget
         uses: treosh/lighthouse-ci-action@12.6.2
         with:
