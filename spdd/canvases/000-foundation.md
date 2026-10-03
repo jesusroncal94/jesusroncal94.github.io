@@ -195,3 +195,23 @@ This section is authoritative where it differs from operation 15.
 - With a temporary failing test, deleted afterwards: exit code 1, run plainly and with `2>&1`.
 - `./tasks.ps1 nope` is rejected by `ValidateSet` before Docker runs.
 - No container is left behind by the aborted runs before the fix.
+
+## Sync — 2026-10-03 (dependency advisory accepted)
+
+`npm audit` reports two high-severity entries, which are one advisory:
+[GHSA-ch52-4w7c-c8xp](https://github.com/advisories/GHSA-ch52-4w7c-c8xp) (CVE-2026-93748) in
+`http-cache-semantics@4.2.0`, pulled in by `astro@7.3.4`. A shared HTTP cache using the library
+can serve one user's cached response, cookies included, to another who sends a large
+`max-stale`. Every version up to 4.2.0, the latest, is affected; there is no patched release.
+
+**Decision, approved by Jesus on 2026-10-03: no dependency change.**
+- Astro imports the library in one file, `assets/build/remote.js`, which caches remote images
+  fetched during the build. Every image on the site is a local import (`avatar.jpg`,
+  `portrait.jpg`), and the only other image source is a `data:` GIF, so that code never runs.
+- The output is static files on GitHub Pages: no server, no shared cache, no cookies or
+  sessions, and the library does not reach the browser.
+- `npm audit fix --force` would downgrade Astro to 2.10.9, five majors back. It must not be run.
+
+**Watch:** Dependabot alerts were off; Jesus turned them on on 2026-10-03, and alert #1 tracks
+this advisory. It stays open, so it closes by itself once a patched version is installed.
+Revisit if the site starts using remote images, or when a patch is released.
