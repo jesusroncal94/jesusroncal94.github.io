@@ -7,7 +7,8 @@ Story: [009](../stories/009-know-what-works.md). Analysis:
 
 **Status:** in progress since 2026-10-02 (start approved that day). The privacy note copy (EN and ES) and the footer link
 were approved on 2026-10-02 with the frames. The retention sentence was replaced and approved
-on 2026-10-02 (analysis decision 6).
+on 2026-10-02 (analysis decision 6). The "What is not" text was made precise and approved on
+2026-10-03: the hash is daily and also uses the user agent, which PostHog does not store.
 
 ## R — Requirements
 
