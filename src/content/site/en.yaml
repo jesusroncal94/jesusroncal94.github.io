@@ -171,7 +171,7 @@ privacy:
     - heading: What is recorded
       text: Which page you open, the site that sent you, the language you read it in, and any campaign tag in the link (utm_*). Also whether you download the CV, copy or open the email address, open my LinkedIn or GitHub, or read a case study to its result.
     - heading: What is not
-      text: No cookies. Nothing is stored in your browser, and nothing identifies you from one visit to the next. Your IP address is used to count the visit and then discarded.
+      text: No cookies. Nothing is stored in your browser, and nothing links your visits from one day to the next. Your IP address and your browser's user agent are used to count the visit and then discarded.
     - heading: Where it goes
       text: To PostHog, processed in the EU. I use it to see which applications and pages work, never to profile anyone. My reports cover the last twelve months.
     - heading: Turning it off
