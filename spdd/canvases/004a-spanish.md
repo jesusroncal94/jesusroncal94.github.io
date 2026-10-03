@@ -5,7 +5,7 @@ Story: [004](../stories/004-read-it-in-my-language.md), part a. Analysis:
 `Home — Desktop 1440 · i18n`, `Home — Phone 390 · i18n suggestion`,
 `Home — Phone 390 · i18n menu` (see [../design.md](../design.md)).
 
-**Status:** implemented and synced on 2026-10-01. The Spanish copy was approved on 2026-10-01 in `spdd/reviews/004a-es.md` (three batches, choices C1–C15, C1 amended). Waiting for the push.
+**Status:** implemented and synced on 2026-10-01, and published at `/es/`. The Spanish copy was approved on 2026-10-01 in `spdd/reviews/004a-es.md` (three batches, choices C1–C15, C1 amended). Follow-up (operations 12–14) synced on 2026-10-03: the phone suggestion moved into the nav row; its text "Ver en español" was approved by Jesus on 2026-10-03. Waiting for the pull request.
 
 ## R — Requirements
 
@@ -296,3 +296,46 @@ This section is authoritative where it differs from the operations above.
 - **Screenshots:** `/es/` at 1440 and 390 px and `/es/work/04-freya/` match the frames. The
   `04` card fits "7 agentes → 1 grafo narrativo" on one line.
 - **Lighthouse:** all assertions pass on 12 URLs × 3 runs.
+
+## Sync — 2026-10-03 (follow-up: operations 12–14)
+
+This section is authoritative where it differs from the operations above.
+
+- **Op 12.**
+  - The pill is rendered in the header's flex row, before the menu, so `justify-between`
+    places it between the monogram and the menu. It has no position, shadow or `z-index`.
+  - It is `h-8` (32 px): an 18 px globe, the link on one line, and the close button with
+    `p-1.5`, a 30 px target. Measured width: 182 px, against 176 px in the frame.
+  - Op 6's note that the phone pill sits at `top-17` no longer holds. The menu sheet keeps
+    `z-40`, which is harmless now that nothing overlaps it.
+- **Op 13.** The review row of `suggest.pill` became a note under the UI table, so the review
+  test still asserts every UI key; the suite has one test fewer (270).
+- **Commits:** one per operation, because each left the tree building: `91b55e4` (op 12) and
+  `76d6426` (op 13), after `42e19a6` with the analysis and these operations.
+
+**Verified on 2026-10-03, on the production build** (`docker compose up preview`, checked from
+a Playwright container on its network; `./tasks.ps1` still fails under PowerShell 5.1):
+- **Coverage,** with `navigator.languages = ['es-ES']` and `['en-US']` at 320, 360, 390, 430,
+  600, 767 and 768 px on `/`, `/work/02-cost-leak/` and `/privacy/`:
+  - the centre of the back link ("All work", "Home") and of the home portrait hits the
+    element itself at every width; before the fix the back link was covered at 320–767 px;
+  - the header is 64 px tall and `main` starts at 64 px with and without the pill, so showing
+    it moves nothing; the pill spans y 16–48 px;
+  - at 320 px the pill spans x 69–251 px, between the monogram (24 px gutter + 32 px, so it ends at 56 px) and the menu;
+  - with the menu open and the pill shown, the first menu link is reachable;
+  - from 768 px the desktop card shows, unchanged.
+- **Overflow audit:** zero on `/`, `/work/02-cost-leak/`, `/es/` and `/es/work/02-cost-leak/` at
+  all 12 widths (320–2560 px), with the suggestion shown and without it.
+- **End to end in headless Chromium:**
+  - the story's six cases give the expected suggestion at 390 and 1440 px;
+  - dismissing hides the pill, and it stays hidden after a reload;
+  - the pill reads "Ver en español" and takes `/work/02-cost-leak/#result` to
+    `/es/work/02-cost-leak/#result`;
+  - without JavaScript the suggestion stays hidden and the switcher is plain links.
+- **Screenshots:** the home at 390 px, the case at 390 px and `/privacy/` at 320 px match
+  `Home — Phone 390 · i18n suggestion`, `Case — Phone 390 · i18n suggestion` and
+  `Nav — Phone 320 · i18n suggestion`.
+- **Tests:** 270 pass. **Build checks:** "Checked internal links in 14 pages: none broken" and
+  "Checked link previews in 14 pages: all complete".
+- **Lighthouse:** not run locally, by the norm "a performance claim is measured where it is
+  enforced". It is confirmed by the pull request's CI run, recorded below once it passes.
