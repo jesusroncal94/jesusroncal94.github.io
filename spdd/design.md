@@ -15,6 +15,8 @@ Mockups live in **Penpot** and are the visual source of truth for the canvases i
 | Social      | OG — Case 04 1200×630  | 008                     |
 | Home        | Home — Desktop 1440 · i18n | 004              |
 | Home        | Home — Phone 390 · i18n suggestion | 004      |
+| Home        | Nav — Phone 320 · i18n suggestion | 004       |
+| Home        | Case — Phone 390 · i18n suggestion | 004      |
 | Home        | Home — Phone 390 · i18n menu | 004            |
 | Ask         | Ask — Desktop 1440 · answer  | 005            |
 | Ask         | Ask — Desktop 1440 · refusal | 005            |
@@ -28,7 +30,10 @@ Mockups live in **Penpot** and are the visual source of truth for the canvases i
 | Privacy     | Case end — Phone 390         | 009            |
 
 The three Home frames sit side by side and share one set of components, so the responsive
-behaviour of story 007 can be compared section by section.
+behaviour of story 007 can be compared section by section. Each page starts at the origin,
+with 100 px between frames and one row per story; on Home, the story 004 frames form a
+second row under the three layouts. The plugin API cannot move a shape to another page, so
+they stay on Home.
 
 ### History
 
@@ -97,8 +102,12 @@ Code Mono.
 - Language (story 004, drawn 2026-09-30). An EN / ES segmented switch sits in the desktop
   nav before "Email me", and in a "Language" row at the foot of the phone menu sheet. The
   suggestion floats and never shifts the layout. On desktop it is a card anchored under the
-  switcher, so it points at where the choice lives. On phones it is a one-line pill under the
-  nav, because a card there would cover the headline. It is written in the target language.
+  switcher, so it points at where the choice lives. On phones it is a compact pill, "Ver en
+  español", inside the nav row between the monogram and the menu (2026-10-03). It first
+  floated under the nav, where it covered the identity row on the home page and the back
+  link on case pages and the privacy note; placed in the page flow instead, it pushed the
+  third proof metric under the contact bar. In the nav row it covers nothing and moves
+  nothing, and it fits at 320 px. It is written in the target language.
 - Ask the portfolio (story 005, drawn 2026-10-01) lives in the command palette dialog: the
   question in the input row, then the answer with numbered references, a numbered source list
   whose rows link to the page, and a footer with the receipt (tokens, cost, latency, grounding)
@@ -116,7 +125,9 @@ Code Mono.
   (for example side by side) while an agent works in it.
 - The plugin's `storage` is lost when the plugin reconnects. The builder library is saved
   in the file itself, as plugin data (`portfolioLib.foundations`,
-  `portfolioLib.sections`, `portfolioLib.patches`, `portfolioLib.social`, `portfolioLib.i18n`, `portfolioLib.ask`, `portfolioLib.frames`), and can be
+  `portfolioLib.sections`, `portfolioLib.patches`, `portfolioLib.social`, `portfolioLib.i18n`, `portfolioLib.ask`, `portfolioLib.privacy`, `portfolioLib.frames`), and can be
   reinstalled in one call.
+- Only the active page can be edited, and a shape cannot be moved or cloned to another page.
+  Open the page first (`penpot.openPage`).
 - Shapes whose text changes need auto-height or auto-width set after they are added to a
   flex board, or they keep the width they had at creation.

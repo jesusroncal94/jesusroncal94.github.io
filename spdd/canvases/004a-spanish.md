@@ -140,6 +140,33 @@ astro.config.mjs                 sitemap i18n alternates
       - switching from `/work/02-cost-leak/#result` lands on `/es/work/02-cost-leak/#result`.
     - Tests, link and preview checks, the PDF page count and Lighthouse on all twelve URLs.
 
+### Follow-up — the phone suggestion covers the page (started 2026-10-03)
+
+Decision 5 of the [analysis](../analysis/phase-3-004a-spanish.md#5-follow-up--the-phone-suggestion-covers-the-page-2026-10-03).
+Frames: `Home — Phone 390 · i18n suggestion`, `Nav — Phone 320 · i18n suggestion`,
+`Case — Phone 390 · i18n suggestion`.
+
+12. **The pill moves into the nav row** (`Nav.astro`, `LocaleSuggestion.astro`).
+    - On phones (below `md`) it sits between the monogram and the menu, in the header's flex
+      row, and is no longer absolutely positioned.
+    - It is 32 px tall: 18 px icons, one line of text (`whitespace-nowrap`), and a close
+      button with a target of at least 24 px.
+    - Its text is `suggest.action` ("Ver en español").
+    - The reveal script is unchanged, and it stays hidden without JavaScript.
+13. **`suggest.pill` is retired.** The key leaves `ui/en.ts` and `ui/es.ts`. Its row in
+    `spdd/reviews/004a-es.md` is replaced by a note pointing to Decision 5, so the review test
+    still matches every UI key.
+14. **Check, on the production build.**
+    - With `navigator.languages = ['es-ES']` at 320–767 px: the back link on a case and on
+      `/privacy/` and the home identity row are not covered, and their centres hit them.
+    - The nav is 64 px tall with and without the pill. The menu opens with the pill shown.
+    - The overflow audit on `/`, `/work/02-cost-leak/`, `/es/` and `/es/work/02-cost-leak/`
+      at all 12 widths.
+    - The suggestion end-to-end run of operation 11: the six cases, dismissal across a
+      reload, and the switch keeping `#result`.
+    - Screenshots compared with the three frames.
+    - Tests, the link and preview checks; Lighthouse is confirmed in the pull request's CI.
+
 ## N — Norms
 
 All of [norms.md](norms.md). In particular:
