@@ -62,7 +62,6 @@ export const en = {
   'suggest.title': 'Also in English.',
   'suggest.alsoIn': 'This site is also available in {language}.',
   'suggest.action': 'Read in English',
-  'suggest.pill': 'Read this site in English →',
   'suggest.close': 'Dismiss',
   'language.en': 'English',
   'language.es': 'Spanish',
