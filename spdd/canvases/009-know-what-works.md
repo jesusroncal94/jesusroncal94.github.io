@@ -337,3 +337,19 @@ run, because the Lighthouse budget failed, so neither reached the published site
   - The browser checks were rerun with the key injected into the HTML, and the results are
     the same.
 - **New rule** in `norms.md`: a performance claim is measured where it is enforced.
+
+**3. Every cookieless event was dropped by PostHog: the user agent was missing.**
+- Found on 2026-10-03, after the deploy of `789ca87`, through the PostHog connector.
+  - The project setting was correct: `cookieless_server_hash_mode` 2, the token matching the
+    repository variable, and the authorized domain set. Yet `ingested_event` was false.
+  - `system.ingestion_warnings` held one `cookieless_missing_user_agent` for a `$pageview`,
+    with `missingProperty: $raw_user_agent`, severity `error`, meaning dropped.
+- Cause: PostHog hashes calendar day, user agent, IP and host to count a cookieless visitor.
+  posthog-js sends `$raw_user_agent` on every event, and the capture shape copied from its
+  tests did not include it, because those tests assert identity fields only. The local
+  checks intercepted the requests, so they could never see PostHog reject one.
+- Fixed on the branch `fix-cookieless-user-agent`: `Visit` carries `navigator.userAgent`, and
+  `buildEvent` sends it as `$raw_user_agent`. The payload test asserts it.
+- **Verification** is a real event arriving in the project, confirmed through the connector,
+  plus no new `cookieless_*` warning. Whether PostHog stores the user agent or only hashes it
+  is checked on that event, because the privacy note must say what happens to it.
