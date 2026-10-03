@@ -176,3 +176,22 @@ the sitemap is. `public/robots.txt` now allows everything and points to
   stop crawlers from seeing that tag.
 - The file holds the domain as text. When `jesusroncal.dev` is configured, its `Sitemap` line
   changes together with `site` in `astro.config.mjs`.
+
+## Sync — 2026-10-03 (`tasks.ps1` and redirected stderr)
+
+This section is authoritative where it differs from operation 15.
+
+- **Op 15.** `tasks.ps1` no longer sets `$ErrorActionPreference`; it is otherwise unchanged.
+  Commit `15631cf`.
+- **Correction.** The Syncs of canvas 009 ("Found, outside this canvas") and 004a
+  (2026-10-03) say that `./tasks.ps1` fails under Windows PowerShell 5.1. It failed only when
+  its stderr was redirected, as an agent or a log capture does; run plainly in a console it
+  passed.
+
+**Verified on 2026-10-03,** under Windows PowerShell 5.1.26100:
+- `./tasks.ps1 test` run plainly, with `2>&1`, with `2>$null` and with `*>` to a file: all four
+  run the suite to the end (270 tests pass) and return exit code 0. Before the fix the last
+  three stopped at "Container … Creating".
+- With a temporary failing test, deleted afterwards: exit code 1, run plainly and with `2>&1`.
+- `./tasks.ps1 nope` is rejected by `ValidateSet` before Docker runs.
+- No container is left behind by the aborted runs before the fix.
