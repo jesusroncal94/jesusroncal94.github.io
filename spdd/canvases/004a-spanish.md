@@ -338,4 +338,8 @@ a Playwright container on its network; `./tasks.ps1` still fails under PowerShel
 - **Tests:** 270 pass. **Build checks:** "Checked internal links in 14 pages: none broken" and
   "Checked link previews in 14 pages: all complete".
 - **Lighthouse:** not run locally, by the norm "a performance claim is measured where it is
-  enforced". It is confirmed by the pull request's CI run, recorded below once it passes.
+  enforced". The pull request's CI run (`37134332567`, 14 URLs × 3) passes every assertion:
+  performance 1 and accessibility 1 on every page, median LCP 1356–1366 ms (the home page is
+  the highest) against the 1500 ms budget, and median CLS at most 0.005. The CI audit does
+  not set a Spanish browser language, so it measures the pages without the suggestion; the
+  pill's own layout effect is covered by the coverage check above.
