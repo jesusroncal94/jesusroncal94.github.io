@@ -125,6 +125,20 @@ README.md
     organised, how to run it (`./tasks.ps1`), how it deploys, deliberate simplifications,
     licence.
 
+### Follow-up — `tasks.ps1` stops when stderr is redirected (started 2026-10-03)
+
+Reproduced on 2026-10-03 under Windows PowerShell 5.1.26100. `./tasks.ps1 test` passes when
+run plainly, but with `2>&1`, `2>$null` or `*>` it stops at Docker's first progress line on
+stderr ("Container … Creating"): once stderr is redirected, PowerShell 5.1 wraps each native
+stderr line in an error record, and `$ErrorActionPreference = 'Stop'` makes the first one
+terminating. Jesus approved the fix on 2026-10-03.
+
+15. **`tasks.ps1` drops `$ErrorActionPreference = 'Stop'`.** The script runs one native
+    command and already returns its result with `exit $LASTEXITCODE`; `ValidateSet` still
+    rejects an unknown task before anything runs. Check: the four invocations above finish
+    with Docker's exit code, a failing test returns a non-zero code even with `2>&1`, and an
+    unknown task is rejected.
+
 ## N — Norms
 
 All of [norms.md](norms.md). Additionally: dependency versions pinned with caret ranges and a
