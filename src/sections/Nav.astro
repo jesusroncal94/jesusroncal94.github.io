@@ -52,6 +52,8 @@ const links = [
     <EmailAction locale={locale} class="max-md:hidden" />
   )}
 
+  {isMultilingual() && <LocaleSuggestion locale={locale} variant="pill" class="md:hidden" />}
+
   <details class="group md:hidden" data-mobile-menu>
     <summary class="cursor-pointer list-none rounded-sm p-1 text-primary [&::-webkit-details-marker]:hidden">
       <span class="sr-only">{t('nav.menu')}</span>
@@ -74,8 +76,6 @@ const links = [
       )}
     </nav>
   </details>
-
-  {isMultilingual() && <LocaleSuggestion locale={locale} variant="pill" class="absolute inset-x-4 top-17 z-30 md:hidden" />}
 </header>
 
 <script>
