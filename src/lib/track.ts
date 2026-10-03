@@ -16,6 +16,7 @@ export interface Visit {
   href: string;
   pathname: string;
   referrer: string;
+  userAgent: string;
   locale: Locale;
   globalPrivacyControl: boolean;
   doNotTrack: boolean;
@@ -49,6 +50,7 @@ export function buildEvent(event: AnalyticsEvent, visit: Visit, key: string, pro
       $current_url: visit.href,
       $pathname: visit.pathname,
       $host: visit.host,
+      $raw_user_agent: visit.userAgent,
       $referrer: visit.referrer || DIRECT,
       $referring_domain: visit.referrer ? new URL(visit.referrer).host : DIRECT,
       locale: visit.locale,
@@ -68,6 +70,7 @@ export function readVisit(): Visit {
     href: location.href,
     pathname: location.pathname,
     referrer: document.referrer,
+    userAgent: navigator.userAgent,
     locale: document.documentElement.lang as Locale,
     globalPrivacyControl: (navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl === true,
     doNotTrack: navigator.doNotTrack === '1',
