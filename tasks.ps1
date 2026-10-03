@@ -4,8 +4,6 @@ param(
     [string] $Task
 )
 
-$ErrorActionPreference = 'Stop'
-
 $services = @{
     dev     = 'web'
     build   = 'build'
