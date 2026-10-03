@@ -110,3 +110,49 @@ with a status column; only `ok` rows ship.
 
 **✅ Decision 4 — Spanish variant.** Confirmed 2026-09-30: neutral Spanish for Spain and Latin America,
 first person, no *vosotros* and no regionalisms.
+
+## 5. Follow-up — the phone suggestion covers the page (2026-10-03)
+
+Found during story 009 and reproduced on 2026-10-03 on the production build, in headless
+Chromium with `navigator.languages = ['es-ES']`, at 320, 360, 390, 430, 600, 767 and 768 px.
+
+### Diagnosis
+
+The phone pill is absolutely positioned under the nav (`top-17`, 68–118 px from the top),
+and on phones every page starts its content right there.
+
+| Page | 320–767 px | ≥ 768 px |
+| ---- | ---------- | -------- |
+| Case (`/work/<slug>/`) | Covers "All work" (88–108 px); the link's centre hits the pill, so it cannot be tapped | Card under the switcher, no overlap |
+| `/privacy/` | Covers "Home" the same way | No overlap |
+| `/` | Covers the identity row: avatar, name, role and city. The approved frame already drew it there | No overlap |
+| `/cv/`, every `/es/` page | No suggestion | — |
+
+At 320 px the pill's text also wraps, leaving the arrow alone on a second line (50 → 70 px).
+The suggestion stays until it is dismissed, so a visitor who neither switches nor dismisses
+it cannot reach the back link.
+
+### Direction
+
+| Option | How | Verdict |
+| ------ | --- | ------- |
+| A. In the page flow under the nav, decided before first paint | An inline script marks `<html>` before paint, so the pill renders in place with no layout shift | Rejected after the mockup: it moves the page down 48 px, and in `Home — Phone 390` the third proof metric goes under the contact bar, which breaks story 001's fold. It also adds a render-blocking script |
+| B. Floating at the bottom, above the contact bar | A toast | Rejected: it would cover the proof metrics that story 001 keeps above the fold |
+| **C. Inside the nav row** | On phones the nav holds only the monogram and the menu; the pill sits between them, 176 × 32 px, with the shorter text "Ver en español" | **Recommended.** It covers nothing and moves nothing, so the existing reveal script stays and CLS cannot change. It fits at 320 px with about 20 px each side, and the close button keeps a target of at least 24 px |
+
+Frames: `Home — Phone 390 · i18n suggestion` (redrawn), `Nav — Phone 320 · i18n suggestion` and
+`Case — Phone 390 · i18n suggestion` (new).
+
+### Risks
+
+| Risk | Mitigation |
+| ---- | ---------- |
+| A longer target-language label would not fit at 320 px when Italian is published | The overflow audit runs at 320 px with the suggestion shown; story 004b rechecks it with its own text |
+| The nav row grows taller than 64 px and shifts the page | The pill is 32 px tall, as the monogram; the check measures the nav height with and without the pill |
+| The menu sheet and the pill overlap | The sheet opens below the nav row (`top-16`); the end-to-end check opens the menu with the pill shown |
+
+**✅ Decision 5 — phone suggestion placement.** Confirmed 2026-10-03: option C, the pill inside
+the nav row on phones, with the text "Ver en español" (the approved `suggest.action` string,
+already used on the desktop card), replacing "Ver este sitio en español →". Jesus first approved
+A; the mockup showed the fold failure, and he then approved C, the text and the frames, all on
+2026-10-03.

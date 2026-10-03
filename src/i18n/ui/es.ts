@@ -64,7 +64,6 @@ export const es: Record<UiKey, string> = {
   'suggest.title': 'También en español.',
   'suggest.alsoIn': 'Este sitio también está disponible en {language}.',
   'suggest.action': 'Ver en español',
-  'suggest.pill': 'Ver este sitio en español →',
   'suggest.close': 'Cerrar',
   'language.en': 'inglés',
   'language.es': 'español',
