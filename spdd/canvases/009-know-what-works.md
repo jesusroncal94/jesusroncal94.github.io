@@ -297,17 +297,43 @@ run, because the Lighthouse budget failed, so neither reached the published site
 - That conclusion came from a local Lighthouse comparison: 1380 → 1382 ms on `/`. In CI the
   same build measured a median LCP of about 1505 ms on almost every page, against about
   1358 ms for `5ded6f2`, and the budget is 1500 ms.
-- Cause: the tracker added three early module requests per page (from 3 to 6):
-  - the `Base` entry;
-  - the shared `track` chunk;
-  - `contact.ts` importing it.
-
-  CI's simulated throttling counts them on the critical path, and the local container did
-  not reproduce it.
-- Fixed:
-  - `Base` now imports `analytics.ts` only after the `load` event.
-  - `contact.ts` imports the tracker only on a click.
-  - A page now makes four early script requests, not six, and nothing on the critical path
-    waits on analytics.
-  - Confirmation is the CI Lighthouse run on the corrected commit, not a local run.
+- **First diagnosis, wrong.**
+  - The guess was the three extra early module requests (from 3 to 6).
+  - `f439d43` moved `analytics.ts` behind the `load` event and made `contact.ts` import the
+    tracker on a click.
+  - CI still measured 1505–1510 ms on the same pages (run for `a8dd620`), so that was not the
+    cause.
+- **Cause, from the CI reports of `5ded6f2` and `a8dd620` compared page by page.**
+  - Before this canvas, `contact.ts` imported a `track()` that did nothing. The bundle
+    dropped the call, and Astro inlined the email button's script into the HTML.
+  - Once `contact.ts` imported the real tracker, that script became an external module of
+    about 1.1 KB. CI's simulated throttling charges it one more round trip before LCP.
+  - The HTML and CSS sizes did not change in any meaningful way. `/cv/`, the one page
+    without the email button, kept its LCP (1358 ms) even with the new analytics scripts.
+- **Fixed** on the branch `fix-lcp-email-script`:
+  - `contact.ts` imports nothing at run time. A click dispatches a `conversion` DOM event
+    with the event name and its target, and `analytics.ts`, loaded after `load`, listens for
+    it and calls `track()`.
+  - The email script is inline again. The only external script the canvas adds is the
+    `Base` entry, which waits for `load`.
+  - A click before `load` is not counted, a cost accepted here.
+  - The browser checks were rerun on that build and all events, gates, storage and
+    overflow results match the Sync above. To inject the test key, the check now looks for
+    it in any `_astro` chunk, because the tracker moved into the `analytics` chunk.
+  - Confirmation is the CI Lighthouse run on the pull request, which builds without
+    deploying, so a failure no longer lands on `main`.
+- **Second step, from the pull request's CI run.**
+  - The case pages, the note and the CV went back to about 1358 ms. `/` and `/es/` still
+    measured 1506 ms.
+  - On the home page the one remaining extra request before LCP was the external `Base`
+    entry (1.1 KB) that loaded `analytics.ts` with a dynamic import. The case pages carried it
+    too and passed, but the home page has more weight before LCP: two fonts, the portrait and
+    an 11 KB document.
+  - `Base` now imports `analytics.ts` statically. With no other importer, the tracker
+    bundles into that one script, which has no imports, and Astro inlines it into the HTML.
+    `analytics.ts` itself waits for `load` before it sends the page view.
+  - Every page now makes exactly the external script requests it made before this canvas.
+    The home HTML grows from 11.3 to 12.1 KB compressed, under the 14.6 KB first round trip.
+  - The browser checks were rerun with the key injected into the HTML, and the results are
+    the same.
 - **New rule** in `norms.md`: a performance claim is measured where it is enforced.

@@ -4,6 +4,13 @@ import { ANALYTICS } from './analytics-config';
 export type ConversionEvent = 'cv_download' | 'email_copy' | 'email_open' | 'profile_open';
 export type AnalyticsEvent = '$pageview' | ConversionEvent | 'case_result_seen';
 
+export const CONVERSION = 'conversion';
+
+export interface Conversion {
+  event: ConversionEvent;
+  props?: Record<string, string>;
+}
+
 export interface Visit {
   host: string;
   href: string;
