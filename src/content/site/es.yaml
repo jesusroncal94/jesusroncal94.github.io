@@ -171,7 +171,7 @@ privacy:
     - heading: Qué se registra
       text: Qué página abres, el sitio desde el que llegas, el idioma en que la lees y cualquier etiqueta de campaña del enlace (utm_*). También si descargas el CV, copias o abres la dirección de email, abres mi LinkedIn o GitHub, o lees un caso hasta su resultado.
     - heading: Qué no
-      text: Ninguna cookie. No se guarda nada en tu navegador y nada te identifica de una visita a otra. Tu dirección IP se usa para contar la visita y después se descarta.
+      text: Ninguna cookie. No se guarda nada en tu navegador y nada vincula tus visitas de un día a otro. Tu dirección IP y el identificador de tu navegador se usan para contar la visita y después se descartan.
     - heading: Adónde va
       text: A PostHog, que lo procesa en la UE. Lo uso para ver qué candidaturas y qué páginas funcionan, nunca para perfilar a nadie. Mis informes abarcan los últimos doce meses.
     - heading: Cómo desactivarlo
