@@ -110,4 +110,6 @@ Report what failed as plainly as what passed.
 - Story 005 (Ask the portfolio) is on hold since 2026-10-01: the live assistant is not built for now.
   Retrieval work continues in the `rag-bm25-search` repository (named `rag-assistant` until
   2026-10-02, and kept sparse-only), in its own session; a fifth case
-  study here can tell it once measured. Phase 4 (PostHog EU) is still open.
+  study here can tell it once measured.
+- Phase 4 (story 009, analytics) is done (2026-10-03): PostHog EU, cookieless, first-party
+  tracker; the token is the `PUBLIC_POSTHOG_KEY` repository variable, never in the code.

@@ -5,7 +5,7 @@ Story: [009](../stories/009-know-what-works.md). Analysis:
 `Privacy — Phone 390`, `Home footer — Desktop 1440`, `Home footer — Phone 390`,
 `Case end — Desktop 1440`, `Case end — Phone 390` (see [../design.md](../design.md)).
 
-**Status:** in progress since 2026-10-02 (start approved that day). The privacy note copy (EN and ES) and the footer link
+**Status:** done on 2026-10-03, story 009 closed (started 2026-10-02, start approved that day). The privacy note copy (EN and ES) and the footer link
 were approved on 2026-10-02 with the frames. The retention sentence was replaced and approved
 on 2026-10-02 (analysis decision 6). The "What is not" text was made precise and approved on
 2026-10-03: the hash is daily and also uses the user agent, which PostHog does not store.
@@ -354,3 +354,61 @@ run, because the Lighthouse budget failed, so neither reached the published site
 - **Verification** is a real event arriving in the project, confirmed through the connector,
   plus no new `cookieless_*` warning. Whether PostHog stores the user agent or only hashes it
   is checked on that event, because the privacy note must say what happens to it.
+
+## Sync — 2026-10-03 (operation 12, launch)
+
+This section is authoritative where it differs from the operations above.
+
+- **Delivery.** Every change after the first push went through a pull request, whose CI runs
+  the tests, the build checks and Lighthouse without deploying, and was then squash-merged
+  with Jesus's yes:
+  - #1 kept the email script inline (LCP);
+  - #2 sent the user agent (cookieless);
+  - #3 made the privacy wording precise.
+- **PostHog project** (EU Cloud): created by Jesus.
+  - Cookieless server hash mode is on (`cookieless_server_hash_mode` 2), and IP anonymisation
+    is on as well.
+  - Autocapture, heatmaps, web vitals and session recording are off, so the project collects
+    nothing the note does not mention.
+  - The authorized domain is `https://jesusroncal94.github.io`.
+  - The token comes from the `PUBLIC_POSTHOG_KEY` repository variable, never from the code.
+- **End to end**, checked through the PostHog connector on 2026-10-03:
+  - Events from the published site are stored: `$pageview`, `profile_open` with
+    `target: linkedin`, and `case_result_seen`, the last from Lighthouse's full-page capture.
+  - They carry a server-computed `cookieless_…` id and a server-assigned `$session_id`.
+  - `$raw_user_agent` and `$ip` are not stored and do not appear in the project's taxonomy.
+  - There has been no `cookieless_*` ingestion warning since `c7b65ed`.
+  - Test traffic is tagged `utm_source` `verification` or `lighthouse`.
+  - `case_result_seen` could not be fired from the hidden browser pane, because Chrome runs no
+    `IntersectionObserver` callbacks for a page it does not render. It fired on the visible
+    Playwright check and on the live site.
+- **Dashboard** (decision 7): PostHog's built-in Web analytics, plus two insights on the
+  project's main dashboard:
+  - "Conversions per week, by language": the five events, weekly, broken down by `locale`;
+  - "CV downloads per day".
+
+  An alert, "Someone downloaded the CV", checks the second one daily and emails Jesus when
+  the previous day had a download.
+- **Lighthouse on the published site** (`/` and `/work/02-cost-leak/`, 3 runs each, with the
+  real request to PostHog):
+  - performance 1 and accessibility 1;
+  - median LCP 1207 and 1051 ms, CLS 0.000 and 0.001;
+  - PostHog answered 200 every time.
+
+  Lighthouse's own entity classification lists PostHog as the one third party (296 bytes)
+  and the site as first party. `resource-summary:third-party` reported 10 and 11, because it
+  counts the site's own `*.github.io` resources as third party. CI is unaffected, because it
+  audits on `localhost`. Read that metric with this in mind if the site is ever audited at its
+  public address.
+- **Owner mark:** Jesus sets it with `?analytics=off` in each browser he uses.
+
+**Done when, item by item:**
+- Unit tests for the payload, the five gates and the pinned host pass (271 in all).
+- The note and the footer match the frames on desktop and phone, and the contact bar does not
+  cover the footer.
+- A fresh profile ends with no cookie and no storage key after visiting all 14 pages.
+- The link check, the preview check, the Spanish review test and the overflow audit pass.
+- Lighthouse passes on 14 URLs, in CI, with the third-party budget at 1.
+- Events arrive from the published site, and Lighthouse passes on the published home page.
+- Not yet seen live: `cv_download`, `email_copy` and `email_open`. They share the path that
+  delivered `profile_open`, and they will show on the dashboard on first use.
