@@ -172,6 +172,19 @@ tests/track.test.ts                  payload, gates, pinned host
     - Then: events seen arriving, the Web analytics dashboard, one conversions insight by
       locale, and a Lighthouse run on the published home page.
 
+### Follow-up — test traffic in the insights (started 2026-10-05)
+
+Decision 8 of the [analysis](../analysis/phase-4-analytics.md#5-follow-up--what-the-insights-count-2026-10-05).
+The change is in the PostHog project, not in this repository.
+
+13. **Both insights exclude test traffic.** "CV downloads per day" (`mcyB7nqs`) and
+    "Conversions per week, by language" (`htd4kN4i`) gain one event-property filter:
+    `utm_source` is not `verification` and not `lighthouse`. Nothing else in them changes, and
+    the alert keeps reading the first.
+    Check: each insight's stored query holds the filter; the same filter on `$pageview` since
+    launch still counts the 2 untagged page views, so untagged events pass; the conversions
+    insight no longer counts the test `profile_open` and `case_result_seen`.
+
 ## N — Norms
 
 All of [norms.md](norms.md), with the Phase 4 amendment from operation 1. In particular:
