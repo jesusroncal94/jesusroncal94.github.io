@@ -155,3 +155,46 @@ third-party budget from 0 to 1, pinned to `eu.i.posthog.com`.
 
 **✅ Decision 7 — Dashboard.** Confirmed 2026-10-02: The built-in Web analytics dashboard plus one conversions
 insight. Jesus creates the account and the project.
+
+## 5. Follow-up — what the insights count (2026-10-05)
+
+Found on 2026-10-05 while checking, through the PostHog connector, whether the three
+conversion events still missing from the launch Sync had arrived.
+
+### Diagnosis
+
+- **The three events have not arrived, because nobody has used them yet.** Since launch the
+  project holds 2 real `$pageview` events and no real conversion. Test traffic, tagged
+  `utm_source` `verification` or `lighthouse`, holds 9 `$pageview`, 3 `case_result_seen` and
+  1 `profile_open`.
+- **The insights count test traffic.** Neither "CV downloads per day" (`mcyB7nqs`) nor
+  "Conversions per week, by language" (`htd4kN4i`) filters it, so the second already shows the
+  test `profile_open` and `case_result_seen` beside the real ones. A verification run that
+  fires `cv_download` would also trigger the alert "Someone downloaded the CV", which reads the
+  first.
+- **One real page view was dropped after the user-agent fix.** `system.ingestion_warnings`
+  holds three `cookieless_missing_user_agent` warnings for `$pageview`: two at 09:09 and
+  09:18 UTC on 2026-10-03, before `c7b65ed` was deployed at 09:36, and one at 20:32 UTC. The
+  published tracker always sends `navigator.userAgent`, so that browser most likely reported an
+  empty one (a privacy extension, or a bot that runs scripts). PostHog keeps nothing else of a
+  dropped event, so the cause cannot be confirmed.
+
+### Direction
+
+1. **Exclude test traffic from both insights:** an event filter `utm_source` is not
+   `verification` and not `lighthouse`. The tags come from the page URL, so every event fired
+   on a tagged page carries them, and untagged events keep passing the filter.
+2. **A tagged verification visit to the published site** that downloads the CV, copies the
+   email and opens the email link, to close the launch Sync's last open item. Only after 1, so
+   it cannot trigger the alert.
+3. **The dropped page view is recorded and watched, with no code change.** One event with no
+   confirmed cause does not justify changing the tracker. If it recurs, the option is a fixed
+   placeholder when the user agent is empty, which changes what the privacy note says and so
+   goes back for copy approval.
+
+**✅ Decision 8 — Test traffic in the insights.** Confirmed 2026-10-05: direction 1, the filter
+on both insights.
+
+**⚠️ Pending — 9, the verification visit.** Direction 2, after decision 8 is applied.
+
+**⚠️ Pending — 10, the dropped page view.** Direction 3, recorded in canvas 009 and watched.

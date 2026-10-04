@@ -172,6 +172,19 @@ tests/track.test.ts                  payload, gates, pinned host
     - Then: events seen arriving, the Web analytics dashboard, one conversions insight by
       locale, and a Lighthouse run on the published home page.
 
+### Follow-up — test traffic in the insights (started 2026-10-05)
+
+Decision 8 of the [analysis](../analysis/phase-4-analytics.md#5-follow-up--what-the-insights-count-2026-10-05).
+The change is in the PostHog project, not in this repository.
+
+13. **Both insights exclude test traffic.** "CV downloads per day" (`mcyB7nqs`) and
+    "Conversions per week, by language" (`htd4kN4i`) gain one event-property filter:
+    `utm_source` is not `verification` and not `lighthouse`. Nothing else in them changes, and
+    the alert keeps reading the first.
+    Check: each insight's stored query holds the filter; the same filter on `$pageview` since
+    launch still counts the 2 untagged page views, so untagged events pass; the conversions
+    insight no longer counts the test `profile_open` and `case_result_seen`.
+
 ## N — Norms
 
 All of [norms.md](norms.md), with the Phase 4 amendment from operation 1. In particular:
@@ -412,3 +425,34 @@ This section is authoritative where it differs from the operations above.
 - Events arrive from the published site, and Lighthouse passes on the published home page.
 - Not yet seen live: `cv_download`, `email_copy` and `email_open`. They share the path that
   delivered `profile_open`, and they will show on the dashboard on first use.
+
+## Sync — 2026-10-05 (operation 13, test traffic out of the insights)
+
+This section is authoritative where it differs from operation 13. Approved by Jesus on
+2026-10-05 (decision 8 of the analysis).
+
+- **Applied in PostHog** on 2026-10-05 (22:32 UTC on 2026-10-04 by the project clock), through
+  the connector: both insights gained the event filter `utm_source` is not `verification`,
+  `lighthouse`. Series, date ranges, interval, breakdown and display are unchanged.
+- **The alert** "Someone downloaded the CV" still reads "CV downloads per day", and is enabled
+  and not firing.
+- **Checked:**
+  - both insights' stored queries hold the filter;
+  - before saving, the same filter on `$pageview` over the last 30 days counted 2, the two
+    untagged page views out of 11, so untagged events pass and tagged ones do not;
+  - "Conversions per week, by language" now shows no data, where it counted the test
+    `profile_open` and the three test `case_result_seen`; "CV downloads per day" is 0 every day.
+- **Not changed:** the conversions insight's description still says tagged visits "are tests";
+  it is still true, and it now also matches what the filter does.
+
+**Still open from the launch Sync:** `cv_download`, `email_copy` and `email_open` have not been
+seen live. Since launch the project holds 2 real page views and no real conversion, so they have
+not been used, not failed. The tagged verification visit is pending 9 of the analysis.
+
+**Observed, not changed (pending 10 of the analysis):** a real `$pageview` was dropped at
+20:32 UTC on 2026-10-03 with `cookieless_missing_user_agent`, eleven hours after `c7b65ed` was
+deployed. The launch Sync's "no `cookieless_*` warning since `c7b65ed`" was true when written
+and no longer is. The likely cause is a browser that reported an empty user agent; it cannot be
+confirmed. Watched through `system.ingestion_warnings`; if it recurs, the option is a fixed
+placeholder for an empty user agent, which changes the privacy note and goes back for copy
+approval.
