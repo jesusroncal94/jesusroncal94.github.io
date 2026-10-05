@@ -4,8 +4,8 @@ Story: [010](../stories/010-ship-without-waiting.md). Analysis:
 [Phase 1.3](../analysis/phase-1-3-ci.md). No frames: nothing visible changes.
 
 **Status:** implemented on 2026-10-05 (#10), start approved that day with the story and
-decisions 1–6; synced below. The documentation-only path is measured on the pull request that
-carries this Sync.
+decisions 1–6; synced below. Story 010 closed on 2026-10-05: every criterion measured on real
+runs, the documentation-only path on its second sample.
 
 ## R — Requirements
 
@@ -191,6 +191,14 @@ request and `main`; a site change now takes about 6 min 15 s across both.
 - One sample cannot tell a passing queue delay from something systematic, such as a slow start
   after a skipped matrix job. The second commit of #12, this note, is documentation only too, and
   its run is the second sample.
+- **Second sample, run `37330298606`: 1 min 9 s, within the limit.** `site` took 56 s and
+  decided `Documentation only: true`, the gate started 2 s after it and passed in 3 s, with
+  Lighthouse skipped. So the 2 min 13 s wait was a passing runner queue, not the skipped matrix.
+- **Done when, last item: met**, on the second sample, with the first recorded as it happened.
+  Runner queue time is GitHub's and can stretch any run; if gate waits of minutes recur, the
+  fix to weigh is folding the gate's check into a job that already holds a runner.
+
+**Story 010 is closed** with the merge of #12.
 - A throwaway pull request with a broken assertion turned `build` red: yes, #11.
 - One `lighthouse-results` artifact per run with every report: yes, one folder per shard.
 - Tests and build checks pass: yes.
