@@ -101,7 +101,10 @@ per breakpoint, 16 px more for case headings, and `scroll-padding-bottom` for th
 bar.
 
 **✅ Decision 4 — The language suggestion.** Confirmed 2026-10-05: the phone pill stays in the pinned bar;
-the desktop card moves out of the header and scrolls away as today.
+the desktop card moves out of the header and scrolls away as today. *Amended 2026-10-05, with
+the canvas start:* the card stays in the header and is hidden while the page is scrolled past
+the bar's height, which keeps its position under the switcher without copying it by hand. The
+outcome is the one decided: as today at the top, never following the reader.
 
 **✅ Decision 5 — What stays out.** Confirmed 2026-10-05: no hide-on-scroll, no section highlight, no
 change to the CV page.

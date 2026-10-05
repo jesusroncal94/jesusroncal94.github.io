@@ -5,8 +5,9 @@ Story: [011](../stories/011-navigation-always-within-reach.md). Analysis:
 `Home — Desktop 1440 · scrolled`, `Home — Tablet 834 · scrolled`, `Home — Phone 390 · scrolled`,
 `Home — Phone 390 · menu scrolled` (see [../design.md](../design.md)).
 
-**Status:** written on 2026-10-05; the story, the frames (solid background) and decisions 1–5
-were approved that day. Waiting for the start.
+**Status:** implemented on 2026-10-05; the story, the frames (solid background), decisions 1–5
+and the canvas start, with its amendment to decision 4, were approved that day. Synced below;
+waiting for the pull request.
 
 ## R — Requirements
 
@@ -116,3 +117,57 @@ All of [norms.md](norms.md). In particular:
 - No new request, script file or dependency; the card's listener lives in `locale.ts`.
 - Accessibility stays at 100 in the budget, and focus is never obscured by either bar.
 - English pages and Spanish pages behave the same.
+
+## Sync — 2026-10-05 (operations 1–4)
+
+This section is authoritative where it differs from the operations above.
+
+- **Op 1** (`d1921f6`).
+  - The minifier first merged the scroll-driven longhands into `animation: linear both
+    nav-scrolled scroll(root)`. The `animation` shorthand does not accept a scroll timeline,
+    so browsers dropped the whole declaration and the line never appeared. The rule is now
+    written as separate longhands with no shorthand (`animation-name`, `-timing-function`,
+    `-fill-mode`, `-timeline`, `-range`), and the built CSS keeps them separate.
+  - Checked at 390, 834 and 1440 px on `/`, `/work/02-cost-leak/` and `/es/privacy/`, with
+    scripts on and off (18 cases): the bar is `sticky`, stays at `top: 0` at 400 px, 1500 px
+    and the end of the page; it is 64 / 86 px tall and `main` starts right below it, as
+    before; the line is transparent at the top and `rgb(38, 38, 44)` (the border token) once
+    scrolled.
+- **Op 2** (`08bc211`). `<html>` carries `scroll-pt-16 max-md:scroll-pb-21 md:scroll-pt-21.5`;
+  case headings `[&_h2]:scroll-mt-4`. 42 jumps, both locales, 390, 834 and 1440 px, to the five
+  home sections and `#problem`, `#approach`, `#result`: 32 land exactly 16 px below the bar; the
+  other 10 are at the end of the page (`#contact` everywhere, `#result` from 834 px), where the
+  page cannot scroll further and the target sits lower, fully visible. None is under the bar.
+- **Op 3** (`476e289`). The card gets `data-suggestion-card` and `data-away:invisible`;
+  `hideCardWhileScrolled` in `locale.ts` toggles `data-away` on a passive scroll listener.
+  - At 1440 px with a Spanish browser, on `/` and a case: the card shows at 73 px, right-aligned
+    with the switcher (the `· i18n` frame draws it at 76 px), is hidden after scrolling 600 px,
+    is back at the top, and stays away once dismissed. Its position classes are unchanged
+    from before the canvas. The check first flagged it, because it expected the card below
+    80 px; that expectation was wrong, not the card.
+  - At 390 px the pill stays in the pinned bar, 16 px from the top, after scrolling 900 px.
+- **Commits.** One per operation.
+
+**Verified on 2026-10-05, on the production build:**
+- **Focus.** Tabbing through `/`, `/es/`, `/work/02-cost-leak/` and `/es/work/02-cost-leak/` at
+  390 and 1440 px, 110–116 stops each: no focused element under the nav bar.
+  - At 390 px on the home pages, measuring right after each Tab flagged the last link, "Built
+    spec-first with SPDD", as under the contact bar. That bar hides itself when the contact
+    section enters the view, over a 300 ms transition. Measured 500 ms after each Tab, all
+    114 stops pass in both locales, the bar hidden at the end. So Chromium honours scroll
+    padding for focus, which the analysis left to this check; other engines were not tested.
+- **Phone menu.** Opened at 2,000 px: the sheet starts at 64 px, right under the bar, and its
+  links are reachable; "Experience" closes it and lands 16 px below the bar.
+- **Screen left for content** at 390 × 844 on a case page: from 64 to 760 px, **82.5 %**.
+- **Overflow:** zero on `/`, `/work/02-cost-leak/`, `/es/` and `/es/work/02-cost-leak/` at all
+  12 widths, at the top and scrolled 1,500 px, with a Spanish and an English browser.
+- **Screenshots** match the four frames. One visible difference: after a jump the section's own
+  top border shows 16 px below the bar's line, so two lines appear; the frames drew the section
+  flush with the bar. The 16 px is decision 3's margin, the same gap the sections land at today.
+- **Reduced motion:** the bar has no transition (`0s`).
+- **Tests:** 273 pass. **Build checks:** "none broken" on 14 pages, every preview complete.
+- **Lighthouse:** confirmed by the pull request's CI.
+
+**Found, outside this canvas:** the phone contact bar slides in and out with a 300 ms
+`translate` and `opacity` transition that does not check `prefers-reduced-motion`, against the
+norm "Motion respects prefers-reduced-motion" (canvas 003).
