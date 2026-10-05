@@ -74,3 +74,26 @@
 @utility px-page {
   padding-inline: max(var(--gutter), (100% - 80rem) / 2);
 }
+
+@utility nav-pinned {
+  position: sticky;
+  top: 0;
+  background-color: var(--color-canvas);
+
+  @supports (animation-timeline: scroll()) {
+    animation-name: nav-scrolled;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    animation-timeline: scroll(root);
+    animation-range: 0 8px;
+  }
+}
+
+@keyframes nav-scrolled {
+  from {
+    box-shadow: 0 1px 0 transparent;
+  }
+  to {
+    box-shadow: 0 1px 0 var(--color-border);
+  }
+}
