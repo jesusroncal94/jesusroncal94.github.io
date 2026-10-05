@@ -3,8 +3,9 @@
 Story: [010](../stories/010-ship-without-waiting.md). Analysis:
 [Phase 1.3](../analysis/phase-1-3-ci.md). No frames: nothing visible changes.
 
-**Status:** written on 2026-10-05; the story and decisions 1–6 were approved that day.
-Waiting for the start.
+**Status:** implemented on 2026-10-05 (#10), start approved that day with the story and
+decisions 1–6; synced below. Story 010 closed on 2026-10-05: every criterion measured on real
+runs, the documentation-only path on its second sample.
 
 ## R — Requirements
 
@@ -118,3 +119,86 @@ All of [norms.md](norms.md). In particular:
   documentation only.
 - The repository settings and the branch protection are not changed.
 - No new third-party action: only `actions/*` and the action already in use.
+
+## Sync — 2026-10-05 (operations 1–5)
+
+This section is authoritative where it differs from the operations above.
+
+- **Op 1** (`1352cdc`). `scripts/ci-scope.ts` checks the base with `git cat-file -e` silently,
+  so a missing base reads as "run everything" without a `fatal:` line in the log; errors from
+  `git diff` itself still show. Tried in a container against real history: #9's range gives
+  true, #5's gives false, and an all-zero, unknown or missing base gives false.
+- **Op 2** (`64e87e3`). All 42 reports of the first parallel run carry
+  `disableFullPageScreenshot: true` and no full-page screenshot. The mean run went from
+  6.3 s to 5.5 s.
+- **Op 3** (`75f07fe`).
+  - The scope step runs after `npm ci`, because it uses `tsx`.
+  - `jq` 1.7 is already on the runner. A local check split the 14 URLs into 7 shards of one page
+    in both locales, every URL exactly once, each shard with the same runs, settings and six
+    assertions.
+  - The shard reports are merged with `separate-directories: true`: `lighthouse-results` holds
+    one folder per shard, because seven `assertion-results.json` files would otherwise
+    overwrite each other. `gh run download <id> -n lighthouse-results` still works.
+  - `actionlint` 1.7.12 (`rhysd/actionlint`, pulled with Jesus's yes) reported nothing.
+- **Op 4** (`bd9926f`). The README's "Deploying" section also corrects the third-party line,
+  which still said "no third-party requests" after Phase 4.
+- **Commits.** One per operation; the pull request #10 was squash-merged as `c17d4af`.
+
+**Verified on 2026-10-05, on real Actions runs:**
+
+| Run | Path | Time | Limit |
+| --- | ---- | ---- | ----- |
+| `37324631829`, pull request #10 | Site change: `site` 1 min 4 s, 7 shards 1 min 16 s – 1 min 43 s in parallel, gate 9 s | **3 min 7 s** | 4 min |
+| `37326266401`, throwaway #11 | LCP limit set to 1 ms | 3 min 2 s, **`build` red** | — |
+| `37327505669`, `main` after the merge | Site change, then the deploy | **3 min 6 s** from merge to live | — |
+
+Before this canvas every run took 8.5–9.5 min, and a change about 17–18 min across its pull
+request and `main`; a site change now takes about 6 min 15 s across both.
+
+- **The gate.** On #11 every shard failed with exactly two `largest-contentful-paint`
+  assertions, its two URLs, and no other. The gate logged
+  `site: success, lighthouse: failure, documentation only: false` and exited 1; `deploy` was
+  skipped. The merged artifact still held the 42 reports. #11 was closed unmerged; deleting
+  its branch `ci-gate-check` is handed to Jesus, per CLAUDE.md.
+- **The scope on real events.** #10 compared against its base, `282e4f5`, listed the 11
+  changed paths and ran the full audit. The push to `main` compared against `main`'s previous
+  commit, the same `282e4f5`, and did the same.
+- **The budget is unchanged.** All 14 URLs pass in both full runs: median LCP 1354–1363 ms,
+  CLS at most 0.004, accessibility 1. The serial run of #5 measured 1356–1366 ms.
+- **Seen and kept in view: single-run performance dips.** In #10, four single runs scored
+  0.95–0.99 (home, CV, cases 02 and 04), with total blocking time of 97–272 ms against under
+  5 ms otherwise: CPU contention on a runner, not the page. Every median stayed 1, which is what
+  the budget asserts. The `main` run had none: all 42 runs scored 1, with at most 30 ms of
+  blocking time. If medians start to dip, the next step is to compare runner hardware in the
+  reports before touching the budget.
+- **Branch protection** still requires `build`, unchanged; no repository setting was touched.
+- **Tests:** 273 pass, including the three for `isDocumentationOnly`.
+
+**Done when, item by item:**
+- Branch protection unchanged: yes.
+- Site pull request within 4 min (3 min 7 s) and the deploy after a merge (3 min 6 s): yes.
+  The documentation-only path (limit 2 min) is measured on this Sync's own pull request; see
+  below.
+
+**Documentation-only path, measured on this Sync's pull request (#12):**
+- Run `37329167161`, first commit: `site` listed one changed path,
+  `spdd/canvases/010-ship-without-waiting.md`, and decided `Documentation only: true`, so the
+  seven shards were skipped and the gate logged
+  `site: success, lighthouse: skipped, documentation only: true` and passed.
+- **It missed the limit: 3 min 16 s.** The work took about 1 min (`site` 56 s, the gate 2 s),
+  but the gate waited **2 min 13 s for a runner**. In the three full runs above the gate started
+  3–5 s after its last dependency.
+- One sample cannot tell a passing queue delay from something systematic, such as a slow start
+  after a skipped matrix job. The second commit of #12, this note, is documentation only too, and
+  its run is the second sample.
+- **Second sample, run `37330298606`: 1 min 9 s, within the limit.** `site` took 56 s and
+  decided `Documentation only: true`, the gate started 2 s after it and passed in 3 s, with
+  Lighthouse skipped. So the 2 min 13 s wait was a passing runner queue, not the skipped matrix.
+- **Done when, last item: met**, on the second sample, with the first recorded as it happened.
+  Runner queue time is GitHub's and can stretch any run; if gate waits of minutes recur, the
+  fix to weigh is folding the gate's check into a job that already holds a runner.
+
+**Story 010 is closed** with the merge of #12.
+- A throwaway pull request with a broken assertion turned `build` red: yes, #11.
+- One `lighthouse-results` artifact per run with every report: yes, one folder per shard.
+- Tests and build checks pass: yes.
