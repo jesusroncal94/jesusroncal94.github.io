@@ -28,6 +28,16 @@ export function bindLocaleLinks() {
   });
 }
 
+function hideCardWhileScrolled() {
+  const card = document.querySelector<HTMLElement>('[data-suggestion-card]:not([hidden])');
+  const bar = document.querySelector('header');
+  if (!card || !bar) return;
+
+  const update = () => card.toggleAttribute('data-away', scrollY > bar.getBoundingClientRect().height);
+  update();
+  addEventListener('scroll', update, { passive: true });
+}
+
 export function revealLocaleSuggestion() {
   const suggestions = [...document.querySelectorAll<HTMLElement>('[data-locale-suggestion]')];
   if (!suggestions.length) return;
@@ -35,6 +45,8 @@ export function revealLocaleSuggestion() {
   const published = (suggestions[0].dataset.published ?? '').split(' ').filter(isLocale);
   const target = suggestLocale(navigator.languages, published, wasDismissed());
   suggestions.forEach((suggestion) => (suggestion.hidden = suggestion.dataset.localeSuggestion !== target));
+
+  hideCardWhileScrolled();
 
   document.addEventListener('click', (event) => {
     const element = event.target as Element;
