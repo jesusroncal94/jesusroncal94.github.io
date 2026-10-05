@@ -5,7 +5,7 @@ Open source `6:158`, Experience `6:213`, How I work `6:269`; Mobile Selected wor
 Experience `9:132`, How I work `9:156`. Components: `CaseCard 2:121`, `StackTag 2:96`,
 `AskPrompt 2:112` (rebuilt as the command palette).
 
-**Status:** implemented and synced on 2026-09-23 (see the Sync section). Case texts approved on 2026-09-24.
+**Status:** implemented and synced on 2026-09-23 (see the Sync section). Case texts approved on 2026-09-24. The `rag-bm25-search` note (operation 14) approved on 2026-10-05, in English and Spanish.
 
 ## R — Requirements
 
@@ -232,3 +232,21 @@ infrastructure detail; the three countries stay.
 **Copy amendment, 2026-09-30.** MindFortress ended in 2026-09, so case 03's closing line moved
 to the past tense: "the same division of labour I used for release gating day to day at
 MindFortress". Jesus approved it on 2026-09-30.
+
+## Sync — 2026-10-05 (operation 14, the `rag-bm25-search` note)
+
+- **Changed** (`16574fe`): the note in `site/en.yaml` and `site/es.yaml`, and its row in
+  `spdd/reviews/004a-es.md`, marked approved on 2026-10-05. Title, pitch and stack are
+  unchanged.
+- **Source of the figures:** the merged README of `rag-bm25-search` (`4f3ea8d`), where both
+  sides of 1/6 → 5/6 are measured with the same model on the same holdout split. Its caveats,
+  one extra model call per question and one run per side, stay in that README, which the card
+  links to.
+
+**Verified on 2026-10-05, on the production build:**
+- Tests: 273 pass, the review test included. Build checks: "none broken" on 14 pages, and every
+  preview complete.
+- The note wraps inside the card at every width checked, 320, 360, 390, 430, 768, 1280 and
+  1440 px, in both locales, with zero page overflow: three lines at 320 px, two at 1440 px,
+  as a block like the previous note.
+- Lighthouse: confirmed by the pull request's CI.
