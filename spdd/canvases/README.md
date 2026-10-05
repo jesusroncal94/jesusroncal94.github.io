@@ -27,6 +27,12 @@ Phase 1.2:
 | ------ | ----- | ---------- |
 | [008 — Link preview](008-link-preview.md) | [008](../stories/008-link-preview.md) | 001, 002, 003 |
 
+Phase 1.3:
+
+| Canvas | Story | Depends on |
+| ------ | ----- | ---------- |
+| [010 — Ship without waiting](010-ship-without-waiting.md) | [010](../stories/010-ship-without-waiting.md) | 000, 004a, 009 |
+
 Phase 3:
 
 | Canvas | Story | Depends on |

@@ -15,6 +15,7 @@ REASONS canvas in `../canvases/` names the story it implements.
 | 007 | [Reads well on any screen](007-reads-well-on-any-screen.md) | Any visitor       | 1.1 |
 | 008 | [Link preview](008-link-preview.md)                   | Recruiter             | 1.2 |
 | 009 | [Know what works](009-know-what-works.md)             | Jesus (owner)         | 4 |
+| 010 | [Ship without waiting](010-ship-without-waiting.md)   | Jesus (owner)         | 1.3 |
 
 ## Personas
 

@@ -49,16 +49,25 @@ Everything runs in Docker; nothing needs Node on the host.
 
 ## Deploying
 
-Every push to `main` runs the tests, builds the site, checks it against a Lighthouse budget,
-and deploys to GitHub Pages. The build fails, and nothing deploys, when any of these is
-missed on mobile:
+Changes reach `main` through pull requests, and `main` requires the `build` check. The same
+workflow runs on every pull request and on every push to `main`:
+
+1. **`site`** runs the tests and builds the site once, with its link and preview checks.
+2. **`lighthouse`** audits every published page against the budget below, in seven parallel
+   jobs, one page in both languages each, three runs per page. It is skipped when a change
+   touches only documentation that never reaches the site: `spdd/`, `README.md`, `CLAUDE.md`.
+3. **`build`** passes only if both did, and gathers the reports into one
+   `lighthouse-results` artifact.
+4. **`deploy`** publishes to GitHub Pages, on `main` only.
+
+The check fails, and nothing deploys, when any of these is missed on mobile:
 
 - Performance score of at least 95
 - Accessibility score of 100
 - LCP of at most 1.5 s
 - CLS of at most 0.02
 - At most 15 KB of JavaScript
-- No third-party requests
+- At most one third-party request: the cookieless analytics event to PostHog's EU endpoint
 
 ## Deliberate simplifications
 

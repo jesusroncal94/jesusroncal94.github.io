@@ -18,7 +18,10 @@
         "http://localhost/es/work/04-freya/index.html",
         "http://localhost/es/privacy/index.html"
       ],
-      "numberOfRuns": 3
+      "numberOfRuns": 3,
+      "settings": {
+        "disableFullPageScreenshot": true
+      }
     },
     "assert": {
       "assertions": {
