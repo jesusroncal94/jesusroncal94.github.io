@@ -143,6 +143,21 @@ tests/palette.test.ts
     Proof, and the palette inside Hero. The Figma "Ask the portfolio" section `5:44` is
     **not** rendered in Phase 1 (story 005).
 
+### Follow-up — the `rag-bm25-search` note (started 2026-10-05)
+
+The repository merged a query rewrite (`jesusroncal94/rag-bm25-search#1`, `4f3ea8d`, merged
+2026-10-05). Its README now reports, measured with `qwen/qwen3.8-27b` on the holdout split
+for both the code before and after the change: natural phrasing answered 1 of 6 → 5 of 6,
+retrieval 6 of 6, every unanswerable question declined. The card's honest-note strip still
+said "answering 1/6".
+
+14. **The note.** `openSource.repos[0].note` becomes "Retrieval 6/6 · answering 1/6 → 5/6 —
+    measured, not claimed" and, in Spanish, "Recuperación 6/6 · respuesta 1/6 → 5/6: medido,
+    no supuesto", both approved by Jesus on 2026-10-05. The review row in
+    `spdd/reviews/004a-es.md` follows, so the review test still matches. Nothing else on the
+    card changes. Check: tests and the build checks; the card at 320, 360, 390 and 430 px in
+    both locales without overflow; Lighthouse in the pull request's CI.
+
 ## N — Norms
 
 All of [norms.md](norms.md). Case copy follows Problem → Approach → Result with no
