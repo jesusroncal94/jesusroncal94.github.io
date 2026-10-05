@@ -73,7 +73,7 @@ openSource:
       pitch: >-
         Preguntas y respuestas sobre documentos internos que cita cada afirmación y, cuando la
         evidencia es débil, devuelve las fuentes más cercanas en lugar de una disculpa.
-      note: 'Recuperación 6/6 · respuesta 1/6: reportado, no oculto'
+      note: 'Recuperación 6/6 · respuesta 1/6 → 5/6: medido, no supuesto'
       stack: [Python, BM25, Eval gate]
     - name: aws-serverless-fastapi ⇄ ecs-fargate
       url: https://github.com/jesusroncal94/aws-serverless-fastapi

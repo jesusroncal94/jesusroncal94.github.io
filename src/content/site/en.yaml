@@ -73,7 +73,7 @@ openSource:
       pitch: >-
         Question answering over internal documents that cites every claim and returns the
         closest sources instead of an apology when the evidence is weak.
-      note: Retrieval 6/6 · answering 1/6 — reported, not hidden
+      note: Retrieval 6/6 · answering 1/6 → 5/6 — measured, not claimed
       stack: [Python, BM25, Eval gate]
     - name: aws-serverless-fastapi ⇄ ecs-fargate
       url: https://github.com/jesusroncal94/aws-serverless-fastapi
