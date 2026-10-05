@@ -177,8 +177,20 @@ request and `main`; a site change now takes about 6 min 15 s across both.
 **Done when, item by item:**
 - Branch protection unchanged: yes.
 - Site pull request within 4 min (3 min 7 s) and the deploy after a merge (3 min 6 s): yes.
-  The documentation-only path (limit 2 min) is measured on this Sync's own pull request and
-  recorded below once it has run.
+  The documentation-only path (limit 2 min) is measured on this Sync's own pull request; see
+  below.
+
+**Documentation-only path, measured on this Sync's pull request (#12):**
+- Run `37329167161`, first commit: `site` listed one changed path,
+  `spdd/canvases/010-ship-without-waiting.md`, and decided `Documentation only: true`, so the
+  seven shards were skipped and the gate logged
+  `site: success, lighthouse: skipped, documentation only: true` and passed.
+- **It missed the limit: 3 min 16 s.** The work took about 1 min (`site` 56 s, the gate 2 s),
+  but the gate waited **2 min 13 s for a runner**. In the three full runs above the gate started
+  3–5 s after its last dependency.
+- One sample cannot tell a passing queue delay from something systematic, such as a slow start
+  after a skipped matrix job. The second commit of #12, this note, is documentation only too, and
+  its run is the second sample.
 - A throwaway pull request with a broken assertion turned `build` red: yes, #11.
 - One `lighthouse-results` artifact per run with every report: yes, one folder per shard.
 - Tests and build checks pass: yes.
