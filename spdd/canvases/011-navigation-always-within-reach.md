@@ -166,7 +166,10 @@ This section is authoritative where it differs from the operations above.
   flush with the bar. The 16 px is decision 3's margin, the same gap the sections land at today.
 - **Reduced motion:** the bar has no transition (`0s`).
 - **Tests:** 273 pass. **Build checks:** "none broken" on 14 pages, every preview complete.
-- **Lighthouse:** confirmed by the pull request's CI.
+- **Lighthouse,** pull request #15, run `37377176279` (3 min 3 s), 14 URLs × 3: every assertion
+  passes. Median LCP 1355–1361 ms, median CLS at most 0.005, every median performance score 1,
+  accessibility 1, at most 1.8 KB of script per page. Three single runs scored under 1 on
+  performance, the runner noise canvas 010 recorded; no median did.
 
 **Found, outside this canvas:** the phone contact bar slides in and out with a 300 ms
 `translate` and `opacity` transition that does not check `prefers-reduced-motion`, against the
