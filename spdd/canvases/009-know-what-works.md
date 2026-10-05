@@ -456,3 +456,27 @@ and no longer is. The likely cause is a browser that reported an empty user agen
 confirmed. Watched through `system.ingestion_warnings`; if it recurs, the option is a fixed
 placeholder for an empty user agent, which changes the privacy note and goes back for copy
 approval.
+
+## Sync — 2026-10-05 (verification visit, the launch Sync's last open item)
+
+Pending 9 of the analysis, approved by Jesus on 2026-10-05.
+
+- **The visit,** at 23:21 UTC on 2026-10-04: one fresh headless Chromium context, from a
+  Playwright container, on `https://jesusroncal94.github.io/?utm_source=verification` at
+  1440 × 900, with a regular user agent and neither GPC nor Do Not Track. Without leaving the
+  page, after `load`:
+  - the hero's "Download CV" downloaded `jesus-roncal-cv-en.pdf`;
+  - the nav's email button copied the address to the clipboard;
+  - the contact section's email link was clicked (`mailto:` opens nothing headless).
+- **Sent:** four requests to `eu.i.posthog.com`, `$pageview`, `cv_download`, `email_copy` and
+  `email_open`, each answered 200.
+- **Stored,** checked through the connector: the four events, each with `utm_source`
+  `verification`, `locale` `en` and `$pathname` `/`. `$raw_user_agent` is not stored. The last
+  two showed up a minute after the first two, which is ingestion delay, not a loss.
+- **No new ingestion warning** on 2026-10-04.
+- **The insights hold:** "Conversions per week, by language" still shows no data and "CV
+  downloads per day" is 0 on 2026-10-04, so operation 13's filter excludes real tagged events
+  and the alert has nothing to fire on.
+
+**Done when, closed:** every conversion event has now been seen arriving from the published
+site. Still watched: pending 10, the page view dropped on 2026-10-03.

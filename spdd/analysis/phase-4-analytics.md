@@ -195,6 +195,7 @@ conversion events still missing from the launch Sync had arrived.
 **✅ Decision 8 — Test traffic in the insights.** Confirmed 2026-10-05: direction 1, the filter
 on both insights.
 
-**⚠️ Pending — 9, the verification visit.** Direction 2, after decision 8 is applied.
+**✅ Approved on 2026-10-05 — 9, the verification visit.** Direction 2, run that day after
+decision 8 was applied; the result is in the Sync of canvas 009.
 
 **⚠️ Pending — 10, the dropped page view.** Direction 3, recorded in canvas 009 and watched.
