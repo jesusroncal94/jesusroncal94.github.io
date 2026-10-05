@@ -90,18 +90,18 @@ and `Home — Phone 390 · menu scrolled` (approved 2026-10-05 with a solid back
 
 ## 4. Decisions
 
-**⚠️ Pending — 1, how the bar stays.** Recommended: A, `position: sticky; top: 0`.
+**✅ Decision 1 — How the bar stays.** Confirmed 2026-10-05: A, `position: sticky; top: 0`.
 
-**⚠️ Pending — 2, background and border.** Recommended: solid `bg-canvas`, with the border line
+**✅ Decision 2 — Background and border.** Confirmed 2026-10-05: solid `bg-canvas`, with the border line
 shown only once scrolled, through a scroll-driven animation inside `@supports`, and no line
 where it is unsupported.
 
-**⚠️ Pending — 3, jumps and focus.** Recommended: `scroll-padding-top` equal to the bar's height
+**✅ Decision 3 — Jumps and focus.** Confirmed 2026-10-05: `scroll-padding-top` equal to the bar's height
 per breakpoint, 16 px more for case headings, and `scroll-padding-bottom` for the phone contact
 bar.
 
-**⚠️ Pending — 4, the language suggestion.** Recommended: the phone pill stays in the pinned bar;
+**✅ Decision 4 — The language suggestion.** Confirmed 2026-10-05: the phone pill stays in the pinned bar;
 the desktop card moves out of the header and scrolls away as today.
 
-**⚠️ Pending — 5, what stays out.** Recommended: no hide-on-scroll, no section highlight, no
+**✅ Decision 5 — What stays out.** Confirmed 2026-10-05: no hide-on-scroll, no section highlight, no
 change to the CV page.

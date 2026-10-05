@@ -33,6 +33,12 @@ Phase 1.3:
 | ------ | ----- | ---------- |
 | [010 — Ship without waiting](010-ship-without-waiting.md) | [010](../stories/010-ship-without-waiting.md) | 000, 004a, 009 |
 
+Phase 1.4:
+
+| Canvas | Story | Depends on |
+| ------ | ----- | ---------- |
+| [011 — Navigation always within reach](011-navigation-always-within-reach.md) | [011](../stories/011-navigation-always-within-reach.md) | 001, 004a, 007 |
+
 Phase 3:
 
 | Canvas | Story | Depends on |
