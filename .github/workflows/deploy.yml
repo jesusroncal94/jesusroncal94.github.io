@@ -14,33 +14,100 @@ permissions:
 
 concurrency:
   group: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.ref) || 'pages' }}
-  cancel-in-progress: false
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
-  build:
+  site:
     runs-on: ubuntu-latest
+    outputs:
+      docs_only: ${{ steps.scope.outputs.docs_only }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: npm
       - run: npm ci
+      - id: scope
+        name: Classify the change
+        run: npx tsx scripts/ci-scope.ts
+        env:
+          CI_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
       - run: npx playwright install --with-deps chromium
       - run: npm run test
       - run: npm run build
         env:
           ASTRO_TELEMETRY_DISABLED: "1"
           PUBLIC_POSTHOG_KEY: ${{ vars.PUBLIC_POSTHOG_KEY }}
-      - name: Lighthouse budget
-        uses: treosh/lighthouse-ci-action@12.6.2
+      - uses: actions/upload-artifact@v7
         with:
-          configPath: ./lighthouserc.json
-          uploadArtifacts: true
+          name: dist
+          path: dist
+          if-no-files-found: error
+          retention-days: 1
       - if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v5
         with:
           path: dist
+
+  lighthouse:
+    needs: site
+    if: needs.site.outputs.docs_only != 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
+        with:
+          name: dist
+          path: dist
+      - name: Pick this shard's pages
+        env:
+          SHARD: ${{ strategy.job-index }}
+          SHARDS: ${{ strategy.job-total }}
+        run: |
+          jq --argjson shard "$SHARD" --argjson shards "$SHARDS" \
+            '.ci.collect.url |= [to_entries[] | select(.key % $shards == $shard) | .value]' \
+            lighthouserc.json > lighthouserc.shard.json
+          jq -r '.ci.collect.url[]' lighthouserc.shard.json
+          test "$(jq '.ci.collect.url | length' lighthouserc.shard.json)" -gt 0
+      - name: Lighthouse budget
+        uses: treosh/lighthouse-ci-action@12.6.2
+        with:
+          configPath: ./lighthouserc.shard.json
+          uploadArtifacts: true
+          artifactName: lighthouse-results-${{ matrix.shard }}
+
+  build:
+    needs: [site, lighthouse]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require every check
+        env:
+          SITE: ${{ needs.site.result }}
+          LIGHTHOUSE: ${{ needs.lighthouse.result }}
+          DOCS_ONLY: ${{ needs.site.outputs.docs_only }}
+        run: |
+          echo "site: $SITE, lighthouse: $LIGHTHOUSE, documentation only: $DOCS_ONLY"
+          test "$SITE" = success
+          if [ "$DOCS_ONLY" = true ]; then
+            test "$LIGHTHOUSE" = skipped
+          else
+            test "$LIGHTHOUSE" = success
+          fi
+      - if: always() && needs.lighthouse.result != 'skipped'
+        uses: actions/upload-artifact/merge@v7
+        with:
+          name: lighthouse-results
+          pattern: lighthouse-results-*
+          separate-directories: true
+          delete-merged: true
 
   deploy:
     if: github.event_name != 'pull_request'
