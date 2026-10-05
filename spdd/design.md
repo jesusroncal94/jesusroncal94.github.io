@@ -18,6 +18,10 @@ Mockups live in **Penpot** and are the visual source of truth for the canvases i
 | Home        | Nav — Phone 320 · i18n suggestion | 004       |
 | Home        | Case — Phone 390 · i18n suggestion | 004      |
 | Home        | Home — Phone 390 · i18n menu | 004            |
+| Home        | Home — Desktop 1440 · scrolled | 011          |
+| Home        | Home — Tablet 834 · scrolled | 011            |
+| Home        | Home — Phone 390 · scrolled | 011             |
+| Home        | Home — Phone 390 · menu scrolled | 011        |
 | Ask         | Ask — Desktop 1440 · answer  | 005            |
 | Ask         | Ask — Desktop 1440 · refusal | 005            |
 | Ask         | Ask — Phone 390 · answer     | 005            |
@@ -32,8 +36,8 @@ Mockups live in **Penpot** and are the visual source of truth for the canvases i
 The three Home frames sit side by side and share one set of components, so the responsive
 behaviour of story 007 can be compared section by section. Each page starts at the origin,
 with 100 px between frames and one row per story; on Home, the story 004 frames form a
-second row under the three layouts. The plugin API cannot move a shape to another page, so
-they stay on Home.
+second row under the three layouts, and the story 011 frames a third row. The plugin API
+cannot move a shape to another page, so they stay on Home.
 
 ### History
 
@@ -115,6 +119,13 @@ Code Mono.
   action; the limit state keeps only the message and the action. Answers speak about Jesus in
   the third person, because the assistant is not him. Answer texts and receipt figures in the
   frames are illustrative.
+- Pinned navigation (story 011, drawn 2026-10-05). The bar stays at the top while the page
+  scrolls, on a solid canvas background with a one-pixel border line below it. A translucent
+  bar was drawn first: at 85 % opacity the text underneath showed through and collided with the
+  links, and the blur that would hide it cannot be drawn in Penpot and costs GPU on low-end
+  phones. The scrolled frames show the state after a jump, with the section heading whole below
+  the bar, and the tablet frame mid-scroll, with content passing under it. On phones the menu
+  sheet opens under the pinned bar, and the contact bar stays at the bottom.
 - The portrait badges frame the face on a diagonal: the current role overhangs the top-left
   edge, the lead role the bottom-right, so neither covers the face (2026-09-27).
 

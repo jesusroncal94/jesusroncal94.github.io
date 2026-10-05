@@ -25,7 +25,8 @@ const targets = locale === DEFAULT_LOCALE ? PUBLISHED_LOCALES.filter((target) =>
       lang={target}
       data-locale-suggestion={target}
       data-published={PUBLISHED_LOCALES.join(' ')}
-      class:list={['w-85 rounded-lg border border-border-strong bg-surface py-4.5 pr-4.5 pl-5 shadow-float', className]}
+      data-suggestion-card
+      class:list={['w-85 data-away:invisible rounded-lg border border-border-strong bg-surface py-4.5 pr-4.5 pl-5 shadow-float', className]}
     >
       <div class="flex items-start gap-3">
         <Icon name="globe" size={20} class="mt-0.5 shrink-0 text-glow" />
