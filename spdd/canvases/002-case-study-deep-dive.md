@@ -158,6 +158,19 @@ said "answering 1/6".
     card changes. Check: tests and the build checks; the card at 320, 360, 390 and 430 px in
     both locales without overflow; Lighthouse in the pull request's CI.
 
+### Follow-up — the arrows and reduced motion (started 2026-10-06)
+
+Found while fixing the contact bar (canvas 003, operation 13): the arrow of a case card on the
+home page and the arrow of "Next case" on a case page shift 4 px on hover
+(`transition-transform group-hover:translate-x-1`) whatever the motion preference. Jesus approved
+including them on 2026-10-06.
+
+15. **The nudge becomes `motion-safe:`.** Both arrows get
+    `motion-safe:transition-transform motion-safe:group-hover:translate-x-1`. With reduced
+    motion they stay still on hover; the card's border and the link's colour still change.
+    Check: with reduced motion, hovering a case card and "Next case" leaves the arrow's
+    transform at none; without it, the arrow moves 4 px as before.
+
 ## N — Norms
 
 All of [norms.md](norms.md). Case copy follows Problem → Approach → Result with no
@@ -250,3 +263,15 @@ MindFortress". Jesus approved it on 2026-09-30.
   1440 px, in both locales, with zero page overflow: three lines at 320 px, two at 1440 px,
   as a block like the previous note.
 - Lighthouse: confirmed by the pull request's CI.
+
+## Sync — 2026-10-06 (operation 15, reduced motion)
+
+- **Changed** (`e16fd6a`): the case-card arrow (`CaseCard.astro`) and the "Next case" arrow
+  (case page) nudge only under `motion-safe:`.
+- **Verified on the production build** at 1440 px, hovering the first case card on `/` and
+  "Next case" on `/work/02-cost-leak/`:
+  - with `prefers-reduced-motion: reduce`, the arrow's `translate` stays `none`;
+  - with `no-preference`, it moves `4px` over 0.15 s, as before.
+- After this and canvas 003's operation 13, every movement on the site is gated: the proof
+  rise and the contact bar with `motion-safe:`, the count-up in its script, the arrows here.
+  Colour-only hover transitions are not motion and are left as they are.

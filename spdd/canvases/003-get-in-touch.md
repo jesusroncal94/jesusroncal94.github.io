@@ -106,6 +106,20 @@ package.json                        + devDependency playwright; build → astro 
 12. **Check**: `pdftotext dist/cv/jesus-roncal-cv-en.pdf -` contains the name, the email and
     every role, and contains no phone pattern; the PDF is at most two pages.
 
+### Follow-up — the contact bar and reduced motion (started 2026-10-06)
+
+Found during canvas 011's verification: the contact bar slides out of view and back with a
+300 ms `translate` and `opacity` transition that runs whatever the visitor's motion
+preference, against the norm "Motion respects prefers-reduced-motion". Jesus approved the fix
+on 2026-10-06.
+
+13. **The transition becomes `motion-safe:`.** `transition-[translate,opacity] duration-300`
+    turns into `motion-safe:transition-[translate,opacity] motion-safe:duration-300`. With
+    reduced motion the bar still hides when the contact section enters the view and comes back
+    after it, at once instead of sliding. Check, on the production build at 390 px: with
+    reduced motion the bar has no transition and still toggles `data-hidden`; without it, the
+    300 ms transition is unchanged.
+
 ## N — Norms
 
 All of [norms.md](norms.md). Event names are snake_case nouns plus a verb, and are defined
@@ -177,3 +191,13 @@ Implemented. This section is authoritative where it differs from the operations 
 the current role. The CV summary reads "Most recently Technical Lead on two AI products, and
 currently AI Engineer on a third". Jesus approved it on 2026-09-30. The PDF is still two
 pages.
+
+## Sync — 2026-10-06 (operation 13, reduced motion)
+
+- **Changed** (`af78527`): the contact bar's transition is `motion-safe:` only. It closes the
+  finding recorded in canvas 011's Sync.
+- **Verified on the production build** at 390 px, on `/` and `/work/02-cost-leak/`:
+  - with `prefers-reduced-motion: reduce`, the bar's transition is `0s`, and it still hides at
+    the end of the page (`data-hidden` set) and comes back at the top;
+  - with `no-preference`, the transition is `0.3s` as before, with the same hiding.
+- Tests: 273 pass; build checks pass. Lighthouse in the pull request's CI.
