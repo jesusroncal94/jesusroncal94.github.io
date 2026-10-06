@@ -263,3 +263,15 @@ MindFortress". Jesus approved it on 2026-09-30.
   1440 px, in both locales, with zero page overflow: three lines at 320 px, two at 1440 px,
   as a block like the previous note.
 - Lighthouse: confirmed by the pull request's CI.
+
+## Sync — 2026-10-06 (operation 15, reduced motion)
+
+- **Changed** (`e16fd6a`): the case-card arrow (`CaseCard.astro`) and the "Next case" arrow
+  (case page) nudge only under `motion-safe:`.
+- **Verified on the production build** at 1440 px, hovering the first case card on `/` and
+  "Next case" on `/work/02-cost-leak/`:
+  - with `prefers-reduced-motion: reduce`, the arrow's `translate` stays `none`;
+  - with `no-preference`, it moves `4px` over 0.15 s, as before.
+- After this and canvas 003's operation 13, every movement on the site is gated: the proof
+  rise and the contact bar with `motion-safe:`, the count-up in its script, the arrows here.
+  Colour-only hover transitions are not motion and are left as they are.

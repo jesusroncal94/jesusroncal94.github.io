@@ -191,3 +191,13 @@ Implemented. This section is authoritative where it differs from the operations 
 the current role. The CV summary reads "Most recently Technical Lead on two AI products, and
 currently AI Engineer on a third". Jesus approved it on 2026-09-30. The PDF is still two
 pages.
+
+## Sync — 2026-10-06 (operation 13, reduced motion)
+
+- **Changed** (`af78527`): the contact bar's transition is `motion-safe:` only. It closes the
+  finding recorded in canvas 011's Sync.
+- **Verified on the production build** at 390 px, on `/` and `/work/02-cost-leak/`:
+  - with `prefers-reduced-motion: reduce`, the bar's transition is `0s`, and it still hides at
+    the end of the page (`data-hidden` set) and comes back at the top;
+  - with `no-preference`, the transition is `0.3s` as before, with the same hiding.
+- Tests: 273 pass; build checks pass. Lighthouse in the pull request's CI.
