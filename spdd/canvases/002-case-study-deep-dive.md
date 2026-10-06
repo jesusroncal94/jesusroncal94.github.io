@@ -158,6 +158,19 @@ said "answering 1/6".
     card changes. Check: tests and the build checks; the card at 320, 360, 390 and 430 px in
     both locales without overflow; Lighthouse in the pull request's CI.
 
+### Follow-up — the arrows and reduced motion (started 2026-10-06)
+
+Found while fixing the contact bar (canvas 003, operation 13): the arrow of a case card on the
+home page and the arrow of "Next case" on a case page shift 4 px on hover
+(`transition-transform group-hover:translate-x-1`) whatever the motion preference. Jesus approved
+including them on 2026-10-06.
+
+15. **The nudge becomes `motion-safe:`.** Both arrows get
+    `motion-safe:transition-transform motion-safe:group-hover:translate-x-1`. With reduced
+    motion they stay still on hover; the card's border and the link's colour still change.
+    Check: with reduced motion, hovering a case card and "Next case" leaves the arrow's
+    transform at none; without it, the arrow moves 4 px as before.
+
 ## N — Norms
 
 All of [norms.md](norms.md). Case copy follows Problem → Approach → Result with no

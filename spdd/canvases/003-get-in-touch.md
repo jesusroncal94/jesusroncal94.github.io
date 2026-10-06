@@ -106,6 +106,20 @@ package.json                        + devDependency playwright; build → astro 
 12. **Check**: `pdftotext dist/cv/jesus-roncal-cv-en.pdf -` contains the name, the email and
     every role, and contains no phone pattern; the PDF is at most two pages.
 
+### Follow-up — the contact bar and reduced motion (started 2026-10-06)
+
+Found during canvas 011's verification: the contact bar slides out of view and back with a
+300 ms `translate` and `opacity` transition that runs whatever the visitor's motion
+preference, against the norm "Motion respects prefers-reduced-motion". Jesus approved the fix
+on 2026-10-06.
+
+13. **The transition becomes `motion-safe:`.** `transition-[translate,opacity] duration-300`
+    turns into `motion-safe:transition-[translate,opacity] motion-safe:duration-300`. With
+    reduced motion the bar still hides when the contact section enters the view and comes back
+    after it, at once instead of sliding. Check, on the production build at 390 px: with
+    reduced motion the bar has no transition and still toggles `data-hidden`; without it, the
+    300 ms transition is unchanged.
+
 ## N — Norms
 
 All of [norms.md](norms.md). Event names are snake_case nouns plus a verb, and are defined
