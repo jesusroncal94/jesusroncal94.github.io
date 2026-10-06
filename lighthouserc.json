@@ -16,7 +16,8 @@
         "http://localhost/es/work/02-cost-leak/index.html",
         "http://localhost/es/work/03-merge-campaign/index.html",
         "http://localhost/es/work/04-freya/index.html",
-        "http://localhost/es/privacy/index.html"
+        "http://localhost/es/privacy/index.html",
+        "http://localhost/404.html"
       ],
       "numberOfRuns": 3,
       "settings": {

@@ -53,8 +53,9 @@ Changes reach `main` through pull requests, and `main` requires the `build` chec
 workflow runs on every pull request and on every push to `main`:
 
 1. **`site`** runs the tests and builds the site once, with its link and preview checks.
-2. **`lighthouse`** audits every published page against the budget below, in seven parallel
-   jobs, one page in both languages each, three runs per page. It is skipped when a change
+2. **`lighthouse`** audits every published page and the not-found page against the budget
+   below, in seven parallel jobs, one page in both languages each (the first also takes the
+   not-found page), three runs per page. It is skipped when a change
    touches only documentation that never reaches the site: `spdd/`, `README.md`, `CLAUDE.md`.
 3. **`build`** passes only if both did, and gathers the reports into one
    `lighthouse-results` artifact.
