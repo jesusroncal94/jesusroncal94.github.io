@@ -80,7 +80,7 @@ const { Content } = await render(entry);
           <span class="label-mono text-subtle">{t('cta.nextCase')}</span>
           <span class="heading-h3 inline-flex items-center gap-2 text-primary">
             {next.data.title}
-            <Icon name="arrow-right" size={18} class="transition-transform group-hover:translate-x-1" />
+            <Icon name="arrow-right" size={18} class="motion-safe:transition-transform motion-safe:group-hover:translate-x-1" />
           </span>
         </a>
         <div class="flex flex-wrap gap-3">
