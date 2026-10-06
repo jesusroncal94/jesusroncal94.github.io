@@ -160,5 +160,9 @@ paths with status 404):
 - Screenshots of both languages at 1440 and 390 px match the four frames.
 - Tests: 279 pass. Build checks: 15 pages, "none broken", every preview complete; the sitemap
   does not list the page.
-- **Still to record:** Lighthouse on the page in the pull request's CI, and the four addresses
-  on the published site after the deploy.
+- **Lighthouse,** pull request #17, run `37543046329` (3 min 8 s), 15 URLs × 3: every assertion
+  passes; all seven shards' assertion files are empty. On `/404.html`, all three runs score
+  performance 1, accessibility 1 and best practices 1, with LCP 1357–1360 ms, CLS 0 and
+  1.3 KB of script. Across the 15 URLs: median LCP 1282–1363 ms, every median performance
+  score 1, accessibility 1. The two language blocks in one file cost the audit nothing.
+- **Still to record:** the four addresses on the published site after the deploy.
