@@ -39,7 +39,8 @@ Mockups live in **Penpot** and are the visual source of truth for the canvases i
 
 The three Home frames sit side by side and share one set of components, so the responsive
 behaviour of story 007 can be compared section by section. Each page starts at the origin,
-with 100 px between frames and one row per story; on Home, the story 004 frames form a
+with 200 px between frames and 400 px between rows, one row per story (spacing widened on
+2026-10-07, when a 1,112 px frame overlapped the row below it); on Home, the story 004 frames form a
 second row under the three layouts, the story 011 frames a third row and the story 012 frames a
 fourth. The plugin API
 cannot move a shape to another page, so they stay on Home.
