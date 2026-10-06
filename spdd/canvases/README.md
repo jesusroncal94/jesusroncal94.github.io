@@ -39,6 +39,12 @@ Phase 1.4:
 | ------ | ----- | ---------- |
 | [011 — Navigation always within reach](011-navigation-always-within-reach.md) | [011](../stories/011-navigation-always-within-reach.md) | 001, 004a, 007 |
 
+Phase 1.5:
+
+| Canvas | Story | Depends on |
+| ------ | ----- | ---------- |
+| [012 — A wrong address still lands](012-a-wrong-address-still-lands.md) | [012](../stories/012-a-wrong-address-still-lands.md) | 002, 004a, 009, 011 |
+
 Phase 3:
 
 | Canvas | Story | Depends on |

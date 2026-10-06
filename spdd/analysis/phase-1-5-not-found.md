@@ -83,17 +83,17 @@ which page is opened, so it stays accurate without a change.
 
 ## 4. Decisions
 
-**⚠️ Pending — 1, one page at the root.** Recommended: `src/pages/404.astro` → `dist/404.html`.
+**✅ Decision 1 — One page at the root.** Confirmed 2026-10-07: `src/pages/404.astro` → `dist/404.html`.
 
-**⚠️ Pending — 2, the language.** Recommended: A, both languages in the file, chosen by an inline
+**✅ Decision 2 — The language.** Confirmed 2026-10-07: A, both languages in the file, chosen by an inline
 `<head>` script from the address; English without scripts.
 
-**⚠️ Pending — 3, the navigation.** Recommended: a `Nav` per language; the switch leads to the
+**✅ Decision 3 — The navigation.** Confirmed 2026-10-07: a `Nav` per language; the switch leads to the
 other language's home page; no language suggestion; no repeated ids.
 
-**⚠️ Pending — 4, indexing.** Recommended: `noindex`, out of the sitemap, no preview card.
+**✅ Decision 4 — Indexing.** Confirmed 2026-10-07: `noindex`, out of the sitemap, no preview card.
 
-**⚠️ Pending — 5, analytics.** Recommended: the default page view only; the privacy note stays.
+**✅ Decision 5 — Analytics.** Confirmed 2026-10-07: the default page view only; the privacy note stays.
 
-**⚠️ Pending — 6, checks.** Recommended: the page joins the Lighthouse audit and its coverage test;
+**✅ Decision 6 — Checks.** Confirmed 2026-10-07: the page joins the Lighthouse audit and its coverage test;
 the published site is checked for the 404 status on the story's four addresses.
