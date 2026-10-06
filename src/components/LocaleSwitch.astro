@@ -4,11 +4,12 @@ import { LOCALE_NAMES, localePath, PUBLISHED_LOCALES, stripLocale, type Locale }
 interface Props {
   locale: Locale;
   variant: 'compact' | 'full';
+  switchToHome?: boolean;
   class?: string;
 }
 
-const { locale, variant, class: className } = Astro.props;
-const path = stripLocale(Astro.url.pathname);
+const { locale, variant, switchToHome = false, class: className } = Astro.props;
+const path = switchToHome ? undefined : stripLocale(Astro.url.pathname);
 const compact = variant === 'compact';
 ---
 
