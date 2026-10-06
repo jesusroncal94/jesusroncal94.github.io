@@ -5,8 +5,9 @@ Story: [012](../stories/012-a-wrong-address-still-lands.md). Analysis:
 `Not found — Phone 390`, `Not found — Desktop 1440 · es`, `Not found — Phone 390 · es` (see
 [../design.md](../design.md)).
 
-**Status:** written on 2026-10-07; the story, the frames and the page's copy (English and
-Spanish, approved 2026-10-07) and decisions 1–6 were approved. Waiting for the start.
+**Status:** implemented on 2026-10-07; the story, the frames and the page's copy (English and
+Spanish, approved 2026-10-07), decisions 1–6 and the canvas start were approved. Synced below;
+waiting for the pull request and the check on the published site.
 
 ## R — Requirements
 
@@ -118,3 +119,46 @@ All of [norms.md](norms.md). In particular:
 - No new request and no new script file; the language script is inline and a few lines.
 - Accessibility stays at 100: one visible `main`, no repeated ids.
 - The privacy note stays accurate without a change: page views already record the page opened.
+
+## Sync — 2026-10-07 (operations 1–4)
+
+This section is authoritative where it differs from the operations above.
+
+- **Op 1** (`dfda143`). The keys are `notFound.eyebrow`, `.lead`, `.accent`, `.lede`, `.home` and
+  `.cases`: the visible "404" got a key, as every visible string must, and there is no
+  `notFound.title`. The tab title is composed from the approved headline in the site's pattern,
+  "This page isn't here — Jesús Roncal" and "Esta página no está aquí — Jesús Roncal", and the
+  description is the approved lede, so no unapproved string was added. "Case studies" is stored
+  in sentence case; the label style sets it in capitals, as drawn. The review test went from 233
+  to 239 checks.
+- **Op 2** (`5599fb4`). `Base` takes `canonical` (when false: no canonical, alternates or
+  `og:url`) and `<slot name="head" />`; `LocaleSwitch` takes `switchToHome`; `Nav` takes
+  `switchToHome` and `suggestion`, and its menu script handles every menu. Built before and
+  after and compared: `/cv/` and `/es/cv/` are byte-identical; the other 12 pages are identical
+  outside their scripts, with exactly one script changed, the menu's.
+- **Op 3** (`f955365`). `src/pages/404.astro`.
+  - The language script is inline in `<head>` and reads the first path segment against the
+    published locales, with their titles passed in at build time. Visibility uses static
+    classes per locale (`in-data-locale:hidden`, `hidden in-data-[locale=es]:block`, and the
+    same for `it`), because Tailwind only generates classes it finds written out.
+  - The verification caught the headline reading "This pageisn't here." in the accessibility
+    tree, the line break leaving no space; an explicit space after the break fixed it, as in
+    the hero.
+  - The sitemap integration already leaves the page out, so its filter did not change.
+- **Op 4** (`b02c47b`). `lighthouserc.json` adds `http://localhost/404.html` (15 URLs; shard 0
+  now holds three), the coverage test expects it, and the README's "Deploying" says so.
+
+**Verified on 2026-10-07, on the production build** (the preview serves `404.html` for missing
+paths with status 404):
+- `/does-not-exist/` and `/work/99-missing/`: 404, English, the English title, the home button
+  to `/`, four case links. `/es/no-existe/` and `/es/work/99-missing/`: 404, Spanish, the
+  Spanish title, the home button to `/es/`, four case links.
+- `/es/x/` at `DOMContentLoaded` already shows only the Spanish block.
+- With scripts off, `/es/no-existe/` shows the English page with working links.
+- The Spanish phone menu opens, its switch links to `/` and `/es/`, and a menu link navigates.
+- Zero overflow at all 12 widths, English and Spanish.
+- Screenshots of both languages at 1440 and 390 px match the four frames.
+- Tests: 279 pass. Build checks: 15 pages, "none broken", every preview complete; the sitemap
+  does not list the page.
+- **Still to record:** Lighthouse on the page in the pull request's CI, and the four addresses
+  on the published site after the deploy.
