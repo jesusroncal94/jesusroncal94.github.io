@@ -18,7 +18,7 @@ const person = personEntity({
   profiles: ['https://github.com/ada'],
 });
 const profile = profilePage({ name: 'Ada Example', url: home, inLanguage: 'es', person });
-const article = caseArticle({ site, headline: 'A case', description: 'What happened.', image: preview, url: caseUrl, inLanguage: 'es' });
+const article = caseArticle({ site, author: { name: 'Ada Example', url: home }, headline: 'A case', description: 'What happened.', image: preview, url: caseUrl, inLanguage: 'es' });
 
 const script = (data: object | string) =>
   `<script type="application/ld+json">${typeof data === 'string' ? data : toJsonLd(data)}</script>`;
@@ -63,8 +63,13 @@ describe('findStructuredDataProblems', () => {
     ]);
   });
 
-  it('reports an article whose image is not the og:image, or whose page address differs', () => {
+  it('reports an article with a bare author reference, a stale image or another page address', () => {
     const stale = { ...article, image: `${site}/es/og/work/01-evals.jpg`, url: `${site}/work/01-evals/` };
+    expect(findStructuredDataProblems([{ path: 'es/work/01-evals/index.html', html: page(caseUrl, script({ ...article, author: { '@id': `${site}/#person` } })) }])).toEqual([
+      { page: '/es/work/01-evals/', reason: 'author is not a Person' },
+      { page: '/es/work/01-evals/', reason: 'author has no name' },
+      { page: '/es/work/01-evals/', reason: 'author has no url' },
+    ]);
     expect(findStructuredDataProblems([{ path: 'es/work/01-evals/index.html', html: page(caseUrl, script(stale)) }])).toEqual([
       { page: '/es/work/01-evals/', reason: `url ${site}/work/01-evals/ is not the page's ${caseUrl}` },
       { page: '/es/work/01-evals/', reason: `image ${site}/es/og/work/01-evals.jpg is not the og:image ${preview}` },

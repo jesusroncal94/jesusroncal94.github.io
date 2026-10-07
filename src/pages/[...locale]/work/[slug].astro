@@ -17,6 +17,7 @@ import { interpolate, useTranslations } from '../../../i18n/translate';
 import { caseEyebrow, caseSlug, getCases, type Case } from '../../../lib/cases';
 import { cvPath } from '../../../lib/cv';
 import { ogImagePath } from '../../../lib/preview';
+import { getSite } from '../../../lib/site';
 import { caseArticle } from '../../../lib/structured-data';
 
 export const getStaticPaths = (async () => {
@@ -48,6 +49,7 @@ const site = String(Astro.site);
 const preview = ogImagePath(locale, caseSlug(entry));
 const structuredData = caseArticle({
   site,
+  author: { name: (await getSite(locale)).displayName, url: new URL(localePath(locale), site).href },
   headline: title,
   description: summary,
   image: new URL(preview, site).href,

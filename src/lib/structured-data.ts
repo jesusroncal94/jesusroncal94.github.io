@@ -31,6 +31,7 @@ export interface ProfilePageInput {
 
 export interface CaseArticleInput {
   site: string;
+  author: { name: string; url: string };
   headline: string;
   description: string;
   image: string;
@@ -55,7 +56,7 @@ export function profilePage({ name, url, inLanguage, person }: ProfilePageInput)
   return { '@context': CONTEXT, '@type': 'ProfilePage', name, url, inLanguage, mainEntity: person };
 }
 
-export function caseArticle({ site, headline, description, image, url, inLanguage }: CaseArticleInput) {
+export function caseArticle({ site, author, headline, description, image, url, inLanguage }: CaseArticleInput) {
   return {
     '@context': CONTEXT,
     '@type': 'Article',
@@ -65,7 +66,7 @@ export function caseArticle({ site, headline, description, image, url, inLanguag
     url,
     mainEntityOfPage: url,
     inLanguage,
-    author: { '@id': personId(site) },
+    author: { '@type': 'Person', '@id': personId(site), ...author },
   };
 }
 
