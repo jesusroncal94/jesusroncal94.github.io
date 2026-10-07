@@ -4,8 +4,8 @@ Story: [013](../stories/013-search-engines-know-who-this-is.md). Analysis:
 [Phase 1.6](../analysis/phase-1-6-structured-data.md). No frames: nothing visible changes.
 
 **Status:** implemented on 2026-10-07; the story, decisions 1–5 (with the name "Jesús Roncal"
-only) and the canvas start were approved that day. Waiting for Lighthouse in the pull
-request's CI and, after the deploy, the Rich Results Test.
+only) and the canvas start were approved that day. Published with #19. The article author
+fix was approved the same day and waits for its Rich Results Test.
 
 ## R — Requirements
 
@@ -151,4 +151,28 @@ This section is authoritative where it differs from the operations above.
   most 0.005. SEO is 1 on the homes, cases and privacy pages; the CV and 404 pages score
   0.63–0.66 because they are `noindex` on purpose, as before.
 
-**Pending:** Jesus's Rich Results Test on the published home page and one case.
+**Verified on the published site, 2026-10-07,** after #19 was merged (`22ed453`) and deployed
+(run `37641801597`, 3 min 26 s):
+- `curl`: `/`, `/es/`, `/work/02-cost-leak/` and `/es/work/04-freya/` carry one block each; the
+  cases declare `og:type` `article`; `/cv/`, `/privacy/` and a missing address carry none. The
+  article's image is its `og:image`, `?v=` included, and both it and the portrait answer 200.
+- Jesus's Rich Results Test (smartphone crawler):
+  - `/`: **Profile page**, 1 valid item ("Jesús Roncal"), no warnings.
+  - `/work/02-cost-leak/`: **Articles**, 1 valid item, **2 non-critical issues**, both on
+    `author`: missing `url` (optional) and missing `name` (optional). Google does not follow
+    the `@id` to the home page, so it read the author as a bare `Thing`.
+
+## Sync — 2026-10-07 (the article author)
+
+Approved by Jesus on 2026-10-07 after the Rich Results Test above.
+
+- `caseArticle` takes `author: { name, url }` and writes
+  `{ "@type": "Person", "@id": …#person, name, url }`. The name is `site.displayName`, already
+  in every case title; the address is the home page of the page's language. The `@id` still
+  ties the author to the person on the home page.
+- The check requires the author to be a `Person` with that `@id`, a `name` and a `url`; a bare
+  reference now fails the build. One test covers it.
+- Tests: 290 pass. Build: structured data "all valid" in 15 pages. `/work/02-cost-leak/`
+  declares author "Jesús Roncal" at `/`; `/es/work/04-freya/` at `/es/`.
+
+**Pending:** the Rich Results Test on the same case once this is deployed, expecting no issues.

@@ -16,6 +16,8 @@ const CASE = new RegExp(`^${PREFIX}work/[^/]+/index\\.html$`);
 
 const PERSON_FIELDS = ['name', 'jobTitle', 'url', 'image'] as const;
 const ARTICLE_FIELDS = ['headline', 'description', 'image', 'url', 'inLanguage'] as const;
+// Google does not follow the @id to the home page, so the author names itself.
+const AUTHOR_FIELDS = ['name', 'url'] as const;
 
 const meta = (html: string, property: string) =>
   html.match(new RegExp(`<meta property="${property}" content="([^"]*)"`))?.[1];
@@ -49,7 +51,10 @@ function problemsOf(block: Block, kind: 'home' | 'case', html: string): string[]
 
   if (block['@type'] !== 'Article') problems.push(`@type is ${String(block['@type'])}, not Article`);
   problems.push(...missingFields(block, ARTICLE_FIELDS).map((field) => `article has no ${field}`));
-  if ((block.author as Block | undefined)?.['@id'] !== id) problems.push(`author is not ${id}`);
+  const author = (block.author ?? {}) as Block;
+  if (author['@type'] !== 'Person') problems.push('author is not a Person');
+  if (author['@id'] !== id) problems.push(`author is not ${id}`);
+  problems.push(...missingFields(author, AUTHOR_FIELDS).map((field) => `author has no ${field}`));
   const image = meta(html, 'og:image');
   if (block.image !== image) problems.push(`image ${String(block.image)} is not the og:image ${String(image)}`);
   return problems;

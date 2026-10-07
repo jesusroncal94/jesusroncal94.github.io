@@ -40,13 +40,14 @@ describe('structured data', () => {
     expect(
       caseArticle({
         site,
+        author: { name: 'Ada Example', url: 'https://example.github.io/' },
         headline: 'A case',
         description: 'What happened.',
         image: 'https://example.github.io/og/work/01-case.jpg?v=abc12345',
         url: 'https://example.github.io/work/01-case/',
         inLanguage: 'en',
       }),
-    ).toMatchObject({ '@type': 'Article', headline: 'A case', mainEntityOfPage: 'https://example.github.io/work/01-case/', author: { '@id': 'https://example.github.io/#person' } });
+    ).toMatchObject({ '@type': 'Article', headline: 'A case', mainEntityOfPage: 'https://example.github.io/work/01-case/', author: { '@type': 'Person', '@id': 'https://example.github.io/#person', name: 'Ada Example', url: 'https://example.github.io/' } });
   });
 
   it('splits the profile city into a locality and a country code', () => {
