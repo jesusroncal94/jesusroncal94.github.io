@@ -4,8 +4,9 @@ Story: [013](../stories/013-search-engines-know-who-this-is.md). Analysis:
 [Phase 1.6](../analysis/phase-1-6-structured-data.md). No frames: nothing visible changes.
 
 **Status:** implemented on 2026-10-07; the story, decisions 1–5 (with the name "Jesús Roncal"
-only) and the canvas start were approved that day. Published with #19. The article author
-fix was approved the same day and waits for its Rich Results Test.
+only) and the canvas start were approved that day. Published with #19; the article
+author fix, approved the same day, with #20. Done on 2026-10-07, story 013 closed after the Rich
+Results Test on the published site.
 
 ## R — Requirements
 
@@ -175,4 +176,16 @@ Approved by Jesus on 2026-10-07 after the Rich Results Test above.
 - Tests: 290 pass. Build: structured data "all valid" in 15 pages. `/work/02-cost-leak/`
   declares author "Jesús Roncal" at `/`; `/es/work/04-freya/` at `/es/`.
 
-**Pending:** the Rich Results Test on the same case once this is deployed, expecting no issues.
+**Verified on the published site, 2026-10-07,** after #20 was merged (`0d40883`) and deployed
+(run `37660325573`, 6 min 37 s; Pages' own deploy step took 2 min 42 s):
+- `curl`: `/work/02-cost-leak/` declares author "Jesús Roncal" at `/`, `/es/work/04-freya/` at
+  `/es/`, both as `Person` with the shared `@id`.
+- Jesus's Rich Results Test (smartphone crawler) on `/work/02-cost-leak/`: **Articles**, 1 valid
+  item, **no issues**.
+
+**Done when, item by item:** the homes carry `ProfilePage` → `Person` and the cases `Article`
+with `author` on the same `@id`, in both languages, and the CV, privacy and 404 pages carry
+none; cases declare `og:type` `article` and every other page `website`; builder and check tests
+pass and the check fails on a missing or broken block; Lighthouse passes in CI (#19, #20); the
+Rich Results Test reports the profile page and the article with no errors, and after #20 with
+no warnings. **Story 013 is closed.**
