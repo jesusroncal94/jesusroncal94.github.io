@@ -145,6 +145,10 @@ This section is authoritative where it differs from the operations above.
   - CV, privacy and 404 pages carry none, and keep `og:type` `website`; the eight cases
     declare `article`.
 - No email, employer or date appears in any block.
+- **Lighthouse,** pull request #19, run `37640344837` (3 min 22 s), 15 URLs × 3: every
+  assertion passes; all seven shards' assertion files are empty. Every page scores median
+  performance 1, accessibility 1 and best practices 1, with median LCP 1356–1361 ms and CLS at
+  most 0.005. SEO is 1 on the homes, cases and privacy pages; the CV and 404 pages score
+  0.63–0.66 because they are `noindex` on purpose, as before.
 
-**Pending:** Lighthouse in the pull request's CI; Jesus's Rich Results Test on the published
-home page and one case.
+**Pending:** Jesus's Rich Results Test on the published home page and one case.
