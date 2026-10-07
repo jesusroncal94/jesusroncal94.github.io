@@ -6,8 +6,8 @@ Story: [012](../stories/012-a-wrong-address-still-lands.md). Analysis:
 [../design.md](../design.md)).
 
 **Status:** implemented on 2026-10-07; the story, the frames and the page's copy (English and
-Spanish, approved 2026-10-07), decisions 1–6 and the canvas start were approved. Synced below;
-waiting for the pull request and the check on the published site.
+Spanish, approved 2026-10-07), decisions 1–6 and the canvas start were approved. Done on
+2026-10-07 (#17), story 012 closed after the check on the published site.
 
 ## R — Requirements
 
@@ -165,4 +165,21 @@ paths with status 404):
   performance 1, accessibility 1 and best practices 1, with LCP 1357–1360 ms, CLS 0 and
   1.3 KB of script. Across the 15 URLs: median LCP 1282–1363 ms, every median performance
   score 1, accessibility 1. The two language blocks in one file cost the audit nothing.
-- **Still to record:** the four addresses on the published site after the deploy.
+
+**Verified on the published site, 2026-10-07,** after #17 was merged (`b14bba5`) and deployed
+(run `37605580845`, 3 min 32 s):
+- `curl`: `/does-not-exist/`, `/es/no-existe/`, `/work/99-missing/` and `/es/work/99-missing/`
+  answer **404** with this page instead of GitHub's. The served title is the English one, as
+  designed; the browser picks the language.
+- In a browser, each with `?utm_source=verification`: the two English addresses show the
+  English block, the title "This page isn't here — Jesús Roncal", the home button to `/` and
+  four case links; the two `/es/` addresses show the Spanish block, "Esta página no está aquí —
+  Jesús Roncal", the button to `/es/` and four case links.
+- Analytics, through the PostHog connector: the four page views were stored with `$pathname`
+  set to the missing address and `locale` `en` or `es` to match, tagged `verification`, with no
+  ingestion warning. So a broken inbound link now shows up as a page view of its address.
+
+**Done when, item by item:** screenshots match the frames; zero overflow at 12 widths in both
+languages; tests, link and preview checks pass and the sitemap leaves the page out; Lighthouse
+passes on the page in CI with accessibility 1; the four addresses answer 404 with this page in
+the right language on the published site. **Story 012 is closed.**
