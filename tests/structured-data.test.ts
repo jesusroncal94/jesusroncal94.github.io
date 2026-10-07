@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { caseArticle, personEntity, profilePage, toJsonLd } from '../src/lib/structured-data';
+import { caseArticle, personEntity, placeOf, profilePage, toJsonLd } from '../src/lib/structured-data';
 
 const site = 'https://example.github.io';
 const person = personEntity({
@@ -47,6 +47,14 @@ describe('structured data', () => {
         inLanguage: 'en',
       }),
     ).toMatchObject({ '@type': 'Article', headline: 'A case', mainEntityOfPage: 'https://example.github.io/work/01-case/', author: { '@id': 'https://example.github.io/#person' } });
+  });
+
+  it('splits the profile city into a locality and a country code', () => {
+    expect(placeOf('Milan, Italy')).toEqual({ city: 'Milan', country: 'IT' });
+  });
+
+  it('fails on a city whose country has no code', () => {
+    expect(() => placeOf('Lima, Peru')).toThrow('Lima, Peru');
   });
 
   it('keeps a closing script tag in the content inside the string', () => {

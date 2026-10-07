@@ -10,9 +10,13 @@ import OpenSource from '../../sections/OpenSource.astro';
 import Principles from '../../sections/Principles.astro';
 import Proof from '../../sections/Proof.astro';
 import Work from '../../sections/Work.astro';
-import { localeRoutes, type Locale } from '../../i18n/locales';
-import { ogImagePath } from '../../lib/preview';
+import profile from '../../../data/public-profile.json';
+import { localePath, localeRoutes, type Locale } from '../../i18n/locales';
 import { useTranslations } from '../../i18n/translate';
+import { largestPortraitPath } from '../../lib/portrait';
+import { ogImagePath } from '../../lib/preview';
+import { getSite } from '../../lib/site';
+import { personEntity, placeOf, profilePage } from '../../lib/structured-data';
 
 export const getStaticPaths = localeRoutes;
 
@@ -22,9 +26,27 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = useTranslations(locale);
+const site = String(Astro.site);
+const url = new URL(localePath(locale), site).href;
+const person = personEntity({
+  site,
+  name: (await getSite(locale)).displayName,
+  jobTitle: t('og.role'),
+  ...placeOf(profile.city),
+  url,
+  image: new URL(await largestPortraitPath(), site).href,
+  profiles: [profile.contact.linkedin, profile.contact.github],
+});
+const structuredData = profilePage({ name: t('site.title'), url, inLanguage: locale, person });
 ---
 
-<Base locale={locale} title={t('site.title')} description={t('site.description')} image={{ path: ogImagePath(locale), alt: t('og.homeAlt') }}>
+<Base
+  locale={locale}
+  title={t('site.title')}
+  description={t('site.description')}
+  image={{ path: ogImagePath(locale), alt: t('og.homeAlt') }}
+  structuredData={structuredData}
+>
   <Nav locale={locale} />
   <main>
     <Hero locale={locale}>

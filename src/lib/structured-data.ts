@@ -1,5 +1,14 @@
 const CONTEXT = 'https://schema.org';
 
+const COUNTRIES: Record<string, string> = { Italy: 'IT' };
+
+export function placeOf(city: string) {
+  const [locality, country] = city.split(',').map((part) => part.trim());
+  const code = country ? COUNTRIES[country] : undefined;
+  if (!locality || !code) throw new Error(`No country code for the profile city "${city}". Add it to src/lib/structured-data.ts`);
+  return { city: locality, country: code };
+}
+
 export const personId = (site: string) => new URL('/#person', site).href;
 
 export interface PersonInput {
