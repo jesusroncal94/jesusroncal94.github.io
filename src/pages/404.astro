@@ -1,0 +1,77 @@
+---
+import Button from '../components/Button.astro';
+import EmailAction from '../components/EmailAction.astro';
+import Icon from '../components/Icon.astro';
+import Base from '../layouts/Base.astro';
+import Nav from '../sections/Nav.astro';
+import { DEFAULT_LOCALE, localePath, PUBLISHED_LOCALES, type Locale } from '../i18n/locales';
+import { useTranslations } from '../i18n/translate';
+import { caseSlug, getCases } from '../lib/cases';
+import { getSite } from '../lib/site';
+
+const titleFor = async (locale: Locale) => {
+  const t = useTranslations(locale);
+  const { displayName } = await getSite(locale);
+  return `${t('notFound.lead')} ${t('notFound.accent').replace(/\.$/, '')} — ${displayName}`;
+};
+
+const blocks = await Promise.all(
+  PUBLISHED_LOCALES.map(async (locale) => ({ locale, t: useTranslations(locale), cases: await getCases(locale) })),
+);
+const t = useTranslations(DEFAULT_LOCALE);
+const localeTitles = Object.fromEntries(await Promise.all(PUBLISHED_LOCALES.map(async (locale) => [locale, await titleFor(locale)])));
+const defaultLocale = DEFAULT_LOCALE;
+
+const visibility: Record<Locale, string> = {
+  en: 'in-data-locale:hidden',
+  es: 'hidden in-data-[locale=es]:block',
+  it: 'hidden in-data-[locale=it]:block',
+};
+---
+
+<Base locale={DEFAULT_LOCALE} title={localeTitles[DEFAULT_LOCALE]} description={t('notFound.lede')} noindex canonical={false}>
+  <script is:inline slot="head" define:vars={{ localeTitles, defaultLocale }}>
+    const locale = location.pathname.split('/')[1];
+    if (locale !== defaultLocale && Object.hasOwn(localeTitles, locale)) {
+      document.documentElement.lang = locale;
+      document.documentElement.dataset.locale = locale;
+      document.title = localeTitles[locale];
+    }
+  </script>
+
+  {blocks.map(({ locale, t, cases }) => (
+    <div lang={locale} class={visibility[locale]}>
+      <Nav locale={locale} switchToHome suggestion={false} />
+      <main class="px-page pt-10 pb-16 md:pt-24 md:pb-30">
+        <article class="mx-auto flex max-w-170 flex-col gap-6 md:gap-7">
+          <p class="label-mono text-signal">{t('notFound.eyebrow')}</p>
+          <h1 class="display text-primary">
+            {t('notFound.lead')}<br />
+            {' '}<span class="display-serif text-signal">{t('notFound.accent')}</span>
+          </h1>
+          <p class="body-l text-muted">{t('notFound.lede')}</p>
+          <div class="flex flex-wrap items-center gap-3">
+            <Button href={localePath(locale)}>{t('notFound.home')}</Button>
+            <EmailAction locale={locale} />
+          </div>
+          <nav aria-label={t('notFound.cases')} class="mt-4 md:mt-6">
+            <p class="label-mono pb-2 text-subtle">{t('notFound.cases')}</p>
+            <ul>
+              {cases.map((entry) => (
+                <li class="border-b border-border">
+                  <a
+                    href={localePath(locale, `work/${caseSlug(entry)}`)}
+                    class="group body-m flex items-center justify-between gap-4 py-4 text-primary transition-colors hover:text-signal"
+                  >
+                    {entry.data.title}
+                    <Icon name="arrow-right" size={18} class="shrink-0 text-muted motion-safe:transition-transform motion-safe:group-hover:translate-x-1" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </article>
+      </main>
+    </div>
+  ))}
+</Base>

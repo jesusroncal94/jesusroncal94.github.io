@@ -17,6 +17,7 @@ REASONS canvas in `../canvases/` names the story it implements.
 | 009 | [Know what works](009-know-what-works.md)             | Jesus (owner)         | 4 |
 | 010 | [Ship without waiting](010-ship-without-waiting.md)   | Jesus (owner)         | 1.3 |
 | 011 | [Navigation always within reach](011-navigation-always-within-reach.md) | Recruiter | 1.4 |
+| 012 | [A wrong address still lands](012-a-wrong-address-still-lands.md) | Recruiter | 1.5 |
 
 ## Personas
 

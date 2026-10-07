@@ -22,6 +22,10 @@ Mockups live in **Penpot** and are the visual source of truth for the canvases i
 | Home        | Home — Tablet 834 · scrolled | 011            |
 | Home        | Home — Phone 390 · scrolled | 011             |
 | Home        | Home — Phone 390 · menu scrolled | 011        |
+| Home        | Not found — Desktop 1440 | 012                |
+| Home        | Not found — Phone 390  | 012                  |
+| Home        | Not found — Desktop 1440 · es | 012           |
+| Home        | Not found — Phone 390 · es | 012              |
 | Ask         | Ask — Desktop 1440 · answer  | 005            |
 | Ask         | Ask — Desktop 1440 · refusal | 005            |
 | Ask         | Ask — Phone 390 · answer     | 005            |
@@ -35,8 +39,10 @@ Mockups live in **Penpot** and are the visual source of truth for the canvases i
 
 The three Home frames sit side by side and share one set of components, so the responsive
 behaviour of story 007 can be compared section by section. Each page starts at the origin,
-with 100 px between frames and one row per story; on Home, the story 004 frames form a
-second row under the three layouts, and the story 011 frames a third row. The plugin API
+with 200 px between frames and 400 px between rows, one row per story (spacing widened on
+2026-10-07, when a 1,112 px frame overlapped the row below it); on Home, the story 004 frames form a
+second row under the three layouts, the story 011 frames a third row and the story 012 frames a
+fourth. The plugin API
 cannot move a shape to another page, so they stay on Home.
 
 ### History
@@ -126,6 +132,11 @@ Code Mono.
   phones. The scrolled frames show the state after a jump, with the section heading whole below
   the bar, and the tablet frame mid-scroll, with content passing under it. On phones the menu
   sheet opens under the pinned bar, and the contact bar stays at the bottom.
+- Not found (story 012, drawn 2026-10-07). The page reads like the privacy note's column: the
+  pinned navigation, then a 680 px column on desktop with "404" as the eyebrow, a two-line
+  headline in the site's lead-and-accent style, one sentence, the home and email buttons, and
+  the four case studies as a list of titled rows with an arrow. The case list is always shown,
+  not only for addresses under `/work/`, so the page needs no script to decide it.
 - The portrait badges frame the face on a diagonal: the current role overhangs the top-left
   edge, the lead role the bottom-right, so neither covers the face (2026-09-27).
 

@@ -48,6 +48,13 @@ export const en = {
   'privacy.back': 'Home',
   'privacy.updated': 'Updated {date}',
 
+  'notFound.eyebrow': '404',
+  'notFound.lead': 'This page',
+  'notFound.accent': "isn't here.",
+  'notFound.lede': 'The link may be mistyped or out of date. Everything else is one click away.',
+  'notFound.home': 'Go to the home page',
+  'notFound.cases': 'Case studies',
+
   'cv.title': 'Curriculum vitae',
   'cv.summary': 'Summary',
   'cv.experience': 'Experience',

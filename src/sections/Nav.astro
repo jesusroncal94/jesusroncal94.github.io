@@ -9,9 +9,11 @@ import { getSite } from '../lib/site';
 
 interface Props {
   locale: Locale;
+  switchToHome?: boolean;
+  suggestion?: boolean;
 }
 
-const { locale } = Astro.props;
+const { locale, switchToHome = false, suggestion = true } = Astro.props;
 const t = useTranslations(locale);
 const site = await getSite(locale);
 
@@ -43,8 +45,8 @@ const links = [
   {isMultilingual() ? (
     <div class="flex items-center gap-4 max-md:hidden">
       <div class="relative">
-        <LocaleSwitch locale={locale} variant="compact" />
-        <LocaleSuggestion locale={locale} variant="card" class="absolute top-full right-0 z-30 mt-3" />
+        <LocaleSwitch locale={locale} variant="compact" switchToHome={switchToHome} />
+        {suggestion && <LocaleSuggestion locale={locale} variant="card" class="absolute top-full right-0 z-30 mt-3" />}
       </div>
       <EmailAction locale={locale} />
     </div>
@@ -52,7 +54,7 @@ const links = [
     <EmailAction locale={locale} class="max-md:hidden" />
   )}
 
-  {isMultilingual() && <LocaleSuggestion locale={locale} variant="pill" class="md:hidden" />}
+  {isMultilingual() && suggestion && <LocaleSuggestion locale={locale} variant="pill" class="md:hidden" />}
 
   <details class="group md:hidden" data-mobile-menu>
     <summary class="cursor-pointer list-none rounded-sm p-1 text-primary [&::-webkit-details-marker]:hidden">
@@ -71,7 +73,7 @@ const links = [
       {isMultilingual() && (
         <div class="mt-2 flex items-center justify-between border-t border-border px-2 pt-3 pb-1">
           <p class="label-mono text-subtle">{t('nav.language')}</p>
-          <LocaleSwitch locale={locale} variant="full" />
+          <LocaleSwitch locale={locale} variant="full" switchToHome={switchToHome} />
         </div>
       )}
     </nav>
@@ -79,6 +81,7 @@ const links = [
 </header>
 
 <script>
-  const menu = document.querySelector<HTMLDetailsElement>('[data-mobile-menu]');
-  menu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => (menu.open = false)));
+  document.querySelectorAll<HTMLDetailsElement>('[data-mobile-menu]').forEach((menu) => {
+    menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => (menu.open = false)));
+  });
 </script>

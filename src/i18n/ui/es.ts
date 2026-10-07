@@ -50,6 +50,13 @@ export const es: Record<UiKey, string> = {
   'privacy.back': 'Inicio',
   'privacy.updated': 'Actualizado el {date}',
 
+  'notFound.eyebrow': '404',
+  'notFound.lead': 'Esta página',
+  'notFound.accent': 'no está aquí.',
+  'notFound.lede': 'Puede que el enlace esté mal escrito o haya caducado. Todo lo demás está a un clic.',
+  'notFound.home': 'Ir al inicio',
+  'notFound.cases': 'Casos de estudio',
+
   'cv.title': 'Currículum vítae',
   'cv.summary': 'Resumen',
   'cv.experience': 'Experiencia',
