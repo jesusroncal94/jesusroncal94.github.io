@@ -17,6 +17,7 @@ import { interpolate, useTranslations } from '../../../i18n/translate';
 import { caseEyebrow, caseSlug, getCases, type Case } from '../../../lib/cases';
 import { cvPath } from '../../../lib/cv';
 import { ogImagePath } from '../../../lib/preview';
+import { caseArticle } from '../../../lib/structured-data';
 
 export const getStaticPaths = (async () => {
   const routes = await Promise.all(
@@ -43,13 +44,25 @@ const { title, summary, before, after, stack, roleId } = entry.data;
 const role = profile.roles.find(({ id }) => id === roleId);
 if (!role) throw new Error(`Case ${entry.id} references an unknown role: ${roleId}`);
 const { Content } = await render(entry);
+const site = String(Astro.site);
+const preview = ogImagePath(locale, caseSlug(entry));
+const structuredData = caseArticle({
+  site,
+  headline: title,
+  description: summary,
+  image: new URL(preview, site).href,
+  url: new URL(localePath(locale, `work/${caseSlug(entry)}`), site).href,
+  inLanguage: locale,
+});
 ---
 
 <Base
   locale={locale}
   title={`${title} — Jesús Roncal`}
   description={summary}
-  image={{ path: ogImagePath(locale, caseSlug(entry)), alt: interpolate(t('og.caseAlt'), { title, before, after }) }}
+  image={{ path: preview, alt: interpolate(t('og.caseAlt'), { title, before, after }) }}
+  structuredData={structuredData}
+  ogType="article"
 >
   <Nav locale={locale} />
   <main class="px-page pt-6 pb-24 md:pt-12">

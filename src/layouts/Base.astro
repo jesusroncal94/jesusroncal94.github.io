@@ -5,6 +5,7 @@ import serifItalicFont from '../assets/fonts/instrument-serif-italic.woff2?url';
 import { getAbsoluteLocaleUrl } from 'astro:i18n';
 import { DEFAULT_LOCALE, ogLocale, PUBLISHED_LOCALES, stripLocale, type Locale } from '../i18n/locales';
 import { PREVIEW_SIZE, type PreviewImage } from '../lib/preview';
+import { toJsonLd } from '../lib/structured-data';
 
 interface Props {
   locale: Locale;
@@ -13,10 +14,22 @@ interface Props {
   image?: PreviewImage;
   noindex?: boolean;
   canonical?: boolean;
+  structuredData?: object;
+  ogType?: 'website' | 'article';
   theme?: 'dark' | 'light';
 }
 
-const { locale, title, description, image, noindex = false, canonical: linked = true, theme = 'dark' } = Astro.props;
+const {
+  locale,
+  title,
+  description,
+  image,
+  noindex = false,
+  canonical: linked = true,
+  structuredData,
+  ogType = 'website',
+  theme = 'dark',
+} = Astro.props;
 const path = stripLocale(Astro.url.pathname);
 const canonical = getAbsoluteLocaleUrl(locale, path);
 const alternates = PUBLISHED_LOCALES.map((alternate) => ({
@@ -45,7 +58,7 @@ const imageUrl = image ? new URL(image.path, Astro.site).href : undefined;
     <link rel="preload" href={geistFont} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={serifItalicFont} as="font" type="font/woff2" crossorigin />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content="Jesús Roncal" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -62,6 +75,7 @@ const imageUrl = image ? new URL(image.path, Astro.site).href : undefined;
       </>
     )}
     <meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
+    {structuredData && <script type="application/ld+json" is:inline set:html={toJsonLd(structuredData)} />}
     <slot name="head" />
   </head>
   <body>

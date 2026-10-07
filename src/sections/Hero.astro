@@ -1,15 +1,15 @@
 ---
-import { getImage, Image } from 'astro:assets';
+import { Image } from 'astro:assets';
 import Button from '../components/Button.astro';
 import EmailAction from '../components/EmailAction.astro';
 import StatusChip from '../components/StatusChip.astro';
 import avatar from '../assets/avatar.jpg';
-import portrait from '../assets/portrait.jpg';
 import profile from '../../data/public-profile.json';
 import type { Locale } from '../i18n/locales';
 import { localiseProfile } from '../i18n/profile';
 import { useTranslations } from '../i18n/translate';
 import { cvPath } from '../lib/cv';
+import { portraitImages } from '../lib/portrait';
 import { getSite } from '../lib/site';
 
 interface Props {
@@ -24,9 +24,7 @@ const city = localiseProfile(profile.city, locale).split(',')[0];
 
 const DESKTOP = '(min-width: 80rem)';
 const PORTRAIT_SIZES = '420px';
-const [portraitAvif, portraitWebp] = await Promise.all(
-  (['avif', 'webp'] as const).map((format) => getImage({ src: portrait, widths: [420, 840], format })),
-);
+const [portraitAvif, portraitWebp] = await portraitImages();
 const TRANSPARENT_PIXEL = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 ---
 

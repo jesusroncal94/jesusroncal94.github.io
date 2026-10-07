@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev --host",
-    "build": "astro build && tsx scripts/render-artifacts.ts && tsx scripts/check-links.ts && tsx scripts/check-previews.ts",
+    "build": "astro build && tsx scripts/render-artifacts.ts && tsx scripts/check-links.ts && tsx scripts/check-previews.ts && tsx scripts/check-structured-data.ts",
     "preview": "astro preview --host",
     "test": "vitest run",
     "export": "tsx scripts/export-profile.ts"

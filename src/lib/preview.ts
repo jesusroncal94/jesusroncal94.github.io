@@ -9,7 +9,9 @@ export const PREVIEW_SIZE = { width: 1200, height: 630 } as const;
 
 export const ogImagePath = (locale: Locale, slug?: string) => `${localePath(locale, 'og')}${slug ? `work/${slug}` : 'home'}.jpg`;
 
+// The og:image tag and the structured data's "image" carry the same address, so both are versioned.
 export const versionPreviewUrls = (html: string, versions: ReadonlyMap<string, string>) =>
-  html.replace(/(<meta property="og:image" content="https?:\/\/[^/"]+(\/[^"?]*\/og\/[^"?]+\.jpg|\/og\/[^"?]+\.jpg))"/g, (tag, prefix: string, path: string) =>
-    versions.has(path) ? `${prefix}?v=${versions.get(path)}"` : tag,
+  html.replace(
+    /((?:<meta property="og:image" content=|"image":)"https?:\/\/[^/"]+(\/[^"?]*\/og\/[^"?]+\.jpg|\/og\/[^"?]+\.jpg))"/g,
+    (tag, prefix: string, path: string) => (versions.has(path) ? `${prefix}?v=${versions.get(path)}"` : tag),
   );
