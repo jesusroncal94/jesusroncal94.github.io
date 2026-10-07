@@ -96,16 +96,16 @@ recorded, not fixed by inventing values.
 
 ## 4. Decisions
 
-**⚠️ Pending — 1, what each page declares.** Recommended: `ProfilePage` with `Person` on the home
+**✅ Decision 1 — What each page declares.** Confirmed 2026-10-07: `ProfilePage` with `Person` on the home
 pages, `Article` on cases, nothing elsewhere.
 
-**⚠️ Pending — 2, properties and sources.** Recommended: the tables above, with the omissions
+**✅ Decision 2 — Properties and sources.** Confirmed 2026-10-07: the tables above, with the omissions
 listed.
 
-**⚠️ Pending — 3, the full name.** Recommended: A, `name` "Jesús Roncal" only.
+**✅ Decision 3 — The full name.** Confirmed 2026-10-07: A, `name` "Jesús Roncal" only.
 
-**⚠️ Pending — 4, build and check.** Recommended: a builder module with tests, `Base` props for
+**✅ Decision 4 — Build and check.** Confirmed 2026-10-07: a builder module with tests, `Base` props for
 the data and `og:type`, and a post-build check.
 
-**⚠️ Pending — 5, verification.** Recommended: the Rich Results Test by Jesus on the published
+**✅ Decision 5 — Verification.** Confirmed 2026-10-07: the Rich Results Test by Jesus on the published
 home and one case; warnings for deliberate omissions recorded.

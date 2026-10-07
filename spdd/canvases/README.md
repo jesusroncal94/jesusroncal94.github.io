@@ -45,6 +45,12 @@ Phase 1.5:
 | ------ | ----- | ---------- |
 | [012 — A wrong address still lands](012-a-wrong-address-still-lands.md) | [012](../stories/012-a-wrong-address-still-lands.md) | 002, 004a, 009, 011 |
 
+Phase 1.6:
+
+| Canvas | Story | Depends on |
+| ------ | ----- | ---------- |
+| [013 — Search engines know who this is](013-search-engines-know-who-this-is.md) | [013](../stories/013-search-engines-know-who-this-is.md) | 001, 002, 006, 008 |
+
 Phase 3:
 
 | Canvas | Story | Depends on |
