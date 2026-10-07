@@ -3,8 +3,9 @@
 Story: [013](../stories/013-search-engines-know-who-this-is.md). Analysis:
 [Phase 1.6](../analysis/phase-1-6-structured-data.md). No frames: nothing visible changes.
 
-**Status:** written on 2026-10-07; the story and decisions 1–5 were approved that day, with the
-name "Jesús Roncal" only. Waiting for the start.
+**Status:** implemented on 2026-10-07; the story, decisions 1–5 (with the name "Jesús Roncal"
+only) and the canvas start were approved that day. Waiting for Lighthouse in the pull
+request's CI and, after the deploy, the Rich Results Test.
 
 ## R — Requirements
 
@@ -102,3 +103,48 @@ All of [norms.md](norms.md). In particular:
 - Nothing visible changes, and pages without the new props render byte for byte as before.
 - No email, employer or date is published.
 - The JSON-LD block is data: it adds no executed script and no request.
+
+## Sync — 2026-10-07 (operations 1–4)
+
+This section is authoritative where it differs from the operations above.
+
+- **Op 1** (`e8fdf97`). As written. `PERSON_ID` became `personId(site)`, so the builders take
+  the site instead of reading a constant.
+- **Op 2** (`cddf4e1`). As written, with `is:inline` on the script so Astro leaves the data
+  block alone. With neither prop, all 15 pages were byte-identical to the build before it.
+- **Op 3** (`cfc59dd`).
+  - The city goes through `placeOf` in `structured-data.ts`: "Milan, Italy" gives `Milan` and
+    `IT`; a country without a code throws and fails the build. Two tests cover it.
+  - **The portrait is 660 px, not 840.** The source image is 660 px wide and Astro does not
+    enlarge it, so the "840" variant is 660 px. The person's `image` is the widest WebP that
+    the hero actually serves. The hero's `getImage` calls moved into `src/lib/portrait.ts`, so
+    the hero and the data share one call and no extra file is built (`_astro/` unchanged).
+  - The `?v=` is added after the build, so `versionPreviewUrls` now versions the block's
+    `"image"` the same way it versions `og:image`. One test covers it.
+  - Against the build before op 3: CV, privacy and 404 pages are byte-identical; the homes
+    differ only by the block, the cases only by the block and `og:type`.
+- **Op 4** (`02469d7`). As written. The expected `@id` is derived from the page's `og:url`,
+  and the check also requires the block's `url` to be that address. Home and case pages are
+  recognised by path, with the locale prefixes taken from `LOCALES`. The first version used
+  any two letters and took `cv/` for a locale; the build caught it, and a test now covers it.
+  `npm run build` runs the check after the preview check.
+
+**Verified on 2026-10-07, on the production build:**
+- Tests: 290 pass (`structured-data`, `structured-data-check`, `preview`).
+- Build checks: 15 pages, links "none broken", previews "all complete", structured data "all
+  valid".
+- The check against the real `dist/`, with the home's block removed and one case's `?v=`
+  stripped by hand: both reported, exit code 1. Rebuilt afterwards.
+- The generated blocks, read one by one:
+  - `/` and `/es/` each carry a `ProfilePage` in their own language and address, with the
+    `Person` `https://jesusroncal94.github.io/#person`: "Jesús Roncal", "AI & Backend
+    Engineer", Milan/IT, the portrait, LinkedIn and GitHub.
+  - The four cases in each language carry an `Article` with the page's title, summary,
+    address and language, `author` that same `@id`, and `image` equal to the page's versioned
+    `og:image`.
+  - CV, privacy and 404 pages carry none, and keep `og:type` `website`; the eight cases
+    declare `article`.
+- No email, employer or date appears in any block.
+
+**Pending:** Lighthouse in the pull request's CI; Jesus's Rich Results Test on the published
+home page and one case.
