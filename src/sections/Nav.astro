@@ -97,6 +97,8 @@ const MARK =
 </header>
 
 <script>
+  import '../scripts/active-section';
+
   document.querySelectorAll<HTMLDetailsElement>('[data-mobile-menu]').forEach((menu) => {
     menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => (menu.open = false)));
   });
