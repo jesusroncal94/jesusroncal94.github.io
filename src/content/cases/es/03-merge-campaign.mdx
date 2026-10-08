@@ -41,6 +41,8 @@ Una cola de ese tamaño se estorba a sí misma. Cada merge mueve la base bajo lo
 
 Dividí el trabajo en dos: preparación en paralelo, admisión en serie.
 
+<Mechanism {...frontmatter.mechanism} locale={props.locale} />
+
 La preparación fue en paralelo. Cada agente de Claude Code trabajó en su propio git worktree aislado, así que nunca se pisaron entre sí. Hicieron rebase de los pull requests por contenido y agruparon los cambios dependientes en cadenas apiladas que podían entrar en orden.
 
 La admisión siguió siendo serial. Cada pull request pasó un gate sin fallos nuevos antes de fusionarse: la suite de tests no podía quedar peor de lo que estaba antes del merge. Por el camino desbloqueé el propio CI, dividiendo la suite en shards y arreglando los tests que dependían de su entorno, para que un build en rojo significara un problema real.

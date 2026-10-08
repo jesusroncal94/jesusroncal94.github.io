@@ -3,6 +3,7 @@ import type { GetStaticPaths } from 'astro';
 import { render } from 'astro:content';
 import BeforeAfter from '../../../components/BeforeAfter.astro';
 import Button from '../../../components/Button.astro';
+import CaseMechanism from '../../../components/CaseMechanism.astro';
 import ContactBar from '../../../components/ContactBar.astro';
 import EmailAction from '../../../components/EmailAction.astro';
 import Icon from '../../../components/Icon.astro';
@@ -83,7 +84,7 @@ const structuredData = caseArticle({
       <BeforeAfter before={before} after={after} locale={locale} size="full" />
 
       <div class="body-l flex flex-col gap-5 text-muted [&_h2]:heading-h3 [&_h2]:mt-4 [&_h2]:scroll-mt-4 [&_h2]:text-primary">
-        <Content />
+        <Content locale={locale} components={{ Mechanism: CaseMechanism }} />
       </div>
 
       <ul class="flex flex-wrap gap-2" aria-label={t('case.stack')}>

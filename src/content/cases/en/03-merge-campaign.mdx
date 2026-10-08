@@ -44,6 +44,8 @@ it, and CI needed work of its own before a green build could be trusted.
 
 I split the work in two: parallel preparation, serial admission.
 
+<Mechanism {...frontmatter.mechanism} locale={props.locale} />
+
 Preparation ran in parallel. Claude Code agents each worked in an isolated git worktree, so
 they never stepped on each other. They rebased pull requests by content and assembled
 dependent changes into stacked chains that could land in order.

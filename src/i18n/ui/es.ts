@@ -34,6 +34,9 @@ export const es: Record<UiKey, string> = {
   'metric.after': 'Después',
   'case.allWork': 'Todo el trabajo',
   'case.stack': 'Stack',
+  'mechanism.step': 'Paso {n} de {total}',
+  'mechanism.previous': 'Paso anterior',
+  'mechanism.next': 'Paso siguiente',
 
   'palette.label': 'Navegación rápida',
   'palette.empty': 'Todavía no hay nada que coincida.',

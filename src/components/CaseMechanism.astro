@@ -1,0 +1,151 @@
+---
+import Icon from './Icon.astro';
+import type { Locale } from '../i18n/locales';
+import { interpolate, useTranslations } from '../i18n/translate';
+
+interface Stage {
+  glyph: 'queue' | 'lanes' | 'gate' | 'done';
+  label: string;
+  detail: string;
+  sentence: string;
+}
+
+interface Props {
+  label: string;
+  stages: Stage[];
+  locale: Locale;
+}
+
+const { label, stages, locale } = Astro.props;
+const t = useTranslations(locale);
+const total = String(stages.length);
+const counter = (step: number) => interpolate(t('mechanism.step'), { n: String(step + 1), total });
+const LANE_FADE = [1, 0.7, 0.4];
+---
+
+<figure
+  class="flex flex-col gap-6 rounded-md bg-raised px-4 py-5 md:p-6"
+  aria-label={label}
+  data-mechanism
+  data-step-template={t('mechanism.step')}
+>
+  <ol class="flex flex-col gap-2 md:flex-row md:gap-7">
+    {
+      stages.map(({ glyph, label: name, detail }, index) => (
+        <li class="flex flex-col items-center gap-2 md:relative md:flex-1 md:basis-0" data-stage data-current={index === 0 ? '' : undefined}>
+          <div class="flex w-full flex-1 items-center gap-4 rounded-md border border-border bg-surface p-3.5 md:flex-col md:items-start md:gap-3" data-card>
+            <div class="flex h-12 w-21 shrink-0 flex-col justify-center" data-glyph aria-hidden="true">
+              {(glyph === 'queue' || glyph === 'done') && <div class:list={['h-12 w-21', glyph === 'queue' ? 'dots-before' : 'dots-signal']} />}
+              {glyph === 'lanes' && (
+                <div class="flex flex-col gap-1.5">
+                  {LANE_FADE.map((opacity) => (
+                    <div class="flex h-3.5 w-21 items-center rounded-[6px] border border-border-strong bg-raised px-1.5" style={`opacity: ${opacity}`}>
+                      <div class="size-2 rounded-[2px] bg-muted" />
+                    </div>
+                  ))}
+                </div>
+              )}
+              {glyph === 'gate' && (
+                <div class="flex h-3.5 w-21 items-center gap-1.5 rounded-[6px] border border-border-strong bg-raised px-1.5">
+                  <div class="size-2 rounded-[2px] bg-signal" />
+                  <div class="h-3.5 w-0.5 bg-signal" />
+                </div>
+              )}
+            </div>
+            <div class="flex min-w-0 flex-col gap-1">
+              <span class="label-mono text-subtle" data-number>{String(index + 1).padStart(2, '0')}</span>
+              <span class="button-m text-primary" data-name>{name}</span>
+              <span class="code-mono text-muted" data-detail>{detail}</span>
+            </div>
+          </div>
+          {index < stages.length - 1 && <Icon name="arrow-right" size={18} class="shrink-0 rotate-90 text-muted md:absolute md:top-1/2 md:-right-5.75 md:-translate-y-1/2 md:rotate-0" />}
+        </li>
+      ))
+    }
+  </ol>
+
+  <ol class="stepped:sr-only flex flex-col gap-3" data-sentences>
+    {
+      stages.map(({ sentence }, index) => (
+        <li class="flex gap-3">
+          <span class="label-mono pt-0.5 text-signal" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+          <span class="body-m text-muted">{sentence}</span>
+        </li>
+      ))
+    }
+  </ol>
+
+  <div class="hidden flex-col gap-3 stepped:flex">
+    <div class="flex items-center justify-between gap-3">
+      <p class="label-mono text-signal" aria-hidden="true" data-counter>{counter(0)}</p>
+      <div class="flex items-center gap-2">
+        <div class="flex items-center gap-1.5" aria-hidden="true">
+          {stages.map((_, index) => <span class="h-1.5 w-1.5 rounded-full bg-border-strong data-current:w-4.5 data-current:bg-signal" data-dot data-current={index === 0 ? '' : undefined} />)}
+        </div>
+        <button type="button" class="step-button" aria-label={t('mechanism.previous')} data-previous disabled>
+          <Icon name="arrow-right" size={18} class="rotate-180" />
+        </button>
+        <button type="button" class="step-button" aria-label={t('mechanism.next')} data-next>
+          <Icon name="arrow-right" size={18} />
+        </button>
+      </div>
+    </div>
+    <p class="body-m text-primary" aria-hidden="true" data-sentence>{stages[0].sentence}</p>
+    <p class="sr-only" aria-live="polite" data-live></p>
+  </div>
+</figure>
+
+<style>
+  .dots-before,
+  .dots-signal {
+    background-size: 6px 6px;
+  }
+
+  .dots-before {
+    background-image: radial-gradient(circle, var(--color-before) 2px, transparent 2.5px);
+  }
+
+  .dots-signal {
+    background-image: radial-gradient(circle, var(--color-signal) 2px, transparent 2.5px);
+  }
+
+  .step-button {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 999px;
+    color: var(--color-primary);
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+  }
+
+  /* Stepped: one stage is current; the others keep their text legible and fade only their drawing. */
+  @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+    [data-stage]:not([data-current]) {
+      [data-glyph] {
+        opacity: 0.35;
+      }
+      [data-name] {
+        color: var(--color-muted);
+      }
+      [data-detail] {
+        color: var(--color-subtle);
+      }
+    }
+
+    [data-stage][data-current] {
+      [data-card] {
+        border-color: var(--color-signal);
+      }
+      [data-number] {
+        color: var(--color-signal);
+      }
+    }
+  }
+</style>
