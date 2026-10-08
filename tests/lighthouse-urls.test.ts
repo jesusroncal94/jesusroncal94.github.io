@@ -2,7 +2,7 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { expect, it } from 'vitest';
 import { localePath, PUBLISHED_LOCALES } from '../src/i18n/locales';
 
-const slugs = readdirSync('src/content/cases/en').map((file) => file.replace(/\.md$/, ''));
+const slugs = readdirSync('src/content/cases/en').map((file) => file.replace(/\.mdx?$/, ''));
 
 it('audits every published page with Lighthouse', () => {
   const pages = [

@@ -10,6 +10,25 @@ before: 112 en cola
 after: '0'
 stack: [Claude Code, GitHub Actions, pytest]
 keywords: [agentes, claude code, merge, pull requests, ci, release, reeve]
+mechanism:
+  label: Cómo se vació la cola
+  stages:
+    - glyph: queue
+      label: Cola
+      detail: 112 PR en 4 repos
+      sentence: 112 pull requests esperaban en 4 repositorios, y cada merge movía la base bajo los demás.
+    - glyph: lanes
+      label: Agentes
+      detail: un worktree cada uno
+      sentence: Agentes de Claude Code, cada uno en su propio git worktree, hicieron rebase de los pull requests y apilaron los cambios dependientes en cadenas.
+    - glyph: gate
+      label: Gate
+      detail: sin fallos nuevos
+      sentence: "De uno en uno, cada pull request pasó un gate sin fallos nuevos: la suite no podía quedar peor que antes."
+    - glyph: done
+      label: Producción
+      detail: 112 en ~30 h
+      sentence: Los 112 llegaron a producción en unas 30 horas. Los agentes pusieron la velocidad; el gate mantuvo el listón.
 ---
 
 <h2 id="problem">Problema</h2>

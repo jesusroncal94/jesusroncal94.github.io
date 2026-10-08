@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
@@ -13,6 +14,7 @@ export default defineConfig({
     routing: { prefixDefaultLocale: false },
   },
   integrations: [
+    mdx(),
     sitemap({
       filter: (page) => !page.endsWith('/cv/') && !page.includes('/og/'),
       i18n: { defaultLocale: 'en', locales: { en: 'en', es: 'es' } },
