@@ -5,8 +5,9 @@ Story: [014](../stories/014-know-where-i-am.md). Analysis:
 `Home — Desktop 1440 · active section`, `Home — Tablet 834 · active section`,
 `Home — Phone 390 · menu active section` (see [../design.md](../design.md)).
 
-**Status:** written on 2026-10-08; the story, the frames and decisions 1–5 were approved that
-day. Waiting for the start.
+**Status:** implemented on 2026-10-08; the story, the frames, decisions 1–5 and the canvas start
+were approved that day, and so were the two focus fixes found on the way (see the Sync).
+Waiting for Lighthouse in the pull request's CI.
 
 ## R — Requirements
 
@@ -110,3 +111,53 @@ All of [norms.md](norms.md). In particular:
 - No request, no dependency, no new copy; one small script that does nothing off the home page.
 - English and Spanish pages behave the same.
 - Accessibility stays at 100 in the budget.
+
+## Sync — 2026-10-08 (operations 1–4)
+
+This section is authoritative where it differs from the operations above.
+
+- **Op 1** (`05ac6ad`). As written; 3 tests.
+- **Op 2** (`4594f60`). As written. The line is the `::after` of a `relative` span around the
+  label, shown through `in-aria-[current=location]:after:block`. With no `aria-current`, five
+  screenshots of the bar (desktop at the top and on Experience, tablet on Open source, the
+  phone menu open, Spanish on Work) were byte-identical to the build before the change.
+- **Op 3** (`247c55d`). One change to the rule: **each section's box is shifted up by its own
+  scroll margin.** Sections carry `scroll-mt-4`, so a jump lands a section's top 16 px under
+  the bar, not at it, as the analysis assumed; with the line one pixel under the bar, the first
+  run marked the section above after every jump (44 of 105 checks failed). Shifted by the
+  margin, the line falls where a jump puts the section's top. The script is inlined with the
+  phone menu's handler, about 1 KB per page; no request.
+- **Two focus defects found by the end-to-end run, fixed on this branch with Jesus's approval
+  (2026-10-08):**
+  - The pinned bar: focusing anything in it with the page scrolled moved the page
+    (`7af12f2`). Recorded as an incident in [canvas 011](011-navigation-always-within-reach.md).
+  - The phone contact bar: hidden, its links still took keyboard focus (`1625c43`). Recorded
+    as an incident in [canvas 003](003-get-in-touch.md).
+  - Two rules were added to [norms.md](norms.md).
+
+**Verified on 2026-10-08, on the production build:**
+- The end-to-end run, 105 checks, all pass:
+  - `/` and `/es/` at 390, 834 and 1440 px: the marked link for every block, the hero, the
+    proof strip, How I work and Contact, plus the end of the page; Work, Open source and
+    Experience are marked, in both copies of the link, and nothing elsewhere.
+  - Jumps from each link (from the menu at 390 px): the jumped-to link is marked, and the mark
+    changes once, with no section in between.
+  - A fresh load of `/#open-source` marks Open source.
+  - Phone menu: the marked row has the raised background and a 2 px signal line. Desktop row:
+    primary text and the line.
+  - `/work/02-cost-leak/`, `/es/work/04-freya/`, `/privacy/` and a missing address, at the
+    top, 600 px and the end: nothing marked.
+  - Reduced motion: the link's transition is `0s`; without it, `0.15s`.
+  - Scripts disabled: nothing marked, after a fragment jump either.
+- Keyboard, Chromium, Firefox and WebKit, `/`, `/es/` and `/work/02-cost-leak/` at 390 and
+  1440 px: tabbing forward and back never moves the page when focus enters the bar, never
+  reaches the hidden contact bar, and leaves no focused element entirely hidden by a bar.
+- Screenshots driven by the script match the three frames: desktop on Experience after a jump,
+  tablet mid-way through Open source with Experience below (Open source marked), the phone menu
+  open over Experience; and Spanish on Trabajo.
+- Overflow: zero at all 12 widths on `/`, `/es/`, `/work/02-cost-leak/` and
+  `/es/work/02-cost-leak/`, with a section marked.
+- Tests: 293 pass. Build checks: 15 pages, links "none broken", previews "all complete",
+  structured data "all valid".
+
+**Pending:** Lighthouse in the pull request's CI.
