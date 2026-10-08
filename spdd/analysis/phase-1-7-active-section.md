@@ -92,16 +92,18 @@ is unit-tested without a browser; the script in `Nav.astro` only measures and ap
 
 ## 4. Decisions
 
-**⚠️ Pending:** Decision 1 — the section crossing a line one pixel under the bar; none in the
-unlinked blocks.
+**✅ Decision 1 — Which section is being read.** Confirmed 2026-10-08: the section crossing a
+line one pixel under the bar; none in the unlinked blocks.
 
-**⚠️ Pending:** Decision 2 — A, a passive scroll listener throttled to a frame, with the
-decision in a pure, unit-tested function.
+**✅ Decision 2 — How it is computed.** Confirmed 2026-10-08: A, a passive scroll listener
+throttled to a frame, with the decision in a pure, unit-tested function.
 
-**⚠️ Pending:** Decision 3 — only links to this page whose target exists; both copies marked.
+**✅ Decision 3 — Which links take part.** Confirmed 2026-10-08: only links to this page whose
+target exists; both copies marked.
 
-**⚠️ Pending:** Decision 4 — `aria-current="location"`; primary text and a 2 px signal line on
-the row, raised background and the line in the menu; `motion-safe` transitions.
+**✅ Decision 4 — The mark.** Confirmed 2026-10-08: `aria-current="location"`; primary text and
+a 2 px signal line on the row, raised background and the line in the menu; `motion-safe`
+transitions.
 
-**⚠️ Pending:** Decision 5 — nothing else changes; unit test plus a scripted end-to-end run
-recorded in the Sync.
+**✅ Decision 5 — Scope and checks.** Confirmed 2026-10-08: nothing else changes; unit test plus
+a scripted end-to-end run recorded in the Sync.
