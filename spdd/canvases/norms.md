@@ -29,6 +29,9 @@
   with a negative `scroll-margin-top` (`nav-pinned`). Any change to the bar, the scroll padding
   or another pinned element is checked by focusing its controls with the page scrolled, in
   Chromium, Firefox and WebKit: the page must not move.
+- **Hidden means hidden to the keyboard too.** An element hidden only visually (translated off
+  screen, transparent, `pointer-events: none`) but kept in the page is also made `inert`, or
+  `hidden`, so that it leaves the focus order and the accessibility tree with it.
 
 ## Safeguards
 
