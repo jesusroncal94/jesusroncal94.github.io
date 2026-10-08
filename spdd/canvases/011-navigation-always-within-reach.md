@@ -174,3 +174,29 @@ This section is authoritative where it differs from the operations above.
 **Found, outside this canvas:** the phone contact bar slides in and out with a 300 ms
 `translate` and `opacity` transition that does not check `prefers-reduced-motion`, against the
 norm "Motion respects prefers-reduced-motion" (canvas 003).
+
+## Incident — 2026-10-08
+
+Found while building story 014, before anyone reported it.
+
+- **What happened.** With the page scrolled, moving keyboard focus onto anything in the pinned
+  bar (the monogram, the section links, the language switch, "Email me", the phone menu
+  button) scrolled the page up: 380–450 px in Chromium, about 50 px in WebKit, nothing in
+  Firefox. A pointer click or a tap did not, because they do not scroll to the focused
+  element.
+- **Cause.** Operation 2 set `scroll-padding-top` on `<html>` to the bar's height, so that
+  jumps and focused elements clear the bar. A focused element inside the pinned bar always
+  sits within that padding, so the browser scrolled to "uncover" it, and the bar, being
+  sticky, never moved out of the way.
+- **Why it slipped through.** The focus check of operation 4 tabbed through a case page from
+  the top, where the page cannot scroll up; it never focused the bar with the page scrolled.
+- **Fix** (story 014's branch, approved by Jesus on 2026-10-08). `nav-pinned` gives every
+  element inside the bar `scroll-margin-top: -6rem`, which takes it out of the padding. A
+  value of `-100vh` was tried and rejected: WebKit then scrolled the page down a little.
+- **Verified,** on the production build: focusing the monogram, a section link, the language
+  switch and the phone menu button with the page at 3,000 px leaves it at 3,000 px in all
+  three engines. Tabbing forward and back through `/`, `/es/` and `/work/02-cost-leak/` at 390
+  and 1440 px in all three engines: the page never moves when focus enters the bar, and no
+  focused element is entirely hidden by either bar. Jumps still land 16 px below the bar.
+- **Rule.** [norms.md](norms.md): pinned elements are tested with the keyboard on a scrolled
+  page, in Chromium, Firefox and WebKit.
