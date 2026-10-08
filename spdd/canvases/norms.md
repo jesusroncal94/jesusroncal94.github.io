@@ -24,6 +24,14 @@
   (`/#work`); a bare fragment is only for a target inside the same component. After every
   build, `scripts/check-links.ts` fails if any internal link points to a page or `id` that
   does not exist.
+- **Pinned elements are tested with the keyboard on a scrolled page.** Scroll padding that
+  clears a pinned bar also covers the bar itself, so anything focusable inside the bar opts out
+  with a negative `scroll-margin-top` (`nav-pinned`). Any change to the bar, the scroll padding
+  or another pinned element is checked by focusing its controls with the page scrolled, in
+  Chromium, Firefox and WebKit: the page must not move.
+- **Hidden means hidden to the keyboard too.** An element hidden only visually (translated off
+  screen, transparent, `pointer-events: none`) but kept in the page is also made `inert`, or
+  `hidden`, so that it leaves the focus order and the accessibility tree with it.
 
 ## Safeguards
 

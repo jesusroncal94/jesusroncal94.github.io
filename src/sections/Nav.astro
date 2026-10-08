@@ -22,6 +22,10 @@ const links = [
   { href: `${localePath(locale)}#open-source`, label: t('nav.openSource') },
   { href: `${localePath(locale)}#experience`, label: t('nav.experience') },
 ];
+
+// The line under the label of the section being read; it takes no space, so nothing shifts.
+const MARK =
+  "relative after:absolute after:inset-x-0 after:top-full after:mt-1.5 after:hidden after:h-0.5 after:rounded-full after:bg-signal after:content-[''] in-aria-[current=location]:after:block";
 ---
 
 <header class="nav-pinned z-20 flex items-center justify-between px-page py-4 md:py-5">
@@ -36,7 +40,13 @@ const links = [
     <ul class="flex gap-9">
       {links.map(({ href, label }) => (
         <li>
-          <a href={href} class="body-s text-muted transition-colors hover:text-primary">{label}</a>
+          <a
+            href={href}
+            class="body-s text-muted hover:text-primary motion-safe:transition-colors aria-[current=location]:text-primary"
+            data-section-link
+          >
+            <span class={MARK}>{label}</span>
+          </a>
         </li>
       ))}
     </ul>
@@ -66,7 +76,13 @@ const links = [
       <ul>
         {links.map(({ href, label }) => (
           <li>
-            <a href={href} class="body-m block rounded-sm px-4 py-3 text-primary hover:bg-raised">{label}</a>
+            <a
+              href={href}
+              class="body-m block rounded-sm px-4 py-3 text-primary hover:bg-raised aria-[current=location]:bg-raised"
+              data-section-link
+            >
+              <span class={MARK}>{label}</span>
+            </a>
           </li>
         ))}
       </ul>
@@ -81,6 +97,8 @@ const links = [
 </header>
 
 <script>
+  import '../scripts/active-section';
+
   document.querySelectorAll<HTMLDetailsElement>('[data-mobile-menu]').forEach((menu) => {
     menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => (menu.open = false)));
   });

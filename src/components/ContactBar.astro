@@ -32,7 +32,10 @@ const t = useTranslations(locale);
         if (isIntersecting) zonesInView.add(target);
         else zonesInView.delete(target);
       }
-      bar.toggleAttribute('data-hidden', zonesInView.size > 0);
+      // Hidden off-screen, its buttons must not take keyboard focus either.
+      const hidden = zonesInView.size > 0;
+      bar.toggleAttribute('data-hidden', hidden);
+      bar.inert = hidden;
     });
     zones.forEach((zone) => observer.observe(zone));
   }

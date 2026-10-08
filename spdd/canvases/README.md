@@ -51,6 +51,12 @@ Phase 1.6:
 | ------ | ----- | ---------- |
 | [013 — Search engines know who this is](013-search-engines-know-who-this-is.md) | [013](../stories/013-search-engines-know-who-this-is.md) | 001, 002, 006, 008 |
 
+Phase 1.7:
+
+| Canvas | Story | Depends on |
+| ------ | ----- | ---------- |
+| [014 — Know where I am](014-know-where-i-am.md) | [014](../stories/014-know-where-i-am.md) | 001, 004a, 011 |
+
 Phase 3:
 
 | Canvas | Story | Depends on |

@@ -26,6 +26,9 @@ Mockups live in **Penpot** and are the visual source of truth for the canvases i
 | Home        | Not found — Phone 390  | 012                  |
 | Home        | Not found — Desktop 1440 · es | 012           |
 | Home        | Not found — Phone 390 · es | 012              |
+| Home        | Home — Desktop 1440 · active section | 014  |
+| Home        | Home — Tablet 834 · active section | 014    |
+| Home        | Home — Phone 390 · menu active section | 014 |
 | Ask         | Ask — Desktop 1440 · answer  | 005            |
 | Ask         | Ask — Desktop 1440 · refusal | 005            |
 | Ask         | Ask — Phone 390 · answer     | 005            |
@@ -41,8 +44,8 @@ The three Home frames sit side by side and share one set of components, so the r
 behaviour of story 007 can be compared section by section. Each page starts at the origin,
 with 200 px between frames and 400 px between rows, one row per story (spacing widened on
 2026-10-07, when a 1,112 px frame overlapped the row below it); on Home, the story 004 frames form a
-second row under the three layouts, the story 011 frames a third row and the story 012 frames a
-fourth. The plugin API
+second row under the three layouts, the story 011 frames a third row, the story 012 frames a
+fourth and the story 014 frames a fifth. The plugin API
 cannot move a shape to another page, so they stay on Home.
 
 ### History
@@ -137,6 +140,13 @@ Code Mono.
   headline in the site's lead-and-accent style, one sentence, the home and email buttons, and
   the four case studies as a list of titled rows with an arrow. The case list is always shown,
   not only for addresses under `/work/`, so the page needs no script to decide it.
+- Active section (story 014, drawn 2026-10-08). The bar marks the link of the section being
+  read: its text turns from muted to primary and a 2 px signal line, as wide as the word, sits
+  6 px under it, so the mark does not rest on colour alone. The phone menu marks the same row
+  with the raised background and the same line under the word. The frames reuse the story 011
+  scrolled states: desktop on Experience after a jump, tablet mid-scroll through Open source
+  with Experience coming into view below (the section under the bar is still the one marked),
+  and the phone menu opened over Experience.
 - The portrait badges frame the face on a diagonal: the current role overhangs the top-left
   edge, the lead role the bottom-right, so neither covers the face (2026-09-27).
 

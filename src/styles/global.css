@@ -80,6 +80,12 @@
   top: 0;
   background-color: var(--color-canvas);
 
+  /* The page's scroll padding is the bar's height, so a focused element inside the bar always
+     sits in it; without this, focusing one scrolls the page up to "uncover" it. */
+  & * {
+    scroll-margin-top: -6rem;
+  }
+
   @supports (animation-timeline: scroll()) {
     animation-name: nav-scrolled;
     animation-timing-function: linear;

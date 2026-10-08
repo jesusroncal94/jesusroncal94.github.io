@@ -201,3 +201,27 @@ pages.
     the end of the page (`data-hidden` set) and comes back at the top;
   - with `no-preference`, the transition is `0.3s` as before, with the same hiding.
 - Tests: 273 pass; build checks pass. Lighthouse in the pull request's CI.
+
+## Incident — 2026-10-08
+
+Found while building story 014, by a keyboard run in Chromium, Firefox and WebKit.
+
+- **What happened.** When the phone contact bar hides (`data-hidden`: moved below the screen
+  and transparent, with `pointer-events: none`), its "Download CV" and "Email me" links still
+  took keyboard focus. Tabbing through any page at 390 px landed twice on links nobody could
+  see, in all three engines, against "a visible focus ring" in the accessibility safeguard
+  (WCAG 2.4.7).
+- **Cause.** Hiding was visual only: translate, opacity and pointer events. Nothing removed
+  the links from the focus order or the accessibility tree.
+- **Why it slipped through.** The focus checks so far measured whether a focused element was
+  covered by a bar, and treated the contact bar's own links as part of it, shown or not.
+- **Fix** (story 014's branch, approved by Jesus on 2026-10-08). The script that sets
+  `data-hidden` also sets `inert` on the bar, so while hidden its links leave the focus order
+  and the accessibility tree; they come back with the bar. Their actions stay reachable in the
+  contact section and the case footers, which are what is in view when the bar hides.
+- **Verified,** on the production build at 390 px: on `/`, `/es/` and `/work/02-cost-leak/`,
+  at the top, the middle and the end, the bar is `inert` exactly when it is hidden, and its
+  link takes focus exactly when it is shown. Tabbing forward and back through the same pages
+  in all three engines never reaches the hidden bar.
+- **Rule.** [norms.md](norms.md): anything hidden visually but kept in the page is also made
+  `inert` (or `hidden`).
