@@ -7,7 +7,7 @@ Story: [014](../stories/014-know-where-i-am.md). Analysis:
 
 **Status:** implemented on 2026-10-08; the story, the frames, decisions 1–5 and the canvas start
 were approved that day, and so were the two focus fixes found on the way (see the Sync).
-Lighthouse passed in the pull request's CI (#22); waiting for the merge.
+Published with #22. Done on 2026-10-08, story 014 closed after the check on the published site.
 
 ## R — Requirements
 
@@ -167,3 +167,19 @@ This section is authoritative where it differs from the operations above.
   other two runs, which have TBT 0. That is the runner's cold start, not the script, which
   returns at once on case pages; pull request #19 showed the same first-run pattern (313 and
   427 ms) before this change.
+
+**Verified on the published site, 2026-10-08,** after #22 was merged (`98dcbaf`) and deployed
+(run `37809251096`, 3 min 18 s), with a Playwright run whose analytics requests were blocked,
+so it left no page views:
+- `/` and `/es/` at 390 and 1440 px: nothing marked at the top and at the end; a jump to
+  `#work`, `#open-source` and `#experience` marks exactly that link.
+- At 390 px, at the end of the page, the hidden contact bar is `inert`.
+- `/work/02-cost-leak/`, scrolled: nothing marked.
+- Chromium and WebKit, 390 and 1440 px: focusing the menu button or a section link with the
+  page at 3,000 px leaves it at 3,000 px.
+
+**Done when, item by item:** screenshots match the three frames; the `currentSection` tests
+pass; the end-to-end run passes in both languages at 390 (menu open) and 1440 px, plus 834,
+for every block, every jump and a fragment URL, with nothing marked on a case page or without
+scripts; zero overflow at all 12 widths on `/` and a case page; tests pass and Lighthouse
+passes in CI. **Story 014 is closed.**
