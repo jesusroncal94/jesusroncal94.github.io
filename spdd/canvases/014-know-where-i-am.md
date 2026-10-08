@@ -7,7 +7,7 @@ Story: [014](../stories/014-know-where-i-am.md). Analysis:
 
 **Status:** implemented on 2026-10-08; the story, the frames, decisions 1–5 and the canvas start
 were approved that day, and so were the two focus fixes found on the way (see the Sync).
-Waiting for Lighthouse in the pull request's CI.
+Lighthouse passed in the pull request's CI (#22); waiting for the merge.
 
 ## R — Requirements
 
@@ -159,5 +159,11 @@ This section is authoritative where it differs from the operations above.
   `/es/work/02-cost-leak/`, with a section marked.
 - Tests: 293 pass. Build checks: 15 pages, links "none broken", previews "all complete",
   structured data "all valid".
-
-**Pending:** Lighthouse in the pull request's CI.
+- **Lighthouse,** pull request #22, run `37807928584` (3 min 12 s), 15 URLs × 3: every
+  assertion passes; all seven shards' assertion files are empty. Every page has median
+  performance 1, accessibility 1 and best practices 1, median LCP 1356–1362 ms, CLS at most
+  0.005 and median TBT 0. Four English case pages show TBT 133–1274 ms on one run each: in
+  every case the first run of its shard, with bootup 583–1977 ms against 63–85 ms on the
+  other two runs, which have TBT 0. That is the runner's cold start, not the script, which
+  returns at once on case pages; pull request #19 showed the same first-run pattern (313 and
+  427 ms) before this change.
