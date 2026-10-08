@@ -108,15 +108,18 @@ three are UI strings.
 
 ## 4. Decisions
 
-**⚠️ Pending:** Decision 1 — A, case 03 in MDX with `<Mechanism />` after Approach's first
-paragraph.
+**✅ Decision 1 — How the diagram gets in.** Confirmed 2026-10-08: A, case 03 in MDX with
+`<Mechanism />` after Approach's first paragraph.
 
-**⚠️ Pending:** Decision 2 — stages in the frontmatter, UI strings in the dictionary, a
-component that knows only glyphs, and the dot count checked against the case.
+**✅ Decision 2 — Where the content lives.** Confirmed 2026-10-08: stages in the frontmatter,
+UI strings in the dictionary, a component that knows only glyphs, and the dot count checked
+against the case.
 
-**⚠️ Pending:** Decision 3 — static HTML first; the interactive layout chosen by a CSS media
-query; a script that only moves the step and announces it.
+**✅ Decision 3 — Static first.** Confirmed 2026-10-08: static HTML first; the interactive
+layout chosen by a CSS media query; a script that only moves the step and announces it.
 
-**⚠️ Pending:** Decision 4 — HTML and CSS drawing, contrast as in the frames, real buttons.
+**✅ Decision 4 — How it is drawn.** Confirmed 2026-10-08: HTML and CSS drawing, contrast as
+in the frames, real buttons.
 
-**⚠️ Pending:** Decision 5 — scope and checks as listed, and the four strings in the table.
+**✅ Decision 5 — Scope and checks.** Confirmed 2026-10-08: as listed, with the four strings in
+the table approved.

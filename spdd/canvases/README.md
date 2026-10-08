@@ -61,6 +61,7 @@ Phase 3:
 
 | Canvas | Story | Depends on |
 | ------ | ----- | ---------- |
+| [015 — See how the queue drained](015-see-how-the-queue-drained.md) | [015](../stories/015-see-how-the-queue-drained.md) | 002, 004a, 007 |
 | [004a — Spanish](004a-spanish.md) | [004](../stories/004-read-it-in-my-language.md), part a | 001, 002, 003, 008 |
 
 Phase 4:
