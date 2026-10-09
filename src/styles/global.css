@@ -29,6 +29,10 @@
   size-adjust: 83.9385%;
 }
 
+/* Step-by-step diagrams switch on only where a script can drive them and motion is welcome;
+   everywhere else their static version shows. Known before the first paint, so nothing shifts. */
+@custom-variant stepped (@media (scripting: enabled) and (prefers-reduced-motion: no-preference));
+
 @layer base {
   html {
     color-scheme: dark;

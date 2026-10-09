@@ -56,7 +56,12 @@ function caseEntry(number: string) {
   const parts = body.split(/<h2 id="(\w+)">[^<]*<\/h2>/);
   const sections: Record<string, string[]> = {};
   for (let index = 1; index < parts.length; index += 2) {
-    sections[parts[index]] = parts[index + 1].trim().split(/\n\s*\n/).map(normalise);
+    // An MDX component on its own line is not prose; its copy is reviewed from the frontmatter.
+    sections[parts[index]] = parts[index + 1]
+      .trim()
+      .split(/\n\s*\n/)
+      .filter((paragraph) => !/^<[A-Z]/.test(paragraph.trim()))
+      .map(normalise);
   }
   return { data: load(frontMatter) as Record<string, unknown>, sections };
 }
@@ -71,7 +76,7 @@ function contentFor({ section, key }: Row): unknown {
   const { data, sections } = caseEntry(caseKey[1]);
   const body = /^body\.(\w+)\[(\d+)\]$/.exec(caseKey[2]);
   if (body) return sections[body[1]]?.[Number(body[2])];
-  const value = data[caseKey[2]];
+  const value = atPath(data, caseKey[2]);
   return Array.isArray(value) ? value.join(', ') : value;
 }
 

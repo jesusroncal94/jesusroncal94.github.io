@@ -20,6 +20,7 @@ REASONS canvas in `../canvases/` names the story it implements.
 | 012 | [A wrong address still lands](012-a-wrong-address-still-lands.md) | Recruiter | 1.5 |
 | 013 | [Search engines know who this is](013-search-engines-know-who-this-is.md) | Recruiter | 1.6 |
 | 014 | [Know where I am](014-know-where-i-am.md)             | Recruiter             | 1.7 |
+| 015 | [See how the queue drained](015-see-how-the-queue-drained.md) | Hiring manager | 3 (case visuals) |
 
 ## Personas
 

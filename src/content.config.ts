@@ -1,6 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { GRID, leadingCount } from './lib/mechanism';
 
 const metric = z.object({
   value: z.string(),
@@ -88,21 +89,46 @@ const site = defineCollection({
   }),
 });
 
+const mechanism = z.object({
+  label: z.string(),
+  stages: z
+    .array(
+      z.object({
+        glyph: z.enum(['queue', 'lanes', 'gate', 'done']),
+        label: z.string(),
+        detail: z.string(),
+        sentence: z.string(),
+      }),
+    )
+    .min(2)
+    .max(6),
+});
+
+const DOTS = GRID.columns * GRID.rows;
+
 const cases = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/cases' }),
-  schema: z.object({
-    order: z.number().int().positive(),
-    roleId: z.string(),
-    organisation: z.string(),
-    product: z.string().optional(),
-    role: z.string(),
-    title: z.string(),
-    summary: z.string(),
-    before: z.string(),
-    after: z.string(),
-    stack: z.array(z.string()).min(1),
-    keywords: z.array(z.string()).default([]),
-  }),
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/cases' }),
+  schema: z
+    .object({
+      order: z.number().int().positive(),
+      roleId: z.string(),
+      organisation: z.string(),
+      product: z.string().optional(),
+      role: z.string(),
+      title: z.string(),
+      summary: z.string(),
+      before: z.string(),
+      after: z.string(),
+      stack: z.array(z.string()).min(1),
+      keywords: z.array(z.string()).default([]),
+      mechanism: mechanism.optional(),
+    })
+    // The dot glyphs always draw the grid, so they may only stand for a case of that size.
+    .refine(
+      ({ mechanism, before }) =>
+        !mechanism?.stages.some(({ glyph }) => glyph === 'queue' || glyph === 'done') || leadingCount(before) === DOTS,
+      { message: `A queue or done glyph draws ${DOTS} dots; the case's "before" must state ${DOTS}.` },
+    ),
 });
 
 export const collections = { site, cases };

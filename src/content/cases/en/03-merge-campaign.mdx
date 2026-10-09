@@ -10,6 +10,25 @@ before: 112 queued
 after: '0'
 stack: [Claude Code, GitHub Actions, pytest]
 keywords: [agents, claude code, merge, pull requests, ci, release, reeve]
+mechanism:
+  label: How the queue was cleared
+  stages:
+    - glyph: queue
+      label: Queue
+      detail: 112 PRs in 4 repos
+      sentence: 112 pull requests waited across 4 repositories, and every merge moved the base under the rest.
+    - glyph: lanes
+      label: Agents
+      detail: a worktree each
+      sentence: Claude Code agents, each in its own git worktree, rebased the pull requests and stacked dependent changes into chains.
+    - glyph: gate
+      label: Gate
+      detail: no new failures
+      sentence: "One at a time, every pull request passed a no-new-failures gate: the suite could not end up worse than before."
+    - glyph: done
+      label: Production
+      detail: 112 in ~30 h
+      sentence: All 112 reached production in about 30 hours. The agents supplied the speed; the gate kept the bar.
 ---
 
 ## Problem
@@ -24,6 +43,8 @@ it, and CI needed work of its own before a green build could be trusted.
 ## Approach
 
 I split the work in two: parallel preparation, serial admission.
+
+<Mechanism {...frontmatter.mechanism} locale={props.locale} />
 
 Preparation ran in parallel. Claude Code agents each worked in an isolated git worktree, so
 they never stepped on each other. They rebased pull requests by content and assembled

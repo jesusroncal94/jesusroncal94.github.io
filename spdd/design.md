@@ -39,6 +39,12 @@ Mockups live in **Penpot** and are the visual source of truth for the canvases i
 | Privacy     | Home footer — Phone 390      | 009            |
 | Privacy     | Case end — Desktop 1440      | 009            |
 | Privacy     | Case end — Phone 390         | 009            |
+| Cases       | Case 03 mechanism — Desktop 1440 · step 1 | 015    |
+| Cases       | Case 03 mechanism — Desktop 1440 · step 3 | 015    |
+| Cases       | Case 03 mechanism — Desktop 1440 · static | 015    |
+| Cases       | Case 03 mechanism — Phone 390 · step 2    | 015    |
+| Cases       | Case 03 mechanism — Phone 390 · static    | 015    |
+| Cases       | Case 03 mechanism — Phone 390 · step 2 · es | 015  |
 
 The three Home frames sit side by side and share one set of components, so the responsive
 behaviour of story 007 can be compared section by section. Each page starts at the origin,
@@ -147,6 +153,17 @@ Code Mono.
   scrolled states: desktop on Experience after a jump, tablet mid-scroll through Open source
   with Experience coming into view below (the section under the bar is still the one marked),
   and the phone menu opened over Experience.
+- Case mechanism (story 015, drawn and approved with its copy on 2026-10-08, page Cases). Case
+  03's Approach gets a panel after its first sentence: four stage cards in a row on desktop and
+  a column on phones (queue, agents, gate, production) joined by arrows, then a step bar ("STEP
+  1 OF 4", four dots, previous and next buttons) and the step's sentence. The queue and
+  production are drawn as 112 dots, 14 × 8, in the before and signal colours; the agents as
+  three worktree lanes fading out, so the drawing states no number of agents; the gate as one
+  lane with a bar across it. The current stage has a signal border and number; the others keep
+  their card and their text in `muted` and `subtle`, and only the drawing fades. A first
+  version faded whole cards to 40 %, which put their text at 2.2–3.6:1 against the panel,
+  under AA. The static version, for no script and reduced motion, shows every stage at full
+  strength and the four sentences as a numbered list.
 - The portrait badges frame the face on a diagonal: the current role overhangs the top-left
   edge, the lead role the bottom-right, so neither covers the face (2026-09-27).
 
@@ -157,7 +174,7 @@ Code Mono.
   (for example side by side) while an agent works in it.
 - The plugin's `storage` is lost when the plugin reconnects. The builder library is saved
   in the file itself, as plugin data (`portfolioLib.foundations`,
-  `portfolioLib.sections`, `portfolioLib.patches`, `portfolioLib.social`, `portfolioLib.i18n`, `portfolioLib.ask`, `portfolioLib.privacy`, `portfolioLib.frames`), and can be
+  `portfolioLib.sections`, `portfolioLib.patches`, `portfolioLib.social`, `portfolioLib.i18n`, `portfolioLib.ask`, `portfolioLib.privacy`, `portfolioLib.frames`, and the case 03 copy and frame ids in `portfolioLib.case03`), and can be
   reinstalled in one call.
 - Only the active page can be edited, and a shape cannot be moved or cloned to another page.
   Open the page first (`penpot.openPage`).

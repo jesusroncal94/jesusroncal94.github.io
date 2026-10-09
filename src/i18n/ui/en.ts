@@ -32,6 +32,9 @@ export const en = {
   'metric.after': 'After',
   'case.allWork': 'All work',
   'case.stack': 'Stack',
+  'mechanism.step': 'Step {n} of {total}',
+  'mechanism.previous': 'Previous step',
+  'mechanism.next': 'Next step',
 
   'palette.label': 'Quick navigation',
   'palette.empty': 'Nothing matches that yet.',
