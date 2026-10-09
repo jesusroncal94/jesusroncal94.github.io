@@ -27,16 +27,37 @@ const t = useTranslations(locale);
 
   if (bar && zones.length) {
     const zonesInView = new Set<Element>();
+    // Hidden off-screen, its buttons must not take keyboard focus either; and while one of them
+    // has focus the bar stays, so focus is never stranded on an invisible button or dropped.
+    const update = (focusInside = bar.contains(document.activeElement)) => {
+      const hidden = zonesInView.size > 0 && !focusInside;
+      bar.toggleAttribute('data-hidden', hidden);
+      bar.inert = hidden;
+    };
     const observer = new IntersectionObserver((entries) => {
       for (const { target, isIntersecting } of entries) {
         if (isIntersecting) zonesInView.add(target);
         else zonesInView.delete(target);
       }
-      // Hidden off-screen, its buttons must not take keyboard focus either.
-      const hidden = zonesInView.size > 0;
-      bar.toggleAttribute('data-hidden', hidden);
-      bar.inert = hidden;
+      update();
     });
     zones.forEach((zone) => observer.observe(zone));
+    // Moving focus scrolls the page, and the observer can report that late (WebKit); measure the
+    // zones as focus moves and again on the next frame, so a focused element at the end is never
+    // left under the bar.
+    const measure = () => {
+      for (const zone of zones) {
+        const { top, bottom } = zone.getBoundingClientRect();
+        if (top < innerHeight && bottom > 0) zonesInView.add(zone);
+        else zonesInView.delete(zone);
+      }
+      update();
+    };
+    document.addEventListener('focusin', () => {
+      measure();
+      requestAnimationFrame(measure);
+    });
+    bar.addEventListener('focusin', () => update(true));
+    bar.addEventListener('focusout', (event) => update(bar.contains(event.relatedTarget as Node | null)));
   }
 </script>
