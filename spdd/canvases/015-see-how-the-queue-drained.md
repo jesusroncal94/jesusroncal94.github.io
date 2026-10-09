@@ -6,8 +6,9 @@ Story: [015](../stories/015-see-how-the-queue-drained.md). Analysis:
 `Case 03 mechanism — Phone 390 · step 2`, `· static`, `· step 2 · es`
 (see [../design.md](../design.md)).
 
-**Status:** written on 2026-10-08; the story, the frames, the stage copy, decisions 1–5 and the
-four UI strings were approved that day. Waiting for the start.
+**Status:** implemented on 2026-10-09; the story, the frames, the stage copy, decisions 1–5, the
+four UI strings and the canvas start were approved on 2026-10-08. Synced below; waiting for
+Lighthouse in the pull request's CI.
 
 ## R — Requirements
 
@@ -138,3 +139,61 @@ All of [norms.md](norms.md). In particular:
 - Accessibility stays at 100: a named figure, real buttons, a live region, AA contrast on every
   text.
 - English and Spanish behave the same.
+
+## Sync — 2026-10-09 (operations 1–5)
+
+This section is authoritative where it differs from the operations above.
+
+- **Op 1** (`a8971d9`). As written; 5 tests, including that 14 × 8 equals the case's 112.
+- **Op 2** (`fc9809f`).
+  - `@astrojs/mdx` 8.0.3 (it supports Astro ^7.2.10). The refine is on the cases schema and
+    reads `before` through `leadingCount`; with `before: 113 queued` the build fails with
+    "A queue or done glyph draws 112 dots; the case's "before" must state 112."
+  - **The `<Mechanism />` tag moved to op 3:** MDX fails on a component it cannot resolve, so the
+    tag went in with the component.
+  - Against the build before: 13 of 15 pages byte-identical; the two case 03 pages differ by one
+    newline (MDX writes no line break before the body's closing `</div>`), identical without
+    newlines.
+  - `tests/lighthouse-urls.test.ts` derived the slugs by stripping `.md`; it now strips `.mdx` too.
+- **Op 3** (`9a9c440`).
+  - `@custom-variant stepped` in `global.css` carries the media query; the stage states live in
+    the component's scoped `<style>`. The highlight keys off `data-current`, rendered on stage 1,
+    which only the stepped CSS reads; `aria-current` is set by the script alone, so the static
+    version announces no current step.
+  - **On desktop the arrows sit in the 28 px gap, out of the flow,** so the four cards share the
+    width equally (`flex-1 basis-0`); with the arrows inside the items, the last card was wider.
+  - **The Spanish review rows were added here, not in op 5:** `tests/review.test.ts` requires a
+    reviewed row for every Spanish string, so `mechanism.step`, `.previous`, `.next` and the 13
+    case rows (`03.mechanism.*`) went in with the copy, all approved on 2026-10-08. The test now
+    reads nested frontmatter keys and ignores MDX component lines in the body.
+  - The component's styles, about 1 KB, are inlined on all eight case pages, since Astro bundles
+    CSS per route and the cases share one; no request. The global CSS file changes hash.
+- **Op 4** (`aaa0c6f`). As written, plus one rule: when the button that has focus becomes
+  disabled at an end, focus moves to the other button instead of falling to the page.
+
+**Verified on 2026-10-09, on the production build:**
+- End-to-end, Chromium, Firefox and WebKit, English and Spanish, 390 and 1440 px: **1,026 checks
+  pass.** Accessible names; the mouse to the end and back, and a click past the end; Enter to the
+  end with focus handed to "previous"; ArrowLeft back with focus handed to "next"; ArrowRight;
+  arrow keys outside the figure ignored; at every step one `aria-current`, the counter, the
+  sentence, the live region ("Step n of 4. …"), the buttons at the ends and the signal border;
+  with no script and with reduced motion, the four sentences shown, no step bar and no
+  focusable button, no stage marked.
+- Screenshots of the six frames' states match them: desktop steps 1 and 3 and static, phone step
+  2, static (reduced motion) and step 2 in Spanish.
+- Overflow: zero at all 12 widths on both case 03 pages, stepped and static; from 768 px the four
+  cards are equal and inside the panel.
+- The other case pages differ from the build before only by the inlined component styles and
+  the CSS file's name; the home, CV, privacy and 404 pages only by the CSS file's name.
+- Keyboard rule of `norms.md`, both case 03 pages at 390 and 1440 px in the three engines: the
+  page never moves when focus enters the bar, and no focused element is entirely hidden.
+  **One intermittent failure, outside this story:** in WebKit at 390 px, on the first page of a
+  freshly launched browser, Tab reached the hidden contact bar in 2 of 7 runs. It did not happen
+  in 18 further WebKit runs nor in Chromium. The likely cause is the contact bar's
+  IntersectionObserver reporting late on a cold start, so focus enters the bar before it becomes
+  `inert` (canvas 003, incident of 2026-10-08). Reported to Jesus.
+- Tests: 314 pass. Build checks: links, previews and structured data valid on 15 pages.
+- `npm audit`: the same three advisories as `main` (`http-cache-semantics`, accepted; `sharp`
+  and `source-map-js`, new since the last review); MDX adds none. Reported to Jesus.
+
+**Pending:** Lighthouse in the pull request's CI, with case 03's LCP and CLS against the last run.
