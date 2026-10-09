@@ -7,8 +7,8 @@ Story: [015](../stories/015-see-how-the-queue-drained.md). Analysis:
 (see [../design.md](../design.md)).
 
 **Status:** implemented on 2026-10-09; the story, the frames, the stage copy, decisions 1–5, the
-four UI strings and the canvas start were approved on 2026-10-08. Synced below; waiting for
-Lighthouse in the pull request's CI.
+four UI strings and the canvas start were approved on 2026-10-08. Synced below; Lighthouse passed
+in the pull request's CI (#24); waiting for the merge.
 
 ## R — Requirements
 
@@ -195,5 +195,10 @@ This section is authoritative where it differs from the operations above.
 - Tests: 314 pass. Build checks: links, previews and structured data valid on 15 pages.
 - `npm audit`: the same three advisories as `main` (`http-cache-semantics`, accepted; `sharp`
   and `source-map-js`, new since the last review); MDX adds none. Reported to Jesus.
-
-**Pending:** Lighthouse in the pull request's CI, with case 03's LCP and CLS against the last run.
+- **Lighthouse,** pull request #24, run `37865323348` (3 min 13 s), 15 URLs × 3: every
+  assertion passes; all seven shards' assertion files are empty. Every page has median
+  performance 1, accessibility 1, best practices 1 and TBT 0, median LCP 1355–1363 ms and CLS at
+  most 0.005. **Case 03 against pull request #22:** LCP 1262/1357/1358 ms against
+  1252/1357/1360 in English and 1356/1356/1362 against 1358/1359/1360 in Spanish; CLS
+  0.0015–0.0025 against 0.0022–0.0025. The LCP element is still the first paragraph of
+  Problem; the diagram, below it, changes neither.
