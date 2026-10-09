@@ -225,3 +225,41 @@ Found while building story 014, by a keyboard run in Chromium, Firefox and WebKi
   in all three engines never reaches the hidden bar.
 - **Rule.** [norms.md](norms.md): anything hidden visually but kept in the page is also made
   `inert` (or `hidden`).
+
+**Follow-up, 2026-10-09.** Found while verifying story 015; fix approved by Jesus that day.
+
+- **What happened.**
+  - **Focus dropped when the bar hid.** With focus on "Download CV" in the shown bar, scrolling
+    to the end of a case page hid the bar and made it `inert`; Chromium and Firefox moved focus
+    to the `body`, so the next Tab started again at the top of the page.
+  - **The observer can be late.** In a freshly started WebKit, Tab reached the bar while the
+    IntersectionObserver had not yet reported the contact zone (its first report came about
+    500 ms later than usual), and on the home page the last footer link, "Built spec-first…",
+    was focused while the shown bar still covered it entirely: 6 of 6 cold runs, about 1,060 ms
+    after load.
+- **Cause.** The bar decided to hide from the observer alone, and hid regardless of where focus
+  was.
+- **Why it slipped through.** The tab-through test treated the contact bar as hidden whenever
+  its `offsetParent` was `null`, which is always true for a `position: fixed` element. It
+  therefore never measured whether the shown bar covered a focused element, and flagged focus
+  in the shown bar as focus in a hidden one; the first reading of the WebKit failure (2026-10-09)
+  rested on that. The test now reads `data-hidden` and `display`.
+- **Fix** (`ContactBar.astro`):
+  - the bar hides only when a zone is in view **and** focus is not inside it; it stays while one
+    of its links has focus, and hides when focus leaves (`focusout` with the `relatedTarget`);
+  - every `focusin` on the page measures the zones at once and again on the next frame, so the
+    bar does not wait for the observer when focus is what scrolled the page. Measuring on the
+    next frame alone was not enough: the cold WebKit failure stayed at 6 of 6.
+- **Verified,** on the production build:
+  - focus in the bar and the page scrolled to the end: the bar stays with its focused link; Tab
+    to its second link keeps it; Shift+Tab out of it hides it; Shift+Tab from the end never
+    lands in it; back mid-page it shows. `/work/03-merge-campaign/` and `/es/`, Chromium,
+    Firefox and WebKit: 30 of 30;
+  - the cold WebKit home run: 6 of 6;
+  - five rounds of tab-throughs in the three engines, the first on a cold container: `/`,
+    `/es/` and `/work/02-cost-leak/` 18 of 18, both case 03 pages 12 of 12, cold WebKit on case 03
+    2 of 2, every round; no focused element entirely hidden by either bar, focus never in the
+    hidden bar;
+  - no regression: story 015's end-to-end run 1,026 of 1,026, story 014's 105 of 105.
+- **Rule.** [norms.md](norms.md), under "Hidden means hidden to the keyboard too": an element
+  that hides itself never strands focus, and does not rely on an observer alone.
