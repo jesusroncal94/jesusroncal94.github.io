@@ -7,8 +7,8 @@ Story: [015](../stories/015-see-how-the-queue-drained.md). Analysis:
 (see [../design.md](../design.md)).
 
 **Status:** implemented on 2026-10-09; the story, the frames, the stage copy, decisions 1–5, the
-four UI strings and the canvas start were approved on 2026-10-08. Synced below; Lighthouse passed
-in the pull request's CI (#24); waiting for the merge.
+four UI strings and the canvas start were approved on 2026-10-08. Published with #24. Done on
+2026-10-09, story 015 closed after the check on the published site.
 
 ## R — Requirements
 
@@ -202,3 +202,16 @@ This section is authoritative where it differs from the operations above.
   1252/1357/1360 in English and 1356/1356/1362 against 1358/1359/1360 in Spanish; CLS
   0.0015–0.0025 against 0.0022–0.0025. The LCP element is still the first paragraph of
   Problem; the diagram, below it, changes neither.
+
+**Verified on the published site, 2026-10-09,** after #24 was merged (`18db928`) and deployed
+(run `37866740467`, 3 min 29 s): the same end-to-end run against
+`https://jesusroncal94.github.io`, with the analytics requests blocked so it left no page views.
+**1,026 checks pass** in Chromium, Firefox and WebKit, both languages, 390 and 1440 px, plus the
+static versions without scripts and with reduced motion.
+
+**Done when, item by item:** screenshots match the six frames; the step and dot-count tests pass;
+the end-to-end run passes, on the production build and on the published site; case 03's body is
+unchanged apart from the diagram (one newline aside) and the other cases change only by the
+inlined component styles; zero overflow at all 12 widths on case 03 in both languages; tests
+pass and Lighthouse passes in CI with case 03's LCP and CLS unchanged. **Story 015 is closed.**
+The pattern is ready for a second case: a frontmatter `mechanism` and, at most, a new glyph.
