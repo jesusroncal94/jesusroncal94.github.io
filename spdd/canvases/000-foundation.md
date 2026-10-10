@@ -239,4 +239,7 @@ fits the ranges the direct dependencies already allow, so no direct dependency c
 - The build is byte-identical to the one before, image files included (the new libvips encodes
   the portrait the same way); only the two CV PDFs differ, by their `/CreationDate` and
   `/ModDate`, which change on every build. Tests: 314 pass; build checks pass.
+- Lighthouse, pull request #27, run `38086234646` (2 min 53 s): every assertion passes on the
+  15 URLs; median performance 1 and accessibility 1 everywhere, median LCP 1,355–1,363 ms, CLS
+  at most 0.005.
 - Dependabot alert #1 should close by itself once this reaches `main`.
