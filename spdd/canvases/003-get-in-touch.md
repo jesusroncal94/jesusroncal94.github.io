@@ -264,5 +264,8 @@ Found while building story 014, by a keyboard run in Chromium, Firefox and WebKi
   - Lighthouse, pull request #26, run `38082625247`: every assertion passes; every page has
     median performance 1 and median LCP 1,354–1,361 ms. Four runs show TBT 186–465 ms, each the
     first run of its shard: the runner's cold start, as in #19 and #22.
+- **Verified on the published site, 2026-10-10,** after #26 was merged (`c58157b`) and deployed
+  (run `38083642990`, 3 min 27 s), with analytics requests blocked: the focus-in-the-bar checks
+  30 of 30 in the three engines, and the cold WebKit home run 3 of 3.
 - **Rule.** [norms.md](norms.md), under "Hidden means hidden to the keyboard too": an element
   that hides itself never strands focus, and does not rely on an observer alone.
