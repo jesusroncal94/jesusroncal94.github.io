@@ -21,6 +21,7 @@ REASONS canvas in `../canvases/` names the story it implements.
 | 013 | [Search engines know who this is](013-search-engines-know-who-this-is.md) | Recruiter | 1.6 |
 | 014 | [Know where I am](014-know-where-i-am.md)             | Recruiter             | 1.7 |
 | 015 | [See how the queue drained](015-see-how-the-queue-drained.md) | Hiring manager | 3 (case visuals) |
+| 016 | [See how a prompt ships](016-see-how-a-prompt-ships.md) | Hiring manager | 3 (case visuals) |
 
 ## Personas
 
