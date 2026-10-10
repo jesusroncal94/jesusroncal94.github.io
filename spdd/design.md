@@ -170,7 +170,7 @@ Code Mono.
   version faded whole cards to 40 %, which put their text at 2.2–3.6:1 against the panel,
   under AA. The static version, for no script and reduced motion, shows every stage at full
   strength and the four sentences as a numbered list.
-- Case 01 mechanism (story 016, drawn 2026-10-10, page Cases). The same panel as case 03, with
+- Case 01 mechanism (story 016, drawn and approved with its copy on 2026-10-10, page Cases). The same panel as case 03, with
   four glyphs of its own in the same 82 × 46 box: the version as three segments joined by dots
   (major, minor, patch; no number is drawn), the fixtures as three sheets fading out (no count),
   the judge as 19 ticks, one per rubric item (the split across the 5 dimensions is not stated,

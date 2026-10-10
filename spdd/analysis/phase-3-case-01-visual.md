@@ -65,12 +65,13 @@ copy (approved 2026-10-10, see [../design.md](../design.md)), `CaseMechanism.ast
 
 ## 4. Decisions
 
-**⚠️ Pending:** Decision 1 — the four glyphs, with the rubric's count read from its detail and
-the bars' widths from the case's percentages.
+**✅ Decision 1 — The new glyphs.** Confirmed 2026-10-10: the four glyphs, with the rubric's count
+read from its detail and the bars' widths from the case's percentages.
 
-**⚠️ Pending:** Decision 2 — the checks in the schema's refine, and `percentOf` with tests.
+**✅ Decision 2 — Where the checks live.** Confirmed 2026-10-10: in the schema's refine, and
+`percentOf` with tests.
 
-**⚠️ Pending:** Decision 3 — copy in the frontmatter with the non-breaking space, and 13 review
-rows.
+**✅ Decision 3 — Copy and review.** Confirmed 2026-10-10: copy in the frontmatter with the
+non-breaking space, and 13 review rows.
 
-**⚠️ Pending:** Decision 4 — the checks as listed.
+**✅ Decision 4 — Checks.** Confirmed 2026-10-10: as listed.
