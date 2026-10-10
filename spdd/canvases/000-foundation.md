@@ -215,3 +215,28 @@ can serve one user's cached response, cookies included, to another who sends a l
 **Watch:** Dependabot alerts were off; Jesus turned them on on 2026-10-03, and alert #1 tracks
 this advisory. It stays open, so it closes by itself once a patched version is installed.
 Revisit if the site starts using remote images, or when a patch is released.
+
+## Sync — 2026-10-10 (dependency advisories fixed)
+
+This section supersedes the acceptance of 2026-10-03.
+
+`npm audit` reported three high-severity advisories, all in build-time dependencies that never
+reach the browser:
+
+| Package | Advisory | Pulled in by |
+| ------- | -------- | ------------ |
+| `http-cache-semantics` 4.2.0 | [GHSA-ch52-4w7c-c8xp](https://github.com/advisories/GHSA-ch52-4w7c-c8xp), the one accepted on 2026-10-03; 4.3.0, published on 2026-10-04, patches it | `astro` (remote images, unused) |
+| `sharp` 0.35.4, `libvips` 1.3.3 | [GHSA-wq5f-xc86-pv6w](https://github.com/advisories/GHSA-wq5f-xc86-pv6w), in librsvg | `astro` (image optimisation at build time) |
+| `source-map-js` 1.2.1 | [GHSA-68fv-2mgg-jv7q](https://github.com/advisories/GHSA-68fv-2mgg-jv7q), event-loop DoS on crafted source maps | `@tailwindcss/vite`, `vite`/`postcss`, `astro` (svgo, magicast) |
+
+**Decision, approved by Jesus on 2026-10-10: `npm audit fix`, without `--force`.** Every patch
+fits the ranges the direct dependencies already allow, so no direct dependency changed.
+
+- The lockfile moves `http-cache-semantics` to 4.3.0, `source-map-js` to 1.2.2, `sharp` and its
+  23 platform packages to 0.35.5, and the `libvips` packages to 1.3.4; nothing else. The musl
+  packages the dry run said it would remove are kept.
+- `npm audit`: 0 vulnerabilities.
+- The build is byte-identical to the one before, image files included (the new libvips encodes
+  the portrait the same way); only the two CV PDFs differ, by their `/CreationDate` and
+  `/ModDate`, which change on every build. Tests: 314 pass; build checks pass.
+- Dependabot alert #1 should close by itself once this reaches `main`.
