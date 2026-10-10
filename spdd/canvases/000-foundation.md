@@ -242,4 +242,6 @@ fits the ranges the direct dependencies already allow, so no direct dependency c
 - Lighthouse, pull request #27, run `38086234646` (2 min 53 s): every assertion passes on the
   15 URLs; median performance 1 and accessibility 1 everywhere, median LCP 1,355–1,363 ms, CLS
   at most 0.005.
-- Dependabot alert #1 should close by itself once this reaches `main`.
+- Dependabot alerts #1 (`http-cache-semantics`), #2 (`source-map-js`) and #3 (`sharp`) closed
+  as fixed at 21:15 UTC on 2026-10-10, when #27 reached `main` (`c3fca5f`); the deploy that
+  followed (run `38086924717`) serves every page as before.
