@@ -32,6 +32,9 @@
 - **Hidden means hidden to the keyboard too.** An element hidden only visually (translated off
   screen, transparent, `pointer-events: none`) but kept in the page is also made `inert`, or
   `hidden`, so that it leaves the focus order and the accessibility tree with it.
+  An element that hides itself never strands focus: it stays while it holds focus, and it does
+  not rely on an observer alone to know when to hide, since the focus that scrolls the page can
+  arrive before the observer reports.
 
 ## Safeguards
 
