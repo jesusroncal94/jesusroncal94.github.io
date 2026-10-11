@@ -2,9 +2,10 @@
 import Icon from './Icon.astro';
 import type { Locale } from '../i18n/locales';
 import { interpolate, useTranslations } from '../i18n/translate';
+import { leadingCount, percentOf } from '../lib/mechanism';
 
 interface Stage {
-  glyph: 'queue' | 'lanes' | 'gate' | 'done';
+  glyph: 'queue' | 'lanes' | 'gate' | 'done' | 'version' | 'fixtures' | 'rubric' | 'compare';
   label: string;
   detail: string;
   sentence: string;
@@ -14,9 +15,12 @@ interface Props {
   label: string;
   stages: Stage[];
   locale: Locale;
+  // The case's metrics, drawn by a compare glyph.
+  before?: string;
+  after?: string;
 }
 
-const { label, stages, locale } = Astro.props;
+const { label, stages, locale, before = '', after = '' } = Astro.props;
 const t = useTranslations(locale);
 const total = String(stages.length);
 const counter = (step: number) => interpolate(t('mechanism.step'), { n: String(step + 1), total });
@@ -49,6 +53,36 @@ const LANE_FADE = [1, 0.7, 0.4];
                 <div class="flex h-3.5 w-21 items-center gap-1.5 rounded-[6px] border border-border-strong bg-raised px-1.5">
                   <div class="size-2 rounded-[2px] bg-signal" />
                   <div class="h-3.5 w-0.5 bg-signal" />
+                </div>
+              )}
+              {glyph === 'version' && (
+                <div class="flex items-center gap-1">
+                  {[0, 1, 2].map((segment) => (
+                    <>
+                      <div class:list={['h-3.5 w-5.5 rounded-[4px]', segment === 2 ? 'bg-signal' : 'bg-border-strong']} />
+                      {segment < 2 && <div class="size-[3px] rounded-full bg-muted" />}
+                    </>
+                  ))}
+                </div>
+              )}
+              {glyph === 'fixtures' && (
+                <div class="flex flex-col gap-1">
+                  {LANE_FADE.map((opacity) => (
+                    <div class="flex h-3 w-21 items-center rounded-[4px] border border-border-strong bg-raised px-1.5" style={`opacity: ${opacity}`}>
+                      <div class="h-0.5 w-10 rounded-full bg-muted" />
+                    </div>
+                  ))}
+                </div>
+              )}
+              {glyph === 'rubric' && (
+                <div class="flex items-end gap-0.5">
+                  {Array.from({ length: leadingCount(detail) ?? 0 }, () => <div class="h-5.5 w-0.5 rounded-full bg-signal" />)}
+                </div>
+              )}
+              {glyph === 'compare' && (
+                <div class="flex w-21 flex-col gap-2">
+                  <div class="h-2 rounded-full bg-before" style={`width: ${percentOf(before)}%`} />
+                  <div class="h-2 rounded-full bg-signal" style={`width: ${percentOf(after)}%`} />
                 </div>
               )}
             </div>
