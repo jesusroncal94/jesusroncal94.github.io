@@ -8,8 +8,8 @@ Story: [016](../stories/016-see-how-a-prompt-ships.md). Analysis:
 (see [../design.md](../design.md)).
 
 **Status:** implemented on 2026-10-11; the story, the frames, the copy and decisions 1–4 were
-approved on 2026-10-10, and the canvas start on 2026-10-11. Synced below; Lighthouse passed in
-the pull request's CI (#28); waiting for the merge.
+approved on 2026-10-10, and the canvas start on 2026-10-11. Published with #28. Done on 2026-10-12,
+story 016 closed after the check on the published site.
 
 ## R — Requirements
 
@@ -139,3 +139,15 @@ This section is authoritative where it differs from the operations above.
   1358/1359/1359 against 1355/1356/1356 in Spanish; CLS 0.0036–0.0045 against 0.0036–0.0038
   in English and 0.0041–0.0055 against 0.0043–0.0048 in Spanish, within run-to-run noise and
   far under the budget. The LCP element is still the first paragraph of Problem.
+
+**Verified on the published site, 2026-10-12,** after #28 was merged (`0553043`) and deployed
+(run `38180324015`, 3 min 31 s), with analytics requests blocked: **case 01, 1,038 checks pass;
+case 03, 1,026 still pass**, in Chromium, Firefox and WebKit, both languages, 390 and 1440 px,
+stepped and static.
+
+**Done when, item by item:** screenshots match the six frames; the `percentOf` tests pass and
+the build fails on a rubric without a number and on a compare without percentages; the end-to-end
+run passes on case 01 and case 03 in the three engines, on the production build and on the
+published site; case 01's body is unchanged apart from the diagram and case 03's page apart from
+the CSS file's name; zero overflow at 12 widths on case 01; tests pass and Lighthouse passes in CI
+with case 01's LCP and CLS unchanged. **Story 016 is closed.**
