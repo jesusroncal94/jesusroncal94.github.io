@@ -7,8 +7,9 @@ Story: [016](../stories/016-see-how-a-prompt-ships.md). Analysis:
 `Case 01 mechanism — Phone 390 · step 4`, `· static`, `· step 2 · es`
 (see [../design.md](../design.md)).
 
-**Status:** written on 2026-10-11; the story, the frames, the copy and decisions 1–4 were
-approved on 2026-10-10. Waiting for the start.
+**Status:** implemented on 2026-10-11; the story, the frames, the copy and decisions 1–4 were
+approved on 2026-10-10, and the canvas start on 2026-10-11. Synced below; waiting for Lighthouse
+in the pull request's CI.
 
 ## R — Requirements
 
@@ -97,3 +98,39 @@ case does not state, and every drawn number read from the case.
 - No request, no new script, no runtime dependency.
 - Case 03 and the stepping behaviour are unchanged.
 - English and Spanish behave the same.
+
+## Sync — 2026-10-11 (operations 1–4)
+
+This section is authoritative where it differs from the operations above.
+
+- **Op 1** (`82ca1a7`). As written; `percentOf` accepts a plain or a non-breaking space before
+  `%`.
+- **Op 2** (`3c456f4`). The schema's `refine` became a `superRefine` with one message per rule.
+  Against the build before it, all 15 pages were identical apart from the CSS file's name; the
+  CSS only gained the new glyphs' utilities.
+- **Op 3** (`9441b62`).
+  - The editor turned the non-breaking spaces of the Spanish frontmatter into plain ones; they
+    were written as bytes, and the file keeps no BOM.
+  - **A correction to the analysis:** its risk table said the review test would catch a lost
+    non-breaking space. It would not: that test normalises whitespace, and `\s` covers the
+    non-breaking space. `tests/case-typography.test.ts` now requires a non-breaking space before
+    `%` in every Spanish diagram line; it passes as shipped and fails with a plain space.
+  - With a `rubric` detail of "items in dimensions" the build fails with "A rubric glyph draws
+    one tick per item…"; with `before: about half`, with "A compare glyph draws the case's
+    percentages…". Restored afterwards.
+  - Against the build before it: case 01 differs only by the figure, its script and its styles;
+    case 03 only by the CSS file's name.
+
+**Verified on 2026-10-11, on the production build:**
+- End-to-end, Chromium, Firefox and WebKit, English and Spanish, 390 and 1440 px: **case 01,
+  1,038 checks pass**, the story 015 run plus the glyphs' numbers (19 ticks; bars at 45.6 % and
+  100 % of the glyph's width); **case 03, 1,026 checks still pass.**
+- Overflow: zero at all 12 widths on both case 01 pages, stepped and static.
+- Keyboard rule of `norms.md`, both case 01 pages, 390 and 1440 px, three engines: all pass.
+- Screenshots of the six frames' states match them. The page shows Approach's whole first
+  paragraph, which the frames abbreviate; in the browser the cards' Code Mono runs slightly
+  wider than in Penpot, so "19 items in 5 / dimensions" breaks one word later than in the
+  frame, with no number left alone; "100 %" stays whole in Spanish.
+- Tests: 330 pass. Build checks: links, previews and structured data valid on 15 pages.
+
+**Pending:** Lighthouse in the pull request's CI, with case 01's LCP and CLS against the last run.
