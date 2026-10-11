@@ -8,8 +8,8 @@ Story: [016](../stories/016-see-how-a-prompt-ships.md). Analysis:
 (see [../design.md](../design.md)).
 
 **Status:** implemented on 2026-10-11; the story, the frames, the copy and decisions 1–4 were
-approved on 2026-10-10, and the canvas start on 2026-10-11. Synced below; waiting for Lighthouse
-in the pull request's CI.
+approved on 2026-10-10, and the canvas start on 2026-10-11. Synced below; Lighthouse passed in
+the pull request's CI (#28); waiting for the merge.
 
 ## R — Requirements
 
@@ -132,5 +132,10 @@ This section is authoritative where it differs from the operations above.
   wider than in Penpot, so "19 items in 5 / dimensions" breaks one word later than in the
   frame, with no number left alone; "100 %" stays whole in Spanish.
 - Tests: 330 pass. Build checks: links, previews and structured data valid on 15 pages.
-
-**Pending:** Lighthouse in the pull request's CI, with case 01's LCP and CLS against the last run.
+- **Lighthouse,** pull request #28, run `38178527534` (3 min 19 s), 15 URLs × 3: every
+  assertion passes; all seven shards' assertion files are empty; every page has median
+  performance 1 and accessibility 1, median LCP 1,355–1,361 ms, CLS at most 0.0055. **Case 01
+  against pull request #27:** LCP 1266/1358/1359 ms against 1243/1359/1360 in English and
+  1358/1359/1359 against 1355/1356/1356 in Spanish; CLS 0.0036–0.0045 against 0.0036–0.0038
+  in English and 0.0041–0.0055 against 0.0043–0.0048 in Spanish, within run-to-run noise and
+  far under the budget. The LCP element is still the first paragraph of Problem.
