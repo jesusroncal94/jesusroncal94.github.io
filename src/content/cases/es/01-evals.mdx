@@ -9,6 +9,25 @@ before: 45,6 %
 after: 100 %
 stack: [Gemini 2.5 Pro, Spring AI, LLM-as-judge]
 keywords: [evals, prompt, calidad, tokens, gemini, planes de clase, proceso de evaluación]
+mechanism:
+  label: Cómo se publicaba un cambio de prompt
+  stages:
+    - glyph: version
+      label: Versión
+      detail: un número por cambio
+      sentence: "Cada cambio de prompt recibió una versión semántica: salía como un release con número, no como una edición sobre la marcha."
+    - glyph: fixtures
+      label: Fixtures
+      detail: el mismo conjunto cada vez
+      sentence: El mismo conjunto de fixtures de prueba se ejecutaba contra cada versión nueva.
+    - glyph: rubric
+      label: Juez
+      detail: 19 ítems en 5 dimensiones
+      sentence: Una rúbrica LLM-as-judge puntuaba cada respuesta en 5 dimensiones y 19 ítems.
+    - glyph: compare
+      label: Release
+      detail: 45,6 % → 100 %
+      sentence: "Cada puntuación se comparaba con la de la versión anterior: la conformidad estructural pasó del 45,6 % al 100 %, y el dashboard mostraba lo que costaba cada versión."
 ---
 
 <h2 id="problem">Problema</h2>
@@ -20,6 +39,8 @@ Medido contra esa estructura, solo el 45,6 % de las respuestas cumplía. Algunas
 <h2 id="approach">Enfoque</h2>
 
 Construí un conjunto de fixtures de prueba y una rúbrica LLM-as-judge que puntúa cada respuesta en 5 dimensiones y 19 ítems. Ahora cada cambio de prompt produce un número que se puede comparar con el anterior, en lugar de una impresión.
+
+<Mechanism {...frontmatter.mechanism} before={frontmatter.before} after={frontmatter.after} locale={props.locale} />
 
 Los prompts pasaron a ser artefactos con versionado semántico, así que un cambio es un release con número y no una edición sobre la marcha. En el mismo sistema, el motor de generación de unidades que entregué deja fuera del modelo las comprobaciones que no lo necesitan: guardrails deterministas validan la estructura y detectan respuestas truncadas sin una sola llamada extra al LLM. Y cada llamada reporta sus tokens, su coste y su latencia, así que un cambio que mejora la calidad pero duplica la factura se ve en el dashboard antes de convertirse en una sorpresa.
 

@@ -45,6 +45,12 @@ Mockups live in **Penpot** and are the visual source of truth for the canvases i
 | Cases       | Case 03 mechanism — Phone 390 · step 2    | 015    |
 | Cases       | Case 03 mechanism — Phone 390 · static    | 015    |
 | Cases       | Case 03 mechanism — Phone 390 · step 2 · es | 015  |
+| Cases       | Case 01 mechanism — Desktop 1440 · step 3 | 016    |
+| Cases       | Case 01 mechanism — Desktop 1440 · static | 016    |
+| Cases       | Case 01 mechanism — Desktop 1440 · step 3 · es | 016 |
+| Cases       | Case 01 mechanism — Phone 390 · step 4    | 016    |
+| Cases       | Case 01 mechanism — Phone 390 · static    | 016    |
+| Cases       | Case 01 mechanism — Phone 390 · step 2 · es | 016  |
 
 The three Home frames sit side by side and share one set of components, so the responsive
 behaviour of story 007 can be compared section by section. Each page starts at the origin,
@@ -164,6 +170,13 @@ Code Mono.
   version faded whole cards to 40 %, which put their text at 2.2–3.6:1 against the panel,
   under AA. The static version, for no script and reduced motion, shows every stage at full
   strength and the four sentences as a numbered list.
+- Case 01 mechanism (story 016, drawn and approved with its copy on 2026-10-10, page Cases). The same panel as case 03, with
+  four glyphs of its own in the same 82 × 46 box: the version as three segments joined by dots
+  (major, minor, patch; no number is drawn), the fixtures as three sheets fading out (no count),
+  the judge as 19 ticks, one per rubric item (the split across the 5 dimensions is not stated,
+  so it is not drawn), and the release as two bars at 45.6 % and 100 % of the width. These
+  frames draw the cards at 137 px, the width the built component gives them in the 680 px
+  column; the case 03 frames had used 125 px. Spanish keeps a non-breaking space before `%`.
 - The portrait badges frame the face on a diagonal: the current role overhangs the top-left
   edge, the lead role the bottom-right, so neither covers the face (2026-09-27).
 
@@ -174,7 +187,7 @@ Code Mono.
   (for example side by side) while an agent works in it.
 - The plugin's `storage` is lost when the plugin reconnects. The builder library is saved
   in the file itself, as plugin data (`portfolioLib.foundations`,
-  `portfolioLib.sections`, `portfolioLib.patches`, `portfolioLib.social`, `portfolioLib.i18n`, `portfolioLib.ask`, `portfolioLib.privacy`, `portfolioLib.frames`, and the case 03 copy and frame ids in `portfolioLib.case03`), and can be
+  `portfolioLib.sections`, `portfolioLib.patches`, `portfolioLib.social`, `portfolioLib.i18n`, `portfolioLib.ask`, `portfolioLib.privacy`, `portfolioLib.frames`, the case 03 copy and frame ids in `portfolioLib.case03`, and case 01's in `portfolioLib.case01`), and can be
   reinstalled in one call.
 - Only the active page can be edited, and a shape cannot be moved or cloned to another page.
   Open the page first (`penpot.openPage`).
