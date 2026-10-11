@@ -9,6 +9,25 @@ before: 45.6%
 after: 100%
 stack: [Gemini 2.5 Pro, Spring AI, LLM-as-judge]
 keywords: [evals, prompt, quality, tokens, gemini, lesson plans, eval process]
+mechanism:
+  label: How a prompt change was released
+  stages:
+    - glyph: version
+      label: Version
+      detail: a number per change
+      sentence: Every prompt change got a semantic version, so it shipped as a release with a number rather than an edit in place.
+    - glyph: fixtures
+      label: Fixtures
+      detail: the same set each run
+      sentence: The same set of test fixtures ran against each new version.
+    - glyph: rubric
+      label: Judge
+      detail: 19 items in 5 dimensions
+      sentence: An LLM-as-judge rubric scored every output on 5 dimensions and 19 items.
+    - glyph: compare
+      label: Release
+      detail: 45.6% → 100%
+      sentence: "Each score was compared with the last version's: structural conformance went from 45.6% to 100%, and the dashboard showed what each version cost."
 ---
 
 ## Problem
@@ -26,6 +45,8 @@ better-sounding prompt. It is a way to measure one.
 I built a set of test fixtures and an LLM-as-judge rubric that scores every output on 5
 dimensions and 19 items. Each prompt change now produces a number that can be compared with
 the last one, instead of an impression.
+
+<Mechanism {...frontmatter.mechanism} before={frontmatter.before} after={frontmatter.after} locale={props.locale} />
 
 Prompts became versioned artefacts with semantic versions, so a change is a release with a
 number rather than an edit in place. In the same system, the unit-generation engine I
