@@ -7,8 +7,9 @@ analyses. Penpot, page Cases: `Case 02 mechanism — Desktop 1440 · step 1`, `�
 `· step 3 · es`, `Case 02 mechanism — Phone 390 · step 4`, `· static`, `· step 2 · es`
 (see [../design.md](../design.md)).
 
-**Status:** written on 2026-10-12; the story, the frames, the copy and decisions 1–4 were
-approved that day. Waiting for the start.
+**Status:** implemented on 2026-10-12; the story, the frames, the copy, decisions 1–4 and the
+canvas start were approved that day. Synced below; waiting for Lighthouse in the pull request's
+CI.
 
 ## R — Requirements
 
@@ -81,3 +82,31 @@ case does not state, and every drawn proportion read from the case.
 - No request, no new script, no runtime dependency.
 - Cases 01 and 03 and the stepping behaviour are unchanged.
 - English and Spanish behave the same.
+
+## Sync — 2026-10-12 (operations 1–4)
+
+This section is authoritative where it differs from the operations above.
+
+- **Op 1** (`a9f3c19`). As written.
+- **Op 2** (`cba1b58`). The amounts are read once per case, outside the loop over stages. The
+  drop's fill keeps an 8 px minimum width, so the zero dot of the frames is always drawn. Against
+  the published site (the state of `main` before this story), with the CSS file's name and the
+  PostHog key normalised (CI injects the key; the local build leaves it empty): cases 01 and 03
+  in both languages, case 04 and the home page are identical.
+- **Op 3** (`98f681f`). The first insertion of the `<Mechanism />` tag matched the same sentence
+  in the new frontmatter rather than in the body, which broke the YAML; the review and typography
+  tests failed at once, and the tag was moved before "Stopping it once…" / "Pararlo una vez…".
+  With `before: fifteen a day`, and with `after: $20`, the build fails with "A drop glyph draws
+  the case's amounts…"; restored afterwards. Against the published site: case 02 differs only by
+  the figure, its script and its styles; cases 01 and 03 are identical.
+
+**Verified on 2026-10-12, on the production build:**
+- End-to-end, Chromium, Firefox and WebKit, English and Spanish, 390 and 1440 px: **case 02,
+  1,038 checks pass**, the story 015 run plus the drop glyph (fill styled `0%`, drawn as the 8 px
+  signal dot, over the 84 px before bar); **case 01, 1,038, and case 03, 1,026, still pass.**
+- Overflow: zero at all 12 widths on both case 02 pages, stepped and static.
+- Keyboard rule of `norms.md`, both case 02 pages, 390 and 1440 px, three engines: 12 of 12.
+- Screenshots of the six frames' states match them.
+- Tests: 345 pass. Build checks: links, previews and structured data valid on 15 pages.
+
+**Pending:** Lighthouse in the pull request's CI, with case 02's LCP and CLS against the last run.
