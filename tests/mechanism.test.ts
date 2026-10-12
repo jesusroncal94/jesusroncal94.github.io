@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { GRID, leadingCount, percentOf, stepAfter } from '../src/lib/mechanism';
+import { amountOf, GRID, leadingCount, percentOf, stepAfter } from '../src/lib/mechanism';
 
 describe('stepAfter', () => {
   it('moves one step inside the range', () => {
@@ -25,6 +25,20 @@ describe('percentOf', () => {
   it('refuses a value that is not a percentage', () => {
     expect(percentOf('112 queued')).toBeUndefined();
     expect(percentOf('$15/day')).toBeUndefined();
+  });
+});
+
+describe('amountOf', () => {
+  it('reads a dollar amount in either language', () => {
+    expect(amountOf('$15/day')).toBe(15);
+    expect(amountOf('$15/día')).toBe(15);
+    expect(amountOf('$0')).toBe(0);
+    expect(amountOf('$12–16')).toBe(12);
+  });
+
+  it('has nothing to read in a value without an amount', () => {
+    expect(amountOf('112 queued')).toBeUndefined();
+    expect(amountOf('45.6%')).toBeUndefined();
   });
 });
 

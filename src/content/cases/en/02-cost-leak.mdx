@@ -9,6 +9,25 @@ before: $15/day
 after: $0
 stack: [Python, Cost ledger, Root-cause analysis]
 keywords: [cost, spend, leak, money, ledger, production, debugging]
+mechanism:
+  label: How the leak was traced and closed
+  stages:
+    - glyph: ledger
+      label: Ledger
+      detail: $12–16/day, no owner
+      sentence: "One bucket in the AI cost ledger had no owner: a chronic $12–16 a day that no feature accounted for."
+    - glyph: trace
+      label: Trace
+      detail: back, not guessed
+      sentence: Instead of guessing where the money went, I followed the unattributed spend back to its source.
+    - glyph: worker
+      label: Source
+      detail: a stale worker
+      sentence: The source was a stale background worker that should not have been making those calls at all.
+    - glyph: drop
+      label: Guard
+      detail: $0 in production
+      sentence: "A guard in the code keeps it from happening again, and the production ledger shows $0 a day: checked there, not assumed."
 ---
 
 ## Problem
@@ -25,6 +44,8 @@ doing work nobody asked for — and whatever that is, it will not stay small on 
 I treated it as a bug with a number attached. Instead of guessing where the money might be
 going, I followed the unattributed spend back until it led to its source: a stale background
 worker that should not have been making those calls at all.
+
+<Mechanism {...frontmatter.mechanism} before={frontmatter.before} after={frontmatter.after} locale={props.locale} />
 
 Stopping it once would not have been a fix, because the conditions that started it could
 return. So I shipped a guard in the code to keep the same situation from happening again,

@@ -1,7 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
-import { GRID, leadingCount, percentOf } from './lib/mechanism';
+import { amountOf, GRID, leadingCount, percentOf } from './lib/mechanism';
 
 const metric = z.object({
   value: z.string(),
@@ -94,7 +94,7 @@ const mechanism = z.object({
   stages: z
     .array(
       z.object({
-        glyph: z.enum(['queue', 'lanes', 'gate', 'done', 'version', 'fixtures', 'rubric', 'compare']),
+        glyph: z.enum(['queue', 'lanes', 'gate', 'done', 'version', 'fixtures', 'rubric', 'compare', 'ledger', 'trace', 'worker', 'drop']),
         label: z.string(),
         detail: z.string(),
         sentence: z.string(),
@@ -125,6 +125,7 @@ const cases = defineCollection({
     })
     // Every number a glyph draws comes from the case's own copy; a case that cannot supply it fails.
     .superRefine(({ mechanism, before, after }, context) => {
+      const [spent, left] = [amountOf(before), amountOf(after)];
       for (const { glyph, detail } of mechanism?.stages ?? []) {
         if ((glyph === 'queue' || glyph === 'done') && leadingCount(before) !== DOTS)
           context.addIssue({ code: 'custom', message: `A ${glyph} glyph draws ${DOTS} dots; the case's "before" must state ${DOTS}.` });
@@ -132,6 +133,8 @@ const cases = defineCollection({
           context.addIssue({ code: 'custom', message: `A rubric glyph draws one tick per item; its detail must state how many: "${detail}".` });
         if (glyph === 'compare' && (percentOf(before) === undefined || percentOf(after) === undefined))
           context.addIssue({ code: 'custom', message: `A compare glyph draws the case's percentages; "${before}" and "${after}" must both be percentages.` });
+        if (glyph === 'drop' && !(spent !== undefined && left !== undefined && spent > 0 && left < spent))
+          context.addIssue({ code: 'custom', message: `A drop glyph draws the case's amounts; "${before}" and "${after}" must be amounts, the second below the first.` });
       }
     }),
 });

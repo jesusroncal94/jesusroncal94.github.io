@@ -10,6 +10,12 @@ export const percentOf = (value: string) => {
   return match ? Number(match[1].replace(',', '.')) : undefined;
 };
 
+// A dollar amount: "$15/day" or "$15/día" → 15, "$0" → 0; a range keeps its first figure.
+export const amountOf = (value: string) => {
+  const match = /\$(\d+(?:\.\d+)?)/.exec(value);
+  return match ? Number(match[1]) : undefined;
+};
+
 export const leadingCount = (value: string) => {
   const match = /\d+/.exec(value);
   return match ? Number(match[0]) : undefined;

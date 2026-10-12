@@ -9,6 +9,25 @@ before: $15/día
 after: $0
 stack: [Python, Ledger de costes, Análisis de causa raíz]
 keywords: [coste, gasto, fuga, dinero, ledger, producción, depuración]
+mechanism:
+  label: Cómo se rastreó y cerró la fuga
+  stages:
+    - glyph: ledger
+      label: Ledger
+      detail: $12–16/día, sin dueño
+      sentence: "Una partida del ledger de costes de IA no tenía dueño: $12–16 al día, de forma crónica, que ninguna funcionalidad justificaba."
+    - glyph: trace
+      label: Rastreo
+      detail: hacia atrás, sin adivinar
+      sentence: En lugar de adivinar adónde iba el dinero, seguí el gasto no atribuido hacia atrás hasta su origen.
+    - glyph: worker
+      label: Origen
+      detail: un worker obsoleto
+      sentence: El origen era un worker en segundo plano obsoleto que no debería haber estado haciendo esas llamadas.
+    - glyph: drop
+      label: Protección
+      detail: $0 en producción
+      sentence: "Una protección en el código impide que se repita, y el ledger de producción muestra $0 al día: comprobado ahí, no supuesto."
 ---
 
 <h2 id="problem">Problema</h2>
@@ -20,6 +39,8 @@ Una fuga de ese tamaño es fácil de tolerar. También es señal de que algo en 
 <h2 id="approach">Enfoque</h2>
 
 Lo traté como un bug con un número asociado. En lugar de adivinar adónde podía ir el dinero, seguí el gasto no atribuido hacia atrás hasta llegar a su origen: un worker en segundo plano obsoleto que no debería haber estado haciendo esas llamadas.
+
+<Mechanism {...frontmatter.mechanism} before={frontmatter.before} after={frontmatter.after} locale={props.locale} />
 
 Pararlo una vez no habría sido un arreglo, porque las condiciones que lo originaron podían volver. Así que entregué una protección en el código para que la misma situación no se repita, y después comprobé el resultado donde importa: en el ledger de producción, no en el código.
 
