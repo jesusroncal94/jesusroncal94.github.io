@@ -8,8 +8,8 @@ analyses. Penpot, page Cases: `Case 02 mechanism — Desktop 1440 · step 1`, `�
 (see [../design.md](../design.md)).
 
 **Status:** implemented on 2026-10-12; the story, the frames, the copy, decisions 1–4 and the
-canvas start were approved that day. Synced below; Lighthouse passed in the pull request's CI
-(#30); waiting for the merge.
+canvas start were approved that day. Published with #30. Done on 2026-10-12,
+story 017 closed after the check on the published site.
 
 ## R — Requirements
 
@@ -114,3 +114,15 @@ This section is authoritative where it differs from the operations above.
   against pull request #28:** median LCP 1,361 against 1,357 ms in English and 1,360 against
   1,357 ms in Spanish; CLS 0.0010 and 0.0009 against the same values. The LCP element is still
   the first paragraph of Problem.
+
+**Verified on the published site, 2026-10-12,** after #30 was merged (`5497e84`) and deployed
+(run `38285225308`, 3 min 18 s), with analytics requests blocked: **case 02, 1,038 checks pass;
+case 01, 1,038, and case 03, 1,026, still pass**, in Chromium, Firefox and WebKit, both
+languages, 390 and 1440 px, stepped and static.
+
+**Done when, item by item:** screenshots match the six frames; the `amountOf` tests pass and the
+build fails on a drop without two amounts, the second below the first; the end-to-end run passes
+on cases 02, 01 and 03 in the three engines, on the production build and on the published site;
+case 02's body is unchanged apart from the diagram and cases 01 and 03 apart from the CSS file's
+name; zero overflow at 12 widths on case 02; tests pass and Lighthouse passes in CI with case 02's
+LCP and CLS unchanged. **Story 017 is closed.**
