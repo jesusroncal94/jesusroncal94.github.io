@@ -59,10 +59,13 @@ Inputs: the six `Case 02 mechanism` frames and their copy (approved 2026-10-12, 
 
 ## 4. Decisions
 
-**⚠️ Pending:** Decision 1 — the four glyphs, with the drop's fill read from the case's amounts.
+**✅ Decision 1 — The new glyphs.** Confirmed 2026-10-12: the four glyphs, with the drop's fill
+read from the case's amounts.
 
-**⚠️ Pending:** Decision 2 — the `drop` rule in the schema, and `amountOf` with tests.
+**✅ Decision 2 — Where the checks live.** Confirmed 2026-10-12: the `drop` rule in the schema,
+and `amountOf` with tests.
 
-**⚠️ Pending:** Decision 3 — copy in the frontmatter, and 13 review rows.
+**✅ Decision 3 — Copy and review.** Confirmed 2026-10-12: copy in the frontmatter, and 13 review
+rows.
 
-**⚠️ Pending:** Decision 4 — the checks as listed.
+**✅ Decision 4 — Checks.** Confirmed 2026-10-12: as listed.
