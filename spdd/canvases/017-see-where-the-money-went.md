@@ -8,8 +8,8 @@ analyses. Penpot, page Cases: `Case 02 mechanism — Desktop 1440 · step 1`, `�
 (see [../design.md](../design.md)).
 
 **Status:** implemented on 2026-10-12; the story, the frames, the copy, decisions 1–4 and the
-canvas start were approved that day. Synced below; waiting for Lighthouse in the pull request's
-CI.
+canvas start were approved that day. Synced below; Lighthouse passed in the pull request's CI
+(#30); waiting for the merge.
 
 ## R — Requirements
 
@@ -108,5 +108,9 @@ This section is authoritative where it differs from the operations above.
 - Keyboard rule of `norms.md`, both case 02 pages, 390 and 1440 px, three engines: 12 of 12.
 - Screenshots of the six frames' states match them.
 - Tests: 345 pass. Build checks: links, previews and structured data valid on 15 pages.
-
-**Pending:** Lighthouse in the pull request's CI, with case 02's LCP and CLS against the last run.
+- **Lighthouse,** pull request #30, run `38283985441` (3 min 9 s), 15 URLs × 3: every
+  assertion passes; all seven shards' assertion files are empty; every page has median
+  performance 1 and accessibility 1, median LCP 1,355–1,363 ms, CLS at most 0.0049. **Case 02
+  against pull request #28:** median LCP 1,361 against 1,357 ms in English and 1,360 against
+  1,357 ms in Spanish; CLS 0.0010 and 0.0009 against the same values. The LCP element is still
+  the first paragraph of Problem.
