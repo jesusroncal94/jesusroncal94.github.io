@@ -10,6 +10,25 @@ before: 7 agents
 after: 1 story graph
 stack: [FastAPI, pgvector, Yjs / CRDT]
 keywords: [freya, agents, multi-agent, knowledge graph, architecture, crdt, writing, hourglass]
+mechanism:
+  label: How the hourglass is shaped
+  stages:
+    - glyph: channels
+      label: Channels
+      detail: 4 ways in
+      sentence: "Authors feed the story in through four channels: voice-first creation, guided questions, character interviews and manuscript import."
+    - glyph: inbound
+      label: Inbound
+      detail: 3 subagents
+      sentence: Inbound subagents extract, summarise and structure what comes in.
+    - glyph: facts
+      label: Facts
+      detail: facts only
+      sentence: "The result goes into a single knowledge base that holds only facts: the narrow waist."
+    - glyph: outbound
+      label: Outbound
+      detail: 3 subagents
+      sentence: Prose generation draws on that base, and outbound subagents generate, validate and enrich the result, which closes the loop.
 ---
 
 ## Problem
@@ -25,6 +44,8 @@ with the book so far.
 
 As Technical Lead, I co-architected Freya's AI layer and wrote its architecture model, the
 "hourglass": many ways in, one source of truth, prose on the way out.
+
+<Mechanism {...frontmatter.mechanism} before={frontmatter.before} after={frontmatter.after} locale={props.locale} />
 
 Authors feed the story in through several channels: voice-first creation, guided questions,
 character interviews and manuscript import. Inbound subagents extract, summarise and structure
