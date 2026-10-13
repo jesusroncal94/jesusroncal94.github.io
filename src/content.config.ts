@@ -82,10 +82,13 @@ const site = defineCollection({
       updated: z.iso.date(),
       sections: z.array(z.object({ heading: z.string(), text: z.string() })).min(1),
     }),
-    cv: z.object({
-      summary: z.string(),
-      highlights: z.array(z.object({ roleId: z.string(), items: z.array(z.string()).min(1).max(4) })),
-    }),
+    // Spanish only: the English CV is cv-base.md's text, through the export.
+    cv: z
+      .object({
+        summary: z.string(),
+        highlights: z.array(z.object({ roleId: z.string(), items: z.array(z.string()).min(1).max(4) })),
+      })
+      .optional(),
   }),
 });
 

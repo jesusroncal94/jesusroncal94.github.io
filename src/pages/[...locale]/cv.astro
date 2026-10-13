@@ -18,7 +18,11 @@ const t = useTranslations(locale);
 const { cv } = await getSite(locale);
 const { name, headline, city, contact, roles, education, skills, languages } = profile;
 
-const highlightsFor = (roleId: string) => cv.highlights.find((entry) => entry.roleId === roleId)?.items ?? [];
+// English is cv-base.md's own text, through the export; Spanish is still written in the site's content.
+const english = locale === 'en';
+const summary = english ? profile.summary : cv?.summary;
+const bulletsFor = (role: (typeof roles)[number]) =>
+  english ? (role.bullets ?? []) : (cv?.highlights.find((entry) => entry.roleId === role.id)?.items ?? []);
 const period = (start: string, end: string | null) =>
   `${formatMonth(start, locale)} – ${end ? formatMonth(end, locale) : t('period.now')}`;
 const l = (value: string) => localiseProfile(value, locale);
@@ -40,7 +44,7 @@ const display =(url: string) => decodeURIComponent(url.replace(/^https?:\/\/(www
 
     <section>
       <h2>{t('cv.summary')}</h2>
-      <p>{cv.summary}</p>
+      <p>{summary}</p>
     </section>
 
     <section>
@@ -54,7 +58,7 @@ const display =(url: string) => decodeURIComponent(url.replace(/^https?:\/\/(www
             <p class="period">{period(role.start, role.end)}</p>
           </div>
           <ul>
-            {highlightsFor(role.id).map((item) => <li>{item}</li>)}
+            {bulletsFor(role).map((item) => <li>{item}</li>)}
           </ul>
         </article>
       ))}
@@ -94,15 +98,15 @@ const display =(url: string) => decodeURIComponent(url.replace(/^https?:\/\/(www
 <style>
   @page {
     size: A4;
-    margin: 12mm 14mm;
+    margin: 10mm 12mm;
   }
 
   .cv {
-    max-width: 182mm;
+    max-width: 186mm;
     margin: 0 auto;
     padding: 12mm 0;
-    font-size: 9.5pt;
-    line-height: 1.45;
+    font-size: 9pt;
+    line-height: 1.4;
     color: var(--color-primary);
   }
 
@@ -167,12 +171,17 @@ const display =(url: string) => decodeURIComponent(url.replace(/^https?:\/\/(www
     color: var(--color-subtle);
   }
 
+  /* A role may run onto the next page; a bullet never splits, and a heading keeps its first bullet. */
   article {
-    break-inside: avoid;
     margin-bottom: 3mm;
   }
 
+  li {
+    break-inside: avoid;
+  }
+
   .role {
+    break-after: avoid;
     display: flex;
     justify-content: space-between;
     gap: 4mm;
