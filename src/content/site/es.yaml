@@ -53,7 +53,7 @@ palette:
       case: 02-cost-leak
     - label: ¿Cómo es tu proceso de evaluación?
       case: 01-evals
-    - label: Explícame los agentes de Freya
+    - label: Explícame la arquitectura de Freya
       case: 04-freya
 
 work:
@@ -196,10 +196,10 @@ cv:
           la cola a producción en ~30 horas, orquestando agentes de Claude Code en paralelo
           tras un merge gate serial sin fallos nuevos.
         - >-
-          Diseñé la arquitectura de la capa de IA de Freya: 7 agentes especializados junto a un
-          motor de consistencia basado en un grafo de conocimiento (33 tipos de aristas,
-          seguimiento epistémico) y coedición en tiempo real con Yjs/CRDT, sobre un backend
-          FastAPI con más de 800 endpoints.
+          Co-diseñé como Technical Lead la capa de IA de Freya y fui autor de su modelo en
+          "reloj de arena" (muchos canales de entrada, una única base de conocimiento solo con
+          hechos, generación de prosa); la preparé para producción con enrutamiento unificado
+          de modelos, aislamiento por proyecto y seguimiento de tokens y costes.
         - >-
           Diseñé un sistema de orquestación multiagente (niveles Coordinator, Manager y Worker)
           que enruta las peticiones de los usuarios por 8 canales de mensajería, de WhatsApp y
