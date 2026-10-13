@@ -9,7 +9,8 @@ and [case 02](../analysis/phase-3-case-02-visual.md) analyses. Penpot, page Case
 (see [../design.md](../design.md)).
 
 **Status:** implemented on 2026-10-13; the story, the frames, the stage copy, decisions 1–4, the
-diagram's label and the canvas start were approved that day. Lighthouse pending in CI.
+diagram's label and the canvas start were approved that day. Published with #33. Done on
+2026-10-13, story 018 closed after the check on the published site.
 
 ## R — Requirements
 
@@ -112,4 +113,29 @@ This section is authoritative where it differs from the operations above.
 - Screenshots of the six frames' states match them. In the phone screenshots the pinned bar is
   drawn mid-image, an artefact of the full-page capture also seen in story 017's.
 - Tests: 365 pass. Build checks: links, previews and structured data valid on 15 pages.
-- Lighthouse: in the pull request's CI, to be added here.
+- **Lighthouse,** pull request #33, run `38468282102`, 15 URLs × 3: every assertion passes, and
+  all seven shards' assertion files are empty. Every page has median performance 1 and
+  accessibility 1; CLS is at most 0.0048.
+  - **Case 04 against #32** (run `38461434240`): median LCP 1,357 against 1,358 ms in English
+    and 1,359 against 1,358 ms in Spanish; CLS 0.0005 and 0.0006, the same values.
+  - Two single runs scored below 1: `/work/02-cost-leak/` at 0.68 (TBT 2,546 ms) and
+    `/work/03-merge-campaign/` at 0.89 (TBT 406 ms). Their medians are 1, and neither page
+    changed in this story. This is the first-run runner noise noted in earlier stories.
+
+**Verified on the published site, 2026-10-13,** after #33 was merged (`34bfb8b`) and deployed
+(run `38469259388`, 4 min 29 s), with analytics requests blocked: **case 04, 1,038 checks pass;
+case 02, 1,038, case 01, 1,038, and case 03, 1,026, still pass**, in Chromium, Firefox and
+WebKit, both languages, 390 and 1440 px, stepped and static.
+
+**Done when, item by item:**
+- Screenshots match the six frames.
+- The `hourglassOf` tests pass, and the build fails on an incomplete hourglass and on a detail
+  without a count.
+- The end-to-end run passes on cases 04, 02, 01 and 03 in the three engines, on the production
+  build and on the published site.
+- Case 04's body is unchanged apart from the diagram, and cases 01–03 apart from the CSS file's
+  name.
+- Overflow is zero at 12 widths on case 04.
+- Tests pass, and Lighthouse passes in CI with case 04's LCP and CLS unchanged.
+
+**Story 018 is closed,** and with it the four case visuals deferred to Phase 3.
