@@ -5,7 +5,7 @@ Open source `6:158`, Experience `6:213`, How I work `6:269`; Mobile Selected wor
 Experience `9:132`, How I work `9:156`. Components: `CaseCard 2:121`, `StackTag 2:96`,
 `AskPrompt 2:112` (rebuilt as the command palette).
 
-**Status:** implemented and synced on 2026-09-23 (see the Sync section). Case texts approved on 2026-09-24. The `rag-bm25-search` note (operation 14) approved on 2026-10-05, in English and Spanish.
+**Status:** implemented and synced on 2026-09-23 (see the Sync section). Case texts approved on 2026-09-24. The `rag-bm25-search` note (operation 14) approved on 2026-10-05, in English and Spanish. Case 04's corrected attribution approved on 2026-10-13 (see the incident).
 
 ## R — Requirements
 
@@ -275,3 +275,48 @@ MindFortress". Jesus approved it on 2026-09-30.
 - After this and canvas 003's operation 13, every movement on the site is gated: the proof
   rise and the contact bar with `motion-safe:`, the count-up in its script, the arrows here.
   Colour-only hover transitions are not motion and are left as they are.
+
+## Incident — 2026-10-13 (case 04 attribution)
+
+**What happened.** On 2026-10-13 the `cv-manager` session re-checked the Freya bullet of
+`profile.md` against the Freya repositories' git history and code, and Jesus approved new
+wording (`cv-manager` commit `50eb9a9`):
+- "Architected Freya's AI layer" became "Co-architected … as Technical Lead";
+- what is his own was named: the "hourglass" architecture model and a production-hardening
+  bullet;
+- the agents, RAG chat and guard pipeline, the knowledge graph and the Yjs collaboration were
+  mainly implemented by other team members;
+- the figures were corrected from the code: 900+ endpoints, 180+ data models.
+
+The site still said "I architected Freya's AI layer" in case 04 and "Architected Freya's AI
+layer" in the CV highlight, in both languages. The case presented the agents, graph and
+co-editing as his own work, and gave 800+ endpoints. `./tasks.ps1 export` showed no
+difference, because it carries only the header and the roles; these texts were written by
+hand from `profile.md`. That is why nothing flagged them.
+
+**Fix** (copy approved by Jesus on 2026-10-13, with three decisions: the team is credited as
+"the team", not by name; "hourglass" is "reloj de arena" in Spanish; this is recorded as an
+incident):
+- **Case 04, both languages.**
+  - The summary and keywords are rewritten.
+  - Approach now says he co-architected the layer and wrote the hourglass model. It credits the
+    platform to the team and lists his own production hardening.
+  - Result describes the hourglass's narrow waist.
+  - The title, Problem and the 7 agents → 1 story graph metric are unchanged.
+- **CV highlight** `mindfortress-inc[1]` is rewritten to the new wording.
+- **Palette question** "Walk me through Freya's agents" becomes "… Freya's architecture".
+- **Review** `spdd/reviews/004a-es.md` has the matching rows.
+- **List style.** The case texts had never used a list, and Tailwind's reset drew the new
+  lists without bullets. The case body now styles its direct `ul` children: disc markers in
+  `text-subtle`, a 1.5 rem indent and a 0.5 rem gap. Cases 01–03 have no list and are
+  unaffected.
+- **New rule in `norms.md`:** a change of wording in `profile.md` is a change to the site.
+
+**Verified on the production build, 2026-10-13:**
+- Tests: 349 pass, the review test included.
+- Build checks: links, previews and structured data valid on 15 pages.
+- The CV PDFs are still two pages.
+- Overflow is zero at all 12 widths on case 04 in both languages and on both home pages.
+- Lists: case 04 has two disc lists (4 and 5 items) in each language; cases 01–03 have none.
+- Screenshots of Approach and Result at 1440 px (English) and 390 px (Spanish) read as
+  approved.
