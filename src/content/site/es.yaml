@@ -180,73 +180,55 @@ privacy:
       text: Escríbeme a jesusroncal94@gmail.com.
 
 cv:
-  summary: >-
-    Ingeniero de software senior con más de 8 años en sistemas backend, APIs e infraestructura
-    cloud; los últimos 4+ construyendo y operando aplicaciones en producción basadas en LLM.
-    Recientemente Technical Lead de dos productos de IA, y actualmente AI Engineer en un
-    tercero, diseñando sistemas multiagente, pipelines RAG y frameworks de evaluación para
-    usuarios reales. Desarrolla y opera servicios en AWS y GCP con Python, Go, Java y
-    TypeScript, trabajando a diario con agentes de programación con IA y las APIs de Claude,
-    Gemini y OpenAI en equipos distribuidos de EE. UU., la UE y LATAM.
-  highlights:
-    - roleId: mindfortress-inc
-      items:
-        - >-
-          Lideré la campaña de merge del MVP de Reeve: 112 pull requests en 4 repositorios, de
-          la cola a producción en ~30 horas, orquestando agentes de Claude Code en paralelo
-          tras un merge gate serial sin fallos nuevos.
-        - >-
-          Co-diseñé como Technical Lead la capa de IA de Freya y fui autor de su modelo en
-          "reloj de arena" (muchos canales de entrada, una única base de conocimiento solo con
-          hechos, generación de prosa); la preparé para producción con enrutamiento unificado
-          de modelos, aislamiento por proyecto y seguimiento de tokens y costes.
-        - >-
-          Diseñé un sistema de orquestación multiagente (niveles Coordinator, Manager y Worker)
-          que enruta las peticiones de los usuarios por 8 canales de mensajería, de WhatsApp y
-          Telegram a Slack y Teams.
-        - >-
-          Rastreé un gasto de IA no atribuido de ~$12–16/día hasta un worker obsoleto y lo
-          reduje a $0, verificado en el ledger de producción; llevé el CI del backend de 11
-          fallos intermitentes a 0.
-    - roleId: intercorp-management-innova-latam
-      items:
-        - >-
-          Soy responsable del sistema LLM en producción sobre Gemini 2.5 Pro (Vertex AI) que
-          genera planes de clase alineados al currículo para Perú, Colombia y México.
-        - >-
-          Diseñé un pipeline de prompts guiado por evaluaciones (fixtures más LLM-as-judge, 5
-          dimensiones y 19 ítems): conformidad estructural del 45,6 % al 100 %, −71 % de tokens
-          de salida en los casos inflados.
-        - >-
-          Lideré la migración de n8n a Spring Boot y Spring AI (Java 21) en AWS ECS, con prompts
-          versionados y observabilidad de tokens, coste y latencia por llamada.
-    - roleId: accelone
-      items:
-        - >-
-          Construí el backend de una plataforma de video en Django y PostgreSQL sobre AWS:
-          procesamiento por colas de archivos multimedia muy grandes con SQS, búsqueda con
-          Elasticsearch y pagos con Stripe.
-    - roleId: wordbox
-      items:
-        - >-
-          Integré LLMs de Google y OpenAI en pipelines de transcripción, traducción y
-          aprendizaje adaptativo con más de 500.000 usuarios en más de 10 mercados, aumentando
-          la satisfacción de los usuarios un 35 %.
-        - >-
-          Reescribí servicios centrales de Python a Go, reduciendo la latencia de la API un 40 %
-          y soportando un 50 % más de usuarios concurrentes.
-    - roleId: indra-pretty-technical
-      items:
-        - >-
-          Construí APIs que sirven modelos predictivos de ML con un 95 % de cobertura de tests,
-          y servicios backend en Go para clientes de videojuegos, finanzas y secuenciación de
-          ADN.
-    - roleId: red-cientifica-peruana
-      items:
-        - >-
-          Internacionalicé Yachay (yachay.lat), una plataforma de hosting y dominios que da
-          servicio a más de 11.000 empresas, impulsando un 25 % de crecimiento de ingresos en
-          nuevos mercados.
-    - roleId: codrise
-      items:
-        - Pasé del soporte TI L3 a Software Engineer, desarrollando aplicaciones web y APIs REST en PHP (Laravel, CodeIgniter).
+  summary:
+    source: 'Senior software engineer with 8+ years across backend systems, APIs, and cloud infrastructure, the last 4+ building and operating production LLM-powered applications. Most recently Technical Lead on two AI products, and currently AI Engineer on a third, designing multi-agent systems, RAG pipelines, and evaluation frameworks for real users at scale. Daily hands-on with AI coding agents (Claude Code) and with Claude, Gemini, and GPT APIs. Ship and operate services on AWS and GCP in Python, Go, Java, and TypeScript, with earlier production experience in PHP (Laravel, CodeIgniter). Strong cross-functional collaborator across distributed US, EU, and LATAM teams.'
+    text: 'Ingeniero de software senior con más de 8 años en sistemas backend, APIs e infraestructura cloud; los últimos 4+ construyendo y operando aplicaciones en producción basadas en LLM. Recientemente Technical Lead de dos productos de IA, y actualmente AI Engineer en un tercero, diseñando sistemas multiagente, pipelines RAG y frameworks de evaluación para usuarios reales a escala. Trabaja a diario con agentes de programación con IA (Claude Code) y con las APIs de Claude, Gemini y GPT. Desarrolla y opera servicios en AWS y GCP con Python, Go, Java y TypeScript, con experiencia previa en producción con PHP (Laravel, CodeIgniter). Colabora de forma transversal con equipos distribuidos en EE. UU., la UE y LATAM.'
+  bullets:
+    - source: 'Own the production LLM system on Gemini 2.5 Pro (Vertex AI) generating curriculum-aligned lesson plans for Peru (CNEB), Colombia (MEN) and Mexico, with Ecuador onboarding: ~25K requests/month, 23K+ sessions and 362 active teachers in the latest cycle, at ~$0.08 per session.'
+      text: 'Soy responsable del sistema LLM en producción sobre Gemini 2.5 Pro (Vertex AI) que genera planes de clase alineados al currículo para Perú (CNEB), Colombia (MEN) y México, con Ecuador en incorporación: ~25.000 peticiones al mes, más de 23.000 sesiones y 362 docentes activos en el último ciclo, a ~$0,08 por sesión.'
+    - source: 'Led the migration of the AI service from n8n to a Spring Boot / Spring AI codebase (Java 21, Vertex AI), now in production on AWS ECS across DEV/STG/PRD, with SemVer-versioned prompts, AOP-style observability (tokens, cost, latency per call) and a 19-panel Grafana dashboard.'
+      text: 'Lideré la migración del servicio de IA de n8n a una base de código en Spring Boot / Spring AI (Java 21, Vertex AI), ya en producción en AWS ECS en DEV/STG/PRD, con prompts versionados con SemVer, observabilidad al estilo AOP (tokens, coste y latencia por llamada) y un dashboard de Grafana de 19 paneles.'
+    - source: 'Shipped the unit-generation engine (v3): batch generation of whole curricular units with per-session fault tolerance, deterministic output guardrails (structural rules + truncation detection, zero extra LLM calls) and Special Educational Needs adaptation, powering 14.9K pregenerated sessions in one cycle.'
+      text: 'Entregué el motor de generación de unidades (v3): generación por lotes de unidades curriculares completas con tolerancia a fallos por sesión, guardrails de salida deterministas (reglas estructurales + detección de truncamiento, sin llamadas extra al LLM) y adaptación a Necesidades Educativas Especiales, con 14.900 sesiones pregeneradas en un ciclo.'
+    - source: 'Designed an eval-driven prompt pipeline (test fixtures + LLM-as-judge, 5 dimensions / 19 items); cut output tokens ~71% on bloated cases and restored structural conformance from 45.6% to 100%.'
+      text: 'Diseñé un pipeline de prompts guiado por evaluaciones (fixtures de test + LLM-as-judge, 5 dimensiones / 19 ítems); reduje ~71 % los tokens de salida en los casos inflados y devolví la conformidad estructural del 45,6 % al 100 %.'
+    - source: 'Own AI cost attribution and governance: monthly Executive Committee reporting validated by independent methods (Grafana + direct SQL), a per-country cost model, and an approved budget band for the AI platform.'
+      text: 'Soy responsable de la atribución y la gobernanza del coste de IA: informes mensuales al Comité Ejecutivo validados por métodos independientes (Grafana + SQL directo), un modelo de costes por país y una banda de presupuesto aprobada para la plataforma de IA.'
+    - source: 'Operate n8n content pipelines on GCP Cloud Run (PostgreSQL); migrated 7 workflows, upgraded to n8n 2.x, and built 19 reusable custom nodes for RAG/agent workflows (Qdrant, Azure embeddings, Typesense, Langfuse).'
+      text: 'Opero pipelines de contenido en n8n sobre GCP Cloud Run (PostgreSQL); migré 7 workflows, actualicé a n8n 2.x y construí 19 nodos personalizados reutilizables para workflows de RAG y de agentes (Qdrant, embeddings de Azure, Typesense, Langfuse).'
+    - source: 'Owned code review and release gating across two AI products (Freya, an AI writing partner; Reeve, an AI commerce-growth platform); drove 6-8 PRs/session to production with empirical pre-merge gates (pytest, tsc/Vitest, Alembic replays) and set engineering standards (spec-driven development, branching strategy, Linear as state bus).'
+      text: 'Fui responsable de la revisión de código y el control de releases de dos productos de IA (Freya, un compañero de escritura con IA; Reeve, una plataforma de IA para el crecimiento de comercios); llevé 6-8 PRs por sesión a producción con gates empíricos previos al merge (pytest, tsc/Vitest, replays de Alembic) y fijé estándares de ingeniería (desarrollo guiado por especificaciones, estrategia de ramas, Linear como bus de estado).'
+    - source: 'Led the Reeve MVP merge campaign: 112 PRs across 4 repos cleared from queue to production in ~30h, orchestrating parallel Claude Code agents (isolated worktrees, rebase-by-content, stacked chains) with serial no-new-failures merge gates, unblocking CI (sharding, env-dependent tests) along the way.'
+      text: 'Lideré la campaña de merge del MVP de Reeve: 112 PRs en 4 repositorios, de la cola a producción en ~30 h, orquestando agentes de Claude Code en paralelo (worktrees aislados, rebase por contenido, cadenas apiladas) tras merge gates seriales sin fallos nuevos, y desbloqueando el CI por el camino (sharding, tests dependientes del entorno).'
+    - source: 'Co-architected Freya''s AI layer as Technical Lead, authoring its "hourglass" model (many input channels feed one facts-only knowledge base that drives prose generation, with inbound and outbound subagents), and hardened it for production: unified model routing, per-project isolation, real token/cost tracking and non-blocking AI calls. The platform spans 7 RAG-grounded agents, a knowledge-graph consistency engine and Yjs/CRDT editing on FastAPI (900+ endpoints).'
+      text: 'Co-diseñé como Technical Lead la capa de IA de Freya y fui autor de su modelo en "reloj de arena" (muchos canales de entrada alimentan una única base de conocimiento solo con hechos que guía la generación de prosa, con subagentes de entrada y de salida), y la preparé para producción: enrutamiento unificado de modelos, aislamiento por proyecto, seguimiento real de tokens y costes y llamadas de IA no bloqueantes. La plataforma abarca 7 agentes con RAG, un motor de consistencia basado en un grafo de conocimiento y edición con Yjs/CRDT sobre FastAPI (más de 900 endpoints).'
+    - source: 'Designed a multi-agent orchestration system (Coordinator / Manager / Worker tiers) routing user requests across 8 messaging channels (WhatsApp, Telegram, Discord, Slack, Teams, Signal, iMessage, WebChat).'
+      text: 'Diseñé un sistema de orquestación multiagente (niveles Coordinator / Manager / Worker) que enruta las peticiones de los usuarios por 8 canales de mensajería (WhatsApp, Telegram, Discord, Slack, Teams, Signal, iMessage, WebChat).'
+    - source: 'Eliminated a chronic production AI-cost leak (~$12-16/day to $0) by root-causing an unattributed spend bucket to a stale worker pointed at the production database; shipped a code guard and verified $0 in the prod ledger.'
+      text: 'Eliminé una fuga crónica de coste de IA en producción (de ~$12-16/día a $0) rastreando una partida de gasto no atribuida hasta un worker obsoleto que apuntaba a la base de datos de producción; entregué una protección en el código y verifiqué $0 en el ledger de producción.'
+    - source: 'Stabilized backend CI: took a Postgres / pytest-xdist baseline from 11 flaky failures to 0 by reproducing CI byte-for-byte in Docker and root-causing a stale SQLAlchemy comparator memoization.'
+      text: 'Estabilicé el CI del backend: llevé una base de Postgres / pytest-xdist de 11 fallos intermitentes a 0, reproduciendo el CI byte a byte en Docker y encontrando la causa en una memoización obsoleta de un comparador de SQLAlchemy.'
+    - source: 'Built mindfortress-claude, a portable engineering platform (7 agents, 10 commands, skills, git hooks, MCP integrations: Linear, Slack, Railway, Vercel, AWS, Sentry, Stripe) with config-vs-logic separation and layered prod-ops authorization gates.'
+      text: 'Construí mindfortress-claude, una plataforma de ingeniería portable (7 agentes, 10 comandos, skills, git hooks, integraciones MCP: Linear, Slack, Railway, Vercel, AWS, Sentry, Stripe) con separación entre configuración y lógica, y autorizaciones por capas para las operaciones en producción.'
+    - source: 'Shipped Stripe billing with subscription enforcement and A/B testing, and ran multi-cloud production operations (Railway GraphQL + cost ledger, AWS EC2/SSH + Alembic deploys).'
+      text: 'Entregué la facturación con Stripe, con control de suscripciones y tests A/B, y operé producción en varias nubes (Railway GraphQL + ledger de costes, AWS EC2/SSH + despliegues con Alembic).'
+    - source: 'Built and operated the backend for a video platform in Django / PostgreSQL on AWS, owning the storage, upload and update pipelines for very large media files with asynchronous, queue-based processing on AWS SQS.'
+      text: 'Construí y operé el backend de una plataforma de video en Django / PostgreSQL sobre AWS, a cargo de los pipelines de almacenamiento, subida y actualización de archivos multimedia muy grandes, con procesamiento asíncrono por colas en AWS SQS.'
+    - source: 'Modeled video metadata for filtering and search and implemented search with Elasticsearch.'
+      text: 'Modelé los metadatos de los videos para el filtrado y la búsqueda, e implementé la búsqueda con Elasticsearch.'
+    - source: 'Integrated Stripe for payments and content management on the platform.'
+      text: 'Integré Stripe para los pagos y la gestión de contenidos de la plataforma.'
+    - source: 'Integrated Google and OpenAI LLMs into the content pipeline for automated transcription, translation, and adaptive learning, serving 500,000+ users across 10+ markets and lifting user satisfaction 35%.'
+      text: 'Integré LLMs de Google y OpenAI en el pipeline de contenidos para transcripción, traducción y aprendizaje adaptativo automatizados, con más de 500.000 usuarios en más de 10 mercados, aumentando la satisfacción de los usuarios un 35 %.'
+    - source: 'Designed asynchronous, event-driven processing with Redis and Google Cloud Pub/Sub to decouple services across the content platform.'
+      text: 'Diseñé un procesamiento asíncrono y orientado a eventos con Redis y Google Cloud Pub/Sub para desacoplar los servicios de la plataforma de contenidos.'
+    - source: 'Refactored core services from Python to Go, reducing API latency 40% and supporting a 50% increase in concurrent users.'
+      text: 'Reescribí servicios centrales de Python a Go, reduciendo la latencia de la API un 40 % y soportando un 50 % más de usuarios concurrentes.'
+    - source: 'Built APIs serving predictive ML models, primarily in Python with PHP (Laravel) services, achieving 95% test coverage; improved CI/CD, accelerating deployment cycles 40% (Indra, Peru).'
+      text: 'Construí APIs que sirven modelos predictivos de ML, sobre todo en Python y con servicios en PHP (Laravel), con un 95 % de cobertura de tests; mejoré el CI/CD, acelerando los ciclos de despliegue un 40 % (Indra, Perú).'
+    - source: 'Built backend systems and APIs primarily in Go, also delivering PHP (Laravel) services, for gaming, finance, and DNA-sequencing data processing (Pretty Technical, Netherlands; client: Elimbio, USA).'
+      text: 'Construí sistemas backend y APIs sobre todo en Go, además de servicios en PHP (Laravel), para el procesamiento de datos de videojuegos, finanzas y secuenciación de ADN (Pretty Technical, Países Bajos; cliente: Elimbio, EE. UU.).'
+    - source: 'Internationalized Yachay (yachay.lat), a web hosting and domain platform serving 11,000+ businesses, driving 25% revenue growth in new markets.'
+      text: 'Internacionalicé Yachay (yachay.lat), una plataforma de hosting y dominios que da servicio a más de 11.000 empresas, impulsando un 25 % de crecimiento de ingresos en nuevos mercados.'
+    - source: 'Progressed from L3 IT Support to Software Engineer, building web applications and REST APIs in PHP (Laravel, CodeIgniter and pure PHP); integrated satellite applications with transactional databases and reporting services.'
+      text: 'Pasé del soporte TI L3 a Software Engineer, desarrollando aplicaciones web y APIs REST en PHP (Laravel, CodeIgniter y PHP puro); integré aplicaciones satélite con bases de datos transaccionales y servicios de reportes.'

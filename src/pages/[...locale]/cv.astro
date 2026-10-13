@@ -5,6 +5,7 @@ import { formatMonth } from '../../i18n/format';
 import { localeRoutes, type Locale } from '../../i18n/locales';
 import { localiseProfile } from '../../i18n/profile';
 import { useTranslations } from '../../i18n/translate';
+import { cvText } from '../../lib/cv-text';
 import { getSite } from '../../lib/site';
 
 export const getStaticPaths = localeRoutes;
@@ -18,11 +19,10 @@ const t = useTranslations(locale);
 const { cv } = await getSite(locale);
 const { name, headline, city, contact, roles, education, skills, languages } = profile;
 
-// English is cv-base.md's own text, through the export; Spanish is still written in the site's content.
-const english = locale === 'en';
-const summary = english ? profile.summary : cv?.summary;
-const bulletsFor = (role: (typeof roles)[number]) =>
-  english ? (role.bullets ?? []) : (cv?.highlights.find((entry) => entry.roleId === role.id)?.items ?? []);
+// The text is cv-base.md's, through the export; other languages show its reviewed translation.
+const text = (source: string) => cvText(source, cv);
+const summary = text(profile.summary ?? '');
+const bulletsFor = (role: (typeof roles)[number]) => (role.bullets ?? []).map(text);
 const period = (start: string, end: string | null) =>
   `${formatMonth(start, locale)} – ${end ? formatMonth(end, locale) : t('period.now')}`;
 const l = (value: string) => localiseProfile(value, locale);
