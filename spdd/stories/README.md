@@ -24,6 +24,7 @@ REASONS canvas in `../canvases/` names the story it implements.
 | 016 | [See how a prompt ships](016-see-how-a-prompt-ships.md) | Hiring manager | 3 (case visuals) |
 | 017 | [See where the money went](017-see-where-the-money-went.md) | Hiring manager | 3 (case visuals) |
 | 018 | [See the hourglass](018-see-the-hourglass.md)         | Hiring manager        | 3 (case visuals) |
+| 019 | [One CV, wherever it comes from](019-one-cv-wherever-it-comes-from.md) | Recruiter | 1.8 |
 
 ## Personas
 

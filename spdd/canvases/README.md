@@ -65,6 +65,7 @@ Phase 3:
 | [016 — See how a prompt ships](016-see-how-a-prompt-ships.md) | [016](../stories/016-see-how-a-prompt-ships.md) | 015 |
 | [017 — See where the money went](017-see-where-the-money-went.md) | [017](../stories/017-see-where-the-money-went.md) | 015, 016 |
 | [018 — See the hourglass](018-see-the-hourglass.md) | [018](../stories/018-see-the-hourglass.md) | 015, 016, 017 |
+| [019 — One CV, wherever it comes from](019-one-cv-wherever-it-comes-from.md) | [019](../stories/019-one-cv-wherever-it-comes-from.md) | 003, 004a, 006 |
 | [004a — Spanish](004a-spanish.md) | [004](../stories/004-read-it-in-my-language.md), part a | 001, 002, 003, 008 |
 
 Phase 4:
