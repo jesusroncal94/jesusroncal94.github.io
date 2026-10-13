@@ -11,6 +11,8 @@ const metric = z.object({
   accent: z.boolean().default(false),
 });
 
+const translation = z.object({ source: z.string(), text: z.string() });
+
 const sectionHead = z.object({
   eyebrow: z.string(),
   title: z.string(),
@@ -82,10 +84,9 @@ const site = defineCollection({
       updated: z.iso.date(),
       sections: z.array(z.object({ heading: z.string(), text: z.string() })).min(1),
     }),
-    cv: z.object({
-      summary: z.string(),
-      highlights: z.array(z.object({ roleId: z.string(), items: z.array(z.string()).min(1).max(4) })),
-    }),
+    // Translations only: the English CV is cv-base.md's text, through the export; each translation
+    // keeps the English it was made from, so a change to the English is caught (cv-translations.test.ts).
+    cv: z.object({ summary: translation, bullets: z.array(translation) }).optional(),
   }),
 });
 

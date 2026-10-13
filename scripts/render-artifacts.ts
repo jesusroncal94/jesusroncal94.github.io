@@ -3,7 +3,7 @@ import { readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { preview } from 'astro';
 import { chromium, type Browser } from 'playwright';
 import { localePath, PUBLISHED_LOCALES } from '../src/i18n/locales';
-import { cvFileName } from '../src/lib/cv';
+import { cvFileName, MAX_CV_PAGES, pdfPageCount } from '../src/lib/cv';
 import { PREVIEW_SIZE, versionPreviewUrls } from '../src/lib/preview';
 
 const PORT = 4322;
@@ -16,9 +16,10 @@ async function renderCvs(browser: Browser) {
     await page.goto(`${ORIGIN}${localePath(locale, 'cv')}`, { waitUntil: 'networkidle' });
     await page.evaluate(() => document.fonts.ready);
     const path = `${DIST}/cv/${cvFileName(locale)}`;
-    await page.pdf({ path, format: 'A4', printBackground: true, preferCSSPageSize: true });
+    const pages = pdfPageCount(await page.pdf({ path, format: 'A4', printBackground: true, preferCSSPageSize: true }));
     await page.close();
-    console.log(`Rendered ${path}`);
+    if (pages > MAX_CV_PAGES) throw new Error(`The ${locale} CV runs to ${pages} pages; it must fit on ${MAX_CV_PAGES}`);
+    console.log(`Rendered ${path} (${pages} pages)`);
   }
 }
 

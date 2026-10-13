@@ -10,6 +10,7 @@ export const roleSchema = z
     location: z.string().min(1).nullable(),
     start: yearOrMonth,
     end: yearOrMonth.nullable(),
+    bullets: z.array(z.string().min(1)).min(1).optional(),
   })
   .strict();
 
@@ -17,6 +18,7 @@ export const publicProfileSchema = z
   .object({
     name: z.string().min(1),
     headline: z.string().min(1),
+    summary: z.string().min(1).optional(),
     city: z.string().min(1),
     contact: z
       .object({

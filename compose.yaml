@@ -29,6 +29,12 @@ services:
   test:
     <<: *node
     command: sh -c "npm ci --prefer-offline && npm run test"
+    # Read-only, for the export freshness check (tests/cv-freshness.test.ts).
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+      - npm_cache:/root/.npm
+      - ../cv-manager:/cv-manager:ro
 
   export:
     <<: *node

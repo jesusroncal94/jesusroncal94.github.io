@@ -46,9 +46,7 @@ function atPath(root: unknown, path: string): unknown {
     .reduce<unknown>((node, segment) => (node as Record<string, unknown>)[segment], root);
 }
 
-const site = load(readFileSync('src/content/site/es.yaml', 'utf8')) as Record<string, unknown> & {
-  cv: { highlights: { roleId: string; items: string[] }[] };
-};
+const site = load(readFileSync('src/content/site/es.yaml', 'utf8')) as Record<string, unknown>;
 
 function caseEntry(number: string) {
   const file = readdirSync(CASES).find((name) => name.startsWith(`${number}-`))!;
@@ -69,8 +67,6 @@ function caseEntry(number: string) {
 function contentFor({ section, key }: Row): unknown {
   if (section.startsWith('UI strings')) return uiEs[key as keyof typeof uiEs];
   if (section.startsWith('Profile values')) return profileEs[key];
-  const highlight = /^cv\.highlights\.([\w-]+)\[(\d+)\]$/.exec(key);
-  if (highlight) return site.cv.highlights.find(({ roleId }) => roleId === highlight[1])?.items[Number(highlight[2])];
   const caseKey = /^(\d\d)\.(.+)$/.exec(key);
   if (!caseKey) return atPath(site, key);
   const { data, sections } = caseEntry(caseKey[1]);

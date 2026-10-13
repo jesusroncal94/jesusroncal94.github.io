@@ -202,6 +202,12 @@ Code Mono.
   narrowing rows with three segments (the inbound subagents), the waist in signal (the facts-only
   knowledge base), the opening rows with three segments (the outbound subagents). No agent,
   handoff, volume or rate is drawn. Copy and frame ids in `portfolioLib.case04`.
+- CV (story 019, mockup approved 2026-10-13). The CV has no Penpot frame; its design lives in
+  `cv.astro` (canvas 003). The mockup is a rendering of that page with `cv-base.md`'s text, made
+  in the scratchpad and never committed: 9 pt with a line height of 1.4, `@page` margins of
+  10 mm by 12 mm, a role may break across pages but a bullet never does, and a role's heading
+  stays with its first bullet. The English CV then fills two pages with a quarter of the second
+  free.
 - The portrait badges frame the face on a diagonal: the current role overhangs the top-left
   edge, the lead role the bottom-right, so neither covers the face (2026-09-27).
 
