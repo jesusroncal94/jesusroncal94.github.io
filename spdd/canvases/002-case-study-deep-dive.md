@@ -320,3 +320,9 @@ incident):
 - Lists: case 04 has two disc lists (4 and 5 items) in each language; cases 01–03 have none.
 - Screenshots of Approach and Result at 1440 px (English) and 390 px (Spanish) read as
   approved.
+
+**Verified on the published site, 2026-10-13,** after #32 was merged (`daade52`) and deployed
+(4 min 23 s; every Lighthouse shard passed on the pull request). Case 04 in both languages has
+the new wording, credits the team and has bulleted lists. Both home pages show the new summary.
+None of the old wording is left on these pages. The CV PDFs were not inspected; they are built
+from the same corrected YAML in the same deploy.

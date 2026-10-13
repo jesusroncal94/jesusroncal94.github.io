@@ -8,8 +8,8 @@ and [case 02](../analysis/phase-3-case-02-visual.md) analyses. Penpot, page Case
 `Case 04 mechanism — Phone 390 · step 4`, `· static`, `· step 2 · es`
 (see [../design.md](../design.md)).
 
-**Status:** written on 2026-10-13; the story, the frames, the stage copy, decisions 1–4 and the
-diagram's label were approved that day.
+**Status:** implemented on 2026-10-13; the story, the frames, the stage copy, decisions 1–4, the
+diagram's label and the canvas start were approved that day. Lighthouse pending in CI.
 
 ## R — Requirements
 
@@ -87,3 +87,29 @@ Jesus's work.
 - No request, no new script, no runtime dependency.
 - Cases 01–03 and the stepping behaviour are unchanged.
 - English and Spanish behave the same.
+
+## Sync — 2026-10-13 (operations 1–4)
+
+This section is authoritative where it differs from the operations above.
+
+- **Op 1** (`45a2f06`). As written; a count of 0 is treated as missing, since a row cannot be
+  split into no segments.
+- **Op 2** (`4ec1d2b`). As written. Against the build of `main` before this story (#32), with the
+  CSS file's name normalised: cases 01–04 and both home pages are identical.
+- **Op 3** (`ad48a04`). As written. Against the same build, with the figure removed and the
+  whitespace between tags normalised (MDX leaves a newline where the tag stood): case 04 is
+  identical in both languages; cases 01–03 and the home pages are identical apart from the CSS
+  file's name. With the `facts` stage removed, and with `channels`' detail as "many ways in",
+  the build fails with "The hourglass glyphs draw one shape…"; restored afterwards.
+
+**Verified on 2026-10-13, on the production build:**
+- End-to-end, Chromium, Firefox and WebKit, English and Spanish, 390 and 1440 px: **case 04,
+  1,038 checks pass**: the story 015 run, plus the hourglass. Each of the four glyphs draws 7
+  rows at 82, 58, 34, 10, 34, 58 and 82 px, split 4, 3, 1, 1, 1, 3, 1, with the part's rows lit
+  and the waist in `signal`. **Case 02, 1,038; case 01, 1,038; case 03, 1,026 still pass.**
+- Overflow: zero at all 12 widths on both case 04 pages, stepped and static.
+- Keyboard rule of `norms.md`, both case 04 pages, 390 and 1440 px, three engines: 12 of 12.
+- Screenshots of the six frames' states match them. In the phone screenshots the pinned bar is
+  drawn mid-image, an artefact of the full-page capture also seen in story 017's.
+- Tests: 365 pass. Build checks: links, previews and structured data valid on 15 pages.
+- Lighthouse: in the pull request's CI, to be added here.
