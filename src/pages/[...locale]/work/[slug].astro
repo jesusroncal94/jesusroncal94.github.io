@@ -83,7 +83,7 @@ const structuredData = caseArticle({
 
       <BeforeAfter before={before} after={after} locale={locale} size="full" />
 
-      <div class="body-l flex flex-col gap-5 text-muted [&_h2]:heading-h3 [&_h2]:mt-4 [&_h2]:scroll-mt-4 [&_h2]:text-primary">
+      <div class="body-l flex flex-col gap-5 text-muted [&_h2]:heading-h3 [&_h2]:mt-4 [&_h2]:scroll-mt-4 [&_h2]:text-primary [&>ul]:flex [&>ul]:list-disc [&>ul]:flex-col [&>ul]:gap-2 [&>ul]:pl-6 [&>ul]:marker:text-subtle">
         <Content locale={locale} components={{ Mechanism: CaseMechanism }} />
       </div>
 
