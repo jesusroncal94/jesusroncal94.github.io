@@ -93,6 +93,49 @@ export function parseProfile(markdown: string): PublicProfile {
   });
 }
 
+export interface Cv {
+  summary: string;
+  roles: { id: string; bullets: string[] }[];
+}
+
+// Phone numbers in either international or grouped local form, and any email address: none may
+// leave cv-base.md, whose contact section is never read.
+const PRIVATE_PATTERNS = [/\+\d[\d\s().-]{6,}\d/, /\b\d{3}[\s.-]\d{3}[\s.-]\d{3,4}\b/, /[\w.+-]+@[\w-]+\.[\w.-]+/];
+
+// Reads only the summary and the role bullets of cv-base.md.
+export function parseCv(markdown: string): Cv {
+  const source = stripComments(markdown);
+  const summary = section(source, ['CV', 'Summary'])
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .join(' ');
+  const experience = section(source, ['CV', 'Experience']);
+  const roles = parseRoles(experience).map(({ id }, index) => ({
+    id,
+    bullets: bullets(experience.split(/^### .*$/m)[index + 1]).map((line) => line.replace(/\*\*/g, '')),
+  }));
+
+  for (const text of [summary, ...roles.flatMap(({ bullets }) => bullets)]) {
+    if (PRIVATE_PATTERNS.some((pattern) => pattern.test(text))) throw new Error(`Private detail in the CV text: ${text.slice(0, 40)}…`);
+  }
+  if (!summary) throw new Error('The CV has no summary');
+  return { summary, roles };
+}
+
+// The CV's text joins the profile role by role; a role in one file and not the other is an error.
+export function mergeCv(profile: PublicProfile, cv: Cv): PublicProfile {
+  const profileIds = profile.roles.map(({ id }) => id).join(', ');
+  const cvIds = cv.roles.map(({ id }) => id).join(', ');
+  if (profileIds !== cvIds) throw new Error(`The CV's roles (${cvIds}) differ from the profile's (${profileIds})`);
+
+  return publicProfileSchema.parse({
+    ...profile,
+    summary: cv.summary,
+    roles: profile.roles.map((role, index) => ({ ...role, bullets: cv.roles[index].bullets })),
+  });
+}
+
 function parseHeading(line: string): { level: number; title: string } | null {
   const match = /^(#{1,6}) (.+?)\s*$/.exec(line);
   return match ? { level: match[1].length, title: match[2] } : null;
