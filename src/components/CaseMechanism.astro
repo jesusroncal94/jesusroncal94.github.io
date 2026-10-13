@@ -2,10 +2,12 @@
 import Icon from './Icon.astro';
 import type { Locale } from '../i18n/locales';
 import { interpolate, useTranslations } from '../i18n/translate';
-import { amountOf, leadingCount, percentOf } from '../lib/mechanism';
+import { amountOf, HOURGLASS_PARTS, HOURGLASS_ROWS, hourglassOf, leadingCount, percentOf } from '../lib/mechanism';
 
 interface Stage {
-  glyph: 'queue' | 'lanes' | 'gate' | 'done' | 'version' | 'fixtures' | 'rubric' | 'compare' | 'ledger' | 'trace' | 'worker' | 'drop';
+  glyph:
+    | 'queue' | 'lanes' | 'gate' | 'done' | 'version' | 'fixtures' | 'rubric' | 'compare' | 'ledger' | 'trace' | 'worker' | 'drop'
+    | (typeof HOURGLASS_PARTS)[number];
   label: string;
   detail: string;
   sentence: string;
@@ -25,6 +27,14 @@ const t = useTranslations(locale);
 const total = String(stages.length);
 const counter = (step: number) => interpolate(t('mechanism.step'), { n: String(step + 1), total });
 const LANE_FADE = [1, 0.7, 0.4];
+
+// Every hourglass glyph draws the same seven rows, split by the case's counts, and lights its own part.
+const hourglass = hourglassOf(stages);
+const WAIST = 3;
+const LIT_ROWS: Record<string, number[]> = { channels: [0], inbound: [1, 2], facts: [WAIST], outbound: [4, 5, 6] };
+const segmentsOf = (row: number) => ({ 0: hourglass?.channels, 1: hourglass?.inbound, 5: hourglass?.outbound })[row] ?? 1;
+const colourOf = (glyph: string, row: number) =>
+  !LIT_ROWS[glyph].includes(row) ? 'bg-border-strong' : row === WAIST ? 'bg-signal' : 'bg-muted';
 ---
 
 <figure
@@ -111,6 +121,17 @@ const LANE_FADE = [1, 0.7, 0.4];
                   <div class="flex h-2 w-full overflow-hidden rounded-full border border-border-strong">
                     <div class="h-full min-w-2 rounded-full bg-signal" style={`width: ${((amountOf(after) ?? 0) / (amountOf(before) ?? 1)) * 100}%`} />
                   </div>
+                </div>
+              )}
+              {hourglass && (HOURGLASS_PARTS as readonly string[]).includes(glyph) && (
+                <div class="flex w-21 flex-col items-center gap-[3px]">
+                  {HOURGLASS_ROWS.map((width, row) => (
+                    <div class="flex h-1 gap-1" style={`width: ${width}px`}>
+                      {Array.from({ length: segmentsOf(row) }, () => (
+                        <div class:list={['flex-1 rounded-[2px]', colourOf(glyph, row)]} />
+                      ))}
+                    </div>
+                  ))}
                 </div>
               )}
             </div>
