@@ -4,8 +4,9 @@ Story: [019](../stories/019-one-cv-wherever-it-comes-from.md). Analysis:
 [Phase 1.8](../analysis/phase-1-8-canonical-cv.md). Mockup: the CV rendering described in
 [../design.md](../design.md) (no Penpot frame; the CV's design lives in `cv.astro`).
 
-**Status:** written on 2026-10-13; the story, the mockup, decisions 1–6 and the publication of
-every `cv-base.md` bullet as it is were approved that day.
+**Status:** implemented on 2026-10-14. On 2026-10-13 the story, the mockup (revised the same
+day), decisions 1–6, the publication of every `cv-base.md` bullet as it is, the canvas start and
+the Spanish translation of the summary and 24 bullets were approved. Lighthouse pending in CI.
 
 ## R — Requirements
 
@@ -115,3 +116,58 @@ story turns from a rule into a check for the CV.
   or any fixture with real values.
 - The case studies, home page and every page other than `/cv/` and `/es/cv/` are unchanged.
 - `cv-manager` is read, never written; nothing outside the allow-list is copied.
+
+## Sync — 2026-10-14 (operations 1–5)
+
+This section is authoritative where it differs from the operations above.
+
+- **Op 1** (`7d17bfb`).
+  - `parseCv` returns `{ summary, roles: { id, bullets }[] }`. It refuses a phone number, in
+    international form or grouped local form, and any email address in the CV text.
+  - `summary` and `bullets` are optional in the schema, so that `parseProfile` alone stays
+    valid; `mergeCv` always sets them and fails on a role mismatch.
+  - The first draft of the privacy test used one of Jesus's real numbers as its example. It was
+    replaced with a fictitious one before anything ran or was committed. `git grep` finds neither
+    real number in the repository.
+  - The re-export added only `summary` and 24 bullets, and every page built byte-identical.
+- **Op 2** (`9c97e10`).
+  - English renders the export.
+  - The mockup's layout: 9 pt / 1.4, margins 10/12 mm, `article` breakable, `li` unbreakable, and
+    `.role` kept with what follows.
+  - `pdfPageCount` in `src/lib/cv.ts`, with tests; `render-artifacts.ts` fails above
+    `MAX_CV_PAGES`.
+  - The page-count check:
+    - with a third of the summary repeated three times, the CV still fits, since page 2 has a
+      quarter free;
+    - with the whole summary repeated four times, the build fails with "The en CV runs to 3
+      pages; it must fit on 2".
+- **Op 3** (`867f3a3`).
+  - `src/lib/cv-text.ts` holds `cvSources`, `translationGaps` and `cvText`; `cvText` throws on a
+    text without a translation, which stops the build.
+  - The 25 pairs are in `es.yaml`, and the 25 review rows replace the old CV rows in
+    `004a-es.md`.
+  - With the pair for the video-metadata bullet removed, and with that bullet's English changed in
+    the export, the build fails each time with "No reviewed translation for the CV text…".
+  - The draft file was deleted after approval.
+- **Op 4** (`be1dea6`).
+  - `tests/cv-freshness.test.ts`; the test service mounts `../cv-manager` read-only.
+  - A stale export fails with "data/public-profile.json is stale: run ./tasks.ps1 export".
+  - Without `cv-manager`, the check is skipped with a warning. A first version added a
+    placeholder test that passed in that case; it was removed, since a pass is what the
+    requirement forbids.
+- **Op 5.** The Spanish PDF left the `%` of "un 35 %" alone at the start of a line. The nine
+  `%` in the Spanish CV texts now take a non-breaking space, as in the case diagrams. The text is
+  unchanged, and the review rows still match, since the test normalises whitespace.
+
+**Verified on 2026-10-14, on the production build:**
+- Tests: 387 pass locally, the freshness check included.
+- Build checks: links, previews and structured data valid on 15 pages.
+- Both PDFs are two pages. The English one fills page 2 to about three quarters and the Spanish
+  one to about nine tenths, each as in the mockup's layout.
+- The English CV's 24 bullets and summary equal the export, in order. Each appears word for word
+  in `cv-base.md`, and the PDF shows the same text.
+- Privacy: no phone pattern, private note, deal-breaker or salary in `dist/` or `data/`. The only
+  "WhatsApp" is the channel name in a MindFortress bullet.
+- Against the build of `main` before this story, only `/cv/` and `/es/cv/` differ.
+- Overflow: zero at all 12 widths on `/cv/` and `/es/cv/`.
+- Lighthouse: in the pull request's CI, to be added here.
