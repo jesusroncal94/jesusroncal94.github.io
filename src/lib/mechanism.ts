@@ -20,3 +20,17 @@ export const leadingCount = (value: string) => {
   const match = /\d+/.exec(value);
   return match ? Number(match[0]) : undefined;
 };
+
+// The hourglass glyphs: four parts, each drawing the same seven rows (widths in px) and lighting its own.
+export const HOURGLASS_PARTS = ['channels', 'inbound', 'facts', 'outbound'] as const;
+export const HOURGLASS_ROWS = [82, 58, 34, 10, 34, 58, 82] as const;
+
+// The segments the hourglass draws, read from the case: how many channels, inbound and outbound subagents.
+export const hourglassOf = (stages: { glyph: string; detail: string }[]) => {
+  const countOf = (part: string) => {
+    const stage = stages.find(({ glyph }) => glyph === part);
+    return stage && leadingCount(stage.detail);
+  };
+  const [channels, inbound, outbound] = [countOf('channels'), countOf('inbound'), countOf('outbound')];
+  return channels && inbound && outbound ? { channels, inbound, outbound } : undefined;
+};

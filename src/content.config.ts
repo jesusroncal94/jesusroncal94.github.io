@@ -1,7 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
-import { amountOf, GRID, leadingCount, percentOf } from './lib/mechanism';
+import { amountOf, GRID, HOURGLASS_PARTS, hourglassOf, leadingCount, percentOf } from './lib/mechanism';
 
 const metric = z.object({
   value: z.string(),
@@ -94,7 +94,7 @@ const mechanism = z.object({
   stages: z
     .array(
       z.object({
-        glyph: z.enum(['queue', 'lanes', 'gate', 'done', 'version', 'fixtures', 'rubric', 'compare', 'ledger', 'trace', 'worker', 'drop']),
+        glyph: z.enum(['queue', 'lanes', 'gate', 'done', 'version', 'fixtures', 'rubric', 'compare', 'ledger', 'trace', 'worker', 'drop', ...HOURGLASS_PARTS]),
         label: z.string(),
         detail: z.string(),
         sentence: z.string(),
@@ -136,6 +136,10 @@ const cases = defineCollection({
         if (glyph === 'drop' && !(spent !== undefined && left !== undefined && spent > 0 && left < spent))
           context.addIssue({ code: 'custom', message: `A drop glyph draws the case's amounts; "${before}" and "${after}" must be amounts, the second below the first.` });
       }
+      const stages = mechanism?.stages ?? [];
+      const parts = HOURGLASS_PARTS.map((part) => stages.filter(({ glyph }) => glyph === part).length);
+      if (parts.some((count) => count > 0) && (parts.some((count) => count !== 1) || !hourglassOf(stages)))
+        context.addIssue({ code: 'custom', message: `The hourglass glyphs draw one shape: ${HOURGLASS_PARTS.join(', ')} once each, and the channels, inbound and outbound details must each state a count.` });
     }),
 });
 

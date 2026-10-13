@@ -10,6 +10,25 @@ before: 7 agentes
 after: 1 grafo narrativo
 stack: [FastAPI, pgvector, Yjs / CRDT]
 keywords: [freya, agentes, multiagente, grafo de conocimiento, arquitectura, crdt, escritura, reloj de arena]
+mechanism:
+  label: Cómo está formado el reloj de arena
+  stages:
+    - glyph: channels
+      label: Canales
+      detail: 4 vías de entrada
+      sentence: "El autor alimenta la historia por cuatro canales: creación por voz, preguntas guiadas, entrevistas con personajes e importación de manuscritos."
+    - glyph: inbound
+      label: Entrada
+      detail: 3 subagentes
+      sentence: Unos subagentes de entrada extraen, resumen y estructuran lo que llega.
+    - glyph: facts
+      label: Hechos
+      detail: solo hechos
+      sentence: "El resultado va a una única base de conocimiento que solo guarda hechos: la cintura estrecha."
+    - glyph: outbound
+      label: Salida
+      detail: 3 subagentes
+      sentence: La generación de prosa se apoya en esa base, y unos subagentes de salida generan, validan y enriquecen el resultado, lo que cierra el ciclo.
 ---
 
 <h2 id="problem">Problema</h2>
@@ -21,6 +40,8 @@ Eso hace de la consistencia el requisito central, no una funcionalidad: cada sug
 <h2 id="approach">Enfoque</h2>
 
 Como Technical Lead, co-diseñé la capa de IA de Freya y escribí su modelo de arquitectura, el "reloj de arena": muchas entradas, una sola fuente de verdad y prosa a la salida.
+
+<Mechanism {...frontmatter.mechanism} before={frontmatter.before} after={frontmatter.after} locale={props.locale} />
 
 El autor alimenta la historia por varios canales: creación por voz, preguntas guiadas, entrevistas con personajes e importación de manuscritos. Unos subagentes de entrada extraen, resumen y estructuran lo que llega, y el resultado va a una única base de conocimiento que solo guarda hechos. La generación de prosa se apoya en esa base. Unos subagentes de salida generan, validan y enriquecen el resultado, y así se cierra el ciclo.
 
