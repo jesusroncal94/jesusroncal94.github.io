@@ -57,6 +57,12 @@ Mockups live in **Penpot** and are the visual source of truth for the canvases i
 | Cases       | Case 02 mechanism — Phone 390 · step 4    | 017    |
 | Cases       | Case 02 mechanism — Phone 390 · static    | 017    |
 | Cases       | Case 02 mechanism — Phone 390 · step 2 · es | 017  |
+| Cases       | Case 04 mechanism — Desktop 1440 · step 1 | 018    |
+| Cases       | Case 04 mechanism — Desktop 1440 · static | 018    |
+| Cases       | Case 04 mechanism — Desktop 1440 · step 3 · es | 018 |
+| Cases       | Case 04 mechanism — Phone 390 · step 4    | 018    |
+| Cases       | Case 04 mechanism — Phone 390 · static    | 018    |
+| Cases       | Case 04 mechanism — Phone 390 · step 2 · es | 018  |
 
 The three Home frames sit side by side and share one set of components, so the responsive
 behaviour of story 007 can be compared section by section. Each page starts at the origin,
@@ -187,9 +193,15 @@ Code Mono.
   of its own: the ledger as three rows, the one without an owner outlined in the before colour;
   the trace as a dotted trail ending in a ring; the stale worker as a box in the before colour;
   and the guard as the before amount drawn full in the before colour over an empty track that
-  starts with a signal dot, -e. No series, total, duration or detail of the worker is drawn.
-  The first stage's detail reads "–16/day, no owner", the metric's format, so that "a" is
+  starts with a signal dot, $0. No series, total, duration or detail of the worker is drawn.
+  The first stage's detail reads "$12–16/day, no owner", the metric's format, so that "a" is
   not left at the end of a line.
+- Case 04 mechanism (story 018, drawn and approved with its copy on 2026-10-13, page Cases). The
+  same panel; every card draws the whole hourglass, seven 4 px rows narrowing to a 10 px waist
+  and opening again, and lights its own part: the top row in four segments (the channels), the
+  narrowing rows with three segments (the inbound subagents), the waist in signal (the facts-only
+  knowledge base), the opening rows with three segments (the outbound subagents). No agent,
+  handoff, volume or rate is drawn. Copy and frame ids in `portfolioLib.case04`.
 - The portrait badges frame the face on a diagonal: the current role overhangs the top-left
   edge, the lead role the bottom-right, so neither covers the face (2026-09-27).
 
@@ -200,7 +212,7 @@ Code Mono.
   (for example side by side) while an agent works in it.
 - The plugin's `storage` is lost when the plugin reconnects. The builder library is saved
   in the file itself, as plugin data (`portfolioLib.foundations`,
-  `portfolioLib.sections`, `portfolioLib.patches`, `portfolioLib.social`, `portfolioLib.i18n`, `portfolioLib.ask`, `portfolioLib.privacy`, `portfolioLib.frames`, the case 03 copy and frame ids in `portfolioLib.case03`, case 01's in `portfolioLib.case01` and case 02's in `portfolioLib.case02`), and can be
+  `portfolioLib.sections`, `portfolioLib.patches`, `portfolioLib.social`, `portfolioLib.i18n`, `portfolioLib.ask`, `portfolioLib.privacy`, `portfolioLib.frames`, the case 03 copy and frame ids in `portfolioLib.case03`, case 01's in `portfolioLib.case01`, case 02's in `portfolioLib.case02` and case 04's in `portfolioLib.case04`), and can be
   reinstalled in one call.
 - Only the active page can be edited, and a shape cannot be moved or cloned to another page.
   Open the page first (`penpot.openPage`).
