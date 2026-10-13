@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { amountOf, GRID, leadingCount, percentOf, stepAfter } from '../src/lib/mechanism';
+import { amountOf, GRID, hourglassOf, leadingCount, percentOf, stepAfter } from '../src/lib/mechanism';
 
 describe('stepAfter', () => {
   it('moves one step inside the range', () => {
@@ -55,5 +55,26 @@ describe('leadingCount', () => {
 
   it('matches the grid the glyphs draw', () => {
     expect(GRID.columns * GRID.rows).toBe(leadingCount('112 queued'));
+  });
+});
+
+describe('hourglassOf', () => {
+  const stages = [
+    { glyph: 'channels', detail: '4 ways in' },
+    { glyph: 'inbound', detail: '3 subagents' },
+    { glyph: 'facts', detail: 'facts only' },
+    { glyph: 'outbound', detail: '3 subagentes' },
+  ];
+
+  it('reads the segments from the stages', () => {
+    expect(hourglassOf(stages)).toEqual({ channels: 4, inbound: 3, outbound: 3 });
+  });
+
+  it('has nothing to draw when a stage is missing', () => {
+    expect(hourglassOf(stages.filter(({ glyph }) => glyph !== 'inbound'))).toBeUndefined();
+  });
+
+  it('has nothing to draw when a detail states no count', () => {
+    expect(hourglassOf(stages.map((stage) => (stage.glyph === 'channels' ? { ...stage, detail: 'many ways in' } : stage)))).toBeUndefined();
   });
 });
