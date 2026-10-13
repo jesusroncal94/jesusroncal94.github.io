@@ -91,7 +91,10 @@ Report what failed as plainly as what passed.
 ## Sources of truth
 
 - **Facts** come from `../cv-manager/profile.md`, through `./tasks.ps1 export` into
-  `data/public-profile.json`. Every claim traces to it, in the approved wording.
+  `data/public-profile.json`. Every claim traces to it, in the approved wording. The CV's
+  summary and role bullets come from `../cv-manager/cv-base.md` the same way (story 019), so the
+  site's CV says what Jesus sends; after editing either file, run the export, and
+  `./tasks.ps1 test` fails locally until you do.
 - **`cv-manager` is private and local-only.** Never publish it, add a remote to it, or copy
   anything outside the export's allow-list into this repo, fixtures included.
 - **Design** is the Penpot file in `spdd/design.md`. Figma holds only the Phase 1 record.

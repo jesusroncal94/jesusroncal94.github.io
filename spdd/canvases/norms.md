@@ -43,9 +43,10 @@
   anything private in a fixture uses synthetic values of the same shape.
 - **Truthfulness.** Every fact traces to `cv-manager/profile.md`; every softened claim uses the
   approved wording. No metric is invented, rounded up or extrapolated.
-- **A change of wording in `profile.md` is a change to the site.** The export carries only the
-  header and the roles; case texts, CV highlights and palette questions were written by hand
-  from `profile.md`. When a bullet's wording, figures or attribution change there, every text
+- **A change of wording in `profile.md` is a change to the site.** The export carries the
+  header, the roles and, since story 019, the CV's text from `cv-base.md`, which the build and
+  the local freshness check keep in step; case texts and palette questions are still written by
+  hand from `profile.md`. When a bullet's wording, figures or attribution change there, every text
   on the site drawn from that bullet is searched for and brought in line, in both languages,
   before anything else is built on it. Work done by a team is credited as the team's. Added
   2026-10-13 after the incident in canvas 002.

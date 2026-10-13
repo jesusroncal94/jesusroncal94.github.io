@@ -6,7 +6,8 @@ Story: [019](../stories/019-one-cv-wherever-it-comes-from.md). Analysis:
 
 **Status:** implemented on 2026-10-14. On 2026-10-13 the story, the mockup (revised the same
 day), decisions 1–6, the publication of every `cv-base.md` bullet as it is, the canvas start and
-the Spanish translation of the summary and 24 bullets were approved. Lighthouse pending in CI.
+the Spanish translation of the summary and 24 bullets were approved. Published with #35. Done on
+2026-10-14, story 019 closed after the check on the published site.
 
 ## R — Requirements
 
@@ -170,4 +171,29 @@ This section is authoritative where it differs from the operations above.
   "WhatsApp" is the channel name in a MindFortress bullet.
 - Against the build of `main` before this story, only `/cv/` and `/es/cv/` differ.
 - Overflow: zero at all 12 widths on `/cv/` and `/es/cv/`.
-- Lighthouse: in the pull request's CI, to be added here.
+- **CI,** pull request #35, run `38475976269`:
+  - The test job printed "Export freshness skipped: /cv-manager is not available here." and
+    reported 386 passed, 1 skipped, as designed.
+  - Both PDFs rendered at two pages.
+- **Lighthouse,** same run, 15 URLs × 3: every assertion passes. `/cv/` and `/es/cv/` have median
+  performance 1, accessibility 1, LCP 1,354 ms and CLS 0. Three single runs scored below 1, each
+  with a median of 1: `/cv/` 0.99, `/work/02-cost-leak/` 0.97 and `/work/03-merge-campaign/` 0.69.
+  The last two pages did not change; this is the first-run runner noise seen before.
+
+**Verified on the published site, 2026-10-14,** after #35 was merged (`dd5b795`) and deployed
+(run `38476429256`, 3 min 28 s):
+- Both published PDFs are two pages, byte for byte the size of the local build's.
+- `/cv/` carries all 25 exported texts. `/es/cv/` carries the approved Spanish.
+- Neither page has a phone pattern or a private note.
+
+**Done when, item by item:**
+- The export tests pass, and the re-export carries only the summary and 24 bullets.
+- The English CV matches `cv-base.md`'s text, apart from the contact line.
+- The Spanish CV has a reviewed pair for every text, and a missing pair or a changed English text
+  fails the build.
+- Both PDFs are two pages, and a three-page CV fails the build.
+- The freshness check fails locally on a stale export and is skipped in CI with a warning.
+- The PDFs match the mockup's layout.
+- Tests and Lighthouse pass, and no other page changed.
+
+**Story 019 is closed.**
