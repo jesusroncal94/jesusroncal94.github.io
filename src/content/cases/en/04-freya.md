@@ -5,11 +5,11 @@ organisation: MindFortress
 product: Freya
 role: Tech Lead
 title: A writing partner that never loses the plot
-summary: Seven specialised agents alongside a knowledge-graph consistency engine with epistemic tracking, plus real-time co-editing over CRDTs, on a FastAPI backend with 800+ endpoints.
+summary: Co-architected an AI writing partner around an "hourglass" model (many input channels, one facts-only knowledge base, prose generation) and hardened its AI layer for production.
 before: 7 agents
 after: 1 story graph
 stack: [FastAPI, pgvector, Yjs / CRDT]
-keywords: [freya, agents, multi-agent, knowledge graph, architecture, crdt, writing]
+keywords: [freya, agents, multi-agent, knowledge graph, architecture, crdt, writing, hourglass]
 ---
 
 ## Problem
@@ -23,21 +23,38 @@ with the book so far.
 
 ## Approach
 
-I architected Freya's AI layer around a single consistency engine for the story.
+As Technical Lead, I co-architected Freya's AI layer and wrote its architecture model, the
+"hourglass": many ways in, one source of truth, prose on the way out.
 
-At its centre is a knowledge graph with 33 types of edges and epistemic tracking on top. Seven
-specialised agents work alongside that engine.
+Authors feed the story in through several channels: voice-first creation, guided questions,
+character interviews and manuscript import. Inbound subagents extract, summarise and structure
+what comes in, and the result goes into a single knowledge base that holds only facts. Prose
+generation draws on that base. Outbound subagents generate, validate and enrich the result,
+which closes the loop.
 
-Writing is collaborative, so the editor is too. Real-time co-editing runs on Yjs CRDTs over
-WebSocket, which lets concurrent changes merge without conflicts. Underneath is a FastAPI
-backend with more than 800 endpoints and pgvector, integrating Claude (Sonnet and Opus) and
-OpenAI models.
+The team built the platform on that model:
+
+- seven specialised chat agents with retrieval over the story bible;
+- a guard pipeline after every generation;
+- a knowledge graph with 33 relation types, including epistemic "who knows what" tracking;
+- real-time co-editing on Yjs CRDTs over WebSocket.
+
+Underneath is a FastAPI backend with more than 900 endpoints, 180+ data models and pgvector,
+integrating Claude (Sonnet and Opus) and OpenAI models.
+
+My own code made that layer hold up in production:
+
+- one model router across the agents, including content-policy-aware routing;
+- per-project isolation and authorisation on chat and manuscript lookups;
+- sanitised streaming errors;
+- real token and cost tracking on streaming;
+- blocking AI calls moved off the event loop.
 
 ## Result
 
-Seven agents, one story graph and an editor several people can write in at once: the
-architecture of Freya's AI layer.
+Many ways in, one store of facts, prose on the way out: the shape Freya's AI layer was built
+on, made ready for production.
 
-The design choices are the ones I would make again for any assistant that has to stay
-consistent over a long document — a graph with typed relationships at the centre, and
-specialised agents with narrow roles around it.
+I would make the same choice again for any assistant that has to stay consistent over a long
+document: a narrow waist. Whatever the input, it becomes facts first, and generation reads only
+from those.

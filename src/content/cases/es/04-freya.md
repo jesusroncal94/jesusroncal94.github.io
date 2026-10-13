@@ -5,11 +5,11 @@ organisation: MindFortress
 product: Freya
 role: Tech Lead
 title: Un compañero de escritura que nunca pierde el hilo
-summary: Siete agentes especializados junto a un motor de consistencia basado en un grafo de conocimiento con seguimiento epistémico, más coedición en tiempo real sobre CRDTs, en un backend FastAPI con más de 800 endpoints.
+summary: Co-diseñé la arquitectura de un compañero de escritura con IA en torno a un modelo en "reloj de arena" (muchos canales de entrada, una única base de conocimiento solo con hechos, generación de prosa) y preparé su capa de IA para producción.
 before: 7 agentes
 after: 1 grafo narrativo
 stack: [FastAPI, pgvector, Yjs / CRDT]
-keywords: [freya, agentes, multiagente, grafo de conocimiento, arquitectura, crdt, escritura]
+keywords: [freya, agentes, multiagente, grafo de conocimiento, arquitectura, crdt, escritura, reloj de arena]
 ---
 
 <h2 id="problem">Problema</h2>
@@ -20,14 +20,29 @@ Eso hace de la consistencia el requisito central, no una funcionalidad: cada sug
 
 <h2 id="approach">Enfoque</h2>
 
-Diseñé la capa de IA de Freya en torno a un único motor de consistencia para la historia.
+Como Technical Lead, co-diseñé la capa de IA de Freya y escribí su modelo de arquitectura, el "reloj de arena": muchas entradas, una sola fuente de verdad y prosa a la salida.
 
-En su centro hay un grafo de conocimiento con 33 tipos de aristas y, por encima, seguimiento epistémico. Siete agentes especializados trabajan junto a ese motor.
+El autor alimenta la historia por varios canales: creación por voz, preguntas guiadas, entrevistas con personajes e importación de manuscritos. Unos subagentes de entrada extraen, resumen y estructuran lo que llega, y el resultado va a una única base de conocimiento que solo guarda hechos. La generación de prosa se apoya en esa base. Unos subagentes de salida generan, validan y enriquecen el resultado, y así se cierra el ciclo.
 
-Escribir es colaborativo, así que el editor también. La coedición en tiempo real funciona con CRDTs de Yjs sobre WebSocket, lo que permite fusionar cambios concurrentes sin conflictos. Por debajo hay un backend FastAPI con más de 800 endpoints y pgvector, que integra modelos de Claude (Sonnet y Opus) y de OpenAI.
+El equipo construyó la plataforma sobre ese modelo:
+
+- siete agentes de chat especializados con recuperación sobre la biblia de la historia;
+- un pipeline de guardas tras cada generación;
+- un grafo de conocimiento con 33 tipos de relación, incluido el seguimiento epistémico de "quién sabe qué";
+- coedición en tiempo real con CRDTs de Yjs sobre WebSocket.
+
+Por debajo hay un backend FastAPI con más de 900 endpoints, más de 180 modelos de datos y pgvector, que integra modelos de Claude (Sonnet y Opus) y de OpenAI.
+
+Mi propio código hizo que esa capa aguantara en producción:
+
+- un único enrutador de modelos para todos los agentes, con enrutamiento consciente de las políticas de contenido;
+- aislamiento y autorización por proyecto en las consultas de chat y de manuscritos;
+- errores de streaming saneados;
+- seguimiento real de tokens y costes en streaming;
+- las llamadas de IA bloqueantes, fuera del event loop.
 
 <h2 id="result">Resultado</h2>
 
-Siete agentes, un grafo narrativo y un editor en el que varias personas pueden escribir a la vez: la arquitectura de la capa de IA de Freya.
+Muchas entradas, un único almacén de hechos y prosa a la salida: la forma sobre la que se construyó la capa de IA de Freya, lista para producción.
 
-Son las decisiones de diseño que volvería a tomar para cualquier asistente que deba mantenerse consistente a lo largo de un documento extenso: un grafo con relaciones tipadas en el centro y agentes especializados con roles acotados a su alrededor.
+Volvería a tomar la misma decisión para cualquier asistente que deba mantenerse consistente a lo largo de un documento extenso: una cintura estrecha. Sea cual sea la entrada, primero se convierte en hechos, y la generación solo lee de ellos.

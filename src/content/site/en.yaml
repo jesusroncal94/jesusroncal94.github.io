@@ -53,7 +53,7 @@ palette:
       case: 02-cost-leak
     - label: What does your eval process look like?
       case: 01-evals
-    - label: Walk me through Freya’s agents
+    - label: Walk me through Freya’s architecture
       case: 04-freya
 
 work:
@@ -196,9 +196,10 @@ cv:
           to production in ~30 hours, orchestrating parallel Claude Code agents behind a serial
           no-new-failures merge gate.
         - >-
-          Architected Freya's AI layer: 7 specialised agents alongside a knowledge-graph
-          consistency engine (33 edge types, epistemic tracking) and real-time co-editing on
-          Yjs/CRDT, on a FastAPI backend with 800+ endpoints.
+          Co-architected Freya's AI layer as Technical Lead and authored its "hourglass" model
+          (many input channels, one facts-only knowledge base, prose generation); hardened it
+          for production with unified model routing, per-project isolation and token/cost
+          tracking.
         - >-
           Designed a multi-agent orchestration system (Coordinator, Manager and Worker tiers)
           routing user requests across 8 messaging channels, from WhatsApp and Telegram to
