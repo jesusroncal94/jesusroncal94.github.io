@@ -63,6 +63,13 @@ Mockups live in **Penpot** and are the visual source of truth for the canvases i
 | Cases       | Case 04 mechanism — Phone 390 · step 4    | 018    |
 | Cases       | Case 04 mechanism — Phone 390 · static    | 018    |
 | Cases       | Case 04 mechanism — Phone 390 · step 2 · es | 018  |
+| Home        | Home — Desktop 1440 · light (theme switch on Light) | 020 |
+| Home        | Home — Phone 390 · light                  | 020    |
+| Home        | Home — Phone 390 · menu · theme · light   | 020    |
+| Home        | Home — Phone 390 · menu · theme (dark, System) | 020 |
+| Home        | Nav — Desktop 1440 · theme switch (dark, System) | 020 |
+| Cases       | Case 04 mechanism — Desktop 1440 · step 1 · light | 020 |
+| Cases       | Case 04 mechanism — Phone 390 · step 4 · light | 020 |
 
 The three Home frames sit side by side and share one set of components, so the responsive
 behaviour of story 007 can be compared section by section. Each page starts at the origin,
@@ -88,13 +95,22 @@ read-only record of Phase 1.
 Penpot tokens, in the sets `color/dark`, `color/light` and `core`, switched by the themes
 `Mode / Dark` and `Mode / Light`. Both modes now live in the design, not only in this file.
 
-- **Color** (`color.*`), dark / light: `canvas #09090B / #FAFAF9`,
-  `surface #111114 / #FFFFFF`, `raised #18181C / #F4F4F5`, `border #26262C / #E4E4E7`,
-  `border-strong #3A3A42 / #D4D4D8`, `primary #F4F4F5 / #09090B`,
-  `muted #A1A1AA / #52525B`, `subtle #80808A / #6B6B74`, `signal #C8F55A / #467010`,
-  `on-signal #0B0F02 / #FFFFFF`, `glow #7C6BFF / #5B4BE8`, `before #FF7A6B / #C81E1E`,
-  `dusk #2E266B / #E9E6FF`. Every text colour clears WCAG AA (4.5:1) on canvas, surface
-  and raised in both modes.
+- **Color** (`color.*`), dark / light: `canvas #09090B / #FAF8F5`,
+  `surface #111114 / #FFFFFF`, `raised #18181C / #F2EFEA`, `border #26262C / #E7E2DA`,
+  `border-strong #3A3A42 / #D6CFC4`, `primary #F4F4F5 / #1C1917`,
+  `muted #A1A1AA / #57534E`, `subtle #80808A / #6B655E`, `signal #C8F55A / #3F6212`,
+  `on-signal #0B0F02 / #FFFFFF`, `glow #7C6BFF / #4F46E5`, `before #FF7A6B / #B42318`,
+  `dusk #2E266B / #EDE9FE`. Every text colour clears WCAG AA (4.5:1) on canvas, surface
+  and raised in both modes. The light set is the "Piedra" palette (warm stone neutrals),
+  chosen on 2026-10-14 for story 020 over the Phase 1 zinc values (`#FAFAF9`, `#F4F4F5`,
+  `#09090B`, `#52525B`, `#6B6B74`, `#467010`, `#5B4BE8`, `#C81E1E`, …), which `tokens.css`
+  still holds until story 020's code. Lowest light ratios: subtle 5.0:1 on raised, signal
+  6.2:1, white on signal 7.1:1.
+- **Light frames** (story 020; frames, theme control, its copy and the 12 % light float shadow
+  approved on 2026-10-14): flat copies, every colour written as its light value with no
+  token binding, so they read light while the file stays on `Mode / Dark`. Switching the theme
+  in Penpot re-resolves every token in the file and stalls the browser tab; leave the file on
+  Dark. Frame ids and the control's copy in `portfolioLib.theme`.
 - **Spacing** (`space.*`): `4 8 12 16 20 24 32 40 48 64 80 96 120`.
 - **Radius** (`radius.*`): `sm 8`, `md 14`, `lg 24`, `full 999`.
 - **Font families** (`font.*`): Geist, Geist Mono, Instrument Serif.
