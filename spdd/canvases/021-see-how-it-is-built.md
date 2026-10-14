@@ -5,7 +5,9 @@ Story: [021](../stories/021-see-how-it-is-built.md). Analysis:
 pages Foundations, 01 SPDD process, 02 Architecture and 03 Privacy boundary.
 
 **Status:** implemented on 2026-10-14. The story, the four boards, decisions 1–5, the canvas start
-and the texts of the five pages were approved that day. CI pending.
+and the texts of the five pages were approved that day. Published with #39. Done on 2026-10-14,
+story 021 closed after the check on GitHub; the docs-only run is shown by this closing pull
+request.
 
 ## R — Requirements
 
@@ -142,10 +144,28 @@ This section is authoritative where it differs from the operations above.
   installed. Each renders at 1,280 px with the fallback fonts, matches its board, and keeps its
   own background, so it reads the same on GitHub in either mode.
 - Relative links in `docs/` and the README resolve (the docs test).
-- CI, docs-only: in the pull request, to be added here.
+- **CI, #39.** The pull request changed code (`ci-scope.ts`, `svg.ts`, `package.json`), so it ran
+  in full. After the fix below, `site`, the 14 Lighthouse jobs and `build` pass.
+  - Squash-merged as `e80acda`.
+  - Deployed in 4 min 31 s (run `38600330049`). The site's pages are unchanged by this story.
+- **On GitHub:** all 11 files are on `main`: the five pages, the four SVGs, the `.penpot` backup
+  and the skill. `docs/process.md` renders with its diagram in GitHub's dark mode.
+- **The docs-only path** is shown by the closing pull request, which touches only `spdd/`: CI
+  should run `site` and skip Lighthouse.
 
 **First CI run of #39 failed** (`site`: 3 docs tests). `docs/design/README.md` and the `.penpot`
 backup had never been committed: `.gitignore`'s `design/`, meant for the local `design/` folder
 at the root, matched `docs/design/` too. Locally the files existed on disk, so every test passed.
 The rule is now `/design/`, anchored to the root, and the two files are committed. Before a push,
 `git status --short -uall` and `git check-ignore` on new folders show what would be left out.
+
+**Done when, item by item:**
+- `./tasks.ps1 diagrams` processes the exports, and a second run changes nothing.
+- `tests/docs.test.ts` passes, and its four failure cases fail.
+- `isDocumentationOnly` covers `docs/` and `.claude/skills/`, with tests.
+- The SVGs render offline, without Geist, on light and dark pages, and on GitHub.
+- The pages, the README and the norm are in, with the page copy approved.
+- The skill describes the procedure.
+- CI passes; the docs-only skip is shown by the closing pull request.
+
+**Story 021 is closed.**
