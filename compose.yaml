@@ -45,6 +45,10 @@ services:
       - npm_cache:/root/.npm
       - ../cv-manager:/cv-manager:ro
 
+  diagrams:
+    <<: *node
+    command: sh -c "npm ci --prefer-offline && npm run diagrams"
+
   fonts:
     image: python:3.12-slim
     working_dir: /app
