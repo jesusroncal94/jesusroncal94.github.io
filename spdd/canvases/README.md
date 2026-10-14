@@ -75,6 +75,7 @@ Phase 4:
 | Canvas | Story | Depends on |
 | ------ | ----- | ---------- |
 | [009 — Know what works](009-know-what-works.md) | [009](../stories/009-know-what-works.md) | 002, 003, 004a, 008 |
+| [022 — Know which theme is read](022-know-which-theme-is-read.md) | [022](../stories/022-know-which-theme-is-read.md) | 009, 020 |
 
 Cross-cutting rules every canvas inherits are in [norms.md](norms.md). Figma node IDs (000–006) and
 Penpot frame names (004a, 007, 008) refer to the files listed in [../design.md](../design.md).
