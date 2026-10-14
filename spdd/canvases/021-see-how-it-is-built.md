@@ -4,8 +4,8 @@ Story: [021](../stories/021-see-how-it-is-built.md). Analysis:
 [Phase 1.10](../analysis/phase-1-10-docs.md). Penpot: the file **jesusroncal94.github.io · docs**,
 pages Foundations, 01 SPDD process, 02 Architecture and 03 Privacy boundary.
 
-**Status:** written on 2026-10-14. The story, the four boards and decisions 1–5 were approved that
-day.
+**Status:** implemented on 2026-10-14. The story, the four boards, decisions 1–5, the canvas start
+and the texts of the five pages were approved that day. CI pending.
 
 ## R — Requirements
 
@@ -82,3 +82,64 @@ and diagrams describe the boundary, never `cv-manager`'s contents.
 - No change to the site's pages, build output or budget.
 - The design Penpot file is not touched, and the agent checks the connected file's name before
   any Penpot change.
+
+## Sync — 2026-10-14 (operations 1–4)
+
+This section is authoritative where it differs from the operations above.
+
+- **Penpot.** The docs file was created by Jesus. On the first two connections the plugin
+  answered from **evidence-library · docs**; nothing was changed there, and work started only
+  once the connected file's name was right. The file holds:
+  - a library of the 12 Piedra light tokens and five Geist typographies;
+  - the boards `style-sheet`, `spdd-process`, `architecture` and `privacy-boundary`.
+  
+  Nine layout fixes were made from PNG exports before approval: centred gate labels, shorter
+  subtitles, orthogonal arrows, an overlapping zone label, and two awkward line breaks. The
+  export server timed out on the cold Google font Geist a few times, and retrying worked.
+- **Op 1** (`3d64fce`).
+  - `src/lib/svg.ts`:
+    - `postprocessSvg` removes `@font-face` style blocks and keeps the others;
+    - it gives Geist and Geist Mono system fallbacks, in CSS and in attributes, including
+      `&quot;`-escaped names;
+    - running it twice changes nothing.
+  - `svgColours` normalises hex and `rgb()` colours.
+  - `./tasks.ps1 diagrams` is backed by a `diagrams` compose service and npm script.
+  - `ci-scope` counts `docs/` and `.claude/skills/` as documentation, but not
+    `.claude/settings.json`.
+  - 6 new tests.
+- **Ops 2 and 3, one group** (`4f3dd50`, `3857669`, `073b637`, `90c30e0`). The docs test can
+  only pass once the pages exist, so the diagrams, the test and the pages went in together.
+  - **Downloads** held two `architecture` SVGs. Ours was `architecture (1).svg`, told apart by
+    its title text; the other is evidence-library's. The skill now says to check content before
+    copying.
+  - **Penpot's SVGs:**
+    - each is one line, 35–101 KB after post-processing;
+    - text sits in `style` attributes as `font-family: Geist;`;
+    - colours are `rgb()`;
+    - each `<text>` carries `textLength` with `lengthAdjust="spacingAndGlyphs"`, so fallback
+      fonts keep Geist's widths.
+  - **The two `diagrams` runs:** the first reported every file processed, the second every file
+    unchanged.
+  - **Colours:** all 9–12 colours of each SVG are tokens.
+  - **The README:** "Figma" was not the only stale claim. It also said Spanish was unpublished,
+    the site dark only, and Lighthouse a single pass. All four were brought up to date, and it
+    links `docs/` and lists `./tasks.ps1 diagrams`.
+  - **The skill:** `.claude/` was excluded locally (`.git/info/exclude`), so the skill was
+    missing from its commit. The local exclude now ignores `.claude/*` except
+    `.claude/skills/`, so `settings.local.json` stays ignored, and the skill went in its own
+    commit.
+
+**Verified on 2026-10-14:**
+- Tests: 419 pass, 11 of them from `tests/docs.test.ts`.
+- The failure cases fail, in one run, and were restored afterwards. An extra SVG carried no
+  manifest row, an `@font-face` and the colour `#ff00ff`, and the privacy page lost its image.
+  Four tests failed:
+  - manifest completeness;
+  - "shows every diagram on its page";
+  - "no web font, script or remote resource";
+  - "token colours only".
+- Each SVG was rendered as an image on a light and a dark page, offline and without Geist
+  installed. Each renders at 1,280 px with the fallback fonts, matches its board, and keeps its
+  own background, so it reads the same on GitHub in either mode.
+- Relative links in `docs/` and the README resolve (the docs test).
+- CI, docs-only: in the pull request, to be added here.
