@@ -166,12 +166,12 @@ contact:
 privacy:
   eyebrow: Privacidad
   title: Qué registra este sitio y qué no
-  updated: '2026-10-02'
+  updated: '2026-10-15'
   sections:
     - heading: Qué se registra
-      text: Qué página abres, el sitio desde el que llegas, el idioma en que la lees y cualquier etiqueta de campaña del enlace (utm_*). También si descargas el CV, copias o abres la dirección de email, abres mi LinkedIn o GitHub, o lees un caso hasta su resultado.
+      text: Qué página abres, el sitio desde el que llegas, el idioma en que la lees y cualquier etiqueta de campaña del enlace (utm_*). También si descargas el CV, copias o abres la dirección de email, abres mi LinkedIn o GitHub, o lees un caso hasta su resultado. Y si la página se muestra clara u oscura, si eso lo elegiste tú o tu sistema, y cuándo usas el selector de tema.
     - heading: Qué no
-      text: Ninguna cookie. No se guarda nada en tu navegador y nada vincula tus visitas de un día a otro. Tu dirección IP y el identificador de tu navegador se usan para contar la visita y después se descartan.
+      text: Ninguna cookie. No se guarda en tu navegador nada que te identifique y nada vincula tus visitas de un día a otro. Tu dirección IP y el identificador de tu navegador se usan para contar la visita y después se descartan. Si eliges Claro u Oscuro, tu navegador guarda esa elección para que la siguiente página se abra igual; «Como el sistema» la borra.
     - heading: Adónde va
       text: A PostHog, que lo procesa en la UE. Lo uso para ver qué candidaturas y qué páginas funcionan, nunca para perfilar a nadie. Mis informes abarcan los últimos doce meses.
     - heading: Cómo desactivarlo
