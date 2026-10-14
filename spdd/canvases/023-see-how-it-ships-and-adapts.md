@@ -5,9 +5,10 @@ story reuses every decision of [Phase 1.10](../analysis/phase-1-10-docs.md) and 
 one. Penpot: the file **jesusroncal94.github.io · docs**, pages 04 CI pipeline, 05 Theme and
 06 Languages.
 
-**Status:** done on 2026-10-15, story 023 closed with #43. The story and the three boards were approved on 2026-10-15, and the
-texts of the three pages the same day. The pages were written before this canvas existed; see
-the incident below. The canvas start and the new norm were approved on 2026-10-15.
+**Status:** done on 2026-10-15, story 023 closed with #43. The story and the three boards were
+approved on 2026-10-15, and the texts of the three pages the same day. The pages were written
+before this canvas existed; see the incident below. The canvas start and the new norm were
+approved on 2026-10-15.
 
 ## R — Requirements
 
