@@ -1,6 +1,5 @@
 import type { Locale } from '../i18n/locales';
 import { ANALYTICS } from './analytics-config';
-import { readChoice, themeOf, type ThemeSource } from './theme';
 
 export type ConversionEvent = 'cv_download' | 'email_copy' | 'email_open' | 'profile_open';
 // Actions the page reports through the CONVERSION channel; the theme switch is one, not a conversion.
@@ -26,6 +25,17 @@ export interface Visit {
   globalPrivacyControl: boolean;
   doNotTrack: boolean;
   ownerMarked: boolean;
+}
+
+export type ThemeSource = 'choice' | 'system' | 'page';
+
+// The theme as CSS resolved it, and who decided it: data-theme marks a visitor's choice, unless the page
+// pins its theme (data-theme-pinned). Read from the page, not lib/theme: importing it would split the
+// switch's code into a shared chunk, one more request before LCP.
+export function themeOf(colorScheme: string, pinned: boolean, chosen: boolean) {
+  const theme: 'light' | 'dark' = colorScheme === 'light' ? 'light' : 'dark';
+  const themeSource: ThemeSource = pinned ? 'page' : chosen ? 'choice' : 'system';
+  return { theme, themeSource };
 }
 
 export const OWNER_MARK = { key: 'analytics', value: 'off' } as const;
@@ -76,7 +86,7 @@ export function readVisit(): Visit {
   const { theme, themeSource } = themeOf(
     getComputedStyle(root).colorScheme,
     root.hasAttribute('data-theme-pinned'),
-    readChoice(() => localStorage),
+    root.hasAttribute('data-theme'),
   );
   return {
     host: location.host,
