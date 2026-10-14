@@ -28,6 +28,7 @@ REASONS canvas in `../canvases/` names the story it implements.
 | 020 | [Read it in daylight](020-read-it-in-daylight.md)     | Recruiter             | 1.9 |
 | 021 | [See how it is built](021-see-how-it-is-built.md)     | Technical interviewer | 1.10 (docs) |
 | 022 | [Know which theme is read](022-know-which-theme-is-read.md) | Jesus (owner)  | 4.1 |
+| 023 | [See how it ships and adapts](023-see-how-it-ships-and-adapts.md) | Technical interviewer | 1.11 (docs) |
 
 ## Personas
 
