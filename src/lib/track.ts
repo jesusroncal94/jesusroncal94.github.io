@@ -1,5 +1,6 @@
 import type { Locale } from '../i18n/locales';
 import { ANALYTICS } from './analytics-config';
+import { readChoice, themeOf, type ThemeSource } from './theme';
 
 export type ConversionEvent = 'cv_download' | 'email_copy' | 'email_open' | 'profile_open';
 export type AnalyticsEvent = '$pageview' | ConversionEvent | 'case_result_seen';
@@ -18,6 +19,8 @@ export interface Visit {
   referrer: string;
   userAgent: string;
   locale: Locale;
+  theme: 'light' | 'dark';
+  themeSource: ThemeSource;
   globalPrivacyControl: boolean;
   doNotTrack: boolean;
   ownerMarked: boolean;
@@ -54,6 +57,8 @@ export function buildEvent(event: AnalyticsEvent, visit: Visit, key: string, pro
       $referrer: visit.referrer || DIRECT,
       $referring_domain: visit.referrer ? new URL(visit.referrer).host : DIRECT,
       locale: visit.locale,
+      theme: visit.theme,
+      theme_source: visit.themeSource,
       ...campaignTags(visit.href),
       ...props,
     },
@@ -65,13 +70,21 @@ function campaignTags(href: string): Record<string, string> {
 }
 
 export function readVisit(): Visit {
+  const root = document.documentElement;
+  const { theme, themeSource } = themeOf(
+    getComputedStyle(root).colorScheme,
+    root.hasAttribute('data-theme-pinned'),
+    readChoice(() => localStorage),
+  );
   return {
     host: location.host,
     href: location.href,
     pathname: location.pathname,
     referrer: document.referrer,
     userAgent: navigator.userAgent,
-    locale: document.documentElement.lang as Locale,
+    locale: root.lang as Locale,
+    theme,
+    themeSource,
     globalPrivacyControl: (navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl === true,
     doNotTrack: navigator.doNotTrack === '1',
     ownerMarked: readOwnerMark() === OWNER_MARK.value,

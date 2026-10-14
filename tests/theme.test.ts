@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { applyChoice, bootTheme, readChoice, THEME_KEY } from '../src/lib/theme';
+import { applyChoice, bootTheme, readChoice, themeOf, THEME_KEY } from '../src/lib/theme';
 
 const memory = (initial: Record<string, string> = {}) => {
   const items = new Map(Object.entries(initial));
@@ -80,5 +80,25 @@ describe('bootTheme', () => {
 
   it('uses the same key as the switch', () => {
     expect(bootTheme.toString()).toMatch(new RegExp(`getItem\\(['"]${THEME_KEY}['"]\\)`));
+  });
+});
+
+describe('themeOf', () => {
+  it('reports the system theme when nothing is chosen', () => {
+    expect(themeOf('light', false, 'system')).toEqual({ theme: 'light', themeSource: 'system' });
+    expect(themeOf('dark', false, 'system')).toEqual({ theme: 'dark', themeSource: 'system' });
+  });
+
+  it('reports a chosen theme as the visitor’s choice', () => {
+    expect(themeOf('light', false, 'light')).toEqual({ theme: 'light', themeSource: 'choice' });
+    expect(themeOf('dark', false, 'dark')).toEqual({ theme: 'dark', themeSource: 'choice' });
+  });
+
+  it('reports a pinned page as the page’s, whatever was chosen', () => {
+    expect(themeOf('light', true, 'dark')).toEqual({ theme: 'light', themeSource: 'page' });
+  });
+
+  it('falls back to dark, the default, on an unexpected color-scheme', () => {
+    expect(themeOf('normal', false, 'system')).toEqual({ theme: 'dark', themeSource: 'system' });
   });
 });

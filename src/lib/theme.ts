@@ -27,6 +27,16 @@ export function applyChoice(root: Pick<Element, 'setAttribute' | 'removeAttribut
   }
 }
 
+export type ThemeSource = 'choice' | 'system' | 'page';
+
+// The theme the page is shown in, as CSS resolved it, and who decided it. Pages that pin their
+// theme (the CV) carry data-theme-pinned, so they are not taken for a visitor's choice.
+export function themeOf(colorScheme: string, pinned: boolean, stored: ThemeChoice) {
+  const theme: 'light' | 'dark' = colorScheme === 'light' ? 'light' : 'dark';
+  const themeSource: ThemeSource = pinned ? 'page' : stored === 'system' ? 'system' : 'choice';
+  return { theme, themeSource };
+}
+
 // Inlined in <head> as source text, so it must not reference anything outside itself. A page that
 // pins its theme (the CV, the preview cards) already carries data-theme and is left alone.
 export function bootTheme() {
