@@ -17,3 +17,10 @@
 
 - `cv-manager` stays local and gains no remote
 - The export runs in Docker
+
+## Note — 2026-10-14
+
+`cv-manager` became a private GitHub repo (`jesusroncal94/cv-manager`), as a backup decided by
+Jesus. The first definition-of-done item above held until then. The rule now, in `CLAUDE.md`:
+it stays private, nothing beyond the export's allow-list is copied here, and this repo's CI never
+gets access to it.

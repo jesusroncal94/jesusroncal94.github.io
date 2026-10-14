@@ -95,8 +95,10 @@ Report what failed as plainly as what passed.
   summary and role bullets come from `../cv-manager/cv-base.md` the same way (story 019), so the
   site's CV says what Jesus sends; after editing either file, run the export, and
   `./tasks.ps1 test` fails locally until you do.
-- **`cv-manager` is private and local-only.** Never publish it, add a remote to it, or copy
-  anything outside the export's allow-list into this repo, fixtures included.
+- **`cv-manager` is a private GitHub repo** (`jesusroncal94/cv-manager`, since 2026-10-14;
+  local-only before). Never make it public, never copy its content into this repo beyond the
+  export's allow-list, fixtures included, and never give this repo's CI access to it: the
+  export and the freshness check run on Jesus's machine only.
 - **Design** is the Penpot file in `spdd/design.md`. Figma holds only the Phase 1 record.
 
 ## Open items
