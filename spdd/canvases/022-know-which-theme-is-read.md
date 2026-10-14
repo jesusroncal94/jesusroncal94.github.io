@@ -86,3 +86,46 @@ All of [norms.md](norms.md), in particular "No third-party requests at runtime, 
 - The insight "Conversions per week, by language" is not changed, and `theme_change` stays out of
   it.
 - The page's appearance does not change, except the privacy note's text.
+
+## Sync — 2026-10-15 (operations 1–3)
+
+This section is authoritative where it differs from the operations above.
+
+- **Op 1** (`9497538`). `themeOf` returns `theme` from the computed `color-scheme` and
+  `theme_source`; `Base.astro` marks pages that pin their theme with `data-theme-pinned` (in the
+  build, `/cv/` carries it and `/` does not); `buildEvent` sends both properties next to `locale`.
+- **Op 2** (`2751801`). `theme_change` joins `AnalyticsEvent` through a new `TrackedAction`
+  type, not `ConversionEvent`; `theme-switch.ts` sends it through the `conversion` channel with
+  `{ choice }`, importing only types from `track.ts`.
+- **Op 3** (`2848e6e`). The approved copy, in both languages, with `updated` 2026-10-15.
+  - The analysis said no test held the note's text. The Spanish review test does: it compares
+    every Spanish string with its approved row in `spdd/reviews/004a-es.md`, and it failed on
+    the two changed sections. Both rows now hold the new text, marked
+    *(approved 2026-10-15, story 022)*, in the same commit, since either change alone fails the
+    tests.
+- **CI on #41, first run: LCP over budget** (`8795209`).
+  - 10 of the 14 Lighthouse jobs failed on LCP alone, between 1506 and 1517 ms against 1500.
+  - Cause: `track.ts` imported `themeOf` and `readChoice` from `lib/theme`, which the switch's
+    script also imports. Vite then stopped inlining the analytics and switch scripts and emitted
+    them as two files plus a shared chunk: three requests before LCP.
+  - Fix: `themeOf` moved to `track.ts` and takes `chosen` from the page instead of storage.
+    `data-theme` is set only by a visitor's choice or by a pinned page, and a pinned page also
+    carries `data-theme-pinned`, so the result is the same. Its tests moved to
+    `tests/track.test.ts`.
+  - The built home page has again 2 external scripts and 7 inline ones, as the published site.
+- **Local slip, no effect.** While inspecting the build, a `git checkout main --` switched the
+  working tree to `main` and a stash pop conflicted there. `main` was reset to its own commit
+  (`064f782`, equal to `origin/main`), and the stash was reapplied on the branch. Nothing was
+  lost or pushed.
+
+**Verified on 2026-10-15:**
+- Tests: 424 pass.
+- On the preview (production build), in the browser pane:
+  - Light, Dark, Dark again and Match system sent three `theme_change` events (`light`, `dark`,
+    `system`); repeating Dark sent none;
+  - the inputs `themeOf` reads were right in each case: system dark and system light on `/`,
+    chosen light and dark, and `/cv/` pinned light;
+  - after Match system, no cookie and no storage key.
+  - No request reaches PostHog locally (no key, foreign host); the payload is covered by the
+    unit tests, and arrival is checked on the published site in operation 4.
+- `/privacy/` and `/es/privacy/` match the approved copy word for word, dated 15 October 2026.
