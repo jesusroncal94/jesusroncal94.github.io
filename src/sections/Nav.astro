@@ -3,6 +3,7 @@ import EmailAction from '../components/EmailAction.astro';
 import Icon from '../components/Icon.astro';
 import LocaleSuggestion from '../components/LocaleSuggestion.astro';
 import LocaleSwitch from '../components/LocaleSwitch.astro';
+import ThemeSwitch from '../components/ThemeSwitch.astro';
 import { isMultilingual, localePath, type Locale } from '../i18n/locales';
 import { useTranslations } from '../i18n/translate';
 import { getSite } from '../lib/site';
@@ -52,17 +53,16 @@ const MARK =
     </ul>
   </nav>
 
-  {isMultilingual() ? (
-    <div class="flex items-center gap-4 max-md:hidden">
+  <div class="flex items-center gap-4 max-md:hidden">
+    <ThemeSwitch locale={locale} variant="compact" />
+    {isMultilingual() && (
       <div class="relative">
         <LocaleSwitch locale={locale} variant="compact" switchToHome={switchToHome} />
         {suggestion && <LocaleSuggestion locale={locale} variant="card" class="absolute top-full right-0 z-30 mt-3" />}
       </div>
-      <EmailAction locale={locale} />
-    </div>
-  ) : (
-    <EmailAction locale={locale} class="max-md:hidden" />
-  )}
+    )}
+    <EmailAction locale={locale} />
+  </div>
 
   {isMultilingual() && suggestion && <LocaleSuggestion locale={locale} variant="pill" class="md:hidden" />}
 
@@ -92,6 +92,10 @@ const MARK =
           <LocaleSwitch locale={locale} variant="full" switchToHome={switchToHome} />
         </div>
       )}
+      <div class="hidden items-center justify-between px-2 pt-2 pb-1 scripted:flex">
+        <p class="label-mono text-subtle">{t('theme.label')}</p>
+        <ThemeSwitch locale={locale} variant="full" />
+      </div>
     </nav>
   </details>
 </header>

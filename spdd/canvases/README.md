@@ -66,6 +66,7 @@ Phase 3:
 | [017 — See where the money went](017-see-where-the-money-went.md) | [017](../stories/017-see-where-the-money-went.md) | 015, 016 |
 | [018 — See the hourglass](018-see-the-hourglass.md) | [018](../stories/018-see-the-hourglass.md) | 015, 016, 017 |
 | [019 — One CV, wherever it comes from](019-one-cv-wherever-it-comes-from.md) | [019](../stories/019-one-cv-wherever-it-comes-from.md) | 003, 004a, 006 |
+| [020 — Read it in daylight](020-read-it-in-daylight.md) | [020](../stories/020-read-it-in-daylight.md) | 000, 007, 011, 019 |
 | [004a — Spanish](004a-spanish.md) | [004](../stories/004-read-it-in-my-language.md), part a | 001, 002, 003, 008 |
 
 Phase 4:

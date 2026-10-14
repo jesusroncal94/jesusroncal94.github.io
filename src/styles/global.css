@@ -33,10 +33,20 @@
    everywhere else their static version shows. Known before the first paint, so nothing shifts. */
 @custom-variant stepped (@media (scripting: enabled) and (prefers-reduced-motion: no-preference));
 
+/* Controls that only work with a script (the theme switch) show only where one runs. */
+@custom-variant scripted (@media (scripting: enabled));
+
 @layer base {
   html {
     color-scheme: dark;
     -webkit-text-size-adjust: 100%;
+  }
+
+  /* The system decides unless a page or the visitor pins a theme with data-theme. */
+  @media (prefers-color-scheme: light) {
+    html:not([data-theme='dark']) {
+      color-scheme: light;
+    }
   }
 
   html[data-theme='light'] {
