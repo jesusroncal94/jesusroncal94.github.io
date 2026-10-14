@@ -6,6 +6,14 @@ describe('isDocumentationOnly', () => {
     expect(isDocumentationOnly(['spdd/canvases/010-ship-without-waiting.md', 'README.md', 'CLAUDE.md'])).toBe(true);
   });
 
+  it('is true for the documentation, its diagrams and the agents’ skills', () => {
+    expect(isDocumentationOnly(['docs/process.md', 'docs/diagrams/architecture.svg', '.claude/skills/update-diagram/SKILL.md'])).toBe(true);
+  });
+
+  it('is false for agent settings, which are not skills', () => {
+    expect(isDocumentationOnly(['.claude/settings.json'])).toBe(false);
+  });
+
   it('is false as soon as one path can reach the site, Markdown content included', () => {
     expect(isDocumentationOnly(['spdd/stories/README.md', 'src/content/cases/en/02-cost-leak.md'])).toBe(false);
   });

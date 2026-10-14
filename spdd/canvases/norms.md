@@ -36,6 +36,11 @@
   not rely on an observer alone to know when to hide, since the focus that scrolls the page can
   arrive before the observer reports.
 
+- **A change of process or architecture updates its page and diagram in the same pull
+  request.** `docs/` explains the site through diagrams designed in the Penpot docs file; a
+  change they describe updates the page's text and re-exports the diagram, through the
+  `update-diagram` skill, so text and image never disagree. Added 2026-10-14 with story 021.
+
 ## Safeguards
 
 - **Nothing private reaches the repository.** No phone number, salary, deal-breaker, visa
