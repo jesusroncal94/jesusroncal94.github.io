@@ -150,8 +150,9 @@ This section is authoritative where it differs from the operations above.
   - Deployed in 4 min 31 s (run `38600330049`). The site's pages are unchanged by this story.
 - **On GitHub:** all 11 files are on `main`: the five pages, the four SVGs, the `.penpot` backup
   and the skill. `docs/process.md` renders with its diagram in GitHub's dark mode.
-- **The docs-only path** is shown by the closing pull request, which touches only `spdd/`: CI
-  should run `site` and skip Lighthouse.
+- **The docs-only path** was shown by the closing pull request, #40, which touched only
+  `spdd/`: CI ran `site` and `build` and skipped Lighthouse. #42, the close of story 022, did
+  the same (recorded by story 023).
 
 **First CI run of #39 failed** (`site`: 3 docs tests). `docs/design/README.md` and the `.penpot`
 backup had never been committed: `.gitignore`'s `design/`, meant for the local `design/` folder

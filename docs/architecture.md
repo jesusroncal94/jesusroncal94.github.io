@@ -18,8 +18,9 @@ ahead of time, and the build fails rather than publish something it cannot check
 
 - **Export.** `./tasks.ps1 export` reads an allow-list from `cv-manager` and writes
   `data/public-profile.json`, which is committed.
-- **Astro build.** `npm run build` renders the pages in English and Spanish, then the CV as a PDF
-  per language and a preview card per page, and checks:
+- **Astro build.** `npm run build` renders the pages in English and Spanish (see
+  [Languages](languages.md)), then the CV as a PDF per language and a preview card per page, and
+  checks:
   - the content schemas;
   - a reviewed Spanish text for every exported English one;
   - internal links;
@@ -30,13 +31,13 @@ ahead of time, and the build fails rather than publish something it cannot check
 ## Delivery
 
 - **CI** (GitHub Actions) runs the tests and the build, then Lighthouse on every page in the
-  light and the dark theme, and deploys `main`.
+  light and the dark theme, and deploys `main`; see [CI](ci.md).
 - **GitHub Pages** serves the static files.
 
 ## In the visitor's browser
 
 - The theme follows the system unless the visitor picks one. A few bytes of inline script apply
-  a stored choice before the first paint.
+  a stored choice before the first paint; see [Theme](theme.md).
 - Scripts only enhance: every link, the CV download and the email fallback work without them.
 - **PostHog** (EU, cookieless) is the only request beyond the site.
 

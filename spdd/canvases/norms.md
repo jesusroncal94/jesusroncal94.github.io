@@ -40,6 +40,10 @@
   request.** `docs/` explains the site through diagrams designed in the Penpot docs file; a
   change they describe updates the page's text and re-exports the diagram, through the
   `update-diagram` skill, so text and image never disagree. Added 2026-10-14 with story 021.
+- **Nothing is written before its canvas is approved, documentation included.** Approved
+  boards or copy are not a canvas start: the pages they lead to wait for the canvas and Jesus's
+  yes, even when the story needs no new decision. A diagram also states only what the code does,
+  read from the code before it is drawn. Added 2026-10-15 after the incident in canvas 023.
 
 ## Safeguards
 

@@ -17,6 +17,9 @@ changes.
 | 01 SPDD process | spdd-process | [spdd-process.svg](../diagrams/spdd-process.svg) | [Process](../process.md) | 2026-10-14 |
 | 02 Architecture | architecture | [architecture.svg](../diagrams/architecture.svg) | [Architecture](../architecture.md) | 2026-10-14 |
 | 03 Privacy boundary | privacy-boundary | [privacy-boundary.svg](../diagrams/privacy-boundary.svg) | [Privacy](../privacy.md) | 2026-10-14 |
+| 04 CI pipeline | ci-pipeline | [ci-pipeline.svg](../diagrams/ci-pipeline.svg) | [CI](../ci.md) | 2026-10-15 |
+| 05 Theme | theme | [theme.svg](../diagrams/theme.svg) | [Theme](../theme.md) | 2026-10-15 |
+| 06 Languages | languages | [languages.svg](../diagrams/languages.svg) | [Languages](../languages.md) | 2026-10-15 |
 
 `tests/docs.test.ts` keeps this table honest: every SVG has a row and every row an SVG, every
 diagram appears on a page, no SVG carries a web font, a script or a remote URL, and every colour

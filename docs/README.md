@@ -3,7 +3,7 @@
 This is Jesús Roncal's personal site: a static Astro site, in English and Spanish, served by GitHub
 Pages. It is also a working example of how he builds software with coding agents: every change
 starts as a user story and reaches the site only through checks and his explicit yes. This folder
-explains how, in three diagrams; the rules agents follow are in [CLAUDE.md](../CLAUDE.md) and the
+explains how, in six diagrams; the rules agents follow are in [CLAUDE.md](../CLAUDE.md) and the
 artefacts of each change in [spdd/](../spdd/).
 
 ## Read in this order
@@ -13,6 +13,9 @@ artefacts of each change in [spdd/](../spdd/).
 | [Process](process.md) | How a change goes from a story to the published site, and where Jesus decides |
 | [Architecture](architecture.md) | The parts of the site and how content flows from a private repository to visitors |
 | [Privacy](privacy.md) | What may leave the private repository, and the checks on every crossing |
+| [CI](ci.md) | What every change passes on its way to the site, and what fails each job |
+| [Theme](theme.md) | Who decides light or dark, and what analytics records about it |
+| [Languages](languages.md) | How a text reaches a published language, and what fails the build |
 | [Design](design/README.md) | The diagrams' visual language, their Penpot source and how to change them |
 
 ## The site in one paragraph
