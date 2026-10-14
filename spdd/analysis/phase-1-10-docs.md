@@ -103,4 +103,17 @@ checked, just without the Lighthouse jobs, which measure pages that did not chan
 
 ## 4. Decisions
 
-**⚠️ Pending:** Decisions 1–5, as recommended above.
+**✅ Decision 1 — Structure.** Confirmed 2026-10-14: `docs/` with an entry page, three diagram
+pages, a design page, the published SVGs, the `.penpot` backup and the `update-diagram` skill.
+
+**✅ Decision 2 — Export and post-processing.** Confirmed 2026-10-14: Jesus exports; a Node script
+behind `./tasks.ps1 diagrams` removes web fonts and adds system fallbacks, idempotently.
+
+**✅ Decision 3 — Tests.** Confirmed 2026-10-14: manifest completeness, links from pages, no web
+font, script or remote URL, token colours only, and working relative links.
+
+**✅ Decision 4 — CI scope.** Confirmed 2026-10-14: `docs/` and `.claude/skills/` count as
+documentation.
+
+**✅ Decision 5 — Page copy, README and norm.** Confirmed 2026-10-14: page texts approved before
+commit, the README fixed, and the same-PR norm.
