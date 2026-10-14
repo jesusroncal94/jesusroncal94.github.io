@@ -33,6 +33,9 @@
    everywhere else their static version shows. Known before the first paint, so nothing shifts. */
 @custom-variant stepped (@media (scripting: enabled) and (prefers-reduced-motion: no-preference));
 
+/* Controls that only work with a script (the theme switch) show only where one runs. */
+@custom-variant scripted (@media (scripting: enabled));
+
 @layer base {
   html {
     color-scheme: dark;

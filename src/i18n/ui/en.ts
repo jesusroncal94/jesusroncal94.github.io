@@ -8,6 +8,10 @@ export const en = {
   'nav.experience': 'Experience',
   'nav.menu': 'Menu',
   'nav.language': 'Language',
+  'theme.label': 'Theme',
+  'theme.system': 'Match system',
+  'theme.light': 'Light',
+  'theme.dark': 'Dark',
 
   'cta.downloadCv': 'Download CV',
   'cta.emailMe': 'Email me',

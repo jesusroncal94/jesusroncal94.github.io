@@ -1,0 +1,42 @@
+---
+import Icon from './Icon.astro';
+import type { Locale } from '../i18n/locales';
+import { useTranslations } from '../i18n/translate';
+
+interface Props {
+  locale: Locale;
+  variant: 'compact' | 'full';
+  class?: string;
+}
+
+const { locale, variant, class: className } = Astro.props;
+const t = useTranslations(locale);
+const compact = variant === 'compact';
+const options = [
+  { value: 'system', icon: 'monitor', label: t('theme.system') },
+  { value: 'light', icon: 'sun', label: t('theme.light') },
+  { value: 'dark', icon: 'moon', label: t('theme.dark') },
+] as const;
+---
+
+<!-- Native radios: arrow keys and the announced state come with them. Hidden without scripts,
+     since nothing could keep the choice; the system setting still applies. -->
+<fieldset class:list={['hidden items-center gap-0.5 rounded-full border border-border-strong p-[3px] scripted:flex', className]} data-theme-switch>
+  <legend class="sr-only">{t('theme.label')}</legend>
+  {options.map(({ value, icon, label }) => (
+    <label
+      class:list={[
+        'grid cursor-pointer place-items-center rounded-full text-muted transition-colors hover:text-primary has-checked:bg-raised has-checked:text-primary has-focus-visible:outline-2 has-focus-visible:outline-signal',
+        compact ? 'h-7 w-9' : 'h-11 w-12',
+      ]}
+    >
+      <input type="radio" name={`theme-${variant}`} value={value} checked={value === 'system'} class="sr-only" />
+      <Icon name={icon} size={compact ? 16 : 18} />
+      <span class="sr-only">{label}</span>
+    </label>
+  ))}
+</fieldset>
+
+<script>
+  import '../scripts/theme-switch';
+</script>

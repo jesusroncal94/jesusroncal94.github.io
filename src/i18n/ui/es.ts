@@ -10,6 +10,10 @@ export const es: Record<UiKey, string> = {
   'nav.experience': 'Experiencia',
   'nav.menu': 'Menú',
   'nav.language': 'Idioma',
+  'theme.label': 'Tema',
+  'theme.system': 'Como el sistema',
+  'theme.light': 'Claro',
+  'theme.dark': 'Oscuro',
 
   'cta.downloadCv': 'Descargar CV',
   'cta.emailMe': 'Escríbeme',
