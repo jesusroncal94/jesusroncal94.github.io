@@ -68,6 +68,7 @@ Phase 3:
 | [019 — One CV, wherever it comes from](019-one-cv-wherever-it-comes-from.md) | [019](../stories/019-one-cv-wherever-it-comes-from.md) | 003, 004a, 006 |
 | [020 — Read it in daylight](020-read-it-in-daylight.md) | [020](../stories/020-read-it-in-daylight.md) | 000, 007, 011, 019 |
 | [021 — See how it is built](021-see-how-it-is-built.md) | [021](../stories/021-see-how-it-is-built.md) | 006, 010, 019, 020 |
+| [023 — See how it ships and adapts](023-see-how-it-ships-and-adapts.md) | [023](../stories/023-see-how-it-ships-and-adapts.md) | 021 |
 | [004a — Spanish](004a-spanish.md) | [004](../stories/004-read-it-in-my-language.md), part a | 001, 002, 003, 008 |
 
 Phase 4:
