@@ -45,7 +45,9 @@ since then, unused except by the CV page. This story designs and ships the light
   THEN all text meets WCAG 2.2 AA contrast, and the case diagrams, before/after panels, portrait
   and glows read as designed for that theme
 - WHEN a preview card or the CV is produced
-  THEN it looks as it does today, whatever the visitor's theme
+  THEN the preview card stays dark and the CV stays light, at two pages, whatever the visitor's
+  theme (amended 2026-10-14: the CV takes the new light palette rather than looking exactly as
+  before; decision 3 of the analysis)
 - WHEN a page loads in either theme
   THEN nothing shifts, and the Lighthouse budget still passes
 

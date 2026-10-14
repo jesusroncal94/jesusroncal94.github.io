@@ -107,5 +107,17 @@ follow the tokens.
 
 ## 4. Decisions
 
-**⚠️ Pending:** Decisions 1–5, as recommended above, including the CV adopting Piedra and the
-story's CV line being amended.
+**✅ Decision 1 — How the theme is chosen.** Confirmed 2026-10-14: the system by default through
+the media query; an explicit choice in `localStorage`, applied by an inline script before the first
+paint; the CV pinned light and the preview cards pinned dark.
+
+**✅ Decision 2 — The control.** Confirmed 2026-10-14: a native radio group, before the language
+switch on desktop and as a menu row on the phone, hidden without scripts.
+
+**✅ Decision 3 — Palette and shadow.** Confirmed 2026-10-14: Piedra in `tokens.css`, the float
+shadow at 12 % in light, and the CV adopting Piedra; the story's CV line is amended.
+
+**✅ Decision 4 — Lighthouse in both themes.** Confirmed 2026-10-14: a second, dark pass over every
+URL, its flag verified on the runner before the sync claims it.
+
+**✅ Decision 5 — Checks.** Confirmed 2026-10-14: as listed.
