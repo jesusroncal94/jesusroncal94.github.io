@@ -60,6 +60,8 @@ jobs:
       fail-fast: false
       matrix:
         shard: [0, 1, 2, 3, 4, 5, 6]
+        # Headless Chrome asks for light; the site follows the system, so dark needs its own pass.
+        scheme: [light, dark]
     steps:
       - uses: actions/checkout@v7
       - uses: actions/download-artifact@v8
@@ -68,20 +70,22 @@ jobs:
           path: dist
       - name: Pick this shard's pages
         env:
-          SHARD: ${{ strategy.job-index }}
-          SHARDS: ${{ strategy.job-total }}
+          SHARD: ${{ matrix.shard }}
+          SHARDS: 7
+          SCHEME: ${{ matrix.scheme }}
         run: |
-          jq --argjson shard "$SHARD" --argjson shards "$SHARDS" \
-            '.ci.collect.url |= [to_entries[] | select(.key % $shards == $shard) | .value]' \
+          jq --argjson shard "$SHARD" --argjson shards "$SHARDS" --arg scheme "$SCHEME" \
+            '.ci.collect.url |= [to_entries[] | select(.key % $shards == $shard) | .value]
+             | if $scheme == "dark" then .ci.collect.settings.chromeFlags = "--blink-settings=preferredColorScheme=0" else . end' \
             lighthouserc.json > lighthouserc.shard.json
-          jq -r '.ci.collect.url[]' lighthouserc.shard.json
+          jq -r '.ci.collect.url[], (.ci.collect.settings.chromeFlags // "no extra Chrome flags")' lighthouserc.shard.json
           test "$(jq '.ci.collect.url | length' lighthouserc.shard.json)" -gt 0
       - name: Lighthouse budget
         uses: treosh/lighthouse-ci-action@12.6.2
         with:
           configPath: ./lighthouserc.shard.json
           uploadArtifacts: true
-          artifactName: lighthouse-results-${{ matrix.shard }}
+          artifactName: lighthouse-results-${{ matrix.shard }}-${{ matrix.scheme }}
 
   build:
     needs: [site, lighthouse]
