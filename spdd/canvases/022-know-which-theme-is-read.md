@@ -4,8 +4,9 @@ Story: [022](../stories/022-know-which-theme-is-read.md). Analysis:
 [Phase 4.1](../analysis/phase-4-1-theme-analytics.md). Penpot: no new frames; the privacy note's
 frame exists since story 009.
 
-**Status:** canvas written on 2026-10-15. The story, the privacy note's new copy in English and
-Spanish, and decisions 1–5 were approved that day.
+**Status:** implemented on 2026-10-15. The story, the privacy note's new copy in English and
+Spanish, decisions 1–5 and the canvas start were approved that day. Published with #41. Done on
+2026-10-15, story 022 closed after the check on the published site and in PostHog.
 
 ## R — Requirements
 
@@ -129,3 +130,55 @@ This section is authoritative where it differs from the operations above.
   - No request reaches PostHog locally (no key, foreign host); the payload is covered by the
     unit tests, and arrival is checked on the published site in operation 4.
 - `/privacy/` and `/es/privacy/` match the approved copy word for word, dated 15 October 2026.
+
+## Sync — 2026-10-15 (operation 4, publish and verify)
+
+This section is authoritative where it differs from operation 4.
+
+- **CI on #41.** After `8795209`, `site`, the 14 Lighthouse jobs (light and dark) and `build`
+  passed, and again on the Sync commit. Squash-merged as `ead8f63`; deployed in 4 min (run
+  times 23:03–23:07 UTC on 2026-10-14, 2026-10-15 at Jesus's clock).
+- **Tagged visit from the browser pane** (no owner mark, no GPC, no DNT), `utm_source`
+  `verification`, one `utm_campaign` per case. Checked through the connector (project `292086`);
+  all 10 events arrived, with these properties:
+
+  | Event | Page | `theme` | `theme_source` | `choice` |
+  | ----- | ---- | ------- | -------------- | -------- |
+  | `$pageview`, system dark | `/` | dark | system | |
+  | `theme_change` | `/` | light | choice | light |
+  | `theme_change` | `/` | dark | choice | dark |
+  | `theme_change` | `/` | dark | system | system |
+  | `$pageview`, system light | `/es/` | light | system | |
+  | `$pageview` | `/cv/` | light | page | |
+  | `$pageview`, system light | `/` | light | system | |
+  | `theme_change` | `/` | dark | choice | dark |
+  | `$pageview`, after choosing Dark | `/work/01-evals/` | dark | choice | |
+  | `theme_change` | `/work/01-evals/` | light | system | system |
+
+  - A `theme_change` carries the theme the page is left in, so Match system reports the system's
+    theme at that moment.
+  - After Match system: no cookie and no storage key.
+- **Insights** on the main dashboard (`993140`), both weekly bar charts over 90 days, excluding
+  `utm_source` `verification` and `lighthouse`:
+  - "Visits per week, by theme" (`nfUCzqaJ`): `$pageview` broken down by `theme` and
+    `theme_source`;
+  - "Theme switch per week, by choice" (`un8BPDUu`): `theme_change` broken down by `choice`.
+  
+  Both show no data yet: the only events with these properties are the tagged ones, which the
+  filter leaves out as intended. "Conversions per week, by language" is unchanged.
+- **Reading the numbers.** The site has few visits; a week, or a month, of them is not a trend.
+  The first conclusion about the light theme waits for at least a few dozen untagged visits.
+
+**Done when, item by item:**
+- `themeOf` covers system light, system dark, chosen light, chosen dark, a pinned page and the
+  fallback (unit tests, now in `tests/track.test.ts`).
+- The `$pageview` payload carries `theme` and `theme_source`, and `theme_change` carries
+  `choice` (unit tests, and the events above).
+- The switch behaves as before and sends one event per change; repeating an option sends none.
+- The privacy note shows the approved copy in both languages, dated 15 October 2026.
+- CI: tests, and Lighthouse in both themes, pass.
+- On the published site, the tagged visit's events arrived with the expected properties, and one
+  `theme_change` per choice.
+- The two insights exist on the main dashboard; their IDs are above.
+
+**Story 022 is closed.**
