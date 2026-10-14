@@ -5,6 +5,7 @@ import serifItalicFont from '../assets/fonts/instrument-serif-italic.woff2?url';
 import { getAbsoluteLocaleUrl } from 'astro:i18n';
 import { DEFAULT_LOCALE, ogLocale, PUBLISHED_LOCALES, stripLocale, type Locale } from '../i18n/locales';
 import { PREVIEW_SIZE, type PreviewImage } from '../lib/preview';
+import { bootTheme } from '../lib/theme';
 import { toJsonLd } from '../lib/structured-data';
 
 interface Props {
@@ -47,6 +48,7 @@ const imageUrl = image ? new URL(image.path, Astro.site).href : undefined;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <script is:inline set:html={`(${bootTheme})()`} />
     {noindex && <meta name="robots" content="noindex" />}
     {linked && (
       <>
