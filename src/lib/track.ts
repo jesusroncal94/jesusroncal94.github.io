@@ -3,12 +3,14 @@ import { ANALYTICS } from './analytics-config';
 import { readChoice, themeOf, type ThemeSource } from './theme';
 
 export type ConversionEvent = 'cv_download' | 'email_copy' | 'email_open' | 'profile_open';
-export type AnalyticsEvent = '$pageview' | ConversionEvent | 'case_result_seen';
+// Actions the page reports through the CONVERSION channel; the theme switch is one, not a conversion.
+export type TrackedAction = ConversionEvent | 'theme_change';
+export type AnalyticsEvent = '$pageview' | TrackedAction | 'case_result_seen';
 
 export const CONVERSION = 'conversion';
 
 export interface Conversion {
-  event: ConversionEvent;
+  event: TrackedAction;
   props?: Record<string, string>;
 }
 

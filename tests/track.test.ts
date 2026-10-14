@@ -50,6 +50,13 @@ describe('buildEvent', () => {
     });
   });
 
+  it('sends a theme change with the choice and the theme it leaves the page in', () => {
+    expect(buildEvent('theme_change', visit, KEY, { choice: 'light' })).toMatchObject({
+      event: 'theme_change',
+      properties: { choice: 'light', theme: 'light', theme_source: 'choice', $pathname: '/es/work/02-cost-leak/' },
+    });
+  });
+
   it('marks a visit without a referrer as direct', () => {
     expect(buildEvent('$pageview', { ...visit, referrer: '' }, KEY).properties).toMatchObject({
       $referrer: '$direct',
