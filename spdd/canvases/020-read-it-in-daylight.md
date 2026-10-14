@@ -6,7 +6,8 @@ on the pages Home and Cases (see [../design.md](../design.md)).
 
 **Status:** implemented on 2026-10-14. The story, the light frames, the theme control and its copy,
 the Piedra palette, the 12 % light float shadow, decisions 1–5 and the canvas start were approved
-that day. The dark Lighthouse pass is pending its check on the runner.
+that day. Published with #37. Done on 2026-10-14, story 020 closed after the check on the
+published site.
 
 ## R — Requirements
 
@@ -192,5 +193,36 @@ This section is authoritative where it differs from the operations above.
   - the phone menu, light.
 - Contrast: by `tests/tokens.test.ts`, from `tokens.css` itself. The lowest light ratios are
   subtle 5.0:1 on raised, signal 6.2:1, and white on signal 7.1:1.
-- Lighthouse, both passes, and the dark flag on the runner: in the pull request's CI, to be added
-  here.
+- **CI,** pull request #37, run `38584465252`:
+  - `site`, all 14 Lighthouse jobs (7 light, 7 dark) and `build` pass.
+  - 90 runs over 15 URLs × 3 × 2 themes: every assertion passes, and every page has median
+    performance 1 and accessibility 1 in both themes.
+  - Median LCP: 1,354–1,365 ms in light and 1,354–1,367 ms in dark. CLS is at most 0.0048 in
+    light and 0.0044 in dark.
+  - Case 04 in the dark pass matches #33: LCP 1,367 ms, CLS 0.0005.
+  - Single runs below 1, each page's median being 1: case 01 at 0.72, the CV at 0.75 and case 04
+    at 0.78 in light; case 03 at 0.85 in dark. This is the first-run runner noise seen before.
+- **The dark flag on the runner:** the brightness of each run's final screenshot was read.
+  - In the dark pass every page except the CV reads 9–10 out of 255, the `#09090b` canvas.
+  - In the light pass they read 248, the Piedra canvas.
+  - The CV is light in both passes, as pinned.
+
+**Verified on the published site, 2026-10-14,** after #37 was merged (`a307063`) and deployed (run
+`38585414384`, 6 min 18 s, with both Lighthouse passes again), with analytics requests blocked:
+- First paint: all 21 cases pass in Chromium, Firefox and WebKit.
+- The switch: all 63 checks pass.
+
+**Done when, item by item:**
+- The theme script and token parity tests pass.
+- End-to-end in three engines, with the system light and dark, on the production build and on
+  the published site:
+  - the first paint follows the system, or the stored choice, with no flash;
+  - the switch works by mouse and keyboard, the choice is kept, and "Match system" returns;
+  - hidden without scripts;
+  - the CV is light and the preview cards are dark.
+- Zero overflow at 12 widths on `/` and a case page, in both languages and both themes.
+- AA on every text token pair in Piedra, from `tokens.css`.
+- Screenshots match the light frames.
+- Lighthouse passes in both passes, with the dark flag shown to apply on the runner.
+
+**Story 020 is closed.**
