@@ -143,3 +143,9 @@ This section is authoritative where it differs from the operations above.
   own background, so it reads the same on GitHub in either mode.
 - Relative links in `docs/` and the README resolve (the docs test).
 - CI, docs-only: in the pull request, to be added here.
+
+**First CI run of #39 failed** (`site`: 3 docs tests). `docs/design/README.md` and the `.penpot`
+backup had never been committed: `.gitignore`'s `design/`, meant for the local `design/` folder
+at the root, matched `docs/design/` too. Locally the files existed on disk, so every test passed.
+The rule is now `/design/`, anchored to the root, and the two files are committed. Before a push,
+`git status --short -uall` and `git check-ignore` on new folders show what would be left out.
