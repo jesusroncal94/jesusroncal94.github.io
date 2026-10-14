@@ -3,8 +3,8 @@ import { describe, expect, it } from 'vitest';
 import profile from '../data/public-profile.json';
 import { mergeCv, parseCv, parseProfile } from '../src/lib/profile/parse';
 
-// cv-manager is private and local-only: the test service mounts it read-only on Jesus's machine,
-// and CI has no copy, so there the check is reported as skipped rather than passed.
+// cv-manager is private, and this repo's CI never gets access to it: the test service mounts it
+// read-only on Jesus's machine, and in CI the check is reported as skipped rather than passed.
 const CV_MANAGER = process.env.CV_MANAGER ?? '/cv-manager';
 const sources = [`${CV_MANAGER}/profile.md`, `${CV_MANAGER}/cv-base.md`];
 const available = sources.every((path) => existsSync(path));
