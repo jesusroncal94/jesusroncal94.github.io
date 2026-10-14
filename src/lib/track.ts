@@ -2,12 +2,14 @@ import type { Locale } from '../i18n/locales';
 import { ANALYTICS } from './analytics-config';
 
 export type ConversionEvent = 'cv_download' | 'email_copy' | 'email_open' | 'profile_open';
-export type AnalyticsEvent = '$pageview' | ConversionEvent | 'case_result_seen';
+// Actions the page reports through the CONVERSION channel; the theme switch is one, not a conversion.
+export type TrackedAction = ConversionEvent | 'theme_change';
+export type AnalyticsEvent = '$pageview' | TrackedAction | 'case_result_seen';
 
 export const CONVERSION = 'conversion';
 
 export interface Conversion {
-  event: ConversionEvent;
+  event: TrackedAction;
   props?: Record<string, string>;
 }
 
@@ -18,9 +20,22 @@ export interface Visit {
   referrer: string;
   userAgent: string;
   locale: Locale;
+  theme: 'light' | 'dark';
+  themeSource: ThemeSource;
   globalPrivacyControl: boolean;
   doNotTrack: boolean;
   ownerMarked: boolean;
+}
+
+export type ThemeSource = 'choice' | 'system' | 'page';
+
+// The theme as CSS resolved it, and who decided it: data-theme marks a visitor's choice, unless the page
+// pins its theme (data-theme-pinned). Read from the page, not lib/theme: importing it would split the
+// switch's code into a shared chunk, one more request before LCP.
+export function themeOf(colorScheme: string, pinned: boolean, chosen: boolean) {
+  const theme: 'light' | 'dark' = colorScheme === 'light' ? 'light' : 'dark';
+  const themeSource: ThemeSource = pinned ? 'page' : chosen ? 'choice' : 'system';
+  return { theme, themeSource };
 }
 
 export const OWNER_MARK = { key: 'analytics', value: 'off' } as const;
@@ -54,6 +69,8 @@ export function buildEvent(event: AnalyticsEvent, visit: Visit, key: string, pro
       $referrer: visit.referrer || DIRECT,
       $referring_domain: visit.referrer ? new URL(visit.referrer).host : DIRECT,
       locale: visit.locale,
+      theme: visit.theme,
+      theme_source: visit.themeSource,
       ...campaignTags(visit.href),
       ...props,
     },
@@ -65,13 +82,21 @@ function campaignTags(href: string): Record<string, string> {
 }
 
 export function readVisit(): Visit {
+  const root = document.documentElement;
+  const { theme, themeSource } = themeOf(
+    getComputedStyle(root).colorScheme,
+    root.hasAttribute('data-theme-pinned'),
+    root.hasAttribute('data-theme'),
+  );
   return {
     host: location.host,
     href: location.href,
     pathname: location.pathname,
     referrer: document.referrer,
     userAgent: navigator.userAgent,
-    locale: document.documentElement.lang as Locale,
+    locale: root.lang as Locale,
+    theme,
+    themeSource,
     globalPrivacyControl: (navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl === true,
     doNotTrack: navigator.doNotTrack === '1',
     ownerMarked: readOwnerMark() === OWNER_MARK.value,

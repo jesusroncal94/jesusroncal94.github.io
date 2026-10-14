@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { ANALYTICS } from '../src/lib/analytics-config';
-import { buildEvent, isMeasured, type Visit } from '../src/lib/track';
+import { buildEvent, isMeasured, themeOf, type Visit } from '../src/lib/track';
 
 const KEY = 'phc_test';
 
@@ -11,6 +11,8 @@ const visit: Visit = {
   referrer: 'https://www.linkedin.com/feed/',
   userAgent: 'Mozilla/5.0 (test)',
   locale: 'es',
+  theme: 'light',
+  themeSource: 'choice',
   globalPrivacyControl: false,
   doNotTrack: false,
   ownerMarked: false,
@@ -33,6 +35,8 @@ describe('buildEvent', () => {
         $referrer: 'https://www.linkedin.com/feed/',
         $referring_domain: 'www.linkedin.com',
         locale: 'es',
+        theme: 'light',
+        theme_source: 'choice',
         utm_source: 'linkedin',
         utm_campaign: 'acme',
       },
@@ -43,6 +47,13 @@ describe('buildEvent', () => {
     expect(buildEvent('profile_open', visit, KEY, { target: 'github' }).properties).toMatchObject({
       target: 'github',
       locale: 'es',
+    });
+  });
+
+  it('sends a theme change with the choice and the theme it leaves the page in', () => {
+    expect(buildEvent('theme_change', visit, KEY, { choice: 'light' })).toMatchObject({
+      event: 'theme_change',
+      properties: { choice: 'light', theme: 'light', theme_source: 'choice', $pathname: '/es/work/02-cost-leak/' },
     });
   });
 
@@ -72,4 +83,24 @@ describe('isMeasured', () => {
 
 it('sends events only to PostHog EU', () => {
   expect(new URL(ANALYTICS.endpoint).host).toBe('eu.i.posthog.com');
+});
+
+describe('themeOf', () => {
+  it('reports the system theme when nothing is chosen', () => {
+    expect(themeOf('light', false, false)).toEqual({ theme: 'light', themeSource: 'system' });
+    expect(themeOf('dark', false, false)).toEqual({ theme: 'dark', themeSource: 'system' });
+  });
+
+  it('reports a chosen theme as the visitor’s choice', () => {
+    expect(themeOf('light', false, true)).toEqual({ theme: 'light', themeSource: 'choice' });
+    expect(themeOf('dark', false, true)).toEqual({ theme: 'dark', themeSource: 'choice' });
+  });
+
+  it('reports a pinned page as the page’s, though it carries data-theme too', () => {
+    expect(themeOf('light', true, true)).toEqual({ theme: 'light', themeSource: 'page' });
+  });
+
+  it('falls back to dark, the default, on an unexpected color-scheme', () => {
+    expect(themeOf('normal', false, false)).toEqual({ theme: 'dark', themeSource: 'system' });
+  });
 });
