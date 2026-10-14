@@ -28,7 +28,8 @@ const {
   canonical: linked = true,
   structuredData,
   ogType = 'website',
-  theme = 'dark',
+  // Without a theme the page follows the visitor's system (global.css); the CV pins light.
+  theme,
 } = Astro.props;
 const path = stripLocale(Astro.url.pathname);
 const canonical = getAbsoluteLocaleUrl(locale, path);
