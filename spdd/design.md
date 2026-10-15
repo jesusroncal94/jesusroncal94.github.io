@@ -1,8 +1,10 @@
 # Design reference
 
 Mockups live in **Penpot** and are the visual source of truth for the canvases in
-`canvases/`. The file is **Portfolio — Jesús Roncal** in Jesus's Penpot drafts
-(design.penpot.app).
+`canvases/`. The file is **jesusroncal94.github.io · design**, in the Penpot project
+**jesusroncal94.github.io** (design.penpot.app). It was named **Portfolio — Jesús Roncal** until
+2026-10-15; the diagrams of `docs/` live in **jesusroncal94.github.io · docs**, in the same
+project (see [`../docs/design/README.md`](../docs/design/README.md)).
 
 | Page        | Frame                  | Stories                 |
 | ----------- | ---------------------- | ----------------------- |
@@ -89,6 +91,24 @@ the design moved to Penpot. Penpot is free, open source, and has an official MCP
 which Penpot hosts, so it stays on the same version as the cloud. Everything was rebuilt
 there from the code, which by then was the more faithful source. The Figma file stays as a
 read-only record of Phase 1.
+
+## Naming in Penpot
+
+Agreed with Jesus on 2026-10-15, for every repository of his:
+
+- **One Penpot project per repository,** named exactly as the repository, without the owner:
+  `jesusroncal94.github.io`, `cv-manager`.
+- **Files are named `<repository> · <purpose>`:** `jesusroncal94.github.io · design`,
+  `jesusroncal94.github.io · docs`. The name must identify the file on its own, in Downloads, in
+  a search, or when an agent checks which file the plugin is connected to.
+- **Private and public never share a project.** A private repository's files stay in its own
+  project, so an export cannot reach a public repository by mistake.
+- **Each repository creates and keeps its own files,** in its own session.
+- **A renamed repository renames its project and files** at the same time.
+- **Drafts** holds only what belongs to no repository yet.
+- **Inside a file,** pages are numbered (`01 SPDD process`) and boards are kebab-case, each
+  board naming its export (`ci-pipeline` → `ci-pipeline.svg`). Copies kept in a repository use
+  kebab-case file names without `·` or spaces (`docs/design/jesusroncal94-docs.penpot`).
 
 ## Tokens
 
