@@ -121,3 +121,19 @@ This section is authoritative where it differs from the operations above.
 - CI passes and skips Lighthouse.
 
 The squash merge needs no check on the published site: nothing in it reaches the built site.
+
+## Sync — 2026-10-15 (Penpot naming)
+
+After #43, Jesus grouped his Penpot files into one project per repository. A naming convention
+was agreed the same day and written in [`../design.md`](../design.md) ("Naming in Penpot"):
+projects named exactly as their repository, files named `<repository> · <purpose>`, private
+and public never in one project. A three-level name (`<project> · <repository> · <purpose>`)
+was considered and declined: the repository name is already unique, a product is not a stable
+boundary, and grouping by product would put `cv-manager` next to the public site.
+
+- Jesus renamed the site's design file from **Portfolio — Jesús Roncal** to
+  **jesusroncal94.github.io · design**. Checked from his screenshot of the project list, which
+  shows both files of the project **jesusroncal94.github.io**; the plugin was not connected to
+  the design file for this.
+- `spdd/design.md` names the file and its project and keeps the old name for searches. Its
+  mention of the Figma record (Phase 1) keeps the old name, which is right for Figma.
