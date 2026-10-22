@@ -232,3 +232,13 @@ Innova LATAM), Peru - Remote" and rewrites its six bullets; claims the evidence 
   as before.
 - Lighthouse and the overflow sweep were not run locally: the change is text only, and Lighthouse
   runs in CI on the pull request.
+
+**Verified on the published site, 2026-10-23,** after #45 was merged (`136d201`) and deployed
+(run `39869063140`):
+- CI on #45: 16 checks passed, Lighthouse included; the deploy job was skipped on the pull
+  request, as designed.
+- Both published PDFs are byte for byte the size of the local build's, which rendered at two pages.
+- `/cv/` and `/es/cv/` carry the new heading; `/es/cv/` carries the approved Spanish bullets.
+- Neither `/es/cv/` nor `/es/work/01-evals/` says "Lideré la migración", "19 nodos" or "71 %", and
+  `/work/01-evals/` no longer mentions the 71%.
+- No phone pattern on the four pages checked.
