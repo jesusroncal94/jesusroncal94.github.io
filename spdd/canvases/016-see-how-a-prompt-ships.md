@@ -151,3 +151,12 @@ run passes on case 01 and case 03 in the three engines, on the production build 
 published site; case 01's body is unchanged apart from the diagram and case 03's page apart from
 the CSS file's name; zero overflow at 12 widths on case 01; tests pass and Lighthouse passes in CI
 with case 01's LCP and CLS unchanged. **Story 016 is closed.**
+
+## Sync — 2026-10-23
+
+Case 01 no longer claims that output tokens fell ~71% on the bloated cases. The Intercorp role was
+re-verified against the work repositories on 2026-10-22, and `cv-manager/profile.md` now records
+that figure as not found. The sentence was dropped from the summary and from the first paragraph of
+the result, in English and in Spanish; the 45.6% → 100% conformance, the diagram and the rest of
+the body are unchanged. The two rows in `spdd/reviews/004a-es.md` were updated. Approved by Jesus on
+2026-10-23. Checks are in the 2026-10-23 sync of [canvas 019](019-one-cv-wherever-it-comes-from.md).

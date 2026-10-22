@@ -7,7 +7,8 @@ Story: [019](../stories/019-one-cv-wherever-it-comes-from.md). Analysis:
 **Status:** implemented on 2026-10-14. On 2026-10-13 the story, the mockup (revised the same
 day), decisions 1–6, the publication of every `cv-base.md` bullet as it is, the canvas start and
 the Spanish translation of the summary and 24 bullets were approved. Published with #35. Done on
-2026-10-14, story 019 closed after the check on the published site.
+2026-10-14, story 019 closed after the check on the published site. On 2026-10-23 the Spanish of
+the re-verified Intercorp role was approved.
 
 ## R — Requirements
 
@@ -197,3 +198,37 @@ This section is authoritative where it differs from the operations above.
 - Tests and Lighthouse pass, and no other page changed.
 
 **Story 019 is closed.**
+
+## Sync — 2026-10-23 (the Intercorp role re-verified)
+
+`cv-manager` `5051d8c` renames the Intercorp heading to "AI Engineer — Intercorp Management (NGR,
+Innova LATAM), Peru - Remote" and rewrites its six bullets; claims the evidence did not support
+("led the migration", "19 custom nodes", "~71% output tokens") are gone.
+
+- **Parser fix.** `parseRoles` split the employer on every ", ", so the comma inside "(NGR, Innova
+  LATAM)" cut the organisation in two and pushed half of it into the location. It now splits only
+  at the top level (`splitTopLevel`), and the fixtures carry the new heading so the test covers
+  it.
+- **Role id.** It is derived from the organisation without parentheticals, so it changed from
+  `intercorp-management-innova-latam` to `intercorp-management`, in both `site/*.yaml` timelines
+  and both case-01 files.
+- **Export.** The local `cv-manager` checkout was three commits behind `5051d8c` and was not
+  touched: `profile.md` and `cv-base.md` were taken from `5051d8c` with `git show` into a scratch
+  folder and mounted for the export and the freshness check. Only the Intercorp role changed in
+  `data/public-profile.json`.
+- **Spanish.** The six new pairs replace the old ones in `es.yaml` and in the review rows;
+  approved by Jesus on 2026-10-23. "+2,9 %" takes the non-breaking space of op 5. The heading needs
+  no new text: the organisation is a name, and "Peru - Remote" already had its translation.
+
+**Verified on 2026-10-23, on the production build:**
+- Tests: 430 pass, the freshness check included, against `5051d8c`.
+- Build checks: links, previews and structured data valid on 15 pages.
+- Both PDFs are two pages. The Spanish one leaves about a sixth of page 2 free, the English one
+  about a quarter.
+- `/es/cv/` shows the new heading and the approved Spanish; `/es/work/01-evals/` no longer carries
+  the token claim; no Spanish or English text on the site says "Lideré la migración", "19 nodos" or
+  "71 %".
+- Privacy: no phone pattern in `dist/` or `data/`; the only email is the public contact address,
+  as before.
+- Lighthouse and the overflow sweep were not run locally: the change is text only, and Lighthouse
+  runs in CI on the pull request.
