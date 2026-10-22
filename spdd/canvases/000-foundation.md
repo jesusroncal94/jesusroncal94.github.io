@@ -245,3 +245,30 @@ fits the ranges the direct dependencies already allow, so no direct dependency c
 - Dependabot alerts #1 (`http-cache-semantics`), #2 (`source-map-js`) and #3 (`sharp`) closed
   as fixed at 21:15 UTC on 2026-10-10, when #27 reached `main` (`c3fca5f`); the deploy that
   followed (run `38086924717`) serves every page as before.
+
+## Sync — 2026-10-23 (vite advisories fixed)
+
+Dependabot reported three alerts on `main`, all in `vite` 8.3.0 through its bundled
+`launch-editor`, which only the dev server uses to open files in an editor; none reaches the
+published site:
+
+| Advisory | Severity |
+| -------- | -------- |
+| [GHSA-r825-w8mm-5pxw](https://github.com/advisories/GHSA-r825-w8mm-5pxw), editor CLI flag misread as a command | high |
+| [GHSA-698v-4r3x-3vcv](https://github.com/advisories/GHSA-698v-4r3x-3vcv), `%` not escaped on Windows | medium |
+| [GHSA-587h-7wmj-h5pm](https://github.com/advisories/GHSA-587h-7wmj-h5pm), existence check bypassed on Windows | medium |
+
+`vite` is not a direct dependency: `astro`, `@tailwindcss/vite` and `vitest` all pull it in, and
+every range (`astro` asks for `^8.0.13`) already allows the patched 8.3.3. So the fix is
+`npm update vite`, with no `overrides` entry and no direct dependency changed.
+
+- The lockfile moves `vite` to 8.3.5 and, with it, its own dependencies: `rolldown` and its
+  platform bindings 1.2.10 → 1.2.15, `@oxc-project/types` 0.151.0 → 0.155.0, `postcss`
+  8.5.28 → 8.5.31, `nanoid` 3.3.19 → 3.3.20; nothing else.
+- `npm audit` no longer lists `vite`. It still lists two moderate advisories in
+  `@vitest/mocker` 5.0.1 (through `vitest`), test-time only and outside this fix.
+- Tests: 429 of 430 pass. The one failure is `tests/cv-freshness.test.ts`: `cv-manager` has
+  commits from 2026-10-22 that have not been exported yet, which this change does not touch.
+  The test service was run from a worktree, so `cv-manager` was mounted by its absolute path.
+- Build: passes; both CV PDFs render at 2 pages; links, previews and structured data checks
+  pass.
