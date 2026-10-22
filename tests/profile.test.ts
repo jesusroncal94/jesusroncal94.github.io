@@ -17,9 +17,9 @@ describe('public profile export', () => {
       },
       roles: [
         {
-          id: 'intercorp-management-innova-latam',
+          id: 'intercorp-management',
           title: 'AI Engineer',
-          organisation: 'Intercorp Management / Innova LATAM',
+          organisation: 'Intercorp Management (NGR, Innova LATAM)',
           location: 'Peru - Remote',
           start: '2024-09',
           end: null,
@@ -71,7 +71,7 @@ describe('CV export', () => {
       summary: 'Senior software engineer with 8+ years across backend systems. Ships services on AWS and GCP.',
       roles: [
         {
-          id: 'intercorp-management-innova-latam',
+          id: 'intercorp-management',
           bullets: ['Own the production LLM system on Gemini 2.5 Pro, at ~$0.08 per session.', 'Designed an eval-driven prompt pipeline.'],
         },
         { id: 'indra-pretty-technical', bullets: ['Built APIs serving predictive ML models.'] },

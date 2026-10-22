@@ -47,7 +47,8 @@ export function parseRoles(text: string): Role[] {
     if (!match) throw new Error(`Unrecognised role heading: ${heading}`);
 
     const [, title, employer, start, end] = match;
-    const [organisation, ...location] = employer.split(', ');
+    // Commas inside parentheses belong to the organisation: "Intercorp Management (NGR, Innova LATAM)".
+    const [organisation, ...location] = splitTopLevel(employer);
     return {
       id: slugify(withoutParentheticals(organisation)),
       title,

@@ -13,7 +13,7 @@ Ships services on AWS and GCP.
 
 ## Experience
 
-### AI Engineer — Intercorp Management / Innova LATAM, Peru - Remote (2024-09 to present)
+### AI Engineer — Intercorp Management (NGR, Innova LATAM), Peru - Remote (2024-09 to present)
 - Own the production LLM system on **Gemini 2.5 Pro**, at ~$0.08 per session.
 - Designed an eval-driven prompt pipeline.
 

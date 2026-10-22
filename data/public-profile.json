@@ -10,19 +10,19 @@
   },
   "roles": [
     {
-      "id": "intercorp-management-innova-latam",
+      "id": "intercorp-management",
       "title": "AI Engineer",
-      "organisation": "Intercorp Management / Innova LATAM",
+      "organisation": "Intercorp Management (NGR, Innova LATAM)",
       "location": "Peru - Remote",
       "start": "2024-09",
       "end": null,
       "bullets": [
-        "Own the production LLM system on Gemini 2.5 Pro (Vertex AI) generating curriculum-aligned lesson plans for Peru (CNEB), Colombia (MEN) and Mexico, with Ecuador onboarding: ~25K requests/month, 23K+ sessions and 362 active teachers in the latest cycle, at ~$0.08 per session.",
-        "Led the migration of the AI service from n8n to a Spring Boot / Spring AI codebase (Java 21, Vertex AI), now in production on AWS ECS across DEV/STG/PRD, with SemVer-versioned prompts, AOP-style observability (tokens, cost, latency per call) and a 19-panel Grafana dashboard.",
-        "Shipped the unit-generation engine (v3): batch generation of whole curricular units with per-session fault tolerance, deterministic output guardrails (structural rules + truncation detection, zero extra LLM calls) and Special Educational Needs adaptation, powering 14.9K pregenerated sessions in one cycle.",
-        "Designed an eval-driven prompt pipeline (test fixtures + LLM-as-judge, 5 dimensions / 19 items); cut output tokens ~71% on bloated cases and restored structural conformance from 45.6% to 100%.",
-        "Own AI cost attribution and governance: monthly Executive Committee reporting validated by independent methods (Grafana + direct SQL), a per-country cost model, and an approved budget band for the AI platform.",
-        "Operate n8n content pipelines on GCP Cloud Run (PostgreSQL); migrated 7 workflows, upgraded to n8n 2.x, and built 19 reusable custom nodes for RAG/agent workflows (Qdrant, Azure embeddings, Typesense, Langfuse)."
+        "Design and operate the production LLM system behind Nauta, Innova Schools' teacher platform, on Gemini 2.5 Pro and 3.x (Vertex AI), generating curriculum-aligned lesson plans for Peru, Colombia and Mexico: ~25K requests, 23K+ sessions and 362 active teachers in four weeks, at ~$0.09 per plan.",
+        "Proposed the move from n8n to a Spring Boot / Spring AI service (Java 21) and became its second-largest contributor; it runs on AWS ECS (DEV/STG/PRD) with SemVer-versioned prompts, per-call cost monitoring and a 19-panel Grafana dashboard.",
+        "Shipped the unit-generation engine (v3): concurrent batch generation of whole units with per-session fault tolerance and deterministic guardrails (zero extra LLM calls), powering 14.9K pregenerated sessions.",
+        "Led the move of 15 AI tasks to Gemini 3.x with a paired-measurement harness on production cases (cost, latency, LLM-as-judge quality), at +2.9% total cost; built a conversational editing-agent POC on Google ADK (gate, planner, parallel executor).",
+        "Own AI cost governance: monthly Executive Committee reporting reconciled against the cloud invoice, a per-country cost model, an approved budget band and Slack budget alerts.",
+        "Earlier, for NGR (via La Victoria Lab's Salto program), built a WhatsApp sales assistant for Bembos on Azure OpenAI GPT-4o with function-calling intent detection."
       ]
     },
     {

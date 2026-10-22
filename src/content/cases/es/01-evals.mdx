@@ -1,10 +1,10 @@
 ---
 order: 1
-roleId: intercorp-management-innova-latam
+roleId: intercorp-management
 organisation: Intercorp
 role: AI Engineer
 title: 'Evals antes que sensaciones: arreglar un prompt que se desviaba'
-summary: Fixtures con LLM-as-judge en 5 dimensiones y 19 ítems convirtieron cada cambio de prompt en un gate de release medido. Los tokens de salida bajaron ~71 % en los casos inflados.
+summary: Fixtures con LLM-as-judge en 5 dimensiones y 19 ítems convirtieron cada cambio de prompt en un gate de release medido.
 before: 45,6 %
 after: 100 %
 stack: [Gemini 2.5 Pro, Spring AI, LLM-as-judge]
@@ -46,6 +46,6 @@ Los prompts pasaron a ser artefactos con versionado semántico, así que un camb
 
 <h2 id="result">Resultado</h2>
 
-La conformidad estructural pasó del 45,6 % al 100 %, y los tokens de salida bajaron cerca de un 71 % en los casos que venían inflados.
+La conformidad estructural pasó del 45,6 % al 100 %.
 
 El cambio duradero está en cómo se publican los prompts. Una nueva versión es un release medido y no una opinión: los fixtures dicen si es mejor, y los dashboards, cuánto cuesta.
