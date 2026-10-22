@@ -254,9 +254,9 @@ published site:
 
 | Advisory | Severity |
 | -------- | -------- |
-| [GHSA-r825-w8mm-5pxw](https://github.com/advisories/GHSA-r825-w8mm-5pxw), editor CLI flag misread as a command | high |
+| [GHSA-587h-7wmj-h5pm](https://github.com/advisories/GHSA-587h-7wmj-h5pm), existence check bypassed on Windows | high |
 | [GHSA-698v-4r3x-3vcv](https://github.com/advisories/GHSA-698v-4r3x-3vcv), `%` not escaped on Windows | medium |
-| [GHSA-587h-7wmj-h5pm](https://github.com/advisories/GHSA-587h-7wmj-h5pm), existence check bypassed on Windows | medium |
+| [GHSA-r825-w8mm-5pxw](https://github.com/advisories/GHSA-r825-w8mm-5pxw), editor CLI flag misread as a command | medium |
 
 `vite` is not a direct dependency: `astro`, `@tailwindcss/vite` and `vitest` all pull it in, and
 every range (`astro` asks for `^8.0.13`) already allows the patched 8.3.3. So the fix is
@@ -272,3 +272,5 @@ every range (`astro` asks for `^8.0.13`) already allows the patched 8.3.3. So th
   The test service was run from a worktree, so `cv-manager` was mounted by its absolute path.
 - Build: passes; both CV PDFs render at 2 pages; links, previews and structured data checks
   pass.
+- CI on pull request #47, run `39872971156`: `site`, `build` and all 14 Lighthouse jobs pass.
+  Dependabot alerts #4, #5 (the high one) and #6 stay open until this reaches `main`.
