@@ -1,10 +1,10 @@
 ---
 order: 1
-roleId: intercorp-management-innova-latam
+roleId: intercorp-management
 organisation: Intercorp
 role: AI Engineer
 title: 'Evals before vibes: fixing a prompt that drifted'
-summary: LLM-as-judge fixtures across 5 dimensions and 19 items turned prompt changes into a measured release gate. Output tokens fell ~71% on bloated cases.
+summary: LLM-as-judge fixtures across 5 dimensions and 19 items turned prompt changes into a measured release gate.
 before: 45.6%
 after: 100%
 stack: [Gemini 2.5 Pro, Spring AI, LLM-as-judge]
@@ -58,8 +58,7 @@ surprise.
 
 ## Result
 
-Structural conformance went from 45.6% to 100%, and output tokens fell by about 71% on the
-cases that had been bloated.
+Structural conformance went from 45.6% to 100%.
 
 The lasting change is in how prompts ship. A new version is a measured release rather than an
 opinion: the fixtures say whether it is better, and the dashboards say what it costs.
