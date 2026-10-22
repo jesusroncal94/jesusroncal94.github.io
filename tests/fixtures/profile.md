@@ -15,7 +15,7 @@ Senior software engineer with 8+ years across backend systems.
 ## Experience
 <!-- One section per role. -->
 
-### AI Engineer — Intercorp Management / Innova LATAM, Peru - Remote (2024-09 to present)
+### AI Engineer — Intercorp Management (NGR, Innova LATAM), Peru - Remote (2024-09 to present)
 <!-- Current and only active role -->
 - Scale: ~1K requests/month at ~$1.23 per call.
 - Technologies: Java 21, Spring Boot.
