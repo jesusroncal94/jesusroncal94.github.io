@@ -274,3 +274,16 @@ every range (`astro` asks for `^8.0.13`) already allows the patched 8.3.3. So th
   pass.
 - CI on pull request #47, run `39872971156`: `site`, `build` and all 14 Lighthouse jobs pass.
   Dependabot alerts #4, #5 (the high one) and #6 stay open until this reaches `main`.
+- **Closed on 2026-10-23, but not by the merge.** #47 reached `main` at 09:10 UTC (`30458ca`)
+  and deployed (run `39929956692`). From then on the lockfile on `main` held only `vite` 8.3.5,
+  and the dependency graph listed 8.3.5, yet at 14:28 UTC alerts #4–#6 were still open, still
+  read `vite` 8.3.0 and had not been updated since 2026-10-21: the alerts page said the
+  dependency files were last checked the week before. GitHub Status showed no incident.
+  - About 14:32 UTC Jesus queued a refresh from the alerts page; 15 minutes later nothing had
+    changed.
+  - Around 15:00 UTC Jesus turned Dependabot alerts off and on again in Settings → Advanced
+    Security. That deleted every alert, the closed #1–#3 included, and rescanned the
+    repository: at 15:21 UTC the API returned no alerts at all, open or closed, with alerts
+    enabled.
+  - So #4–#6 are gone rather than marked as fixed, and the record of #1–#3 now lives only in
+    the 2026-10-10 section above.
