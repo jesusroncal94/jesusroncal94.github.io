@@ -4,9 +4,9 @@ roleId: mindfortress-inc
 organisation: MindFortress
 product: Reeve
 role: Tech Lead
-title: 112 PR a producción en 30 horas
-summary: Agentes de Claude Code en paralelo, cada uno en su worktree aislado, hicieron rebase de la cola y la apilaron en 4 repos; un gate serial sin fallos nuevos decidió qué se fusionaba.
-before: 112 en cola
+title: Más de 110 PR en cola, despachados en 30 horas
+summary: Agentes de Claude Code en paralelo, cada uno en su worktree aislado, apilaron la cola en cadenas de PR en 4 repos; merge gates seriales decidieron qué se fusionaba.
+before: 110+ en cola
 after: '0'
 stack: [Claude Code, GitHub Actions, pytest]
 keywords: [agentes, claude code, merge, pull requests, ci, release, reeve]
@@ -15,27 +15,27 @@ mechanism:
   stages:
     - glyph: queue
       label: Cola
-      detail: 112 PR en 4 repos
-      sentence: 112 pull requests esperaban en 4 repositorios, y cada merge movía la base bajo los demás.
+      detail: 110+ PR en 4 repos
+      sentence: Más de 110 pull requests esperaban en 4 repositorios, y cada merge movía la base bajo los demás.
     - glyph: lanes
       label: Agentes
       detail: un worktree cada uno
-      sentence: Agentes de Claude Code, cada uno en su propio git worktree, hicieron rebase de los pull requests y apilaron los cambios dependientes en cadenas.
+      sentence: Agentes de Claude Code, cada uno en su propio git worktree, prepararon los pull requests y apilaron los cambios dependientes en cadenas.
     - glyph: gate
       label: Gate
-      detail: sin fallos nuevos
-      sentence: "De uno en uno, cada pull request pasó un gate sin fallos nuevos: la suite no podía quedar peor que antes."
+      detail: tests en cada merge
+      sentence: De uno en uno, cada pull request pasó un merge gate serial que ejecutaba los tests sobre el resultado del merge.
     - glyph: done
-      label: Producción
-      detail: 112 en ~30 h
-      sentence: Los 112 llegaron a producción en unas 30 horas. Los agentes pusieron la velocidad; el gate mantuvo el listón.
+      label: Fusionados
+      detail: 110+ en ~30 h
+      sentence: La cola entera quedó vacía en unas 30 horas. Los agentes pusieron la velocidad; el gate mantuvo el listón.
 ---
 
 <h2 id="problem">Problema</h2>
 
-Reeve es una plataforma de crecimiento para comercio con IA, y su MVP esperaba en una cola de 112 pull requests repartidos en 4 repositorios. Yo era responsable de la revisión de código y del control de releases, así que vaciar esa cola era mi trabajo, sin dejar que la velocidad rebajara el listón de lo que llega a producción.
+Reeve es una plataforma de crecimiento para comercio con IA, y su MVP esperaba en una cola de más de 110 pull requests repartidos en 4 repositorios. Yo hacía de gate de releases de Reeve, así que vaciar esa cola era mi trabajo, sin dejar que la velocidad rebajara el listón de lo que llega a producción.
 
-Una cola de ese tamaño se estorba a sí misma. Cada merge mueve la base bajo los pull requests que vienen detrás, y el CI necesitaba su propio trabajo antes de que un build en verde fuera fiable.
+Una cola de ese tamaño se estorba a sí misma. Cada merge mueve la base bajo los pull requests que vienen detrás.
 
 <h2 id="approach">Enfoque</h2>
 
@@ -43,12 +43,12 @@ Dividí el trabajo en dos: preparación en paralelo, admisión en serie.
 
 <Mechanism {...frontmatter.mechanism} locale={props.locale} />
 
-La preparación fue en paralelo. Cada agente de Claude Code trabajó en su propio git worktree aislado, así que nunca se pisaron entre sí. Hicieron rebase de los pull requests por contenido y agruparon los cambios dependientes en cadenas apiladas que podían entrar en orden.
+La preparación fue en paralelo. Cada agente de Claude Code trabajó en su propio git worktree aislado, así que nunca se pisaron entre sí. Agruparon los cambios dependientes en cadenas de PR apiladas que podían entrar en orden.
 
-La admisión siguió siendo serial. Cada pull request pasó un gate sin fallos nuevos antes de fusionarse: la suite de tests no podía quedar peor de lo que estaba antes del merge. Por el camino desbloqueé el propio CI, dividiendo la suite en shards y arreglando los tests que dependían de su entorno, para que un build en rojo significara un problema real.
+La admisión siguió siendo serial. Cada pull request pasó un merge gate antes de fusionarse: los tests se ejecutaban sobre cada resultado de merge, en una réplica del CI en Docker dividida en shards. Por el camino corregí también hallazgos de seguridad.
 
 <h2 id="result">Resultado</h2>
 
-Los 112 pull requests pasaron de la cola a producción en unas 30 horas. Los agentes aportaron el rendimiento; el gate serial, la seguridad.
+La cola entera, más de 110 pull requests, quedó vacía en unas 30 horas. Los agentes aportaron el rendimiento; el gate serial, la seguridad.
 
-Es la misma división del trabajo que usaba a diario en MindFortress para el control de releases: 6–8 pull requests por sesión a producción, cada uno tras pasar gates empíricos previos al merge (tests, comprobación de tipos y replays de migraciones).
+Es el mismo papel que cumplía a diario como gate de releases de Reeve: más de 1.900 pull requests fusionados, la mayoría de compañeros del equipo.
