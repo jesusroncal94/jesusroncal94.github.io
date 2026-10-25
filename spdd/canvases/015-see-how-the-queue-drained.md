@@ -215,3 +215,27 @@ unchanged apart from the diagram (one newline aside) and the other cases change 
 inlined component styles; zero overflow at all 12 widths on case 03 in both languages; tests
 pass and Lighthouse passes in CI with case 03's LCP and CLS unchanged. **Story 015 is closed.**
 The pattern is ready for a second case: a frontmatter `mechanism` and, at most, a new glyph.
+
+## Sync — 2026-10-26
+
+The MindFortress role was re-verified against the work repositories on 2026-10-25 (`cv-manager`
+`b1b133b`), and the CV now says "cleared 110+ queued PRs across 4 repos in ~30h". Case 03 follows
+it, in English and in Spanish:
+
+- **Copy.** "112" became "110+" in the title, `before`, the queue and done details, and the body;
+  the last stage is "Merged" rather than "Production". The gate is described as `profile.md` does
+  ("tests on every merge result, a sharded Docker replica of CI") instead of "no new failures";
+  "rebased by content" and the CI unblocking (sharding the suite, environment-dependent tests) are
+  gone, and "fixing security findings along the way" is added. The last paragraph's "6–8 pull
+  requests per session" became "1,900+ pull requests merged, mostly teammates'". Approved by Jesus
+  on 2026-10-26.
+- **The dot grid draws the stated count.** The frame stays 14 × 8 (84 × 48 px), but the glyph now
+  draws exactly the count its stage's detail states: `dotRowsOf` in `src/lib/mechanism.ts` splits
+  it into full rows and a last partial row, so 110 is seven rows of 14 and a row of 12. The
+  refine in `src/content.config.ts` now requires a queue or done detail to state a count that fits
+  the frame and equals the one in `before`. Decision taken with Jesus on 2026-10-26: keep the rule
+  that every number a glyph draws comes from the case's copy, rather than drawing 112 dots for
+  "110+".
+
+Checks are in the 2026-10-26 sync of [canvas 019](019-one-cv-wherever-it-comes-from.md); on the
+production build both case 03 grids measure 84 × 42 px plus 72 × 6 px, that is 98 + 12 dots.
