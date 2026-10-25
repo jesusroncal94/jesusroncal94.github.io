@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { amountOf, GRID, hourglassOf, leadingCount, percentOf, stepAfter } from '../src/lib/mechanism';
+import { amountOf, dotRowsOf, GRID, hourglassOf, leadingCount, percentOf, stepAfter } from '../src/lib/mechanism';
 
 describe('stepAfter', () => {
   it('moves one step inside the range', () => {
@@ -53,8 +53,18 @@ describe('leadingCount', () => {
     expect(leadingCount('one story graph')).toBeUndefined();
   });
 
-  it('matches the grid the glyphs draw', () => {
-    expect(GRID.columns * GRID.rows).toBe(leadingCount('112 queued'));
+});
+
+describe('dotRowsOf', () => {
+  it('splits a count into full rows of the grid and what is left', () => {
+    expect(dotRowsOf(leadingCount('110+ PRs in 4 repos'))).toEqual({ full: 7, rest: 12 });
+    expect(dotRowsOf(GRID.columns * GRID.rows)).toEqual({ full: GRID.rows, rest: 0 });
+  });
+
+  it('draws nothing for a count the frame cannot hold', () => {
+    expect(dotRowsOf(GRID.columns * GRID.rows + 1)).toBeUndefined();
+    expect(dotRowsOf(0)).toBeUndefined();
+    expect(dotRowsOf(undefined)).toBeUndefined();
   });
 });
 
