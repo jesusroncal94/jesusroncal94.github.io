@@ -320,3 +320,37 @@ Both are fixed in 5.0.3. Unlike `vite` on 2026-10-23, `vitest` is a direct depen
   pass.
 - Alerts #7 and #8 stay open until this reaches `main`. If they do not close after the merge,
   the 2026-10-23 section above records what happened last time.
+
+## Sync — 2026-10-26 (undici and zod advisories fixed)
+
+Alerts #7 and #8 closed when #50 reached `main` (`a72969d`). The same day Dependabot opened four
+high alerts on `main`, the two packages the section above found in `npm audit`:
+
+| Alert | Package | Advisory |
+| ----- | ------- | -------- |
+| #9 | `zod` < 4.6.6 | [GHSA-mrhx-c7xc-m3w5](https://github.com/advisories/GHSA-mrhx-c7xc-m3w5), memory exhaustion validating oversized constrained collections |
+| #10–#12 | `undici` 8.0.0–8.12.1 | [GHSA-4qv8-2p9j-2685](https://github.com/advisories/GHSA-4qv8-2p9j-2685), unbounded memory in the EventSource parser; [GHSA-f72v-6w45-q472](https://github.com/advisories/GHSA-f72v-6w45-q472), Subresource Integrity bypass through non-lowercase algorithm tokens; [GHSA-xjj6-f33q-929c](https://github.com/advisories/GHSA-xjj6-f33q-929c), unhandled error on excessive content-encodings |
+
+Neither reaches the published site, which is static output:
+
+- `undici` is not a direct dependency. `npm ls undici` shows one path, `astro` → `unifont`
+  0.7.5, which fetches font files at build time and asks for `^8.0.0`. So, as with `vite` on
+  2026-10-23, the fix is `npm update undici`, with no `overrides` entry.
+- `zod` is a direct dependency, also deduped under `astro` and `@astrojs/sitemap`. Our only
+  import is `src/lib/profile/schema.ts`, whose schema runs in `scripts/export-profile.ts` and
+  the tests; the pages import only its types. Astro uses its copy for config and content
+  schemas during the build. The fix is `npm install zod@^4.6.7` (the latest), so a fresh
+  resolve cannot fall back below the patched version.
+
+Both commands ran in the test container. No `overrides` entry.
+
+- `package.json` moves `zod` from `^4.6.5` to `^4.6.7`.
+- The lockfile moves `zod` 4.6.5 → 4.6.7 and `undici` 8.11.0 → 8.12.3; nothing else.
+- `npm audit`: 0 vulnerabilities.
+- Tests: 429 of 430 pass. The one failure is `tests/cv-freshness.test.ts`: `cv-manager` now
+  names the Intercorp organisation "Intercorp Management (NGR, Innova LATAM)", which has not
+  been exported, and this change does not touch it. The test service was run from a worktree,
+  so `cv-manager` was mounted by its absolute path.
+- Build: passes; both CV PDFs render at 2 pages; links, previews and structured data checks
+  pass.
+- Alerts #9–#12 stay open until this reaches `main`.
