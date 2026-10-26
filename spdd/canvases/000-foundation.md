@@ -287,3 +287,36 @@ every range (`astro` asks for `^8.0.13`) already allows the patched 8.3.3. So th
     enabled.
   - So #4–#6 are gone rather than marked as fixed, and the record of #1–#3 now lives only in
     the 2026-10-10 section above.
+
+## Sync — 2026-10-26 (vitest mocker advisories fixed)
+
+Dependabot alerts #7 and #8 opened on `main`, both in `@vitest/mocker` 5.0.1, which `vitest`
+pins exactly. It only runs under `./tasks.ps1 test`; none of it reaches the published site:
+
+| Advisory | Severity |
+| -------- | -------- |
+| [GHSA-qxg6-89mg-rqv8](https://github.com/advisories/GHSA-qxg6-89mg-rqv8), code injection through unauthenticated manual mock registration | medium |
+| [GHSA-xp26-3454-mjgp](https://github.com/advisories/GHSA-xp26-3454-mjgp), Windows backslash traversal past the redirect allowlist | medium |
+
+Both are fixed in 5.0.3. Unlike `vite` on 2026-10-23, `vitest` is a direct dependency and its
+`@vitest/*` packages are pinned to its own version, so the fix is
+`npm install --save-dev vitest@^5.0.5` (the latest 5.x), run in the test container. No
+`overrides` entry.
+
+- `package.json` moves `vitest` from `^5.0.1` to `^5.0.5`, so a fresh resolve cannot fall back
+  below the patched version.
+- The lockfile moves `vitest`, `@vitest/mocker` and `@vitest/spy` 5.0.1 → 5.0.5, and with them
+  `chai` 6.2.2 → 6.3.0, `std-env` 4.2.0 → 4.3.0, `tinybench` 6.1.4 → 6.2.2,
+  `why-is-node-running` 2.3.0 → 3.2.1 and both nested `magic-string` copies 1.4.2 → 1.4.3. It
+  drops `siginfo`, `stackback` and the nested `obug` and `tinyexec` copies; `vite` stays at
+  8.3.5. Nothing else.
+- `npm audit` no longer lists `@vitest/mocker`. It now lists two high advisories outside this
+  fix, with no Dependabot alert yet: `undici` 8.0.0–8.12.1 (three) and `zod` < 4.6.6 (one).
+- Tests: 429 of 430 pass. The one failure is `tests/cv-freshness.test.ts`: `cv-manager` has an
+  Intercorp role change that has not been exported on this branch, which this change does not
+  touch. The test service was run from a worktree, so `cv-manager` was mounted by its absolute
+  path.
+- Build: passes; both CV PDFs render at 2 pages; links, previews and structured data checks
+  pass.
+- Alerts #7 and #8 stay open until this reaches `main`. If they do not close after the merge,
+  the 2026-10-23 section above records what happened last time.
