@@ -4,37 +4,37 @@ roleId: mindfortress-inc
 organisation: MindFortress
 role: Tech Lead
 title: Finding the AI spend nobody could explain
-summary: A spend bucket with no owner was burning $12–16 a day. I traced it to its source, shipped a guard so it cannot recur, and verified $0 in the production ledger.
-before: $15/day
-after: $0
-stack: [Python, Cost ledger, Root-cause analysis]
-keywords: [cost, spend, leak, money, ledger, production, debugging]
+summary: A spend bucket with no owner was costing about $16 a day. I traced it to a stale staging worker running against the production database, shipped a guard in the code and split the production and staging credentials.
+before: ~$16/day
+after: guarded
+stack: [Python, Railway, Root-cause analysis]
+keywords: [cost, spend, leak, money, staging, credentials, production, debugging]
 mechanism:
   label: How the leak was traced and closed
   stages:
     - glyph: ledger
-      label: Ledger
-      detail: $12–16/day, no owner
-      sentence: "One bucket in the AI cost ledger had no owner: a chronic $12–16 a day that no feature accounted for."
+      label: Spend
+      detail: ~$16/day, no owner
+      sentence: "One bucket of AI spend had no owner: about $16 a day that no user or project accounted for."
     - glyph: trace
       label: Trace
       detail: back, not guessed
       sentence: Instead of guessing where the money went, I followed the unattributed spend back to its source.
     - glyph: worker
       label: Source
-      detail: a stale worker
-      sentence: The source was a stale background worker that should not have been making those calls at all.
-    - glyph: drop
+      detail: a stale staging worker
+      sentence: The source was a stale staging worker running against the production database.
+    - glyph: gate
       label: Guard
-      detail: $0 in production
-      sentence: "A guard in the code keeps it from happening again, and the production ledger shows $0 a day: checked there, not assumed."
+      detail: guard + split credentials
+      sentence: A guard in the code keeps it from happening again, and production and staging no longer share credentials.
 ---
 
 ## Problem
 
-As Technical Lead at MindFortress I ran production operations for two AI products, including
-the cost ledger for their AI spend. One bucket in that ledger had no owner: a chronic
-$12–16 a day that no feature accounted for.
+As Technical Lead at MindFortress I owned environment health and deploys for two AI products.
+One bucket of their AI spend had no owner: about $16 a day that no user or project accounted
+for.
 
 A leak that size is easy to live with. It is also a sign that something in production is
 doing work nobody asked for — and whatever that is, it will not stay small on its own.
@@ -42,19 +42,20 @@ doing work nobody asked for — and whatever that is, it will not stay small on 
 ## Approach
 
 I treated it as a bug with a number attached. Instead of guessing where the money might be
-going, I followed the unattributed spend back until it led to its source: a stale background
-worker that should not have been making those calls at all.
+going, I followed the unattributed spend back until it led to its source: a stale staging
+worker running against the production database.
 
 <Mechanism {...frontmatter.mechanism} before={frontmatter.before} after={frontmatter.after} locale={props.locale} />
 
 Stopping it once would not have been a fix, because the conditions that started it could
 return. So I shipped a guard in the code to keep the same situation from happening again,
-and then checked the result where it matters — in the production ledger, not in the code.
+and split the production and staging credentials.
 
 ## Result
 
-The unattributed spend went from about $12–16 a day to $0, verified in the production
-ledger rather than assumed.
+The leak was traced to the worker behind it, guarded in the code, and production and staging
+stopped sharing credentials. It was part of a team effort to attribute every LLM call to a
+user or project.
 
 The guard turns a quiet, recurring cost into a failure that would show up immediately. The
 broader habit is the one I apply to any AI system I run: spend is a metric like latency, and

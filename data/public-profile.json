@@ -1,7 +1,7 @@
 {
   "name": "Jesús Enrique Roncal Huatta",
   "headline": "Senior Software Engineer | AI & Backend",
-  "summary": "Senior software engineer with 8+ years across backend systems, APIs, and cloud infrastructure, the last 4+ building and operating production LLM-powered applications. Most recently Technical Lead on two AI products, and currently AI Engineer on a third, designing multi-agent systems, RAG pipelines, and evaluation frameworks for real users at scale. Daily hands-on with AI coding agents (Claude Code) and with Claude, Gemini, and GPT APIs. Ship and operate services on AWS and GCP in Python, Go, Java, and TypeScript, with earlier production experience in PHP (Laravel, CodeIgniter). Strong cross-functional collaborator across distributed US, EU, and LATAM teams.",
+  "summary": "Senior software engineer with 8+ years across backend systems, APIs, and cloud infrastructure, the last 4+ building and operating production LLM-powered applications. Most recently Technical Lead on two AI products, and currently AI Engineer on a third, designing multi-agent systems, RAG pipelines, and evaluation frameworks for real users at scale. Daily hands-on with AI coding agents (Claude Code) and with Claude, Gemini, and GPT APIs. Ship and operate services on AWS and GCP in Python, Go, Java, and TypeScript, with earlier production experience in PHP (Laravel, CodeIgniter). Strong cross-functional collaborator across distributed US, EU, LATAM, and Asia-Pacific teams.",
   "city": "Milan, Italy",
   "contact": {
     "email": "jesusroncal94@gmail.com",
@@ -33,14 +33,13 @@
       "start": "2025-10",
       "end": "2026-09",
       "bullets": [
-        "Owned code review and release gating across two AI products (Freya, an AI writing partner; Reeve, an AI commerce-growth platform); drove 6-8 PRs/session to production with empirical pre-merge gates (pytest, tsc/Vitest, Alembic replays) and set engineering standards (spec-driven development, branching strategy, Linear as state bus).",
-        "Led the Reeve MVP merge campaign: 112 PRs across 4 repos cleared from queue to production in ~30h, orchestrating parallel Claude Code agents (isolated worktrees, rebase-by-content, stacked chains) with serial no-new-failures merge gates, unblocking CI (sharding, env-dependent tests) along the way.",
+        "Technical Lead for two AI products (Freya, an AI writing partner in production; Reeve, an AI commerce-growth platform at MVP) in a team spread across US, European and Asia-Pacific time zones: owned code review and release gating, coordinated technical decisions with the team and supported teammates through reviews and onboarding guides.",
+        "Designed and ran the team's AI-assisted delivery system on Claude Code, packaged as mindfortress-claude and adopted by the team: role agents and commands for each SDLC stage, session tooling that cross-references Linear, GitHub and Slack, human approval gates for deploys, and the standards it encodes (spec-driven development, branching strategy).",
+        "Release gate for Reeve (1,900+ PRs merged, mostly teammates'); in the MVP merge campaign, cleared 110+ queued PRs across 4 repos in ~30h by orchestrating parallel Claude Code agents (isolated worktrees, stacked PR chains) behind serial merge gates, fixing security findings along the way.",
         "Co-architected Freya's AI layer as Technical Lead, authoring its \"hourglass\" model (many input channels feed one facts-only knowledge base that drives prose generation, with inbound and outbound subagents), and hardened it for production: unified model routing, per-project isolation, real token/cost tracking and non-blocking AI calls. The platform spans 7 RAG-grounded agents, a knowledge-graph consistency engine and Yjs/CRDT editing on FastAPI (900+ endpoints).",
-        "Designed a multi-agent orchestration system (Coordinator / Manager / Worker tiers) routing user requests across 8 messaging channels (WhatsApp, Telegram, Discord, Slack, Teams, Signal, iMessage, WebChat).",
-        "Eliminated a chronic production AI-cost leak (~$12-16/day to $0) by root-causing an unattributed spend bucket to a stale worker pointed at the production database; shipped a code guard and verified $0 in the prod ledger.",
-        "Stabilized backend CI: took a Postgres / pytest-xdist baseline from 11 flaky failures to 0 by reproducing CI byte-for-byte in Docker and root-causing a stale SQLAlchemy comparator memoization.",
-        "Built mindfortress-claude, a portable engineering platform (7 agents, 10 commands, skills, git hooks, MCP integrations: Linear, Slack, Railway, Vercel, AWS, Sentry, Stripe) with config-vs-logic separation and layered prod-ops authorization gates.",
-        "Shipped Stripe billing with subscription enforcement and A/B testing, and ran multi-cloud production operations (Railway GraphQL + cost ledger, AWS EC2/SSH + Alembic deploys)."
+        "Restored Freya's full backend test suite to CI (pytest and Alembic upgrades on a real Postgres) and drove the inherited failing baseline from 64 to 0, root-causing a stale SQLAlchemy comparator memoization.",
+        "Root-caused a ~$16/day unattributed AI-spend leak to a stale staging worker running against the production database; shipped a code guard and split prod/staging credentials.",
+        "Owned environment health and deploys (Reeve deploy runbook, Freya uptime-monitor hardening, AWS EC2 and Railway operations) and hardened Reeve's multi-channel agent gateway (auth gate, idempotency, loop detection)."
       ]
     },
     {
