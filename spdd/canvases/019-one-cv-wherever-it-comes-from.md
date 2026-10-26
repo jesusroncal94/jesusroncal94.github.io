@@ -285,3 +285,12 @@ system over 8 messaging channels, Stripe billing with A/B testing, the mindfortr
   a real 320 px viewport `/es/` and `/es/work/03-merge-campaign/` have no overflow.
 - Lighthouse was not run locally. Its first CI run on #49 failed CLS on `/es/work/02-cost-leak/`;
   the fix and the measurement are in the 2026-10-26 sync of canvas 017.
+
+**Verified on the published site, 2026-10-26,** after #49 was merged (`b764949`) and deployed
+(the run's deploy job succeeded):
+- Both published PDFs are byte for byte the size of the local build's, which rendered at two pages.
+- `/cv/` and `/es/cv/` carry the MindFortress heading as `cv-base.md` has it; `/es/cv/` carries the
+  approved Spanish of the new summary sentence and the six changed bullets.
+- None of the removed claims appears on `/`, `/es/`, `/cv/`, `/es/cv/` or cases 02 and 03 in either
+  language; those pages show "110+" and "~$16/day" instead.
+- No phone pattern on the eight pages checked; the only email is the public contact address.
