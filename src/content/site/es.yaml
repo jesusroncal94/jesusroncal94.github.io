@@ -23,11 +23,11 @@ hero:
 
 metrics:
   - value: 45,6 % → 100 %
-    caption: conformidad estructural tras reescribir el prompt guiado por evaluaciones
-    source: Intercorp · LLM-as-judge
+    caption: conformidad en producción antes del arreglo; 8/8 fixtures de prueba después
+    source: Intercorp · estructura
     compact:
       value: 45,6→100 %
-      caption: conformidad estructural, prompts guiados por evaluaciones
+      caption: producción antes, 8/8 fixtures después
     accent: true
   - value: 110+ PR · 30 h
     caption: PR en cola vaciados en 4 repos con agentes de Claude Code en paralelo

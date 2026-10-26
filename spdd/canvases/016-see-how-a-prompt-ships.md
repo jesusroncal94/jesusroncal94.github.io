@@ -160,3 +160,29 @@ that figure as not found. The sentence was dropped from the summary and from the
 the result, in English and in Spanish; the 45.6% → 100% conformance, the diagram and the rest of
 the body are unchanged. The two rows in `spdd/reviews/004a-es.md` were updated. Approved by Jesus on
 2026-10-23. Checks are in the 2026-10-23 sync of [canvas 019](019-one-cv-wherever-it-comes-from.md).
+
+## Sync — 2026-10-26
+
+The 45.6% → 100% conformance figure now says what each side measured. 45.6% was the share of
+production responses that conformed; 100% is 8 of 8 test fixtures after the fix, not production.
+In case 01 (English and Spanish), the summary, the Release stage's detail and sentence, the
+second paragraph of Problem and the first of Result say "in production" and "8 of 8 test
+fixtures". `before: 45.6%` and `after: 100%` stay as they are, so the compare glyph is
+unchanged. On the home page, the first metric's caption and compact caption name production and
+fixtures. Its source label changes from "Intercorp · LLM-as-judge" to "Intercorp · structure" /
+"Intercorp · estructura": the conformance check was structural, and the judge rubric scored
+quality. The summaries are now double-quoted, because ": " inside them broke the YAML. The eight
+rows in `spdd/reviews/004a-es.md` were updated. Jesus approved the wording on 2026-10-26.
+"Structural check" / "control estructural" wrapped to two lines on the home page at 1280 px, so he
+approved the shorter label the same day.
+
+Checks, on the production build:
+
+- Tests: 429 pass, 1 skipped (the cv-manager freshness check; the CV is not affected).
+- Both CV PDFs are still 2 pages. Links, previews and structured data are valid on 15 pages.
+- Home: the four metric source labels are each one line (16 px) at 768, 1024, 1280 and
+  1920 px in both languages. No horizontal overflow at those widths or at 375 px.
+- Case 01, EN and ES: the new text renders, and the Release detail wraps to two lines like the
+  other stages.
+- Lighthouse runs in CI on the pull request. The sweep of all 12 widths was not repeated for
+  this text-only change.
