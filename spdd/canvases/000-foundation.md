@@ -358,4 +358,8 @@ Both commands ran in the test container. No `overrides` entry.
   so `cv-manager` was mounted by its absolute path.
 - Build: passes; both CV PDFs render at 2 pages; links, previews and structured data checks
   pass.
-- Alerts #9–#12 stay open until this reaches `main`.
+- CI on pull request #52: `site`, `build` and all 14 Lighthouse jobs pass.
+- **Closed on 2026-10-26 by the merge.** #52 reached `main` at 01:54:05 UTC (`a34120f`), and
+  Dependabot marked alerts #9–#12 as fixed at 01:54:14 UTC, without the refresh or the
+  disable-and-enable that 2026-10-23 needed. The deploy (run `40256446171`) passed `build` and
+  `deploy` at 01:58 UTC.
