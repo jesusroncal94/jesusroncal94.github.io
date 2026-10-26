@@ -29,18 +29,18 @@ metrics:
       value: 45.6→100%
       caption: production before, 8/8 fixtures after
     accent: true
-  - value: 112 PRs · 30 h
-    caption: cleared from queue to production with parallel Claude Code agents
+  - value: 110+ PRs · 30 h
+    caption: queued PRs cleared across 4 repos with parallel Claude Code agents
     source: Reeve · merge campaign
     compact:
-      value: 112 PRs · 30h
-      caption: queue to prod with parallel agents
-  - value: $15/day → $0
-    caption: untracked AI spend traced to its source and shut off
+      value: 110+ PRs · 30h
+      caption: queue cleared with parallel agents
+  - value: ~$16/day
+    caption: unattributed AI spend traced to a stale staging worker and guarded in code
     source: MindFortress · cost
     compact:
-      value: $15/day → $0
-      caption: untracked AI spend shut off
+      value: ~$16/day
+      caption: unattributed AI spend, traced and guarded
   - value: 500K+ users
     caption: served by LLM transcription and translation pipelines
     source: Wordbox · 10+ markets
@@ -49,7 +49,7 @@ palette:
   placeholder: Jump to a case, a repo or a question…
   hint: Press ⌘K anywhere to jump around.
   questions:
-    - label: How did you cut an AI cost leak to $0?
+    - label: How did you trace an AI cost leak?
       case: 02-cost-leak
     - label: What does your eval process look like?
       case: 01-evals
@@ -88,7 +88,7 @@ openSource:
       title: The agent setup I work with daily
       pitch: >-
         Claude Code subagents, slash commands and permission settings, versioned and portable
-        across projects — the tooling behind the 112-PR campaign, generalised.
+        across projects — the tooling behind the Reeve merge campaign, generalised.
       note: Claude Code today · Cursor and Copilot planned
       stack: [Claude Code, MCP, Shell]
 
@@ -109,7 +109,7 @@ experience:
       role: Technical Lead, AI Products
       organisation: MindFortress
       place: USA · remote
-      line: Code review and release gating for Freya and Reeve; multi-agent architecture.
+      line: Code review and release gating for Freya and Reeve; the team’s AI-assisted delivery system.
     - roleId: wordbox
       role: Backend & AI Engineer
       organisation: Wordbox

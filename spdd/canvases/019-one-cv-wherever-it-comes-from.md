@@ -8,7 +8,8 @@ Story: [019](../stories/019-one-cv-wherever-it-comes-from.md). Analysis:
 day), decisions 1–6, the publication of every `cv-base.md` bullet as it is, the canvas start and
 the Spanish translation of the summary and 24 bullets were approved. Published with #35. Done on
 2026-10-14, story 019 closed after the check on the published site. On 2026-10-23 the Spanish of
-the re-verified Intercorp role was approved.
+the re-verified Intercorp role was approved. On 2026-10-26 the Spanish of the re-verified
+MindFortress role and the new summary sentence was approved.
 
 ## R — Requirements
 
@@ -242,3 +243,54 @@ Innova LATAM), Peru - Remote" and rewrites its six bullets; claims the evidence 
 - Neither `/es/cv/` nor `/es/work/01-evals/` says "Lideré la migración", "19 nodos" or "71 %", and
   `/work/01-evals/` no longer mentions the 71%.
 - No phone pattern on the four pages checked.
+
+## Sync — 2026-10-26 (the MindFortress role re-verified)
+
+`cv-manager` `b1b133b` keeps the MindFortress heading and rewrites the role: six of its bullets
+changed (the Freya "Co-architected" bullet did not), the role went from nine bullets to seven, and
+the summary's last sentence now names "US, EU, LATAM, and Asia-Pacific teams". Claims the
+evidence did not support are gone from the CV: "6-8 PRs/session", "112 PRs", "~$12-16/day to $0",
+"verified $0 in the prod ledger", "11 flaky failures to 0", the Coordinator / Manager / Worker
+system over 8 messaging channels, Stripe billing with A/B testing, the mindfortress-claude
+"MCP integrations" list and "layered prod-ops authorization gates".
+
+- **Export.** As on 2026-10-23, the local `cv-manager` checkout (four commits behind) was not
+  touched: `profile.md` and `cv-base.md` were taken from `b1b133b` with `git show` into a scratch
+  folder and mounted for the export and the freshness check. Only the summary and the MindFortress
+  bullets changed in `data/public-profile.json`; the CV now has 23 bullets, so
+  `tests/cv-translations.test.ts` expects 24 texts.
+- **Spanish.** The summary pair and the six new bullet pairs replace the old ones in `es.yaml`;
+  the review rows in `spdd/reviews/004a-es.md` were rebuilt in export order, unchanged texts
+  keeping their approval date. Approved by Jesus on 2026-10-26.
+- **The rest of the site.** The same claims were removed from cases 02 and 03 (see the
+  2026-10-26 syncs of [canvas 017](017-see-where-the-money-went.md) and
+  [canvas 015](015-see-how-the-queue-drained.md)) and from the home page: the Reeve metric reads
+  "110+ PRs · 30 h", the cost metric "~$16/day" (traced and guarded, no longer "→ $0"), the
+  palette question asks how the leak was traced, the ai-agents pitch points at "the Reeve merge
+  campaign", and the MindFortress timeline line names the team's AI-assisted delivery system
+  instead of "multi-agent architecture". Every new text comes from `cv-base.md` or `profile.md`;
+  all of it, in both languages, was approved by Jesus on 2026-10-26.
+
+**Verified on 2026-10-26, on the production build:**
+- Tests: 430 pass, the freshness check included, against `b1b133b`.
+- Build checks: links, previews and structured data valid on 15 pages.
+- Both PDFs are two pages, checked visually page by page. The Spanish one leaves about an eighth of
+  page 2 free, the English one about a third. The MindFortress heading is identical to
+  `cv-base.md`'s in both.
+- No HTML, JSON or XML file in `dist/` contains any of the removed claims (searched in English and
+  Spanish); the only `$0` left is Intercorp's "~$0.09 per plan".
+- Privacy: no phone pattern in `dist/`; the only email is the public contact address, as before.
+- Overflow: none on `/`, `/es/` and cases 02 and 03 in both languages at the 12 widths. The sweep
+  ran in iframes, whose scrollbar made the 320 px run measure 305 px and flag `/es/` by 7 px; at
+  a real 320 px viewport `/es/` and `/es/work/03-merge-campaign/` have no overflow.
+- Lighthouse was not run locally. Its first CI run on #49 failed CLS on `/es/work/02-cost-leak/`;
+  the fix and the measurement are in the 2026-10-26 sync of canvas 017.
+
+**Verified on the published site, 2026-10-26,** after #49 was merged (`b764949`) and deployed
+(the run's deploy job succeeded):
+- Both published PDFs are byte for byte the size of the local build's, which rendered at two pages.
+- `/cv/` and `/es/cv/` carry the MindFortress heading as `cv-base.md` has it; `/es/cv/` carries the
+  approved Spanish of the new summary sentence and the six changed bullets.
+- None of the removed claims appears on `/`, `/es/`, `/cv/`, `/es/cv/` or cases 02 and 03 in either
+  language; those pages show "110+" and "~$16/day" instead.
+- No phone pattern on the eight pages checked; the only email is the public contact address.

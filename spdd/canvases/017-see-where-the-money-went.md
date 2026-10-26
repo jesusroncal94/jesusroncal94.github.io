@@ -126,3 +126,32 @@ on cases 02, 01 and 03 in the three engines, on the production build and on the 
 case 02's body is unchanged apart from the diagram and cases 01 and 03 apart from the CSS file's
 name; zero overflow at 12 widths on case 02; tests pass and Lighthouse passes in CI with case 02's
 LCP and CLS unchanged. **Story 017 is closed.**
+
+## Sync — 2026-10-26
+
+The MindFortress role was re-verified against the work repositories on 2026-10-25 (`cv-manager`
+`b1b133b`). The CV no longer claims the unattributed spend went "~$12-16/day to $0" or that $0 was
+verified in the production ledger; it says the ~$16/day leak was root-caused to a stale staging
+worker running against the production database, guarded in code, and that the production and
+staging credentials were split. Case 02 follows it, in English and in Spanish:
+
+- `before` is "~$16/day" and `after` "guarded" (ES "protegido"); the summary, the stages and the
+  body say "a stale staging worker running against the production database", add the split
+  credentials, and drop the ledger and every "$0". The result credits the team effort to
+  attribute every LLM call to a user or project. The stack tag "Cost ledger" became "Railway".
+- **The fourth stage uses the `gate` glyph instead of `drop`.** A drop draws the second amount
+  below the first, which would show the $0 the case no longer claims. The `drop` glyph and its
+  refine stay in the code, unused for now.
+
+Approved by Jesus on 2026-10-26. The OG image's alt text reads "~$16/day to guarded" because the
+shared template is "{before} to {after}"; left as it is. Checks are in the 2026-10-26 sync of
+[canvas 019](019-one-cv-wherever-it-comes-from.md).
+
+**Incident on the pull request (#49), same day.** Lighthouse failed CLS on `/es/work/02-cost-leak/`
+(0.031 against 0.02, both schemes). The count-up draws its first frame at 0: "~$0/día" is 10 px
+narrower than "~$16/día", so at the 412 px mobile width "protegido" fitted on the first line and
+then wrapped back to the second as the number grew, a 33 px jump. The old values ("$15/día → $0")
+never wrapped. Fix: `countUp` (`src/lib/count-up.ts`) now fixes the element's `min-width` at the
+server-rendered final width before the first frame, so no frame can be narrower than the last.
+Checked in the browser at 412 × 823 on the production build: without the fix the first frame
+moves "protegido" from 405 to 372 px; with it, it stays at 405.

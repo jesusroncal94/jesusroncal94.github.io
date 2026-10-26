@@ -1,5 +1,11 @@
-// The dot grid of the queue and done glyphs: 14 × 8 = 112, the count case 03 states.
+// The dot grid of the queue and done glyphs: a 14 × 8 frame that draws exactly the count the stage states.
 export const GRID = { columns: 14, rows: 8 } as const;
+
+// "110+ PRs in 4 repos" → 7 full rows and a last row of 12; a count that does not fit the frame draws nothing.
+export const dotRowsOf = (count: number | undefined) =>
+  count && count > 0 && count <= GRID.columns * GRID.rows
+    ? { full: Math.floor(count / GRID.columns), rest: count % GRID.columns }
+    : undefined;
 
 export const stepAfter = (current: number, delta: -1 | 1, total: number) =>
   Math.min(Math.max(current + delta, 0), total - 1);

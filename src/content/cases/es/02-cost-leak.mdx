@@ -4,48 +4,48 @@ roleId: mindfortress-inc
 organisation: MindFortress
 role: Tech Lead
 title: Encontrar el gasto de IA que nadie sabía explicar
-summary: Una partida de gasto sin dueño consumía $12–16 al día. La rastreé hasta su origen, entregué una protección para que no se repita y verifiqué $0 en el ledger de producción.
-before: $15/día
-after: $0
-stack: [Python, Ledger de costes, Análisis de causa raíz]
-keywords: [coste, gasto, fuga, dinero, ledger, producción, depuración]
+summary: Una partida de gasto sin dueño costaba unos $16 al día. La rastreé hasta un worker de staging obsoleto que trabajaba contra la base de datos de producción, entregué una protección en el código y separé las credenciales de producción y staging.
+before: ~$16/día
+after: protegido
+stack: [Python, Railway, Análisis de causa raíz]
+keywords: [coste, gasto, fuga, dinero, staging, credenciales, producción, depuración]
 mechanism:
   label: Cómo se rastreó y cerró la fuga
   stages:
     - glyph: ledger
-      label: Ledger
-      detail: $12–16/día, sin dueño
-      sentence: "Una partida del ledger de costes de IA no tenía dueño: $12–16 al día, de forma crónica, que ninguna funcionalidad justificaba."
+      label: Gasto
+      detail: ~$16/día, sin dueño
+      sentence: "Una partida del gasto de IA no tenía dueño: unos $16 al día que ningún usuario ni proyecto justificaba."
     - glyph: trace
       label: Rastreo
       detail: hacia atrás, sin adivinar
       sentence: En lugar de adivinar adónde iba el dinero, seguí el gasto no atribuido hacia atrás hasta su origen.
     - glyph: worker
       label: Origen
-      detail: un worker obsoleto
-      sentence: El origen era un worker en segundo plano obsoleto que no debería haber estado haciendo esas llamadas.
-    - glyph: drop
+      detail: un worker de staging obsoleto
+      sentence: El origen era un worker de staging obsoleto que trabajaba contra la base de datos de producción.
+    - glyph: gate
       label: Protección
-      detail: $0 en producción
-      sentence: "Una protección en el código impide que se repita, y el ledger de producción muestra $0 al día: comprobado ahí, no supuesto."
+      detail: protección + credenciales separadas
+      sentence: Una protección en el código impide que se repita, y producción y staging ya no comparten credenciales.
 ---
 
 <h2 id="problem">Problema</h2>
 
-Como Technical Lead en MindFortress llevaba las operaciones en producción de dos productos de IA, incluido el ledger de costes de su gasto en IA. Una partida de ese ledger no tenía dueño: $12–16 al día, de forma crónica, que ninguna funcionalidad justificaba.
+Como Technical Lead en MindFortress era responsable de la salud de los entornos y de los despliegues de dos productos de IA. Una partida de su gasto en IA no tenía dueño: unos $16 al día que ningún usuario ni proyecto justificaba.
 
 Una fuga de ese tamaño es fácil de tolerar. También es señal de que algo en producción está haciendo un trabajo que nadie pidió, y sea lo que sea, no se va a quedar pequeño por sí solo.
 
 <h2 id="approach">Enfoque</h2>
 
-Lo traté como un bug con un número asociado. En lugar de adivinar adónde podía ir el dinero, seguí el gasto no atribuido hacia atrás hasta llegar a su origen: un worker en segundo plano obsoleto que no debería haber estado haciendo esas llamadas.
+Lo traté como un bug con un número asociado. En lugar de adivinar adónde podía ir el dinero, seguí el gasto no atribuido hacia atrás hasta llegar a su origen: un worker de staging obsoleto que trabajaba contra la base de datos de producción.
 
 <Mechanism {...frontmatter.mechanism} before={frontmatter.before} after={frontmatter.after} locale={props.locale} />
 
-Pararlo una vez no habría sido un arreglo, porque las condiciones que lo originaron podían volver. Así que entregué una protección en el código para que la misma situación no se repita, y después comprobé el resultado donde importa: en el ledger de producción, no en el código.
+Pararlo una vez no habría sido un arreglo, porque las condiciones que lo originaron podían volver. Así que entregué una protección en el código para que la misma situación no se repita, y separé las credenciales de producción y staging.
 
 <h2 id="result">Resultado</h2>
 
-El gasto no atribuido pasó de unos $12–16 al día a $0, verificado en el ledger de producción y no supuesto.
+La fuga quedó rastreada hasta el worker que la causaba, protegida en el código, y producción y staging dejaron de compartir credenciales. Formó parte de un esfuerzo del equipo para atribuir cada llamada a un LLM a un usuario o a un proyecto.
 
 La protección convierte un coste silencioso y recurrente en un fallo que se vería de inmediato. El hábito de fondo es el que aplico a cualquier sistema de IA que llevo: el gasto es una métrica como la latencia, y un número que nadie sabe explicar es un incidente esperando nombre.

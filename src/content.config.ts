@@ -1,7 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
-import { amountOf, GRID, HOURGLASS_PARTS, hourglassOf, leadingCount, percentOf } from './lib/mechanism';
+import { amountOf, dotRowsOf, GRID, HOURGLASS_PARTS, hourglassOf, leadingCount, percentOf } from './lib/mechanism';
 
 const metric = z.object({
   value: z.string(),
@@ -128,8 +128,11 @@ const cases = defineCollection({
     .superRefine(({ mechanism, before, after }, context) => {
       const [spent, left] = [amountOf(before), amountOf(after)];
       for (const { glyph, detail } of mechanism?.stages ?? []) {
-        if ((glyph === 'queue' || glyph === 'done') && leadingCount(before) !== DOTS)
-          context.addIssue({ code: 'custom', message: `A ${glyph} glyph draws ${DOTS} dots; the case's "before" must state ${DOTS}.` });
+        if ((glyph === 'queue' || glyph === 'done') && (!dotRowsOf(leadingCount(detail)) || leadingCount(detail) !== leadingCount(before)))
+          context.addIssue({
+            code: 'custom',
+            message: `A ${glyph} glyph draws one dot per item, up to ${DOTS}; its detail must state the count the case's "before" states: "${detail}".`,
+          });
         if (glyph === 'rubric' && leadingCount(detail) === undefined)
           context.addIssue({ code: 'custom', message: `A rubric glyph draws one tick per item; its detail must state how many: "${detail}".` });
         if (glyph === 'compare' && (percentOf(before) === undefined || percentOf(after) === undefined))

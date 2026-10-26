@@ -10,7 +10,7 @@ const exported = profile as PublicProfile;
 
 describe('Spanish CV', () => {
   it('has a reviewed translation for every exported text, and none left over', () => {
-    expect(cvSources(exported)).toHaveLength(25);
+    expect(cvSources(exported)).toHaveLength(24);
     expect(translationGaps(exported, spanish)).toEqual({ missing: [], stale: [] });
   });
 

@@ -29,18 +29,18 @@ metrics:
       value: 45,6→100 %
       caption: producción antes, 8/8 fixtures después
     accent: true
-  - value: 112 PR · 30 h
-    caption: de la cola a producción con agentes de Claude Code en paralelo
+  - value: 110+ PR · 30 h
+    caption: PR en cola vaciados en 4 repos con agentes de Claude Code en paralelo
     source: Reeve · campaña de merge
     compact:
-      value: 112 PR · 30 h
-      caption: de la cola a producción con agentes en paralelo
-  - value: $15/día → $0
-    caption: gasto de IA sin rastrear, localizado en su origen y cortado
+      value: 110+ PR · 30 h
+      caption: cola vaciada con agentes en paralelo
+  - value: ~$16/día
+    caption: gasto de IA no atribuido, rastreado hasta un worker de staging obsoleto y protegido en el código
     source: MindFortress · coste
     compact:
-      value: $15/día → $0
-      caption: gasto de IA sin rastrear, cortado
+      value: ~$16/día
+      caption: gasto de IA no atribuido, rastreado y protegido
   - value: +500 mil usuarios
     caption: atendidos por pipelines de transcripción y traducción con LLM
     source: Wordbox · 10+ mercados
@@ -49,7 +49,7 @@ palette:
   placeholder: Salta a un caso, un repo o una pregunta…
   hint: Pulsa ⌘K en cualquier parte para moverte.
   questions:
-    - label: ¿Cómo redujiste a $0 una fuga de costes de IA?
+    - label: ¿Cómo rastreaste una fuga de costes de IA?
       case: 02-cost-leak
     - label: ¿Cómo es tu proceso de evaluación?
       case: 01-evals
@@ -88,7 +88,7 @@ openSource:
       title: El setup de agentes con el que trabajo cada día
       pitch: >-
         Subagentes, slash commands y permisos de Claude Code, versionados y portables entre
-        proyectos: las herramientas detrás de la campaña de 112 PR, generalizadas.
+        proyectos: las herramientas detrás de la campaña de merge de Reeve, generalizadas.
       note: Claude Code hoy · Cursor y Copilot previstos
       stack: [Claude Code, MCP, Shell]
 
@@ -109,7 +109,7 @@ experience:
       role: Technical Lead, AI Products
       organisation: MindFortress
       place: EE. UU. · remoto
-      line: Revisión de código y control de releases para Freya y Reeve; arquitectura multiagente.
+      line: Revisión de código y control de releases para Freya y Reeve; el sistema de entrega asistida por IA del equipo.
     - roleId: wordbox
       role: Backend & AI Engineer
       organisation: Wordbox
@@ -181,8 +181,8 @@ privacy:
 
 cv:
   summary:
-    source: 'Senior software engineer with 8+ years across backend systems, APIs, and cloud infrastructure, the last 4+ building and operating production LLM-powered applications. Most recently Technical Lead on two AI products, and currently AI Engineer on a third, designing multi-agent systems, RAG pipelines, and evaluation frameworks for real users at scale. Daily hands-on with AI coding agents (Claude Code) and with Claude, Gemini, and GPT APIs. Ship and operate services on AWS and GCP in Python, Go, Java, and TypeScript, with earlier production experience in PHP (Laravel, CodeIgniter). Strong cross-functional collaborator across distributed US, EU, and LATAM teams.'
-    text: 'Ingeniero de software senior con más de 8 años en sistemas backend, APIs e infraestructura cloud; los últimos 4+ construyendo y operando aplicaciones en producción basadas en LLM. Recientemente Technical Lead de dos productos de IA, y actualmente AI Engineer en un tercero, diseñando sistemas multiagente, pipelines RAG y frameworks de evaluación para usuarios reales a escala. Trabaja a diario con agentes de programación con IA (Claude Code) y con las APIs de Claude, Gemini y GPT. Desarrolla y opera servicios en AWS y GCP con Python, Go, Java y TypeScript, con experiencia previa en producción con PHP (Laravel, CodeIgniter). Colabora de forma transversal con equipos distribuidos en EE. UU., la UE y LATAM.'
+    source: 'Senior software engineer with 8+ years across backend systems, APIs, and cloud infrastructure, the last 4+ building and operating production LLM-powered applications. Most recently Technical Lead on two AI products, and currently AI Engineer on a third, designing multi-agent systems, RAG pipelines, and evaluation frameworks for real users at scale. Daily hands-on with AI coding agents (Claude Code) and with Claude, Gemini, and GPT APIs. Ship and operate services on AWS and GCP in Python, Go, Java, and TypeScript, with earlier production experience in PHP (Laravel, CodeIgniter). Strong cross-functional collaborator across distributed US, EU, LATAM, and Asia-Pacific teams.'
+    text: 'Ingeniero de software senior con más de 8 años en sistemas backend, APIs e infraestructura cloud; los últimos 4+ construyendo y operando aplicaciones en producción basadas en LLM. Recientemente Technical Lead de dos productos de IA, y actualmente AI Engineer en un tercero, diseñando sistemas multiagente, pipelines RAG y frameworks de evaluación para usuarios reales a escala. Trabaja a diario con agentes de programación con IA (Claude Code) y con las APIs de Claude, Gemini y GPT. Desarrolla y opera servicios en AWS y GCP con Python, Go, Java y TypeScript, con experiencia previa en producción con PHP (Laravel, CodeIgniter). Colabora de forma transversal con equipos distribuidos en EE. UU., la UE, LATAM y Asia-Pacífico.'
   bullets:
     - source: 'Design and operate the production LLM system behind Nauta, Innova Schools'' teacher platform, on Gemini 2.5 Pro and 3.x (Vertex AI), generating curriculum-aligned lesson plans for Peru, Colombia and Mexico: ~25K requests, 23K+ sessions and 362 active teachers in four weeks, at ~$0.09 per plan.'
       text: 'Diseño y opero el sistema LLM en producción detrás de Nauta, la plataforma docente de Innova Schools, sobre Gemini 2.5 Pro y 3.x (Vertex AI), que genera planes de clase alineados al currículo para Perú, Colombia y México: ~25.000 peticiones, más de 23.000 sesiones y 362 docentes activos en cuatro semanas, a ~$0,09 por plan.'
@@ -196,22 +196,20 @@ cv:
       text: 'Soy responsable de la gobernanza del coste de IA: informes mensuales al Comité Ejecutivo conciliados con la factura cloud, un modelo de costes por país, una banda de presupuesto aprobada y alertas de presupuesto en Slack.'
     - source: 'Earlier, for NGR (via La Victoria Lab''s Salto program), built a WhatsApp sales assistant for Bembos on Azure OpenAI GPT-4o with function-calling intent detection.'
       text: 'Antes, para NGR (a través del programa Salto de La Victoria Lab), construí un asistente de ventas por WhatsApp para Bembos sobre Azure OpenAI GPT-4o con detección de intención mediante function calling.'
-    - source: 'Owned code review and release gating across two AI products (Freya, an AI writing partner; Reeve, an AI commerce-growth platform); drove 6-8 PRs/session to production with empirical pre-merge gates (pytest, tsc/Vitest, Alembic replays) and set engineering standards (spec-driven development, branching strategy, Linear as state bus).'
-      text: 'Fui responsable de la revisión de código y el control de releases de dos productos de IA (Freya, un compañero de escritura con IA; Reeve, una plataforma de IA para el crecimiento de comercios); llevé 6-8 PRs por sesión a producción con gates empíricos previos al merge (pytest, tsc/Vitest, replays de Alembic) y fijé estándares de ingeniería (desarrollo guiado por especificaciones, estrategia de ramas, Linear como bus de estado).'
-    - source: 'Led the Reeve MVP merge campaign: 112 PRs across 4 repos cleared from queue to production in ~30h, orchestrating parallel Claude Code agents (isolated worktrees, rebase-by-content, stacked chains) with serial no-new-failures merge gates, unblocking CI (sharding, env-dependent tests) along the way.'
-      text: 'Lideré la campaña de merge del MVP de Reeve: 112 PRs en 4 repositorios, de la cola a producción en ~30 h, orquestando agentes de Claude Code en paralelo (worktrees aislados, rebase por contenido, cadenas apiladas) tras merge gates seriales sin fallos nuevos, y desbloqueando el CI por el camino (sharding, tests dependientes del entorno).'
+    - source: 'Technical Lead for two AI products (Freya, an AI writing partner in production; Reeve, an AI commerce-growth platform at MVP) in a team spread across US, European and Asia-Pacific time zones: owned code review and release gating, coordinated technical decisions with the team and supported teammates through reviews and onboarding guides.'
+      text: 'Fui Technical Lead de dos productos de IA (Freya, un compañero de escritura con IA en producción; Reeve, una plataforma de IA para el crecimiento de comercios en fase MVP) en un equipo repartido entre husos horarios de EE. UU., Europa y Asia-Pacífico: fui responsable de la revisión de código y el control de releases, coordiné las decisiones técnicas con el equipo y apoyé a mis compañeros con revisiones y guías de incorporación.'
+    - source: 'Designed and ran the team''s AI-assisted delivery system on Claude Code, packaged as mindfortress-claude and adopted by the team: role agents and commands for each SDLC stage, session tooling that cross-references Linear, GitHub and Slack, human approval gates for deploys, and the standards it encodes (spec-driven development, branching strategy).'
+      text: 'Diseñé y operé el sistema de entrega asistida por IA del equipo sobre Claude Code, empaquetado como mindfortress-claude y adoptado por el equipo: agentes por rol y comandos para cada etapa del SDLC, herramientas de sesión que cruzan Linear, GitHub y Slack, gates de aprobación humana para los despliegues y los estándares que codifica (desarrollo guiado por especificaciones, estrategia de ramas).'
+    - source: 'Release gate for Reeve (1,900+ PRs merged, mostly teammates''); in the MVP merge campaign, cleared 110+ queued PRs across 4 repos in ~30h by orchestrating parallel Claude Code agents (isolated worktrees, stacked PR chains) behind serial merge gates, fixing security findings along the way.'
+      text: 'Hice de gate de releases de Reeve (más de 1.900 PRs fusionados, la mayoría de compañeros del equipo); en la campaña de merge del MVP, vacié una cola de más de 110 PRs en 4 repositorios en ~30 h orquestando agentes de Claude Code en paralelo (worktrees aislados, cadenas de PRs apiladas) tras merge gates seriales, y corregí hallazgos de seguridad por el camino.'
     - source: 'Co-architected Freya''s AI layer as Technical Lead, authoring its "hourglass" model (many input channels feed one facts-only knowledge base that drives prose generation, with inbound and outbound subagents), and hardened it for production: unified model routing, per-project isolation, real token/cost tracking and non-blocking AI calls. The platform spans 7 RAG-grounded agents, a knowledge-graph consistency engine and Yjs/CRDT editing on FastAPI (900+ endpoints).'
       text: 'Co-diseñé como Technical Lead la capa de IA de Freya y fui autor de su modelo en "reloj de arena" (muchos canales de entrada alimentan una única base de conocimiento solo con hechos que guía la generación de prosa, con subagentes de entrada y de salida), y la preparé para producción: enrutamiento unificado de modelos, aislamiento por proyecto, seguimiento real de tokens y costes y llamadas de IA no bloqueantes. La plataforma abarca 7 agentes con RAG, un motor de consistencia basado en un grafo de conocimiento y edición con Yjs/CRDT sobre FastAPI (más de 900 endpoints).'
-    - source: 'Designed a multi-agent orchestration system (Coordinator / Manager / Worker tiers) routing user requests across 8 messaging channels (WhatsApp, Telegram, Discord, Slack, Teams, Signal, iMessage, WebChat).'
-      text: 'Diseñé un sistema de orquestación multiagente (niveles Coordinator / Manager / Worker) que enruta las peticiones de los usuarios por 8 canales de mensajería (WhatsApp, Telegram, Discord, Slack, Teams, Signal, iMessage, WebChat).'
-    - source: 'Eliminated a chronic production AI-cost leak (~$12-16/day to $0) by root-causing an unattributed spend bucket to a stale worker pointed at the production database; shipped a code guard and verified $0 in the prod ledger.'
-      text: 'Eliminé una fuga crónica de coste de IA en producción (de ~$12-16/día a $0) rastreando una partida de gasto no atribuida hasta un worker obsoleto que apuntaba a la base de datos de producción; entregué una protección en el código y verifiqué $0 en el ledger de producción.'
-    - source: 'Stabilized backend CI: took a Postgres / pytest-xdist baseline from 11 flaky failures to 0 by reproducing CI byte-for-byte in Docker and root-causing a stale SQLAlchemy comparator memoization.'
-      text: 'Estabilicé el CI del backend: llevé una base de Postgres / pytest-xdist de 11 fallos intermitentes a 0, reproduciendo el CI byte a byte en Docker y encontrando la causa en una memoización obsoleta de un comparador de SQLAlchemy.'
-    - source: 'Built mindfortress-claude, a portable engineering platform (7 agents, 10 commands, skills, git hooks, MCP integrations: Linear, Slack, Railway, Vercel, AWS, Sentry, Stripe) with config-vs-logic separation and layered prod-ops authorization gates.'
-      text: 'Construí mindfortress-claude, una plataforma de ingeniería portable (7 agentes, 10 comandos, skills, git hooks, integraciones MCP: Linear, Slack, Railway, Vercel, AWS, Sentry, Stripe) con separación entre configuración y lógica, y autorizaciones por capas para las operaciones en producción.'
-    - source: 'Shipped Stripe billing with subscription enforcement and A/B testing, and ran multi-cloud production operations (Railway GraphQL + cost ledger, AWS EC2/SSH + Alembic deploys).'
-      text: 'Entregué la facturación con Stripe, con control de suscripciones y tests A/B, y operé producción en varias nubes (Railway GraphQL + ledger de costes, AWS EC2/SSH + despliegues con Alembic).'
+    - source: 'Restored Freya''s full backend test suite to CI (pytest and Alembic upgrades on a real Postgres) and drove the inherited failing baseline from 64 to 0, root-causing a stale SQLAlchemy comparator memoization.'
+      text: 'Devolví al CI la suite completa de tests del backend de Freya (pytest y upgrades de Alembic sobre un Postgres real) y llevé la base de fallos heredada de 64 a 0, encontrando la causa en una memoización obsoleta de un comparador de SQLAlchemy.'
+    - source: 'Root-caused a ~$16/day unattributed AI-spend leak to a stale staging worker running against the production database; shipped a code guard and split prod/staging credentials.'
+      text: 'Encontré la causa de una fuga de gasto de IA no atribuido de ~$16/día: un worker de staging obsoleto que trabajaba contra la base de datos de producción; entregué una protección en el código y separé las credenciales de producción y staging.'
+    - source: 'Owned environment health and deploys (Reeve deploy runbook, Freya uptime-monitor hardening, AWS EC2 and Railway operations) and hardened Reeve''s multi-channel agent gateway (auth gate, idempotency, loop detection).'
+      text: 'Fui responsable de la salud de los entornos y de los despliegues (runbook de despliegue de Reeve, refuerzo del monitor de disponibilidad de Freya, operaciones en AWS EC2 y Railway) y reforcé el gateway de agentes multicanal de Reeve (gate de autenticación, idempotencia, detección de bucles).'
     - source: 'Built and operated the backend for a video platform in Django / PostgreSQL on AWS, owning the storage, upload and update pipelines for very large media files with asynchronous, queue-based processing on AWS SQS.'
       text: 'Construí y operé el backend de una plataforma de video en Django / PostgreSQL sobre AWS, a cargo de los pipelines de almacenamiento, subida y actualización de archivos multimedia muy grandes, con procesamiento asíncrono por colas en AWS SQS.'
     - source: 'Modeled video metadata for filtering and search and implemented search with Elasticsearch.'

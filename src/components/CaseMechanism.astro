@@ -2,7 +2,7 @@
 import Icon from './Icon.astro';
 import type { Locale } from '../i18n/locales';
 import { interpolate, useTranslations } from '../i18n/translate';
-import { amountOf, HOURGLASS_PARTS, HOURGLASS_ROWS, hourglassOf, leadingCount, percentOf } from '../lib/mechanism';
+import { amountOf, dotRowsOf, HOURGLASS_PARTS, HOURGLASS_ROWS, hourglassOf, leadingCount, percentOf } from '../lib/mechanism';
 
 interface Stage {
   glyph:
@@ -27,6 +27,10 @@ const t = useTranslations(locale);
 const total = String(stages.length);
 const counter = (step: number) => interpolate(t('mechanism.step'), { n: String(step + 1), total });
 const LANE_FADE = [1, 0.7, 0.4];
+// The dots repeat every 6 px (the background-size below), so a row of the grid is 6 px tall.
+const DOT_PITCH = 6;
+// The schema guarantees a queue or done stage states a count that fits the frame.
+const dotsOf = (detail: string) => dotRowsOf(leadingCount(detail)) ?? { full: 0, rest: 0 };
 
 // Every hourglass glyph draws the same seven rows, split by the case's counts, and lights its own part.
 const hourglass = hourglassOf(stages);
@@ -49,7 +53,17 @@ const colourOf = (glyph: string, row: number) =>
         <li class="flex flex-col items-center gap-2 md:relative md:flex-1 md:basis-0" data-stage data-current={index === 0 ? '' : undefined}>
           <div class="flex w-full flex-1 items-center gap-4 rounded-md border border-border bg-surface p-3.5 md:flex-col md:items-start md:gap-3" data-card>
             <div class="flex h-12 w-21 shrink-0 flex-col justify-center" data-glyph aria-hidden="true">
-              {(glyph === 'queue' || glyph === 'done') && <div class:list={['h-12 w-21', glyph === 'queue' ? 'dots-before' : 'dots-signal']} />}
+              {(glyph === 'queue' || glyph === 'done') && (
+                <div class="flex h-12 w-21 flex-col">
+                  <div class:list={['w-21', glyph === 'queue' ? 'dots-before' : 'dots-signal']} style={`height: ${dotsOf(detail).full * DOT_PITCH}px`} />
+                  {dotsOf(detail).rest > 0 && (
+                    <div
+                      class:list={[glyph === 'queue' ? 'dots-before' : 'dots-signal']}
+                      style={`height: ${DOT_PITCH}px; width: ${dotsOf(detail).rest * DOT_PITCH}px`}
+                    />
+                  )}
+                </div>
+              )}
               {glyph === 'lanes' && (
                 <div class="flex flex-col gap-1.5">
                   {LANE_FADE.map((opacity) => (
