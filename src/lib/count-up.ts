@@ -33,6 +33,8 @@ export function countUp(element: HTMLElement, value: string, locale: string): vo
     element.textContent = `${parts.prefix}${format.format(current)}${parts.suffix}`;
   };
 
+  // The page renders the final value; keep its width so a narrower first frame cannot rewrap the line.
+  element.style.minWidth = `${element.getBoundingClientRect().width}px`;
   const start = performance.now();
   const step = (now: number) => {
     const progress = Math.min((now - start) / DURATION_MS, 1);
