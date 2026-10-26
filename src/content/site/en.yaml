@@ -23,11 +23,11 @@ hero:
 
 metrics:
   - value: 45.6% → 100%
-    caption: structural conformance after an eval-driven prompt rewrite
-    source: Intercorp · LLM-as-judge
+    caption: conformance in production before the fix; 8/8 test fixtures after it
+    source: Intercorp · structure
     compact:
       value: 45.6→100%
-      caption: structural conformance, eval-driven prompts
+      caption: production before, 8/8 fixtures after
     accent: true
   - value: 112 PRs · 30 h
     caption: cleared from queue to production with parallel Claude Code agents

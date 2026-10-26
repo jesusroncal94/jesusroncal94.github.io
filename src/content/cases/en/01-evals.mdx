@@ -4,7 +4,7 @@ roleId: intercorp-management
 organisation: Intercorp
 role: AI Engineer
 title: 'Evals before vibes: fixing a prompt that drifted'
-summary: LLM-as-judge fixtures across 5 dimensions and 19 items turned prompt changes into a measured release gate.
+summary: "LLM-as-judge fixtures across 5 dimensions and 19 items turned prompt changes into a measured release gate. Structural conformance: 45.6% in production before the fix, 8 of 8 test fixtures after it."
 before: 45.6%
 after: 100%
 stack: [Gemini 2.5 Pro, Spring AI, LLM-as-judge]
@@ -26,8 +26,8 @@ mechanism:
       sentence: An LLM-as-judge rubric scored every output on 5 dimensions and 19 items.
     - glyph: compare
       label: Release
-      detail: 45.6% → 100%
-      sentence: "Each score was compared with the last version's: structural conformance went from 45.6% to 100%, and the dashboard showed what each version cost."
+      detail: 45.6% prod → 8/8 fixtures
+      sentence: "Each score was compared with the last version's: structural conformance went from 45.6% in production to 8 of 8 test fixtures passing, and the dashboard showed what each version cost."
 ---
 
 ## Problem
@@ -36,8 +36,8 @@ I own the production LLM system that generates curriculum-aligned lesson plans f
 in Peru, Colombia and Mexico, running on Gemini 2.5 Pro through Vertex AI. A lesson plan is
 only useful if it follows the structure its national curriculum defines, section by section.
 
-Measured against that structure, only 45.6% of the outputs conformed. Some responses were
-also bloated, spending tokens on text nobody had asked for. The cure for that is not a
+Measured against that structure in production, only 45.6% of the responses conformed. Some
+responses were also bloated, spending tokens on text nobody had asked for. The cure for that is not a
 better-sounding prompt. It is a way to measure one.
 
 ## Approach
@@ -58,7 +58,8 @@ surprise.
 
 ## Result
 
-Structural conformance went from 45.6% to 100%.
+Structural conformance went from 45.6% of production responses to 8 of 8 test fixtures passing
+after the fix.
 
 The lasting change is in how prompts ship. A new version is a measured release rather than an
 opinion: the fixtures say whether it is better, and the dashboards say what it costs.
