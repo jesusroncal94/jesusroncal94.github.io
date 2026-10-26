@@ -287,3 +287,79 @@ every range (`astro` asks for `^8.0.13`) already allows the patched 8.3.3. So th
     enabled.
   - So #4–#6 are gone rather than marked as fixed, and the record of #1–#3 now lives only in
     the 2026-10-10 section above.
+
+## Sync — 2026-10-26 (vitest mocker advisories fixed)
+
+Dependabot alerts #7 and #8 opened on `main`, both in `@vitest/mocker` 5.0.1, which `vitest`
+pins exactly. It only runs under `./tasks.ps1 test`; none of it reaches the published site:
+
+| Advisory | Severity |
+| -------- | -------- |
+| [GHSA-qxg6-89mg-rqv8](https://github.com/advisories/GHSA-qxg6-89mg-rqv8), code injection through unauthenticated manual mock registration | medium |
+| [GHSA-xp26-3454-mjgp](https://github.com/advisories/GHSA-xp26-3454-mjgp), Windows backslash traversal past the redirect allowlist | medium |
+
+Both are fixed in 5.0.3. Unlike `vite` on 2026-10-23, `vitest` is a direct dependency and its
+`@vitest/*` packages are pinned to its own version, so the fix is
+`npm install --save-dev vitest@^5.0.5` (the latest 5.x), run in the test container. No
+`overrides` entry.
+
+- `package.json` moves `vitest` from `^5.0.1` to `^5.0.5`, so a fresh resolve cannot fall back
+  below the patched version.
+- The lockfile moves `vitest`, `@vitest/mocker` and `@vitest/spy` 5.0.1 → 5.0.5, and with them
+  `chai` 6.2.2 → 6.3.0, `std-env` 4.2.0 → 4.3.0, `tinybench` 6.1.4 → 6.2.2,
+  `why-is-node-running` 2.3.0 → 3.2.1 and both nested `magic-string` copies 1.4.2 → 1.4.3. It
+  drops `siginfo`, `stackback` and the nested `obug` and `tinyexec` copies; `vite` stays at
+  8.3.5. Nothing else.
+- `npm audit` no longer lists `@vitest/mocker`. It now lists two high advisories outside this
+  fix, with no Dependabot alert yet: `undici` 8.0.0–8.12.1 (three) and `zod` < 4.6.6 (one).
+- Tests: 429 of 430 pass. The one failure is `tests/cv-freshness.test.ts`: `cv-manager` has an
+  Intercorp role change that has not been exported on this branch, which this change does not
+  touch. The test service was run from a worktree, so `cv-manager` was mounted by its absolute
+  path.
+- Build: passes; both CV PDFs render at 2 pages; links, previews and structured data checks
+  pass.
+- CI on pull request #50, run `40251100684`: `site`, `build` and all 14 Lighthouse jobs pass.
+- **Closed by the merge on 2026-10-26.** #50 reached `main` at 01:00:41 UTC (`a72969d`), and
+  the API marked alerts #7 and #8 `fixed` at 01:00:46 and 01:00:47 UTC, with no refresh and
+  no toggling of Dependabot alerts this time. The deploy (run `40252093851`) succeeded at
+  01:08 UTC.
+  - The same rescan opened #9 (`zod`) and #10–#12 (`undici`), all high: the advisories
+    `npm audit` listed above. The section below fixes them.
+
+## Sync — 2026-10-26 (undici and zod advisories fixed)
+
+Alerts #7 and #8 closed when #50 reached `main` (`a72969d`). The same day Dependabot opened four
+high alerts on `main`, the two packages the section above found in `npm audit`:
+
+| Alert | Package | Advisory |
+| ----- | ------- | -------- |
+| #9 | `zod` < 4.6.6 | [GHSA-mrhx-c7xc-m3w5](https://github.com/advisories/GHSA-mrhx-c7xc-m3w5), memory exhaustion validating oversized constrained collections |
+| #10–#12 | `undici` 8.0.0–8.12.1 | [GHSA-4qv8-2p9j-2685](https://github.com/advisories/GHSA-4qv8-2p9j-2685), unbounded memory in the EventSource parser; [GHSA-f72v-6w45-q472](https://github.com/advisories/GHSA-f72v-6w45-q472), Subresource Integrity bypass through non-lowercase algorithm tokens; [GHSA-xjj6-f33q-929c](https://github.com/advisories/GHSA-xjj6-f33q-929c), unhandled error on excessive content-encodings |
+
+Neither reaches the published site, which is static output:
+
+- `undici` is not a direct dependency. `npm ls undici` shows one path, `astro` → `unifont`
+  0.7.5, which fetches font files at build time and asks for `^8.0.0`. So, as with `vite` on
+  2026-10-23, the fix is `npm update undici`, with no `overrides` entry.
+- `zod` is a direct dependency, also deduped under `astro` and `@astrojs/sitemap`. Our only
+  import is `src/lib/profile/schema.ts`, whose schema runs in `scripts/export-profile.ts` and
+  the tests; the pages import only its types. Astro uses its copy for config and content
+  schemas during the build. The fix is `npm install zod@^4.6.7` (the latest), so a fresh
+  resolve cannot fall back below the patched version.
+
+Both commands ran in the test container. No `overrides` entry.
+
+- `package.json` moves `zod` from `^4.6.5` to `^4.6.7`.
+- The lockfile moves `zod` 4.6.5 → 4.6.7 and `undici` 8.11.0 → 8.12.3; nothing else.
+- `npm audit`: 0 vulnerabilities.
+- Tests: 429 of 430 pass. The one failure is `tests/cv-freshness.test.ts`: `cv-manager` now
+  names the Intercorp organisation "Intercorp Management (NGR, Innova LATAM)", which has not
+  been exported, and this change does not touch it. The test service was run from a worktree,
+  so `cv-manager` was mounted by its absolute path.
+- Build: passes; both CV PDFs render at 2 pages; links, previews and structured data checks
+  pass.
+- CI on pull request #52: `site`, `build` and all 14 Lighthouse jobs pass.
+- **Closed on 2026-10-26 by the merge.** #52 reached `main` at 01:54:05 UTC (`a34120f`), and
+  Dependabot marked alerts #9–#12 as fixed at 01:54:14 UTC, without the refresh or the
+  disable-and-enable that 2026-10-23 needed. The deploy (run `40256446171`) passed `build` and
+  `deploy` at 01:58 UTC.
