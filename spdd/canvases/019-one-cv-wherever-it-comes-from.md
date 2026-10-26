@@ -283,4 +283,5 @@ system over 8 messaging channels, Stripe billing with A/B testing, the mindfortr
 - Overflow: none on `/`, `/es/` and cases 02 and 03 in both languages at the 12 widths. The sweep
   ran in iframes, whose scrollbar made the 320 px run measure 305 px and flag `/es/` by 7 px; at
   a real 320 px viewport `/es/` and `/es/work/03-merge-campaign/` have no overflow.
-- Lighthouse was not run locally; it runs in CI on the pull request.
+- Lighthouse was not run locally. Its first CI run on #49 failed CLS on `/es/work/02-cost-leak/`;
+  the fix and the measurement are in the 2026-10-26 sync of canvas 017.
