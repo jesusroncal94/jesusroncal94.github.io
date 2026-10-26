@@ -318,8 +318,13 @@ Both are fixed in 5.0.3. Unlike `vite` on 2026-10-23, `vitest` is a direct depen
   path.
 - Build: passes; both CV PDFs render at 2 pages; links, previews and structured data checks
   pass.
-- Alerts #7 and #8 stay open until this reaches `main`. If they do not close after the merge,
-  the 2026-10-23 section above records what happened last time.
+- CI on pull request #50, run `40251100684`: `site`, `build` and all 14 Lighthouse jobs pass.
+- **Closed by the merge on 2026-10-26.** #50 reached `main` at 01:00:41 UTC (`a72969d`), and
+  the API marked alerts #7 and #8 `fixed` at 01:00:46 and 01:00:47 UTC, with no refresh and
+  no toggling of Dependabot alerts this time. The deploy (run `40252093851`) succeeded at
+  01:08 UTC.
+  - The same rescan opened #9 (`zod`) and #10–#12 (`undici`), all high: the advisories
+    `npm audit` listed above. The section below fixes them.
 
 ## Sync — 2026-10-26 (undici and zod advisories fixed)
 
