@@ -3,7 +3,7 @@
 This is Jesús Roncal's personal site: a static Astro site, in English and Spanish, served by GitHub
 Pages. It is also a working example of how he builds software with coding agents: every change
 starts as a user story and reaches the site only through checks and his explicit yes. This folder
-explains how, in six diagrams; the rules agents follow are in [CLAUDE.md](../CLAUDE.md) and the
+explains how, in six diagrams; the rules agents follow are in [AGENTS.md](../AGENTS.md) and the
 artefacts of each change in [spdd/](../spdd/).
 
 ## Read in this order

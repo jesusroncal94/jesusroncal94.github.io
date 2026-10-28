@@ -4,3 +4,9 @@ dist/
 .env
 /design/
 .lighthouseci/
+# Claude Code: share the standard's settings, hooks, agents and skills mirror; keep local files out.
+.claude/*
+!.claude/settings.json
+!.claude/hooks/
+!.claude/agents/
+!.claude/skills/
