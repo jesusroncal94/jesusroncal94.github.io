@@ -1,0 +1,197 @@
+{
+  "_note": "Index of the SPDD stories. The criteria are the WHEN/THEN scenarios in each story file, not copies; passes is true where the canvas Sync section records them verified.",
+  "features": [
+    {
+      "id": "S-001",
+      "spec": "spdd/stories/001-twenty-second-scan.md",
+      "canvas": "spdd/canvases/001-twenty-second-scan.md",
+      "description": "Twenty-second scan",
+      "steps": ["WHEN/THEN scenarios 1-4 in spdd/stories/001-twenty-second-scan.md", "Definition of done in spdd/stories/001-twenty-second-scan.md"],
+      "passes": true
+    },
+    {
+      "id": "S-002",
+      "spec": "spdd/stories/002-case-study-deep-dive.md",
+      "canvas": "spdd/canvases/002-case-study-deep-dive.md",
+      "description": "Case study deep dive",
+      "steps": ["WHEN/THEN scenarios 1-4 in spdd/stories/002-case-study-deep-dive.md", "Definition of done in spdd/stories/002-case-study-deep-dive.md"],
+      "passes": true
+    },
+    {
+      "id": "S-003",
+      "spec": "spdd/stories/003-get-in-touch.md",
+      "canvas": "spdd/canvases/003-get-in-touch.md",
+      "description": "Get in touch",
+      "steps": ["WHEN/THEN scenarios 1-4 in spdd/stories/003-get-in-touch.md", "Definition of done in spdd/stories/003-get-in-touch.md"],
+      "passes": true
+    },
+    {
+      "id": "S-004a",
+      "spec": "spdd/stories/004-read-it-in-my-language.md",
+      "canvas": "spdd/canvases/004a-spanish.md",
+      "description": "Read it in my language: Spanish (004a)",
+      "steps": ["WHEN/THEN scenarios in spdd/stories/004-read-it-in-my-language.md, as they apply to Spanish", "Definition of done in spdd/stories/004-read-it-in-my-language.md"],
+      "passes": true
+    },
+    {
+      "id": "S-004b",
+      "spec": "spdd/stories/004-read-it-in-my-language.md",
+      "canvas": null,
+      "description": "Read it in my language: Italian (004b), on hold",
+      "steps": ["WHEN/THEN scenarios in spdd/stories/004-read-it-in-my-language.md, as they apply to Italian", "Definition of done in spdd/stories/004-read-it-in-my-language.md"],
+      "passes": false
+    },
+    {
+      "id": "S-005",
+      "spec": "spdd/stories/005-ask-the-portfolio.md",
+      "canvas": null,
+      "description": "Ask the portfolio, on hold",
+      "steps": ["WHEN/THEN scenarios 1-8 in spdd/stories/005-ask-the-portfolio.md", "Definition of done in spdd/stories/005-ask-the-portfolio.md"],
+      "passes": false
+    },
+    {
+      "id": "S-006",
+      "spec": "spdd/stories/006-public-profile-export.md",
+      "canvas": "spdd/canvases/006-public-profile-export.md",
+      "description": "Public profile export",
+      "steps": ["WHEN/THEN scenarios 1-3 in spdd/stories/006-public-profile-export.md", "Definition of done in spdd/stories/006-public-profile-export.md"],
+      "passes": true
+    },
+    {
+      "id": "S-007",
+      "spec": "spdd/stories/007-reads-well-on-any-screen.md",
+      "canvas": "spdd/canvases/007-reads-well-on-any-screen.md",
+      "description": "Reads well on any screen",
+      "steps": ["WHEN/THEN scenarios 1-5 in spdd/stories/007-reads-well-on-any-screen.md", "Definition of done in spdd/stories/007-reads-well-on-any-screen.md"],
+      "passes": true
+    },
+    {
+      "id": "S-008",
+      "spec": "spdd/stories/008-link-preview.md",
+      "canvas": "spdd/canvases/008-link-preview.md",
+      "description": "Link preview",
+      "steps": ["WHEN/THEN scenarios 1-5 in spdd/stories/008-link-preview.md", "Definition of done in spdd/stories/008-link-preview.md"],
+      "passes": true
+    },
+    {
+      "id": "S-009",
+      "spec": "spdd/stories/009-know-what-works.md",
+      "canvas": "spdd/canvases/009-know-what-works.md",
+      "description": "Know what works",
+      "steps": ["WHEN/THEN scenarios 1-9 in spdd/stories/009-know-what-works.md", "Definition of done in spdd/stories/009-know-what-works.md"],
+      "passes": true
+    },
+    {
+      "id": "S-010",
+      "spec": "spdd/stories/010-ship-without-waiting.md",
+      "canvas": "spdd/canvases/010-ship-without-waiting.md",
+      "description": "Ship without waiting",
+      "steps": ["WHEN/THEN scenarios 1-5 in spdd/stories/010-ship-without-waiting.md", "Definition of done in spdd/stories/010-ship-without-waiting.md"],
+      "passes": true
+    },
+    {
+      "id": "S-011",
+      "spec": "spdd/stories/011-navigation-always-within-reach.md",
+      "canvas": "spdd/canvases/011-navigation-always-within-reach.md",
+      "description": "Navigation always within reach",
+      "steps": ["WHEN/THEN scenarios 1-8 in spdd/stories/011-navigation-always-within-reach.md", "Definition of done in spdd/stories/011-navigation-always-within-reach.md"],
+      "passes": true
+    },
+    {
+      "id": "S-012",
+      "spec": "spdd/stories/012-a-wrong-address-still-lands.md",
+      "canvas": "spdd/canvases/012-a-wrong-address-still-lands.md",
+      "description": "A wrong address still lands",
+      "steps": ["WHEN/THEN scenarios 1-6 in spdd/stories/012-a-wrong-address-still-lands.md", "Definition of done in spdd/stories/012-a-wrong-address-still-lands.md"],
+      "passes": true
+    },
+    {
+      "id": "S-013",
+      "spec": "spdd/stories/013-search-engines-know-who-this-is.md",
+      "canvas": "spdd/canvases/013-search-engines-know-who-this-is.md",
+      "description": "Search engines know who this is",
+      "steps": ["WHEN/THEN scenarios 1-5 in spdd/stories/013-search-engines-know-who-this-is.md", "Definition of done in spdd/stories/013-search-engines-know-who-this-is.md"],
+      "passes": true
+    },
+    {
+      "id": "S-014",
+      "spec": "spdd/stories/014-know-where-i-am.md",
+      "canvas": "spdd/canvases/014-know-where-i-am.md",
+      "description": "Know where I am",
+      "steps": ["WHEN/THEN scenarios 1-9 in spdd/stories/014-know-where-i-am.md", "Definition of done in spdd/stories/014-know-where-i-am.md"],
+      "passes": true
+    },
+    {
+      "id": "S-015",
+      "spec": "spdd/stories/015-see-how-the-queue-drained.md",
+      "canvas": "spdd/canvases/015-see-how-the-queue-drained.md",
+      "description": "See how the queue drained",
+      "steps": ["WHEN/THEN scenarios 1-6 in spdd/stories/015-see-how-the-queue-drained.md", "Definition of done in spdd/stories/015-see-how-the-queue-drained.md"],
+      "passes": true
+    },
+    {
+      "id": "S-016",
+      "spec": "spdd/stories/016-see-how-a-prompt-ships.md",
+      "canvas": "spdd/canvases/016-see-how-a-prompt-ships.md",
+      "description": "See how a prompt ships",
+      "steps": ["WHEN/THEN scenarios 1-5 in spdd/stories/016-see-how-a-prompt-ships.md", "Definition of done in spdd/stories/016-see-how-a-prompt-ships.md"],
+      "passes": true
+    },
+    {
+      "id": "S-017",
+      "spec": "spdd/stories/017-see-where-the-money-went.md",
+      "canvas": "spdd/canvases/017-see-where-the-money-went.md",
+      "description": "See where the money went",
+      "steps": ["WHEN/THEN scenarios 1-5 in spdd/stories/017-see-where-the-money-went.md", "Definition of done in spdd/stories/017-see-where-the-money-went.md"],
+      "passes": true
+    },
+    {
+      "id": "S-018",
+      "spec": "spdd/stories/018-see-the-hourglass.md",
+      "canvas": "spdd/canvases/018-see-the-hourglass.md",
+      "description": "See the hourglass",
+      "steps": ["WHEN/THEN scenarios 1-6 in spdd/stories/018-see-the-hourglass.md", "Definition of done in spdd/stories/018-see-the-hourglass.md"],
+      "passes": true
+    },
+    {
+      "id": "S-019",
+      "spec": "spdd/stories/019-one-cv-wherever-it-comes-from.md",
+      "canvas": "spdd/canvases/019-one-cv-wherever-it-comes-from.md",
+      "description": "One CV, wherever it comes from",
+      "steps": ["WHEN/THEN scenarios 1-6 in spdd/stories/019-one-cv-wherever-it-comes-from.md", "Definition of done in spdd/stories/019-one-cv-wherever-it-comes-from.md"],
+      "passes": true
+    },
+    {
+      "id": "S-020",
+      "spec": "spdd/stories/020-read-it-in-daylight.md",
+      "canvas": "spdd/canvases/020-read-it-in-daylight.md",
+      "description": "Read it in daylight",
+      "steps": ["WHEN/THEN scenarios 1-7 in spdd/stories/020-read-it-in-daylight.md", "Definition of done in spdd/stories/020-read-it-in-daylight.md"],
+      "passes": true
+    },
+    {
+      "id": "S-021",
+      "spec": "spdd/stories/021-see-how-it-is-built.md",
+      "canvas": "spdd/canvases/021-see-how-it-is-built.md",
+      "description": "See how it is built",
+      "steps": ["WHEN/THEN scenarios 1-7 in spdd/stories/021-see-how-it-is-built.md", "Definition of done in spdd/stories/021-see-how-it-is-built.md"],
+      "passes": true
+    },
+    {
+      "id": "S-022",
+      "spec": "spdd/stories/022-know-which-theme-is-read.md",
+      "canvas": "spdd/canvases/022-know-which-theme-is-read.md",
+      "description": "Know which theme is read",
+      "steps": ["WHEN/THEN scenarios 1-6 in spdd/stories/022-know-which-theme-is-read.md", "Definition of done in spdd/stories/022-know-which-theme-is-read.md"],
+      "passes": true
+    },
+    {
+      "id": "S-023",
+      "spec": "spdd/stories/023-see-how-it-ships-and-adapts.md",
+      "canvas": "spdd/canvases/023-see-how-it-ships-and-adapts.md",
+      "description": "See how it ships and adapts",
+      "steps": ["WHEN/THEN scenarios 1-8 in spdd/stories/023-see-how-it-ships-and-adapts.md", "Definition of done in spdd/stories/023-see-how-it-ships-and-adapts.md"],
+      "passes": true
+    }
+  ]
+}
