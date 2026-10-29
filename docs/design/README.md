@@ -21,7 +21,7 @@ changes.
 | 05 Theme | theme | [theme.svg](../diagrams/theme.svg) | [Theme](../theme.md) | 2026-10-15 |
 | 06 Languages | languages | [languages.svg](../diagrams/languages.svg) | [Languages](../languages.md) | 2026-10-15 |
 
-`tests/docs.test.ts` keeps this table honest: every SVG has a row and every row an SVG, every
+`tests/docs.test.ts` and `ads check` keep this table honest: every SVG has a row and every row an SVG, every
 diagram appears on a page, no SVG carries a web font, a script or a remote URL, and every colour
 is a token.
 
@@ -48,18 +48,26 @@ Segoe UI, Roboto, Helvetica or Arial, and to the system monospace, where Geist i
 
 ## Changing a diagram
 
-The `update-diagram` skill holds the procedure. In short:
+The `update-diagram` skill holds the procedure. What it leaves to this page:
 
-1. Connect the Penpot MCP plugin to **jesusroncal94.github.io · docs**, and check the file's name
-   before any change. Never edit the site's design file for a diagram.
-2. Keep the Penpot tab in front: browsers suspend background tabs and the plugin stops answering.
-3. Edit the board using the file's library (the token colours and the five typographies). Review
-   it by exporting it to PNG, and fix overlaps and overflowing text.
-4. Export the board as SVG, named after the board, and the whole file as `.penpot` when its
-   structure changed. The plugin cannot write to disk, so Jesus exports them to Downloads.
-5. Copy them into `docs/diagrams/` and this folder, run `./tasks.ps1 diagrams`, update the export
-   date above, and run `./tasks.ps1 test`.
-6. Change the page that uses the diagram in the same pull request, so text and image agree.
+- **Which file.** Connect the Penpot MCP plugin to **jesusroncal94.github.io · docs**, and check the
+  file's name before any change. Never edit the site's design file (`spdd/design.md`) or
+  evidence-library's docs file for a diagram. The docs file has no token themes; switching a theme
+  in the site's design file stalls the tab.
+- **Library.** Use the token colours and the five typographies (title, section, node title, body,
+  note); colour means a role, as in the style sheet, and arrows follow its three kinds.
+  [tokens.json](tokens.json) mirrors them.
+- **Downloads.** The folder may hold a file of the same name from evidence-library; check each
+  SVG's content before copying it.
+- **Post-processing.** `./tasks.ps1 diagrams` (`scripts/postprocess-svg.ts`) and
+  `bash docs/design/postprocess-svg.sh` give the same result, from the same fonts; a second run
+  reports every file unchanged. The fonts live in [tokens.json](tokens.json) and in
+  `src/lib/svg.ts`: change both together.
+- **Check.** `./tasks.ps1 test` runs `tests/docs.test.ts`: the manifest, the pages, web fonts,
+  scripts, token colours and links. `ads check` runs the standard's L1-DIAGRAMS on the same
+  manifest.
+- **Branch.** Documentation commits are `docs(spdd): …`. A documentation-only pull request skips
+  the Lighthouse jobs. Jesus pushes and merges.
 
 ## Rules for content
 
