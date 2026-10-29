@@ -86,7 +86,7 @@ Nothing crosses a gate without an explicit yes from Jesus in chat. Stop and ask 
 - `spdd/stories/`, `spdd/analysis/`, `spdd/canvases/`: the SPDD artefacts, each with a README index. They are this project's specs.
 - `spdd/canvases/norms.md`: code-level rules.
 - `spdd/design.md`: the Penpot design file and the Penpot MCP gotchas.
-- `docs/`: process, architecture, CI and privacy pages; diagrams in `docs/diagrams/`.
+- `docs/`: process, architecture, CI and privacy pages. `docs/design/`: how the diagrams are made in Penpot, their manifest and visual language; `docs/diagrams/`: the published SVGs, changed only through Penpot and `docs/design/postprocess-svg.sh` (`./tasks.ps1 diagrams` does the same).
 - `data/public-profile.json`: the exported facts; never edit it by hand.
 - `acceptance/features.json`: an index of the stories' WHEN/THEN criteria, human-owned; agents may only flip `passes` after a passing check.
 - `progress.md`: the latest state between sessions, including open items.
