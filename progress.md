@@ -8,6 +8,13 @@ Newest entry first. At most five lines per session (ten for a handoff). Move old
 - Story 005 (Ask the portfolio) is on hold since 2026-10-01; retrieval work continues in `rag-bm25-search`, and a fifth case study waits for a larger eval measured over several runs.
 - Custom domain `jesusroncal.dev` dropped on 2026-09-30; the site stays on `jesusroncal94.github.io`.
 
+## 2026-11-05 update to standard 1.1.6
+
+- Done: `ads update` from v1.1.0 to v1.1.6; only `.copier-answers.yml` and the checker pin in `.github/workflows/standard.yml` change, with no conflicts. The 1.1.5 template fix to `scripts/check.sh` does not apply to this `check_command`.
+- Verified with: `docker compose run --rm test` (28 files, 430 tests) and `ads check` (conforms at L2). The Lighthouse and layout checks were not run: no site file changed.
+- Open issues: none.
+- Next step: Jesus pushes, adds the `human-approved` label (guarded paths) and merges.
+
 ## 2026-10-29 update to standard 1.1.0 with diagrams
 
 - Done: `ads update` to v1.1.0 with `diagrams=true`; `update-diagram` skill from the template (both copies); `postprocess-svg.sh` and a site `tokens.json` (Geist, Piedra roles); site specifics moved into `docs/design/README.md`.
